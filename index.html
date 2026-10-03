@@ -147,7 +147,9 @@ aside{width:232px;position:fixed;inset:0 auto 0 0;background:#e5e1d7;border-righ
         const tz=document.getElementById("setupTimezone"), list=document.getElementById("timezoneOptions");
         if(!tz||!list)return;
         try{
-          const zones=Intl.supportedValuesOf("timeZone").filter(z=>!z.startsWith("Etc/")).sort();
+          const zones=Intl.supportedValuesOf("timeZone")
+            .filter(z=>!z.startsWith("Etc/")&&!z.startsWith("Indian/"))
+            .sort();
           list.innerHTML=zones.map(z=>'<option value="'+z+'"></option>').join("");
         }catch(e){}
       })();
