@@ -136,21 +136,19 @@ aside{width:232px;position:fixed;inset:0 auto 0 0;background:#e5e1d7;border-righ
       <p>Choose the country, timezone and date format StudyOS should use.</p>
     </div>
     <div class="setup-fields">
-      <div class="setup-field"><label for="setupCountry">COUNTRY</label><select id="setupCountry">
-        <option value="India">India</option><option value="United States">United States</option><option value="United Kingdom">United Kingdom</option><option value="Australia">Australia</option><option value="Singapore">Singapore</option><option value="United Arab Emirates">United Arab Emirates</option><option value="Canada">Canada</option><option value="Japan">Japan</option><option value="Germany">Germany</option><option value="France">France</option>
-      </select></div>
-      <div class="setup-field"><label for="setupTimezone">TIMEZONE</label><select id="setupTimezone">
-        <option value="Asia/Kolkata">India · Asia/Kolkata</option><option value="America/New_York">United States · America/New_York</option><option value="Europe/London">United Kingdom · Europe/London</option><option value="Australia/Sydney">Australia · Australia/Sydney</option><option value="Asia/Singapore">Singapore · Asia/Singapore</option><option value="Asia/Dubai">United Arab Emirates · Asia/Dubai</option><option value="America/Toronto">Canada · America/Toronto</option><option value="Asia/Tokyo">Japan · Asia/Tokyo</option><option value="Europe/Berlin">Germany · Europe/Berlin</option><option value="Europe/Paris">France · Europe/Paris</option>
-      </select></div>
+      <div class="setup-field"><label for="setupCountry">COUNTRY</label><input id="setupCountry" type="text" list="countryOptions" autocomplete="country-name" placeholder="Type a country..." /></div>
+      <datalist id="countryOptions">
+        <option value="India"><option value="United States"><option value="United Kingdom"><option value="Australia"><option value="Singapore"><option value="United Arab Emirates"><option value="Canada"><option value="Japan"><option value="Germany"><option value="France"><option value="Brazil"><option value="China"><option value="South Korea"><option value="New Zealand"><option value="South Africa"><option value="Nepal"><option value="Bangladesh"><option value="Sri Lanka"><option value="Malaysia"><option value="Indonesia"><option value="Thailand">
+      </datalist>
+      <div class="setup-field"><label for="setupTimezone">TIMEZONE</label><input id="setupTimezone" type="text" list="timezoneOptions" autocomplete="off" placeholder="Type a timezone..." aria-autocomplete="list" /></div>
+      <datalist id="timezoneOptions"></datalist>
       <script>
       (function(){
-        const tz=document.getElementById("setupTimezone");
-        if(!tz)return;
+        const tz=document.getElementById("setupTimezone"), list=document.getElementById("timezoneOptions");
+        if(!tz||!list)return;
         try{
           const zones=Intl.supportedValuesOf("timeZone").filter(z=>!z.startsWith("Etc/")).sort();
-          const current=tz.value;
-          tz.innerHTML=zones.map(z=>'<option value="'+z+'">'+z.replace(/_/g," ")+'</option>').join("");
-          if(current && zones.includes(current))tz.value=current;
+          list.innerHTML=zones.map(z=>'<option value="'+z+'"></option>').join("");
         }catch(e){}
       })();
       </script>
