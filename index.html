@@ -203,10 +203,9 @@ function generatePlan(){
     const key=addDays(start,day),dow=new Date(key+"T12:00:00").getDay();if(isVacation(key))continue;
     for(const w of state.availability.filter(x=>Number(x.day)===dow)){let cursor=mins(w.start),limit=mins(w.end);while(cursor+15<=limit){const target=remaining.find(x=>x.remaining>0&&x.due>=key);if(!target)break;const block=Math.min(target.remaining,Math.min(90,limit-cursor));if(block<15)break;const id=key+"-"+cursor+"-"+Math.random().toString(36).slice(2,7);newPlan.push({id,date:key,start:timeStr(cursor),duration:block,subject:target.subject,task:target.title,kind:target.kind||"deadline"});target.remaining-=block;cursor+=block+5;}}
   }
-  state.plan=newPlan;state.done=state.done.filter(id=>newPlan.some(x=>x.id===id));saveState();renderToday();renderGeneratedPlan();renderExamList();
+  state.plan=newPlan;state.done=state.done.filter(id=>newPlan.some(x=>x.id===id));saveState();renderToday();renderGeneratedPlan();renderPlanner();
   const unresolved=remaining.filter(x=>x.remaining>0);$("planSummary").textContent=newPlan.length?newPlan.length+" blocks generated"+(unresolved.length?" · "+unresolved.length+" task(s) still need more hours":""):"Add availability before generating";
   if(unresolved.length)addMessage("assistant","Some exam work could not fit into the study windows you gave me. I kept the plan honest instead of inventing free time. Add study hours or reduce the required work.");
-}
 }
 function isVacation(key){return state.vacations.some(v=>key>=v.start&&key<=v.end)}
 function renderGeneratedPlan(){
