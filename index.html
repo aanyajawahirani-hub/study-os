@@ -144,7 +144,14 @@ aside{width:232px;position:fixed;inset:0 auto 0 0;background:#e5e1d7;border-righ
         const timezone=document.getElementById("setupTimezone"), timezoneList=document.getElementById("timezoneOptions");
         if(!country||!countryList||!timezone||!timezoneList)return;
         const countries=["India","United States","United Kingdom","Australia","Singapore","United Arab Emirates","Canada","Japan","Germany","France","Brazil","China","South Korea","New Zealand","South Africa","Nepal","Bangladesh","Sri Lanka","Malaysia","Indonesia","Thailand"];
-        const zones=(()=>{try{return Intl.supportedValuesOf("timeZone").filter(z=>!z.startsWith("Etc/")&&!z.startsWith("Indian/")).sort()}catch(e){return ["Asia/Kolkata","Asia/Dubai","Asia/Singapore","Asia/Tokyo","Australia/Sydney","Europe/London","Europe/Paris","Europe/Berlin","America/New_York","America/Chicago","America/Denver","America/Los_Angeles","Pacific/Auckland"]}})();
+        const zones=(()=>{
+          try{
+            const raw=Intl.supportedValuesOf("timeZone").filter(z=>!z.startsWith("Etc/")&&!z.startsWith("Indian/")&&z!=="Asia/Calcutta");
+            return Array.from(new Set(["Asia/Kolkata",...raw])).sort();
+          }catch(e){
+            return ["Asia/Kolkata","Asia/Dubai","Asia/Singapore","Asia/Tokyo","Australia/Sydney","Europe/London","Europe/Paris","Europe/Berlin","America/New_York","America/Chicago","America/Denver","America/Los_Angeles","Pacific/Auckland"];
+          }
+        })();
         function setupSearch(input,list,items){
           const render=()=>{
             const q=input.value.trim().toLowerCase();
