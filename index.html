@@ -22,7 +22,7 @@ aside{width:232px;position:fixed;inset:0 auto 0 0;background:#e5e1d7;border-righ
 @media(max-width:800px){aside{display:none}.mobile-nav{display:flex;position:sticky;top:0;z-index:10;gap:3px;overflow:auto;padding:8px;margin:-8px -8px 18px;background:var(--paper);border-bottom:1px solid var(--line)}.mobile-nav button{white-space:nowrap;border:1px solid var(--line);background:var(--surface);color:var(--muted);padding:9px 12px;font-size:11px}.mobile-nav button.active{background:var(--ink);color:var(--surface)}.shell{margin:0;padding:22px 16px}header{flex-direction:column;gap:16px}h1{font-size:42px}.grid,.planner-grid{grid-template-columns:1fr}.slots{grid-template-columns:1fr}.planner-top{display:block}.generate-btn{margin-top:14px}.page-title{font-size:36px}.focusbox{grid-template-columns:1fr}.form-grid{grid-template-columns:1fr}.timeline-block{grid-template-columns:58px 1fr 48px}}
 </style></head><body><main>
 <aside><div class="brand"><i>✦</i> STUDYOS</div><nav><button class="navlink active" data-section="today">Today</button><button class="navlink" data-section="planner">Planner</button><button class="navlink" data-section="syllabus">Syllabus</button><button class="navlink" data-section="reminders">Reminders</button><button class="navlink" data-section="progress">Progress</button></nav><div class="streak"><small>STREAK</small><b id="streakValue">0 DAYS</b><small>Start your first study block.</small></div></aside>
-<section class="shell"><header><div><div class="eyebrow" id="date"></div><h1>Good morning.<br><em>Let’s lock in.</em></h1></div><button class="btn" id="notify">◉ ENABLE NOTIFICATIONS</button></header>
+<section class="shell"><header><div><div class="eyebrow" id="date"></div><h1 id="greeting">Good night.<br><em>Let’s lock in.</em></h1></div><button class="btn" id="notify">◉ ENABLE NOTIFICATIONS</button></header>
 <div class="mobile-nav" id="mobileNav"><button class="active" data-section="today">Today</button><button data-section="planner">Planner</button><button data-section="syllabus">Syllabus</button><button data-section="reminders">Reminders</button><button data-section="progress">Progress</button></div><div id="section-today" class="section active"><div class="hero"><div><div class="eyebrow">TODAY'S MISSION</div><h2><span id="count">0</span> blocks complete</h2><p id="next">Add your first study block to get started.</p></div><div class="ring"><b id="pct">0%</b><span>DONE</span></div></div>
 <div class="grid"><section class="panel"><div class="head"><b>THE RUNWAY</b><span id="planned">0 min planned</span></div><div id="blocks"></div></section>
 <section class="panel"><div class="head"><b>UP NEXT</b></div><div id="upNext"><div class="insight">Your upcoming exams and priorities will appear here once you add them.</div></div></section></div>
@@ -131,12 +131,31 @@ aside{width:232px;position:fixed;inset:0 auto 0 0;background:#e5e1d7;border-righ
     <div class="head"><b>YOUR ACTUAL STUDY PLAN</b><span id="planSummary">Waiting for your inputs</span></div>
     <div id="generatedPlan" class="timeline"></div>
   </section>
-</section><section id="section-syllabus" class="section"><div class="panel"><div class="head"><b>SYLLABUS</b><span>Track what remains</span></div><div class="insight"><b>No syllabus has been added yet.</b><br>Add subjects and chapters when you want StudyOS to track coverage. Nothing is pre-filled.</div></div></section><section id="section-reminders" class="section"><div class="panel"><div class="head"><b>REMINDERS</b><span>Up to 10/day</span></div><div id="reminderSectionSlots"></div><div class="insight">Reminder slots are synced from the Today view. Push notifications require browser permission and your notification keys to be configured.</div></div></section><section id="section-progress" class="section"><div class="panel"><div class="head"><b>PROGRESS</b><span>Real activity only</span></div><div class="insight"><b>Your progress starts at zero.</b><br>Completed study blocks and focus sessions will appear here. No sample streaks or fake statistics.</div><div id="progressStats" style="display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-top:14px"></div></div></section></section></main><div class="modal" id="focusModal"><div class="focuscard"><button class="close" onclick="closeFocus()">×</button><div class="eyebrow">FOCUS SESSION</div><div class="timer" id="focusTimer">25:00</div><div class="session-meta" id="focusState">Ready when you are.</div><div class="focus-controls" style="justify-content:center;margin-top:22px"><button onclick="setFocus(25)">25 MIN</button><button onclick="setFocus(50)">50 MIN</button><button onclick="setFocus(90)">90 MIN</button><label class="custom-duration">CUSTOM <input id="customFocusMinutes" type="number" min="5" max="180" step="5" placeholder="min" onchange="setCustomFocus()"></label><button onclick="resetFocus()">RESET</button><button class="primary" id="focusAction" onclick="toggleFocus()">START FOCUS</button></div></div></div>
+</section><section id="section-syllabus" class="section"><div class="panel"><div class="head"><b>SYLLABUS</b><span>Track what remains</span></div><div class="insight"><b>No syllabus has been added yet.</b><br>Add subjects and chapters when you want StudyOS to track coverage. Nothing is pre-filled.</div></div></section><section id="section-reminders" class="section"><div class="panel"><div class="head"><b>REMINDERS</b><span>Up to 10/day</span></div><div id="reminderSectionSlots"></div><div class="insight">Reminder slots are synced from the Today view. Push notifications require browser permission and your notification keys to be configured.</div></div></section><section id="section-progress" class="section"><div class="panel"><div class="head"><b>PROGRESS</b><span>Real activity only</span></div><div class="insight"><b>Your progress starts at zero.</b><br>Completed study blocks and focus sessions will appear here. No sample streaks or fake statistics.</div><div id="progressStats" style="display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-top:14px"></div></div></section></section></main><div class="modal open" id="setupModal"><div class="focuscard"><div class="eyebrow">WELCOME TO STUDYOS</div><h2 style="font-family:Georgia,serif;font-size:34px;margin:10px 0">Set your clock.</h2><p class="page-lede">StudyOS uses your country and timezone for greetings, planner dates and reminders. Nothing is guessed from the server.</p><div class="form-grid" style="margin-top:18px"><select id="setupCountry"><option>India</option><option>United States</option><option>United Kingdom</option><option>Australia</option><option>Singapore</option><option>United Arab Emirates</option><option>Canada</option><option>Japan</option><option>Germany</option><option>France</option></select><select id="setupTimezone"></select><select id="setupDateFormat"><option>DD/MM/YYYY</option><option>MM/DD/YYYY</option><option>YYYY/MM/DD</option></select><button class="dark-btn" id="saveSetup">SAVE SETTINGS</button></div><div class="schedule-note">You can change these later in Settings. Your country only sets the default timezone and date format.</div></div></div><div class="modal" id="focusModal"><div class="focuscard"><button class="close" onclick="closeFocus()">×</button><div class="eyebrow">FOCUS SESSION</div><div class="timer" id="focusTimer">25:00</div><div class="session-meta" id="focusState">Ready when you are.</div><div class="focus-controls" style="justify-content:center;margin-top:22px"><button onclick="setFocus(25)">25 MIN</button><button onclick="setFocus(50)">50 MIN</button><button onclick="setFocus(90)">90 MIN</button><label class="custom-duration">CUSTOM <input id="customFocusMinutes" type="number" min="5" max="180" step="5" placeholder="min" onchange="setCustomFocus()"></label><button onclick="resetFocus()">RESET</button><button class="primary" id="focusAction" onclick="toggleFocus()">START FOCUS</button></div></div></div>
 <script>
 const $=id=>document.getElementById(id);
 const blocksEl=$("blocks"),countEl=$("count"),pctEl=$("pct"),nextEl=$("next"),plannedEl=$("planned"),slotsEl=$("slots"),notifyBtn=$("notify"),timerEl=$("timer"),focusTimerEl=$("focusTimer"),focusHeaderStateEl=$("focusHeaderState"),focusStateEl=$("focusState"),focusActionEl=$("focusAction");
 const DAYS=["Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"];
-const todayKey=()=>{const d=new Date();return d.toISOString().slice(0,10)};
+const COUNTRY_ZONES={"India":"Asia/Kolkata","United States":"America/New_York","United Kingdom":"Europe/London","Australia":"Australia/Sydney","Singapore":"Asia/Singapore","United Arab Emirates":"Asia/Dubai","Canada":"America/Toronto","Japan":"Asia/Tokyo","Germany":"Europe/Berlin","France":"Europe/Paris"};
+const COUNTRY_DATE_FORMAT={"India":"DD/MM/YYYY","United States":"MM/DD/YYYY","United Kingdom":"DD/MM/YYYY","Australia":"DD/MM/YYYY","Singapore":"DD/MM/YYYY","United Arab Emirates":"DD/MM/YYYY","Canada":"MM/DD/YYYY","Japan":"YYYY/MM/DD","Germany":"DD/MM/YYYY","France":"DD/MM/YYYY"};
+const settingsKey="studyos-settings";
+let userSettings=JSON.parse(localStorage.getItem(settingsKey)||"null");
+function localNow(){return new Date(new Intl.DateTimeFormat("en-US",{timeZone:userSettings?.timezone||"Asia/Kolkata",year:"numeric",month:"2-digit",day:"2-digit",hour:"2-digit",minute:"2-digit",second:"2-digit",hourCycle:"h23"}).formatToParts(new Date()).reduce((o,p)=>(o[p.type]=p.value,o),{}).year+"-"+new Intl.DateTimeFormat("en-US",{timeZone:userSettings?.timezone||"Asia/Kolkata",year:"numeric",month:"2-digit",day:"2-digit"}).format(new Date()).split("/")[0]+"-01T00:00:00");}
+function zonedParts(){
+  const parts=new Intl.DateTimeFormat("en-US",{timeZone:userSettings?.timezone||"Asia/Kolkata",weekday:"long",year:"numeric",month:"2-digit",day:"2-digit",hour:"2-digit",minute:"2-digit",hourCycle:"h23"}).formatToParts(new Date());
+  return Object.fromEntries(parts.filter(p=>p.type!=="literal").map(p=>[p.type,p.value]));
+}
+function accountTodayKey(){const p=zonedParts();return p.year+"-"+p.month+"-"+p.day}
+function greetingForHour(h){return h<5?"Good night.":h<12?"Good morning.":h<17?"Good afternoon.":h<21?"Good evening.":"Good night."}
+function updateClockAndGreeting(){
+  const p=zonedParts();
+  const g=$("greeting");
+  if(g)g.innerHTML=greetingForHour(Number(p.hour))+"<br><em>Let’s lock in.</em>";
+  const d=$("date");
+  if(d)d.textContent=new Intl.DateTimeFormat("en-IN",{timeZone:userSettings?.timezone||"Asia/Kolkata",weekday:"long",day:"numeric",month:"long"}).format(new Date()).toUpperCase();
+}
+
+const todayKey=()=>accountTodayKey();
 let state=JSON.parse(localStorage.getItem("studyos-state")||"null")||{deadlines:[],availability:[],vacations:[],exams:[],plan:[],done:[],times:[]};
 state.deadlines=Array.isArray(state.deadlines)?state.deadlines:[];
 state.availability=Array.isArray(state.availability)?state.availability:[];
@@ -152,7 +171,7 @@ function iso(d){return d.toISOString().slice(0,10)}
 function addDays(s,n){const d=new Date(s+"T12:00:00");d.setDate(d.getDate()+n);return iso(d)}
 function mins(t){const [h,m]=String(t).split(":").map(Number);return h*60+m}
 function timeStr(n){return String(Math.floor(n/60)).padStart(2,"0")+":"+String(n%60).padStart(2,"0")}
-document.getElementById("date").textContent=new Date().toLocaleDateString("en-IN",{weekday:"long",day:"numeric",month:"long"}).toUpperCase();
+updateClockAndGreeting(); setInterval(updateClockAndGreeting,30000);
 
 function renderFocusTasks(){
   const meta=$("focusMeta"); if(!meta)return;
@@ -268,6 +287,21 @@ document.querySelectorAll("[data-section]").forEach(b=>b.addEventListener("click
 async function enable(){if(!("Notification"in window))return alert("Notifications are not supported here.");const p=await Notification.requestPermission();if(p==="granted"){notifyBtn.classList.add("on");notifyBtn.textContent="NOTIFICATIONS ON";const reg=await navigator.serviceWorker.ready;try{const c=await fetch("/api/config");const j=await c.json();if(j.publicKey){const key=j.publicKey;const pad="=".repeat((4-key.length%4)%4),raw=atob((key+pad).replace(/-/g,"+").replace(/_/g,"/"));const sub=await reg.pushManager.subscribe({userVisibleOnly:true,applicationServerKey:Uint8Array.from(raw,ch=>ch.charCodeAt(0))});await fetch("/api/subscribe",{method:"POST",headers:{"content-type":"application/json"},body:JSON.stringify({subscription:sub})})}else reg.showNotification("StudyOS notifications enabled",{body:"Server push still needs its Vercel keys."})}catch(e){reg.showNotification("StudyOS notifications enabled",{body:"Your browser permission is on."})}}}
 if("serviceWorker"in navigator)navigator.serviceWorker.register("/sw.js");notifyBtn.addEventListener("click",enable);
 
+function openSetup(){
+  $("setupModal").classList.add("open");
+  $("setupCountry").value=userSettings?.country||"India";
+  $("setupTimezone").innerHTML=Object.entries(COUNTRY_ZONES).map(([name,zone])=>'<option value="'+zone+'">'+name+" · "+zone+"</option>").join("");
+  $("setupTimezone").value=userSettings?.timezone||COUNTRY_ZONES[$("setupCountry").value]||"Asia/Kolkata";
+  $("setupDateFormat").value=userSettings?.dateFormat||COUNTRY_DATE_FORMAT[$("setupCountry").value]||"DD/MM/YYYY";
+}
+$("setupCountry").addEventListener("change",()=>{$("setupTimezone").value=COUNTRY_ZONES[$("setupCountry").value]||"Asia/Kolkata";$("setupDateFormat").value=COUNTRY_DATE_FORMAT[$("setupCountry").value]||"DD/MM/YYYY"});
+$("saveSetup").addEventListener("click",()=>{
+  userSettings={country:$("setupCountry").value,timezone:$("setupTimezone").value,dateFormat:$("setupDateFormat").value};
+  localStorage.setItem(settingsKey,JSON.stringify(userSettings));
+  $("setupModal").classList.remove("open");
+  updateClockAndGreeting(); renderToday(); renderGeneratedPlan();
+});
+if(!userSettings){openSetup()}else{$("setupModal").classList.remove("open")}
 const focus={seconds:25*60,running:false,mode:25,breakMinutes:5,interval:null};
 function fmt(s){return String(Math.floor(s/60)).padStart(2,"0")+":"+String(s%60).padStart(2,"0")}
 function syncFocus(){timerEl.textContent=fmt(focus.seconds);focusTimerEl.textContent=fmt(focus.seconds);focusHeaderStateEl.textContent=focus.running?"FOCUS SESSION IN PROGRESS":"Ready when you are.";focusStateEl.textContent=focus.running?"FOCUS SESSION IN PROGRESS":"Ready when you are.";focusActionEl.textContent=focus.running?"PAUSE":"START FOCUS";document.querySelectorAll("[data-focus]").forEach(b=>b.classList.toggle("active",Number(b.dataset.focus)===focus.mode));document.querySelectorAll("[data-break]").forEach(b=>b.classList.toggle("active",Number(b.dataset.break)===focus.breakMinutes))}
