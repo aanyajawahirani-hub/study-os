@@ -431,7 +431,7 @@ function applyActions(actions){
   });saveState();
 }
 let pendingAttachment=null;
-$("scheduleFile").addEventListener("change",async e=>{
+$("scheduleFile")?.addEventListener("change",async e=>{
   const f=e.target.files[0];if(!f)return;
   if(f.size>6500000){$("fileStatus").textContent="File too large";return}
   $("fileStatus").textContent=f.name;
@@ -439,7 +439,7 @@ $("scheduleFile").addEventListener("change",async e=>{
   else {const text=await f.text();pendingAttachment={type:"text",mime:"text/plain",data:text.slice(0,50000)}}
 });
 $("sendChat").onclick=()=>sendChat();
-$("chatInput").addEventListener("keydown",e=>{if(e.key==="Enter"&&(e.metaKey||e.ctrlKey)){e.preventDefault();sendChat()}});
+$("chatInput")?.addEventListener("keydown",e=>{if(e.key==="Enter"&&(e.metaKey||e.ctrlKey)){e.preventDefault();sendChat()}});
 $("addDeadline").onclick=()=>{const subject=$("deadlineSubject").value.trim(),title=$("deadlineTitle").value.trim(),due=$("deadlineDate").value,minutes=Number($("deadlineMinutes").value),priority=$("deadlinePriority").value;if(!subject||!title||!due||minutes<15)return alert("Add the subject, deadline, and realistic study time.");state.deadlines.push({subject,title,due,minutes,priority});["deadlineSubject","deadlineTitle","deadlineDate","deadlineMinutes"].forEach(id=>$(id).value="");saveState();generatePlan();renderPlanner()};
 $("addAvailability").onclick=()=>{const day=Number($("availDay").value),start=$("availStart").value,end=$("availEnd").value;if(!start||!end||mins(end)<=mins(start))return alert("Choose a valid study window.");state.availability.push({day,start,end});saveState();generatePlan();renderPlanner()};
 $("addVacation").onclick=()=>{const start=$("vacStart").value,end=$("vacEnd").value;if(!start||!end||end<start)return alert("Choose valid dates.");state.vacations.push({start,end});saveState();generatePlan();renderPlanner()};
@@ -459,7 +459,7 @@ function showSection(name){document.body.dataset.section=name;document.querySele
 document.querySelectorAll("[data-section]").forEach(b=>b.addEventListener("click",()=>showSection(b.dataset.section)));
 
 async function enable(){if(!("Notification"in window))return alert("Notifications are not supported here.");const p=await Notification.requestPermission();if(p==="granted"){notifyBtn.classList.add("on");notifyBtn.textContent="NOTIFICATIONS ON";const reg=await navigator.serviceWorker.ready;try{const c=await fetch("/api/config");const j=await c.json();if(j.publicKey){const key=j.publicKey;const pad="=".repeat((4-key.length%4)%4),raw=atob((key+pad).replace(/-/g,"+").replace(/_/g,"/"));const sub=await reg.pushManager.subscribe({userVisibleOnly:true,applicationServerKey:Uint8Array.from(raw,ch=>ch.charCodeAt(0))});await fetch("/api/subscribe",{method:"POST",headers:{"content-type":"application/json"},body:JSON.stringify({subscription:sub})})}else reg.showNotification("StudyOS notifications enabled",{body:"Server push still needs its Vercel keys."})}catch(e){reg.showNotification("StudyOS notifications enabled",{body:"Your browser permission is on."})}}}
-if("serviceWorker"in navigator)navigator.serviceWorker.register("/sw.js");notifyBtn.addEventListener("click",enable);
+if("serviceWorker"in navigator)navigator.serviceWorker.register("/sw.js");notifyBtn?.addEventListener("click",enable);
 
 function openSetup(){
   const modal=$("setupModal"),countryEl=$("setupCountry"),timezoneEl=$("setupTimezone"),formatEl=$("setupDateFormat");
@@ -473,7 +473,7 @@ function openSetup(){
   timezoneEl.value=selected;
   formatEl.value=userSettings?.dateFormat||COUNTRY_DATE_FORMAT[country]||"DD/MM/YYYY";
 }
-$("openClockSettings").addEventListener("click",openSetup);$("setupCountry").addEventListener("change",()=>{$("setupTimezone").value=COUNTRY_ZONES[$("setupCountry").value]||"Asia/Kolkata";$("setupDateFormat").value=COUNTRY_DATE_FORMAT[$("setupCountry").value]||"DD/MM/YYYY"});
+$("openClockSettings")?.addEventListener("click",openSetup);$("setupCountry")?.addEventListener("change",()=>{$("setupTimezone").value=COUNTRY_ZONES[$("setupCountry").value]||"Asia/Kolkata";$("setupDateFormat").value=COUNTRY_DATE_FORMAT[$("setupCountry").value]||"DD/MM/YYYY"});
 // Clock settings are saved by the isolated handler beside the modal so this control remains functional even if another StudyOS module fails.
 if(!userSettings){openSetup()}else{$("setupModal").classList.remove("open")}
 const focus={seconds:25*60,running:false,mode:25,breakMinutes:5,interval:null};
@@ -487,7 +487,7 @@ function toggleFocus(){if(focus.running){focus.running=false;clearInterval(focus
 function resetFocus(){focus.running=false;clearInterval(focus.interval);focus.seconds=focus.mode*60;syncFocus()}
 document.querySelectorAll("[data-focus]").forEach(b=>b.addEventListener("click",()=>setFocus(Number(b.dataset.focus))));
 document.querySelectorAll("[data-break]").forEach(b=>b.addEventListener("click",()=>{focus.breakMinutes=Number(b.dataset.break);syncFocus()}));
-$("customFocusMinutes").addEventListener("change",setCustomFocus);
+$("customFocusMinutes")?.addEventListener("change",setCustomFocus);
 
 let focusTaskIndex=0;
 function focusTasks(){return state.plan.filter(x=>x.date===todayKey()).sort((a,b)=>a.start.localeCompare(b.start)).filter(x=>!state.done.includes(x.id))}
@@ -504,12 +504,12 @@ function renderFocusHistory(){
   el.innerHTML=rows.length?rows.slice(0,6).map(x=>'<div class="focus-history-row"><b>'+esc(x.task)+'</b><span>'+x.duration+' min · '+esc(x.date)+'</span></div>').join(""):'<div class="insight">No completed focus sessions yet.</div>';
 }
 document.querySelectorAll("[data-page-focus]").forEach(b=>b.addEventListener("click",()=>{setFocus(Number(b.dataset.pageFocus));renderFocusPage()}));
-$("focusPageStart").addEventListener("click",()=>toggleFocus());
-$("focusPageReset").addEventListener("click",()=>resetFocus());
-$("focusPagePrev").addEventListener("click",()=>{const n=focusTasks().length;focusTaskIndex=n?((focusTaskIndex-1+n)%n):0;renderFocusPage()});
-$("focusPageNext").addEventListener("click",()=>{const n=focusTasks().length;focusTaskIndex=n?((focusTaskIndex+1)%n):0;renderFocusPage()});
+$("focusPageStart")?.addEventListener("click",()=>toggleFocus());
+$("focusPageReset")?.addEventListener("click",()=>resetFocus());
+$("focusPagePrev")?.addEventListener("click",()=>{const n=focusTasks().length;focusTaskIndex=n?((focusTaskIndex-1+n)%n):0;renderFocusPage()});
+$("focusPageNext")?.addEventListener("click",()=>{const n=focusTasks().length;focusTaskIndex=n?((focusTaskIndex+1)%n):0;renderFocusPage()});
 document.querySelectorAll("[data-sound]").forEach(b=>b.addEventListener("click",()=>setSound(b.dataset.sound)));
-$("soundVolume").addEventListener("input",e=>setSoundVolume(Number(e.target.value)));
+$("soundVolume")?.addEventListener("input",e=>setSoundVolume(Number(e.target.value)));
 let audioCtx=null,soundNodes=[],soundGain=null,currentSound="";
 function stopSound(){soundNodes.forEach(n=>{try{n.stop()}catch(e){}});soundNodes.forEach(n=>{try{n.disconnect()}catch(e){}});soundNodes=[];if(soundGain)try{soundGain.disconnect()}catch(e){}currentSound="";$("soundStatus")&&($("soundStatus").textContent="Off");document.querySelectorAll("[data-sound]").forEach(b=>b.classList.remove("active"))}
 function noiseBuffer(type){
