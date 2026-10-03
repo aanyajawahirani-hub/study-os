@@ -686,4 +686,21 @@ function playPianoLoop(){
 }
 function setSoundVolume(v){if(soundGain)soundGain.gain.value=v}
 document.body.dataset.section="today";$("sundayBlocked").checked=!!state.calendarRules.sundayBlocked;initPlannerWindows();renderToday();renderPlanner();renderProgress();renderGeneratedPlan();renderReminderSection();renderFocusPage();renderFocusHistory();syncFocus();syncReminders();
-</script></body></html>
+</script><script>
+(function(){
+  document.addEventListener("click",function(e){
+    const btn=e.target.closest(".navlink[data-section]");
+    if(!btn)return;
+    const name=btn.dataset.section;
+    if(typeof showSection==="function"){
+      e.preventDefault();
+      showSection(name);
+    }else{
+      document.querySelectorAll(".section").forEach(s=>s.classList.toggle("active",s.id==="section-"+name));
+      document.querySelectorAll(".navlink[data-section]").forEach(b=>b.classList.toggle("active",b===btn));
+      document.body.dataset.section=name;
+    }
+  });
+})();
+</script>
+</body></html>
