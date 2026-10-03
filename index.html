@@ -21,28 +21,127 @@ aside{width:232px;position:fixed;inset:0 auto 0 0;background:#e5e1d7;border-righ
 .generated-panel{margin-top:18px}.timeline{display:grid;gap:0}.day-label{font-size:9px;letter-spacing:.16em;color:var(--muted);border-top:2px solid var(--ink);padding:15px 0 7px}.timeline-block{display:grid;grid-template-columns:80px 1fr 70px;gap:10px;align-items:center;padding:10px 0;border-top:1px solid var(--line)}.timeline-block time{font-size:10px;color:var(--muted)}.timeline-block b{font-size:11px}.timeline-block p{margin:3px 0 0;color:var(--muted);font-size:10px}.timeline-block span{text-align:right;font-size:9px;color:var(--muted)}
 .focus{margin-top:18px}.focusbox{display:grid;grid-template-columns:1fr auto;gap:20px;align-items:center}.timer{font-size:58px;font-weight:800;letter-spacing:-.06em}.focus-controls{display:flex;gap:7px;flex-wrap:wrap}.focus-controls button,.choice-row button{border:1px solid var(--ink);background:var(--surface);color:var(--ink);border-radius:2px;padding:9px 11px;font-size:9px;font-weight:800;cursor:pointer}.focus-controls button:hover{background:var(--surface2)}.focus-controls button.active,.focus-controls button.primary{background:var(--accent2);color:white;border-color:var(--accent2)}.session-meta{font-size:10px;color:var(--muted);margin-top:6px}.modal{position:fixed;inset:0;background:rgba(241,238,230,.94);display:none;place-items:center;z-index:20;padding:20px}.modal.open{display:grid}.focuscard{width:min(560px,100%);border:2px solid var(--ink);background:var(--surface);padding:30px}.focuscard .timer{font-size:92px;margin:20px 0}.close{float:right;border:0;background:none;color:var(--muted);font-size:18px;cursor:pointer}.custom-duration{border:1px solid var(--ink);background:var(--surface);padding:7px 8px;font-size:9px;font-weight:800;display:flex;gap:5px;align-items:center}.custom-duration input{width:55px;border:0;background:transparent;outline:0;color:var(--ink);font-size:11px}
 @media(max-width:800px){aside{display:none}.mobile-nav{display:flex;position:sticky;top:0;z-index:10;gap:3px;overflow:auto;padding:8px;margin:-8px -8px 18px;background:var(--paper);border-bottom:1px solid var(--line)}.mobile-nav button{white-space:nowrap;border:1px solid var(--line);background:var(--surface);color:var(--muted);padding:9px 12px;font-size:11px}.mobile-nav button.active{background:var(--ink);color:var(--surface)}.shell{margin:0;padding:22px 16px}header{flex-direction:column;gap:16px}h1{font-size:42px}.grid,.planner-grid{grid-template-columns:1fr}.slots{grid-template-columns:1fr}.planner-top{display:block}.generate-btn{margin-top:14px}.page-title{font-size:36px}.focusbox{grid-template-columns:1fr}.form-grid{grid-template-columns:1fr}.timeline-block{grid-template-columns:58px 1fr 48px}}
-.focus-workspace{display:grid;grid-template-columns:minmax(0,1.25fr) minmax(280px,.75fr);gap:18px}.focus-main{border:2px solid var(--ink);background:var(--surface);padding:30px;min-height:600px}.focus-kicker{font-size:9px;letter-spacing:.18em;color:var(--muted);font-weight:800}.focus-title{font-family:Georgia,serif;font-size:48px;line-height:1;margin:8px 0 12px;letter-spacing:-.04em}.focus-sub{color:var(--muted);font-size:12px;line-height:1.6;max-width:620px}.focus-clock{font-size:clamp(72px,10vw,128px);line-height:.9;letter-spacing:-.08em;font-weight:800;margin:58px 0 28px;text-align:center}.focus-task{border-top:1px solid var(--line);border-bottom:1px solid var(--line);padding:15px 0;margin:0 auto 22px;max-width:700px}.focus-task b{font-size:12px}.focus-task small{display:block;color:var(--muted);margin-top:5px;font-size:10px}.focus-actions{display:flex;justify-content:center;gap:8px;flex-wrap:wrap}.focus-actions button{border:1px solid var(--ink);background:var(--surface);color:var(--ink);padding:11px 14px;font-size:9px;font-weight:800;cursor:pointer}.focus-actions button.primary{background:var(--ink);color:var(--surface)}.focus-actions button.active{background:var(--accent2);border-color:var(--accent2);color:#fff}.sound-board{border:1px solid var(--line);background:var(--surface);padding:20px}.sound-list{display:grid;gap:7px;margin-top:13px}.sound-choice{display:grid;grid-template-columns:1fr auto;gap:10px;align-items:center;border:1px solid var(--line);background:transparent;padding:12px;cursor:pointer;text-align:left;color:var(--ink)}.sound-choice:hover,.sound-choice.active{background:var(--surface2);border-color:var(--ink)}.sound-choice b{font-size:11px}.sound-choice small{display:block;color:var(--muted);font-size:9px;margin-top:3px}.sound-volume{width:100%;margin-top:15px}.focus-history{margin-top:18px;border-top:2px solid var(--ink);padding-top:15px}.focus-history-row{display:flex;justify-content:space-between;border-top:1px solid var(--line);padding:10px 0;font-size:10px}.focus-history-row span{color:var(--muted)}.focus-note{margin-top:18px;padding:12px;background:var(--surface2);font-size:10px;color:var(--muted);line-height:1.55}@media(max-width:900px){.focus-workspace{grid-template-columns:1fr}.focus-main{min-height:0}.focus-clock{margin:42px 0 24px}.focus-title{font-size:38px}}.setup-card{width:min(620px,100%);padding:34px}.setup-heading h2{font-family:Georgia,serif;font-size:38px;line-height:1;margin:9px 0 8px}.setup-heading p{margin:0;color:var(--muted);font-size:12px;line-height:1.55}.setup-fields{display:grid;grid-template-columns:1fr;gap:12px;margin-top:25px}.setup-field{display:grid;gap:6px}.setup-field label{font-size:8px;letter-spacing:.16em;font-weight:800;color:var(--muted)}.search-select{position:relative}.search-options{position:absolute;top:calc(100% + 4px);left:0;right:0;max-height:240px;overflow:auto;background:var(--surface);border:2px solid var(--ink);z-index:50}.search-option{display:block;width:100%;padding:10px 12px;border:0;border-bottom:1px solid var(--line);background:var(--surface);color:var(--ink);font:inherit;text-align:left;cursor:pointer}.search-option:hover,.search-option:focus{background:var(--surface2)}.setup-field{position:relative}.setup-field select:focus{outline:2px solid var(--accent);outline-offset:2px}.setup-save{width:100%;margin-top:14px}.setup-card .schedule-note{margin-top:12px}@media(max-width:600px){.setup-card{padding:24px}.setup-heading h2{font-size:32px}}</style></head><body><main>
+.focus-workspace{display:grid;grid-template-columns:minmax(0,1.25fr) minmax(280px,.75fr);gap:18px}.focus-main{border:2px solid var(--ink);background:var(--surface);padding:30px;min-height:600px}.focus-kicker{font-size:9px;letter-spacing:.18em;color:var(--muted);font-weight:800}.focus-title{font-family:Georgia,serif;font-size:48px;line-height:1;margin:8px 0 12px;letter-spacing:-.04em}.focus-sub{color:var(--muted);font-size:12px;line-height:1.6;max-width:620px}.focus-clock{font-size:clamp(72px,10vw,128px);line-height:.9;letter-spacing:-.08em;font-weight:800;margin:58px 0 28px;text-align:center}.focus-task{border-top:1px solid var(--line);border-bottom:1px solid var(--line);padding:15px 0;margin:0 auto 22px;max-width:700px}.focus-task b{font-size:12px}.focus-task small{display:block;color:var(--muted);margin-top:5px;font-size:10px}.focus-actions{display:flex;justify-content:center;gap:8px;flex-wrap:wrap}.focus-actions button{border:1px solid var(--ink);background:var(--surface);color:var(--ink);padding:11px 14px;font-size:9px;font-weight:800;cursor:pointer}.focus-actions button.primary{background:var(--ink);color:var(--surface)}.focus-actions button.active{background:var(--accent2);border-color:var(--accent2);color:#fff}.sound-board{border:1px solid var(--line);background:var(--surface);padding:20px}.sound-list{display:grid;gap:7px;margin-top:13px}.sound-choice{display:grid;grid-template-columns:1fr auto;gap:10px;align-items:center;border:1px solid var(--line);background:transparent;padding:12px;cursor:pointer;text-align:left;color:var(--ink)}.sound-choice:hover,.sound-choice.active{background:var(--surface2);border-color:var(--ink)}.sound-choice b{font-size:11px}.sound-choice small{display:block;color:var(--muted);font-size:9px;margin-top:3px}.sound-volume{width:100%;margin-top:15px}.focus-history{margin-top:18px;border-top:2px solid var(--ink);padding-top:15px}.focus-history-row{display:flex;justify-content:space-between;border-top:1px solid var(--line);padding:10px 0;font-size:10px}.focus-history-row span{color:var(--muted)}.focus-note{margin-top:18px;padding:12px;background:var(--surface2);font-size:10px;color:var(--muted);line-height:1.55}@media(max-width:900px){.focus-workspace{grid-template-columns:1fr}.focus-main{min-height:0}.focus-clock{margin:42px 0 24px}.focus-title{font-size:38px}}.setup-card{width:min(620px,100%);padding:34px}.setup-heading h2{font-family:Georgia,serif;font-size:38px;line-height:1;margin:9px 0 8px}.setup-heading p{margin:0;color:var(--muted);font-size:12px;line-height:1.55}.setup-fields{display:grid;grid-template-columns:1fr;gap:12px;margin-top:25px}.setup-field{display:grid;gap:6px}.setup-field label{font-size:8px;letter-spacing:.16em;font-weight:800;color:var(--muted)}.search-select{position:relative}.search-options{position:absolute;top:calc(100% + 4px);left:0;right:0;max-height:240px;overflow:auto;background:var(--surface);border:2px solid var(--ink);z-index:50}.search-option{display:block;width:100%;padding:10px 12px;border:0;border-bottom:1px solid var(--line);background:var(--surface);color:var(--ink);font:inherit;text-align:left;cursor:pointer}.search-option:hover,.search-option:focus{background:var(--surface2)}.setup-field{position:relative}.setup-field select:focus{outline:2px solid var(--accent);outline-offset:2px}.setup-save{width:100%;margin-top:14px}.setup-card .schedule-note{margin-top:12px}@media(max-width:600px){.setup-card{padding:24px}.setup-heading h2{font-size:32px}}<style>
+/* TODAY / EDITORIAL LAYOUT */
+.today-intro{display:flex;justify-content:space-between;align-items:flex-end;padding:6px 0 30px;border-bottom:2px solid var(--ink)}
+.today-intro h2{font-family:Georgia,serif;font-size:clamp(44px,5vw,72px);line-height:.9;letter-spacing:-.055em;margin:9px 0 0}
+.today-intro h2 em{font-style:italic;color:var(--accent)}
+.today-summary{display:flex;gap:0;border-left:1px solid var(--line)}
+.today-summary>div{min-width:105px;padding:0 18px;border-right:1px solid var(--line)}
+.today-summary span{display:block;font-family:Georgia,serif;font-size:27px;line-height:1}
+.today-summary small{display:block;margin-top:7px;color:var(--muted);font-size:8px;letter-spacing:.14em;font-weight:800}
+.today-next{padding:25px 0 27px;border-bottom:1px solid var(--line)}
+.next-label{font-size:9px;letter-spacing:.18em;font-weight:800;color:var(--accent)}
+.next-content{display:flex;justify-content:space-between;gap:30px;align-items:end}
+.next-time{font-size:9px;letter-spacing:.13em;color:var(--muted);margin-top:10px}
+.next-content h3{font-family:Georgia,serif;font-size:32px;line-height:1;margin:6px 0}
+.next-content p{margin:0;max-width:650px;color:var(--muted);font-size:12px;line-height:1.5}
+.next-action{flex:0 0 auto;border:1px solid var(--ink);background:var(--ink);color:var(--surface);padding:12px 17px;font-size:9px;font-weight:800;letter-spacing:.06em;cursor:pointer}
+.next-action:hover{background:var(--accent);border-color:var(--accent)}
+.today-columns{display:grid;grid-template-columns:minmax(0,1.55fr) minmax(280px,.7fr);gap:45px;padding-top:26px}
+.section-line{display:flex;justify-content:space-between;align-items:baseline;border-bottom:1px solid var(--ink);padding-bottom:9px;margin-bottom:0}
+.section-line b{font-size:9px;letter-spacing:.17em}
+.section-line span{font-size:8px;letter-spacing:.1em;color:var(--muted)}
+.today-list #blocks{min-height:40px}
+.today-list .block{grid-template-columns:72px 22px 1fr 52px;padding:17px 4px;border-top:1px solid var(--line)}
+.today-list .block:first-child{border-top:0}
+.today-list .block:hover{background:transparent}
+.today-list .block .copy b{font-size:13px}
+.today-list .block .copy p{font-size:10px}
+.today-list .block time{font-variant-numeric:tabular-nums}
+.today-empty{padding:20px 4px;color:var(--muted);font-size:11px;line-height:1.55;border-bottom:1px solid var(--line)}
+.today-side{border-left:1px solid var(--line);padding-left:28px}
+.side-section{padding-bottom:25px;margin-bottom:24px;border-bottom:1px solid var(--line)}
+.side-empty{padding:15px 0;color:var(--muted);font-size:10px;line-height:1.55}
+.today-side .insight{background:transparent;border-left:0;padding:14px 0;border-bottom:1px solid var(--line);margin:0}
+.mini-focus{padding:16px 0 4px}
+.mini-timer{font-size:42px;font-weight:800;letter-spacing:-.06em;font-variant-numeric:tabular-nums}
+.mini-controls{display:flex;gap:5px;margin-top:13px}
+.mini-controls button{border:1px solid var(--ink);background:transparent;color:var(--ink);padding:8px 10px;font-size:8px;font-weight:800;cursor:pointer}
+.mini-controls button.active{background:var(--accent2);border-color:var(--accent2);color:#fff}
+.mini-controls button:hover{background:var(--surface2)}
+.today-side .slots{display:grid;gap:0}
+.today-side .slot{border:0;border-bottom:1px solid var(--line);background:transparent;padding:10px 0}
+.today-side .slot input{background:transparent}
+.today-side .reminders{margin-top:0}
+@media(max-width:900px){
+  .today-intro{display:block}
+  .today-summary{margin-top:25px;border-left:0;border-top:1px solid var(--line);padding-top:16px}
+  .today-summary>div{padding-left:0;margin-right:22px;border-right:0}
+  .today-columns{grid-template-columns:1fr;gap:25px}
+  .today-side{border-left:0;border-top:2px solid var(--ink);padding-left:0;padding-top:25px}
+}
+@media(max-width:600px){
+  .today-intro h2{font-size:46px}
+  .next-content{display:block}
+  .next-action{margin-top:16px}
+  .today-list .block{grid-template-columns:55px 22px 1fr}
+  .today-list .block>span:last-child{display:none}
+}
+</style></style></head><body><main>
 <aside><div class="brand"><i>•</i> STUDYOS</div><nav><button class="navlink active" data-section="today">Today</button><button class="navlink" data-section="planner">Planner</button><button class="navlink" data-section="focus">Focus</button><button class="navlink" data-section="syllabus">Syllabus</button><button class="navlink" data-section="reminders">Reminders</button><button class="navlink" data-section="progress">Progress</button></nav><div class="streak"><small>STREAK</small><b id="streakValue">0 DAYS</b><small>Start your first study block.</small></div></aside>
 <section class="shell"><header><div><div class="eyebrow" id="date"></div><h1 id="greeting">Good night.<br><em>What are we working on today?</em></h1></div><div style="display:flex;gap:8px;align-items:center"><button class="btn" id="openClockSettings">CLOCK SETTINGS</button><button class="btn" id="notify">ENABLE NOTIFICATIONS</button></div></header>
-<div class="mobile-nav" id="mobileNav"><button class="active" data-section="today">Today</button><button data-section="planner">Planner</button><button data-section="focus">Focus</button><button data-section="syllabus">Syllabus</button><button data-section="reminders">Reminders</button><button data-section="progress">Progress</button></div><div id="section-today" class="section active"><div class="hero"><div><div class="eyebrow">TODAY'S MISSION</div><h2><span id="count">0</span> blocks complete</h2><p id="next">Add your first study block to get started.</p></div><div class="ring"><b id="pct">0%</b><span>DONE</span></div></div>
-<div class="grid"><section class="panel"><div class="head"><b>THE RUNWAY</b><span id="planned">0 min planned</span></div><div id="blocks"></div></section>
-<section class="panel"><div class="head"><b>UP NEXT</b></div><div id="upNext"><div class="insight">Your upcoming exams and priorities will appear here once you add them.</div></div></section></div>
-<section class="panel focus">
-  <div class="head"><b>FOCUS SESSION</b><span id="focusHeaderState">Ready when you are.</span></div>
-  <div class="focusbox">
+<div class="mobile-nav" id="mobileNav"><button class="active" data-section="today">Today</button><button data-section="planner">Planner</button><button data-section="focus">Focus</button><button data-section="syllabus">Syllabus</button><button data-section="reminders">Reminders</button><button data-section="progress">Progress</button></div><div id="section-today" class="section active">
+  <div class="today-intro">
     <div>
-      <div class="timer" id="timer">25:00</div>
-      <div class="session-meta" id="focusMeta">Choose a duration or make your own.</div>
+      <div class="eyebrow">YOUR DAY</div>
+      <h2>What matters<br><em>right now.</em></h2>
     </div>
-    <div class="focus-controls">
-      <button class="duration active" data-focus="25">25 MIN</button>
-      <button class="duration" data-focus="50">50 MIN</button>
-      <button class="duration" data-focus="90">90 MIN</button>
-      <button onclick="openFocus()">OPEN FOCUS</button>
+    <div class="today-summary">
+      <div><span id="count">0</span><small>COMPLETED</small></div>
+      <div><span id="planned">0</span><small>MIN PLANNED</small></div>
+      <div><span id="pct">0%</span><small>DONE</small></div>
     </div>
   </div>
-</section><section class="panel reminders"><div class="head"><b>REMINDER SLOTS</b><span>Up to 10/day</span></div><div class="slots" id="slots"></div></section>
-</section></div><section id="section-focus" class="section">
+
+  <div class="today-next">
+    <div class="next-label">NEXT UP</div>
+    <div class="next-content">
+      <div>
+        <div class="next-time" id="nextTime">YOUR NEXT STUDY BLOCK</div>
+        <h3 id="nextTitle">Add your first study block.</h3>
+        <p id="next">Tell StudyOS what is due and when you can study. Your next block will appear here.</p>
+      </div>
+      <button class="next-action" onclick="openFocus()">OPEN FOCUS</button>
+    </div>
+  </div>
+
+  <div class="today-columns">
+    <section class="today-list">
+      <div class="section-line"><b>TODAY</b><span id="todayPlanMeta">YOUR SCHEDULE</span></div>
+      <div id="blocks"></div>
+      <div class="today-empty" id="todayEmpty">No study blocks yet. Add your constraints in Planner and rebuild your plan.</div>
+    </section>
+
+    <aside class="today-side">
+      <section class="side-section">
+        <div class="section-line"><b>UP NEXT</b><span>PRIORITIES</span></div>
+        <div id="upNext"><div class="side-empty">Upcoming exams and priorities will appear here once you add them.</div></div>
+      </section>
+
+      <section class="side-section focus-mini">
+        <div class="section-line"><b>FOCUS</b><span id="focusHeaderState">READY</span></div>
+        <div class="mini-focus">
+          <div>
+            <div class="mini-timer" id="timer">25:00</div>
+            <div class="session-meta" id="focusMeta">Choose a duration or make your own.</div>
+          </div>
+          <div class="mini-controls">
+            <button class="duration active" data-focus="25">25</button>
+            <button class="duration" data-focus="50">50</button>
+            <button class="duration" data-focus="90">90</button>
+            <button onclick="openFocus()">OPEN</button>
+          </div>
+        </div>
+      </section>
+
+      <section class="side-section reminders">
+        <div class="section-line"><b>REMINDERS</b><span>UP TO 10/DAY</span></div>
+        <div class="slots" id="slots"></div>
+      </section>
+    </aside>
+  </div>
+</section></div></div><section id="section-focus" class="section">
   <div class="planner-top">
     <div><div class="eyebrow">FOCUS ROOM</div><h2 class="page-title">Clear desk.<br><em>Quiet mind.</em></h2><p class="page-lede">Start from the work StudyOS already planned for you. Pick a calm soundscape, choose your pace, and let the session run without leaving your plan.</p></div>
   </div>
