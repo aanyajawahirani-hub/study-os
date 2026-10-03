@@ -1,11 +1,26 @@
 export default async function handler(req,res){
   if(req.method!=="POST")return res.status(405).json({error:"Method not allowed"});
-  if(!process.env.GROQ_API_KEY)return res.status(503).json({error:"Planner AI is not configured. Add GROQ_API_KEY to the server environment."});
+
+  const apiKey=process.env.OPENAI_API_KEY||process.env.GROQ_API_KEY;
+  if(!apiKey)return res.status(503).json({error:"Planner AI is not configured. Add OPENAI_API_KEY to the server environment."});
+
   const body=req.body||{};
   const message=typeof body.message==="string"?body.message.slice(0,4000):"";
   const context=body.context||{};
   const attachment=body.attachment||null;
-  const model=attachment&&attachment.type==="image"?"qwen/qwen3.8-27b":(process.env.STUDYOS_AI_MODEL||"openai/gpt-oss-20b");
+
+  let baseURL=process.env.OPENAI_BASE_URL||"https://api.groq.com/openai/v1";
+  baseURL=baseURL.replace(/\/$/,"");
+  if(baseURL==="https://groq.com"||baseURL==="https://api.groq.com"){
+    baseURL="https://api.groq.com/openai/v1";
+  }else if(baseURL==="https://api.groq.com/openai"){
+    baseURL="https://api.groq.com/openai/v1";
+  }
+
+  let model=process.env.AI_MODEL||process.env.STUDYOS_AI_MODEL||"openai/gpt-oss-20b";
+  if(model==="llama-3.3-70b-versatile")model="openai/gpt-oss-20b";
+  if(attachment&&attachment.type==="image")model="qwen/qwen3.8-27b";
+
   const system=`You are StudyOS, an action-taking student scheduling assistant. You are not a generic chatbot. Your job is to change the user's planner state when they ask.
 
 Current state:
@@ -27,18 +42,49 @@ Rules:
 - For an exam, understand the user's requested PYQ count, sample-paper count, and final-revision time. Do not invent those quantities when the user has explicitly specified them.
 JSON shape:
 {"reply":"string","actions":[{"type":"..."}]}`;
+
   let content;
   if(attachment&&attachment.type==="image"){
-    content=[{type:"text",text:message||"Read this schedule and update my StudyOS planner from it."},{type:"image_url",image_url:{url:attachment.data}}];
+    content=[
+      {type:"text",text:message||"Read this schedule and update my StudyOS planner from it."},
+      {type:"image_url",image_url:{url:attachment.data}}
+    ];
   }else{
     content=message+(attachment&&attachment.data?"\n\nUploaded schedule text:\n"+String(attachment.data).slice(0,50000):"");
   }
+
   try{
-    const r=await fetch("https://api.groq.com/openai/v1/chat/completions",{method:"POST",headers:{"content-type":"application/json","authorization":"Bearer "+process.env.GROQ_API_KEY},body:JSON.stringify({model,messages:[{role:"system",content:system},{role:"user",content}],temperature:.1,max_completion_tokens:1800,response_format:{type:"json_object"}})});
+    const r=await fetch(baseURL+"/chat/completions",{
+      method:"POST",
+      headers:{
+        "content-type":"application/json",
+        "authorization":"Bearer "+apiKey
+      },
+      body:JSON.stringify({
+        model,
+        messages:[{role:"system",content:system},{role:"user",content}],
+        temperature:.1,
+        max_completion_tokens:1800,
+        response_format:{type:"json_object"}
+      })
+    });
+
     const data=await r.json();
     if(!r.ok)return res.status(502).json({error:"Planner AI provider error"});
-    let parsed;try{parsed=JSON.parse(data.choices?.[0]?.message?.content||"{}")}catch(e){return res.status(502).json({error:"Planner AI returned invalid data"})}
+
+    let parsed;
+    try{
+      parsed=JSON.parse(data.choices?.[0]?.message?.content||"{}");
+    }catch(e){
+      return res.status(502).json({error:"Planner AI returned invalid data"});
+    }
+
     if(!Array.isArray(parsed.actions))parsed.actions=[];
-    return res.status(200).json({reply:String(parsed.reply||"I updated the planner.").slice(0,1000),actions:parsed.actions.slice(0,20)});
-  }catch(e){return res.status(500).json({error:"Planner AI request failed"})}
+    return res.status(200).json({
+      reply:String(parsed.reply||"I updated the planner.").slice(0,1000),
+      actions:parsed.actions.slice(0,20)
+    });
+  }catch(e){
+    return res.status(500).json({error:"Planner AI request failed"});
+  }
 }
