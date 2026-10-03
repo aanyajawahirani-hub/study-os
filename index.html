@@ -8,7 +8,7 @@
 :root{--paper:#f1eee6;--surface:#f8f5ed;--surface2:#e7e2d7;--ink:#202923;--muted:#6e756d;--line:#c9c5b9;--accent:#a94d38;--accent2:#557766}
 *{box-sizing:border-box}body{margin:0;background:var(--paper);color:var(--ink);font-family:Arial,Helvetica,sans-serif}main{min-height:100vh;display:block}
 aside#appSidebar{width:232px;position:fixed;inset:0 auto 0 0;background:#e5e1d7;border-right:2px solid var(--ink);padding:25px 18px}.brand{font-family:Georgia,serif;font-weight:700;letter-spacing:.08em;font-size:17px;border-bottom:1px solid var(--line);padding-bottom:22px}.brand i{color:var(--accent);font-style:normal;margin-right:7px}nav{margin-top:30px;display:grid;gap:3px}.navlink{padding:12px 10px;border:0;border-left:3px solid transparent;background:transparent;color:var(--muted);font:inherit;font-size:12px;text-align:left;cursor:pointer}.navlink:hover{color:var(--ink);background:#ddd8cd}.navlink.active{border-left-color:var(--accent);background:var(--surface);color:var(--ink);font-weight:700}.streak{position:absolute;bottom:24px;left:18px;right:18px;padding:15px 12px;border-top:2px solid var(--ink)}.streak small{color:var(--muted);font-size:9px;letter-spacing:.15em}.streak b{display:block;font-family:Georgia,serif;font-size:25px;margin:5px 0}
-.shell{margin-left:232px;padding:42px 50px;max-width:1450px;width:100%}header{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:38px;border-bottom:2px solid var(--ink);padding-bottom:22px}.eyebrow{font-size:9px;letter-spacing:.18em;color:var(--muted);font-weight:700}h1{font-family:Georgia,serif;font-size:58px;line-height:.96;letter-spacing:-.045em;margin:10px 0}h1 em{font-style:italic;color:var(--accent)}
+.shell{margin-left:248px;padding:42px 50px;max-width:none;width:calc(100% - 248px)}header{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:38px;border-bottom:2px solid var(--ink);padding-bottom:22px}.eyebrow{font-size:9px;letter-spacing:.18em;color:var(--muted);font-weight:700}h1{font-family:Georgia,serif;font-size:58px;line-height:.96;letter-spacing:-.045em;margin:10px 0}h1 em{font-style:italic;color:var(--accent)}
 .btn,.generate-btn,.dark-btn,.send-btn{border:1px solid var(--ink);border-radius:2px;padding:11px 14px;background:var(--ink);color:var(--surface);font-size:10px;font-weight:800;cursor:pointer}.btn:hover,.generate-btn:hover,.dark-btn:hover,.send-btn:hover{background:var(--accent);border-color:var(--accent)}
 .hero{display:grid;grid-template-columns:1fr 150px;border:2px solid var(--ink);padding:28px;background:var(--surface);margin-bottom:18px}.hero h2{font-family:Georgia,serif;margin:8px 0;font-size:34px}.hero p{color:var(--muted);font-size:12px}.ring{width:100px;height:100px;border:2px solid var(--accent);display:grid;place-content:center;text-align:center;justify-self:end}.ring b{font-size:24px}.ring span{font-size:8px;color:var(--muted)}
 .grid,.planner-grid{display:grid;grid-template-columns:1.25fr .9fr;gap:18px}.panel{border:1px solid var(--line);background:var(--surface);padding:20px}.panel:hover{border-color:#8f9188}.head{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:12px;border-bottom:1px solid var(--line);padding-bottom:9px}.head b{font-size:10px;letter-spacing:.15em}.head span{font-size:10px;color:var(--muted)}
@@ -102,7 +102,7 @@ aside#appSidebar .brand{display:flex;align-items:center;gap:8px;white-space:nowr
 .nav-index{font-family:Georgia,serif;font-size:10px;color:var(--muted);width:20px}
 .streak{left:18px;right:18px}
 .content-menu-toggle{display:none;position:fixed;top:18px;left:18px;z-index:25;padding:9px 11px;font-size:9px}
-body.sidebar-collapsed aside#appSidebar{width:72px}
+body.sidebar-collapsed aside#appSidebar{width:72px}\nbody.sidebar-collapsed .shell{margin-left:72px;width:calc(100% - 72px)}
 body.sidebar-collapsed .brand-name,
 body.sidebar-collapsed .nav-label,
 body.sidebar-collapsed .nav-group-label,
@@ -194,7 +194,7 @@ body[data-page="ai"] #section-planner .planner-grid{max-width:980px}
 </head><body><main>
 <aside id="appSidebar">
   <div class="brand"><span class="brand-mark">•</span><span class="brand-name">STUDYOS</span></div>
-  <button class="sidebar-toggle" id="sidebarToggle" type="button" aria-label="Collapse sidebar"><span>←</span><b>CLOSE</b></button>
+  <button class="sidebar-toggle" id="sidebarToggle" type="button" aria-label="Close sidebar"><span>←</span><b>CLOSE SIDEBAR</b></button>
   <nav class="side-nav">
     <div class="nav-group"><span class="nav-group-label">WORKSPACE</span>
       <button class="navlink active" data-section="today"><span class="nav-index">01</span><span class="nav-label">Today</span></button>
@@ -780,9 +780,6 @@ $("scheduleFile")?.addEventListener("change",async e=>{
 $("sendChat").onclick=()=>sendChat();
 $("chatInput")?.addEventListener("keydown",e=>{if(e.key==="Enter"&&(e.metaKey||e.ctrlKey)){e.preventDefault();sendChat()}});
 $("addDeadline").onclick=()=>{const subject=$("deadlineSubject").value.trim(),title=$("deadlineTitle").value.trim(),due=$("deadlineDate").value,minutes=Number($("deadlineMinutes").value),priority=$("deadlinePriority").value;if(!subject||!title||!due||minutes<15)return alert("Add the subject, deadline, and realistic study time.");state.deadlines.push({subject,title,due,minutes,priority});["deadlineSubject","deadlineTitle","deadlineDate","deadlineMinutes"].forEach(id=>$(id).value="");saveState();generatePlan();renderPlanner()};
-$("addAvailability").onclick=()=>{const day=Number($("availDay").value),start=$("availStart").value,end=$("availEnd").value;if(!start||!end||mins(end)<=mins(start))return alert("Choose a valid study window.");state.availability.push({day,start,end});saveState();generatePlan();renderPlanner()};
-$("addVacation").onclick=()=>{const start=$("vacStart").value,end=$("vacEnd").value;if(!start||!end||end<start)return alert("Choose valid dates.");state.vacations.push({start,end});saveState();generatePlan();renderPlanner()};
-$("addExam").onclick=()=>{const subject=$("examSubject").value.trim(),date=$("examDate").value;if(!subject||!date)return alert("Add the subject and exam date.");const ex={subject,date,syllabusHours:Math.max(0,Number($("syllabusHours").value)||0),pyqCount:Math.max(0,Number($("pyqCount").value)||0),pyqMinutes:Math.max(15,Number($("pyqMinutes").value)||60),sampleCount:Math.max(0,Number($("sampleCount").value)||0),sampleMinutes:Math.max(30,Number($("sampleMinutes").value)||120),errorMinutes:Math.max(15,Number($("errorMinutes").value)||45),finalDays:Math.max(0,Number($("finalDays").value)||0),finalMinutes:Math.max(15,Number($("finalMinutes").value)||60)};state.exams=state.exams.filter(x=>!(x.subject.toLowerCase()===subject.toLowerCase()&&x.date===date));state.exams.push(ex);saveState();generatePlan();renderPlanner();["examSubject","examDate","syllabusHours","pyqCount","sampleCount"].forEach(id=>$(id).value="")};
 $("addAvailability2").onclick=()=>{const day=Number($("availDay2").value),start=$("availStart2").value,end=$("availEnd2").value;if(!start||!end||mins(end)<=mins(start))return alert("Choose a valid study window.");state.availability.push({day,start,end});saveState();generatePlan();renderPlanner()};
 $("addActivity").onclick=()=>{const title=$("activityTitle").value.trim(),scope=$("activityScope").value,date=$("activityDay").value,start=$("activityStart").value,end=$("activityEnd").value,location=$("activityLocation").value.trim();if(!title||!date||!start||!end||mins(end)<=mins(start))return alert("Add the activity and a valid time.");state.activities.push({title,scope,date,start,end,location});saveState();generatePlan();renderPlanner();["activityTitle","activityDay","activityStart","activityEnd","activityLocation"].forEach(id=>$(id).value="")};
 $("addExtra").onclick=()=>{const title=$("extraTitle").value.trim(),scope=$("extraScope").value,day=Number($("extraDay").value),start=$("extraStart").value,end=$("extraEnd").value,note=$("extraNote").value.trim();if(!title||!start||!end||mins(end)<=mins(start))return alert("Add the commitment and a valid time.");state.extras.push({title,scope,day,start,end,note});saveState();generatePlan();renderPlanner();["extraTitle","extraStart","extraEnd","extraNote"].forEach(id=>$(id).value="")};
@@ -818,7 +815,7 @@ document.querySelectorAll("[data-section]").forEach(b=>b.addEventListener("click
   document.body.classList.toggle("sidebar-collapsed");
   const collapsed=document.body.classList.contains("sidebar-collapsed");
   const btn=document.getElementById("sidebarToggle");
-  if(btn){btn.querySelector("b").textContent=collapsed?"OPEN":"CLOSE";btn.querySelector("span").textContent=collapsed?"→":"←";btn.setAttribute("aria-label",collapsed?"Open sidebar":"Collapse sidebar")}
+  if(btn){btn.querySelector("b").textContent=collapsed?"OPEN SIDEBAR":"CLOSE SIDEBAR";btn.querySelector("span").textContent=collapsed?"→":"←";btn.setAttribute("aria-label",collapsed?"Open sidebar":"Collapse sidebar")}
 });
 document.getElementById("contentMenuToggle")?.addEventListener("click",()=>document.body.classList.remove("sidebar-collapsed"));
 
