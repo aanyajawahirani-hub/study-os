@@ -87,6 +87,25 @@
     </section>
 
     <section class="panel">
+      <div class="head"><b>EXAM PREP ENGINE</b><span>Work backwards from the exam</span></div>
+      <div class="form-grid">
+        <input id="examSubject" placeholder="Subject">
+        <input id="examDate" type="date">
+        <input id="syllabusHours" type="number" min="0" step="0.5" placeholder="Syllabus hours">
+        <input id="pyqCount" type="number" min="0" step="1" placeholder="PYQs">
+        <input id="pyqMinutes" type="number" min="15" step="15" value="60" placeholder="Minutes per PYQ">
+        <input id="sampleCount" type="number" min="0" step="1" placeholder="Sample papers">
+        <input id="sampleMinutes" type="number" min="30" step="15" value="120" placeholder="Minutes per paper">
+        <input id="errorMinutes" type="number" min="15" step="15" value="45" placeholder="Error analysis minutes">
+        <input id="finalDays" type="number" min="0" step="1" value="2" placeholder="Final revision days">
+        <input id="finalMinutes" type="number" min="15" step="15" value="60" placeholder="Final revision min/day">
+        <button class="dark-btn" id="addExam">BUILD EXAM PREP PLAN</button>
+      </div>
+      <div id="examList" class="data-list"></div>
+      <div class="schedule-note">StudyOS stages the work as syllabus → PYQs → timed sample papers → error analysis → final revision, then fits those tasks around your real availability.</div>
+    </section>
+
+    <section class="panel">
       <div class="head"><b>EXCEPTIONS</b><span>Days StudyOS must protect</span></div>
       <div class="form-grid">
         <input id="vacStart" type="date">
@@ -102,13 +121,20 @@
     <div class="head"><b>YOUR ACTUAL STUDY PLAN</b><span id="planSummary">Waiting for your inputs</span></div>
     <div id="generatedPlan" class="timeline"></div>
   </section>
-</section><section id="section-syllabus" class="section"><div class="panel"><div class="head"><b>SYLLABUS</b><span>Track what remains</span></div><div class="insight"><b>No syllabus has been added yet.</b><br>Add subjects and chapters when you want StudyOS to track coverage. Nothing is pre-filled.</div></div></section><section id="section-reminders" class="section"><div class="panel"><div class="head"><b>REMINDERS</b><span>Up to 10/day</span></div><div id="reminderSectionSlots"></div><div class="insight">Reminder slots are synced from the Today view. Push notifications require browser permission and your notification keys to be configured.</div></div></section><section id="section-progress" class="section"><div class="panel"><div class="head"><b>PROGRESS</b><span>Real activity only</span></div><div class="insight"><b>Your progress starts at zero.</b><br>Completed study blocks and focus sessions will appear here. No sample streaks or fake statistics.</div><div id="progressStats" style="display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-top:14px"></div></div></section></section></main><div class="modal" id="focusModal"><div class="focuscard"><button class="close" onclick="closeFocus()">×</button><div class="eyebrow">FOCUS SESSION</div><div class="timer" id="focusTimer">25:00</div><div class="session-meta" id="focusState">Ready when you are.</div><div class="focus-controls" style="justify-content:center;margin-top:22px"><button onclick="setFocus(25)">25 MIN</button><button onclick="setFocus(50)">50 MIN</button><button onclick="setFocus(90)">90 MIN</button><button onclick="resetFocus()">RESET</button><button class="primary" id="focusAction" onclick="toggleFocus()">START FOCUS</button></div></div></div>
+</section><section id="section-syllabus" class="section"><div class="panel"><div class="head"><b>SYLLABUS</b><span>Track what remains</span></div><div class="insight"><b>No syllabus has been added yet.</b><br>Add subjects and chapters when you want StudyOS to track coverage. Nothing is pre-filled.</div></div></section><section id="section-reminders" class="section"><div class="panel"><div class="head"><b>REMINDERS</b><span>Up to 10/day</span></div><div id="reminderSectionSlots"></div><div class="insight">Reminder slots are synced from the Today view. Push notifications require browser permission and your notification keys to be configured.</div></div></section><section id="section-progress" class="section"><div class="panel"><div class="head"><b>PROGRESS</b><span>Real activity only</span></div><div class="insight"><b>Your progress starts at zero.</b><br>Completed study blocks and focus sessions will appear here. No sample streaks or fake statistics.</div><div id="progressStats" style="display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-top:14px"></div></div></section></section></main><div class="modal" id="focusModal"><div class="focuscard"><button class="close" onclick="closeFocus()">×</button><div class="eyebrow">FOCUS SESSION</div><div class="timer" id="focusTimer">25:00</div><div class="session-meta" id="focusState">Ready when you are.</div><div class="focus-controls" style="justify-content:center;margin-top:22px"><button onclick="setFocus(25)">25 MIN</button><button onclick="setFocus(50)">50 MIN</button><button onclick="setFocus(90)">90 MIN</button><label class="custom-duration">CUSTOM <input id="customFocusMinutes" type="number" min="5" max="180" step="5" placeholder="min" onchange="setCustomFocus()"></label><button onclick="resetFocus()">RESET</button><button class="primary" id="focusAction" onclick="toggleFocus()">START FOCUS</button></div></div></div>
 <script>
 const $=id=>document.getElementById(id);
 const blocksEl=$("blocks"),countEl=$("count"),pctEl=$("pct"),nextEl=$("next"),plannedEl=$("planned"),slotsEl=$("slots"),notifyBtn=$("notify"),timerEl=$("timer"),focusTimerEl=$("focusTimer"),focusHeaderStateEl=$("focusHeaderState"),focusStateEl=$("focusState"),focusActionEl=$("focusAction");
 const DAYS=["Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"];
 const todayKey=()=>{const d=new Date();return d.toISOString().slice(0,10)};
-let state=JSON.parse(localStorage.getItem("studyos-state")||"null")||{deadlines:[],availability:[],vacations:[],plan:[],done:[],times:[]};
+let state=JSON.parse(localStorage.getItem("studyos-state")||"null")||{deadlines:[],availability:[],vacations:[],exams:[],plan:[],done:[],times:[]};
+state.deadlines=Array.isArray(state.deadlines)?state.deadlines:[];
+state.availability=Array.isArray(state.availability)?state.availability:[];
+state.vacations=Array.isArray(state.vacations)?state.vacations:[];
+state.exams=Array.isArray(state.exams)?state.exams:[];
+state.plan=Array.isArray(state.plan)?state.plan:[];
+state.done=Array.isArray(state.done)?state.done:[];
+state.times=Array.isArray(state.times)?state.times:[];
 let times=state.times||[];
 function saveState(){localStorage.setItem("studyos-state",JSON.stringify(state))}
 function esc(v){return String(v??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;","\"":"&quot;","'":"&#039;"}[c]))}
@@ -127,17 +153,33 @@ function renderToday(){
   nextEl.textContent=rows.find(x=>!state.done.includes(x.id))?("Next: "+rows.find(x=>!state.done.includes(x.id)).subject+" · "+rows.find(x=>!state.done.includes(x.id)).task):(rows.length?"Today is cleared.":"Add your constraints to generate a plan.");
   renderFocusTasks();
 }
-function renderPlanner(){
-  const dl=$("deadlineList");$("deadlineCount").textContent=state.deadlines.length+" saved";
-  dl.innerHTML=state.deadlines.length?state.deadlines.map((x,i)=>'<div class="data-row"><div><b>'+esc(x.subject)+" · "+esc(x.title)+'</b><small>Due '+x.due+" · "+x.minutes+" min · "+x.priority+' priority</small></div><button class="remove-btn" data-remove-deadline="'+i+'">×</button></div>').join(""):'<div class="schedule-note">Nothing due yet. Add an exam, assignment, project or revision target.</div>';
-  dl.querySelectorAll("[data-remove-deadline]").forEach(b=>b.onclick=()=>{state.deadlines.splice(Number(b.dataset.removeDeadline),1);saveState();generatePlan();renderPlanner()});
-  const av=$("availabilityList");
-  av.innerHTML=state.availability.length?state.availability.map((x,i)=>'<div class="data-row"><div><b>'+DAYS[x.day]+'</b><small>'+x.start+" to "+x.end+'</small></div><button class="remove-btn" data-remove-av="'+i+'">×</button></div>').join(""):'<div class="schedule-note">No study windows yet. Add the hours you can actually study.</div>';
-  av.querySelectorAll("[data-remove-av]").forEach(b=>b.onclick=()=>{state.availability.splice(Number(b.dataset.removeAv),1);saveState();generatePlan();renderPlanner()});
-  const va=$("vacationList");
-  va.innerHTML=state.vacations.length?state.vacations.map((x,i)=>'<div class="data-row"><div><b>'+x.start+" to "+x.end+'</b><small>No study blocks will be placed here.</small></div><button class="remove-btn" data-remove-vac="'+i+'">×</button></div>').join(""):'<div class="schedule-note">No protected days.</div>';
-  va.querySelectorAll("[data-remove-vac]").forEach(b=>b.onclick=()=>{state.vacations.splice(Number(b.dataset.removeVac),1);saveState();generatePlan();renderPlanner()});
-  renderGeneratedPlan();
+function renderPlannfunction buildExamTasks(){
+  const tasks=[];
+  state.exams.forEach(ex=>{
+    const exam=new Date(ex.date+"T12:00:00");
+    const finalDays=Math.max(0,Number(ex.finalDays)||0);
+    const finalMins=Math.max(15,Number(ex.finalMinutes)||60);
+    for(let i=0;i<finalDays;i++){const d=new Date(exam);d.setDate(d.getDate()-1-i);tasks.push({subject:ex.subject,title:"Final revision · "+ex.subject,due:iso(d),minutes:finalMins,priority:"high",kind:"final"});}
+    const sampleMinutes=Math.max(30,Number(ex.sampleMinutes)||120),errorMinutes=Math.max(15,Number(ex.errorMinutes)||45),samples=Math.max(0,Number(ex.sampleCount)||0);
+    for(let i=samples;i>=1;i--){const d=new Date(exam);d.setDate(d.getDate()-(finalDays+(samples-i)*2+2));tasks.push({subject:ex.subject,title:"Sample paper "+i+" · timed practice",due:iso(d),minutes:sampleMinutes,priority:"high",kind:"sample"});const e=new Date(d);e.setDate(e.getDate()+1);if(e<exam)tasks.push({subject:ex.subject,title:"Sample paper "+i+" · error analysis",due:iso(e),minutes:errorMinutes,priority:"high",kind:"errors"});}
+    const pyqMinutes=Math.max(15,Number(ex.pyqMinutes)||60),pyqs=Math.max(0,Number(ex.pyqCount)||0);
+    for(let i=pyqs;i>=1;i--){const d=new Date(exam);d.setDate(d.getDate()-(finalDays+samples*2+(pyqs-i)+3));tasks.push({subject:ex.subject,title:"PYQ "+i+" · past-paper practice",due:iso(d),minutes:pyqMinutes,priority:"high",kind:"pyq"});}
+    const syllabusMinutes=Math.max(0,Number(ex.syllabusHours)||0)*60;
+    if(syllabusMinutes>0){const d=new Date(exam);d.setDate(d.getDate()-(finalDays+samples*2+pyqs+4));tasks.push({subject:ex.subject,title:"Syllabus coverage · "+ex.subject,due:iso(d),minutes:syllabusMinutes,priority:"high",kind:"syllabus"});}
+  });return tasks;
+}
+function generatePlan(){
+  const deadlines=[...state.deadlines.filter(x=>x.due&&x.minutes>0),...buildExamTasks()].sort((a,b)=>a.due.localeCompare(b.due)||(a.priority==="high"?-1:1));
+  let newPlan=[],remaining=deadlines.map(x=>({...x,remaining:x.minutes}));
+  const start=todayKey(),end=deadlines.length?deadlines.reduce((m,x)=>x.due>m?x.due:m,start):start;
+  for(let day=0;day<=180&&addDays(start,day)<=end;day++){
+    const key=addDays(start,day),dow=new Date(key+"T12:00:00").getDay();if(isVacation(key))continue;
+    for(const w of state.availability.filter(x=>Number(x.day)===dow)){let cursor=mins(w.start),limit=mins(w.end);while(cursor+15<=limit){const target=remaining.find(x=>x.remaining>0&&x.due>=key);if(!target)break;const block=Math.min(target.remaining,Math.min(90,limit-cursor));if(block<15)break;const id=key+"-"+cursor+"-"+Math.random().toString(36).slice(2,7);newPlan.push({id,date:key,start:timeStr(cursor),duration:block,subject:target.subject,task:target.title,kind:target.kind||"deadline"});target.remaining-=block;cursor+=block+5;}}
+  }
+  state.plan=newPlan;state.done=state.done.filter(id=>newPlan.some(x=>x.id===id));saveState();renderToday();renderGeneratedPlan();renderExamList();
+  const unresolved=remaining.filter(x=>x.remaining>0);$("planSummary").textContent=newPlan.length?newPlan.length+" blocks generated"+(unresolved.length?" · "+unresolved.length+" task(s) still need more hours":""):"Add availability before generating";
+  if(unresolved.length)addMessage("assistant","Some exam work could not fit into the study windows you gave me. I kept the plan honest instead of inventing free time. Add study hours or reduce the required work.");
+}
 }
 function isVacation(key){return state.vacations.some(v=>key>=v.start&&key<=v.end)}
 function generatePlan(){
@@ -177,7 +219,7 @@ function addMessage(role,text){const c=$("chat"),d=document.createElement("div")
 async function sendChat(extra){
   const input=$("chatInput"),msg=(extra||input.value).trim();if(!msg&&!pendingAttachment)return;
   if(!extra)input.value="";addMessage("user",msg||"I uploaded my schedule.");
-  const payload={message:msg,context:{deadlines:state.deadlines,availability:state.availability,vacations:state.vacations},attachment:pendingAttachment||null};
+  const payload={message:msg,context:{deadlines:state.deadlines,availability:state.availability,vacations:state.vacations,exams:state.exams},attachment:pendingAttachment||null};
   pendingAttachment=null;$("fileStatus").textContent="Nothing attached";
   try{
     const r=await fetch("/api/ai",{method:"POST",headers:{"content-type":"application/json"},body:JSON.stringify(payload)});
@@ -195,6 +237,8 @@ function applyActions(actions){
     if(a.type==="set_availability"&&a.day!==undefined&&a.start&&a.end){state.availability=state.availability.filter(x=>!(Number(x.day)===Number(a.day)&&x.start===a.start&&x.end===a.end));state.availability.push({day:Number(a.day),start:a.start,end:a.end})}
     if(a.type==="remove_availability"&&a.day!==undefined)state.availability=state.availability.filter(x=>Number(x.day)!==Number(a.day));
     if(a.type==="set_vacation"&&a.start&&a.end)state.vacations.push({start:a.start,end:a.end});
+    if(a.type==="add_exam"&&a.subject&&a.date)state.exams.push({subject:String(a.subject).slice(0,80),date:a.date,syllabusHours:Math.max(0,Number(a.syllabusHours)||0),pyqCount:Math.max(0,Number(a.pyqCount)||0),pyqMinutes:Math.max(15,Number(a.pyqMinutes)||60),sampleCount:Math.max(0,Number(a.sampleCount)||0),sampleMinutes:Math.max(30,Number(a.sampleMinutes)||120),errorMinutes:Math.max(15,Number(a.errorMinutes)||45),finalDays:Math.max(0,Number(a.finalDays)||0),finalMinutes:Math.max(15,Number(a.finalMinutes)||60)});
+    if(a.type==="remove_exam"&&a.match)state.exams=state.exams.filter(x=>!(x.subject+" "+x.date).toLowerCase().includes(String(a.match).toLowerCase()));
     if(a.type==="clear_plan")state.plan=[];
     if(a.type==="clear_vacations")state.vacations=[];
   });saveState();
@@ -212,6 +256,7 @@ $("chatInput").addEventListener("keydown",e=>{if(e.key==="Enter"&&(e.metaKey||e.
 $("addDeadline").onclick=()=>{const subject=$("deadlineSubject").value.trim(),title=$("deadlineTitle").value.trim(),due=$("deadlineDate").value,minutes=Number($("deadlineMinutes").value),priority=$("deadlinePriority").value;if(!subject||!title||!due||minutes<15)return alert("Add the subject, deadline, and realistic study time.");state.deadlines.push({subject,title,due,minutes,priority});["deadlineSubject","deadlineTitle","deadlineDate","deadlineMinutes"].forEach(id=>$(id).value="");saveState();generatePlan();renderPlanner()};
 $("addAvailability").onclick=()=>{const day=Number($("availDay").value),start=$("availStart").value,end=$("availEnd").value;if(!start||!end||mins(end)<=mins(start))return alert("Choose a valid study window.");state.availability.push({day,start,end});saveState();generatePlan();renderPlanner()};
 $("addVacation").onclick=()=>{const start=$("vacStart").value,end=$("vacEnd").value;if(!start||!end||end<start)return alert("Choose valid dates.");state.vacations.push({start,end});saveState();generatePlan();renderPlanner()};
+$("addExam").onclick=()=>{const subject=$("examSubject").value.trim(),date=$("examDate").value;if(!subject||!date)return alert("Add the subject and exam date.");const ex={subject,date,syllabusHours:Math.max(0,Number($("syllabusHours").value)||0),pyqCount:Math.max(0,Number($("pyqCount").value)||0),pyqMinutes:Math.max(15,Number($("pyqMinutes").value)||60),sampleCount:Math.max(0,Number($("sampleCount").value)||0),sampleMinutes:Math.max(30,Number($("sampleMinutes").value)||120),errorMinutes:Math.max(15,Number($("errorMinutes").value)||45),finalDays:Math.max(0,Number($("finalDays").value)||0),finalMinutes:Math.max(15,Number($("finalMinutes").value)||60)};state.exams=state.exams.filter(x=>!(x.subject.toLowerCase()===subject.toLowerCase()&&x.date===date));state.exams.push(ex);saveState();generatePlan();renderPlanner();["examSubject","examDate","syllabusHours","pyqCount","sampleCount"].forEach(id=>$(id).value="")};
 $("generatePlan").onclick=generatePlan;
 
 function renderReminderSection(){const target=$("reminderSectionSlots");target.innerHTML=times.length?times.map((t,i)=>'<label class="slot"><input type="time" value="'+t+'" onchange="saveTime('+i+',this.value)"><span>Reminder '+(i+1)+'</span></label>').join(""):'<div class="insight">No reminder slots yet.</div>'}
