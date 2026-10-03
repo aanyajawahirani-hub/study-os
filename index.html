@@ -124,6 +124,10 @@ body.sidebar-collapsed .content-menu-toggle{display:block}
 #section-planner .planner-grid{display:block}
 #section-planner .planner-grid>.ai-panel{max-width:900px}
 #section-planner .planner-pages{margin-top:30px}
+body[data-page="plan"] #section-planner .planner-top{display:none}
+body[data-page="plan"] #section-planner .cooking-hero{margin-top:0}
+body[data-page="plan"] #section-planner .generated-panel{margin-top:0}
+
 #section-planner .planner-window{display:none}
 #section-planner .planner-window.active{display:block}
 #section-planner .generated-panel{margin-top:30px}
@@ -191,6 +195,69 @@ body[data-page="ai"] #section-planner .planner-grid{max-width:980px}
     .mobile-nav{display:flex}
   }
 </style>
+<style id="cooking-engine-ui">
+#section-planner .cooking-hero{display:none;grid-template-columns:minmax(0,1.05fr) minmax(390px,.95fr);gap:0;border:2px solid var(--ink);background:var(--surface);margin:0 0 30px;min-height:520px;overflow:hidden}
+body[data-page="plan"] #section-planner .cooking-hero{display:grid}
+body[data-page="ai"] #section-planner .cooking-hero{display:none}
+.cooking-copy{padding:44px 42px 38px;display:flex;flex-direction:column;justify-content:center;border-right:1px solid var(--ink)}
+.cooking-kicker{font-size:9px;letter-spacing:.18em;font-weight:800;color:var(--muted);display:flex;justify-content:space-between;gap:18px}
+.cooking-kicker span{color:var(--accent)}
+.cooking-copy h2{font-family:Georgia,serif;font-size:clamp(50px,5.8vw,82px);line-height:.86;letter-spacing:-.065em;margin:28px 0 22px}
+.cooking-copy h2 em{font-style:italic;color:var(--accent)}
+.cooking-copy h2 strong{font-weight:700;color:var(--accent2)}
+.cooking-copy p{max-width:540px;color:var(--muted);font-size:12px;line-height:1.65;margin:0}
+.cooking-actions{display:flex;align-items:center;gap:14px;flex-wrap:wrap;margin-top:28px}
+.cooking-primary{border:1px solid var(--ink);background:var(--ink);color:var(--surface);padding:13px 16px;font-size:9px;font-weight:800;letter-spacing:.07em;cursor:pointer}
+.cooking-primary:hover{background:var(--accent);border-color:var(--accent)}
+#cookingStats{font-size:9px;color:var(--muted);letter-spacing:.06em}
+.cooking-stage{position:relative;min-height:520px;background:#e9e5dc;perspective:900px;display:flex;flex-direction:column;justify-content:space-between;padding:18px 20px 16px;overflow:hidden}
+.cooking-stage:before{content:"";position:absolute;inset:0;border-left:1px solid rgba(32,41,35,.08);background:repeating-linear-gradient(90deg,transparent 0,transparent 74px,rgba(32,41,35,.035) 75px)}
+.stage-topline,.stage-foot{position:relative;z-index:4;display:flex;justify-content:space-between;gap:16px;font-size:8px;letter-spacing:.14em;color:var(--muted);font-weight:800}
+.work-stack{position:relative;z-index:3;width:min(410px,82%);height:330px;margin:auto;transform-style:preserve-3d;transform:rotateX(10deg) rotateY(-15deg);transition:transform .18s ease-out}
+.work-layer{position:absolute;left:50%;width:76%;height:68px;transform-style:preserve-3d;transform-origin:center;display:flex;align-items:center;justify-content:space-between;padding:0 17px;border:2px solid var(--ink);background:var(--surface);color:var(--ink);font:inherit;text-align:left;cursor:pointer;transition:transform .65s cubic-bezier(.2,.75,.2,1),background .3s ease,color .3s ease}
+.work-layer span{font-size:9px;letter-spacing:.13em;font-weight:800}
+.work-layer b{font-family:Georgia,serif;font-size:25px;font-weight:700}
+.work-layer:hover{background:var(--ink);color:var(--surface);transform:translateX(-50%) translateZ(22px) rotateZ(-1deg)!important}
+.layer-exams{top:8px;transform:translateX(-50%) translateZ(78px) rotateZ(-3deg);border-color:var(--accent)}
+.layer-deadlines{top:75px;transform:translateX(-50%) translateZ(48px) rotateZ(2deg)}
+.layer-projects{top:142px;transform:translateX(-50%) translateZ(18px) rotateZ(-1deg)}
+.layer-hours{top:209px;transform:translateX(-50%) translateZ(-12px) rotateZ(3deg);border-color:var(--accent2)}
+.work-core{position:absolute;left:50%;top:262px;transform:translateX(-50%) translateZ(-38px);width:56%;height:60px;border-top:1px solid var(--ink);border-bottom:1px solid var(--ink);display:grid;place-content:center;text-align:center}
+.work-core span{font-family:Georgia,serif;font-size:21px;letter-spacing:.02em}
+.work-core small{font-size:7px;letter-spacing:.15em;color:var(--muted);margin-top:4px}
+.stage-foot{padding-top:13px;border-top:1px solid rgba(32,41,35,.22)}
+.cooking-hero[data-state="recovering"] .layer-deadlines{transform:translateX(-50%) translateZ(75px) rotateZ(-2deg)}
+.cooking-hero[data-state="recovering"] .layer-hours{transform:translateX(-50%) translateZ(35px) rotateZ(2deg)}
+.cooking-hero[data-state="locked"] .layer-hours{transform:translateX(-50%) translateZ(100px) rotateZ(-2deg)}
+.cooking-hero[data-state="locked"] .layer-projects{transform:translateX(-50%) translateZ(45px) rotateZ(1deg)}
+.cooking-hero[data-state="cooking"] .layer-hours{transform:translateX(-50%) translateZ(125px) rotateZ(-1deg)}
+.cooking-hero[data-state="cooking"] .layer-deadlines{transform:translateX(-50%) translateZ(80px) rotateZ(1deg)}
+.cooking-hero[data-state="cooking"] .layer-exams{transform:translateX(-50%) translateZ(40px) rotateZ(-1deg)}
+.cooking-hero[data-state="cooking"] .work-core{transform:translateX(-50%) translateZ(80px);background:var(--accent2);color:#fff;border-color:var(--accent2)}
+.cooking-hero[data-state="cooking"] .work-core small{color:rgba(255,255,255,.72)}
+.cooking-hero[data-state="cooked"] .work-stack{animation:cooking-idle 5s ease-in-out infinite}
+.cooking-hero[data-state="cooking"] .work-stack{animation:cooking-breathe 3.8s ease-in-out infinite}
+@keyframes cooking-idle{0%,100%{transform:rotateX(10deg) rotateY(-15deg) translateY(0)}50%{transform:rotateX(8deg) rotateY(-12deg) translateY(-5px)}}
+@keyframes cooking-breathe{0%,100%{transform:rotateX(9deg) rotateY(-12deg) translateY(0)}50%{transform:rotateX(12deg) rotateY(-17deg) translateY(-7px)}}
+@media(max-width:900px){
+  #section-planner .cooking-hero{grid-template-columns:1fr}
+  .cooking-copy{border-right:0;border-bottom:1px solid var(--ink);padding:32px 26px}
+  .cooking-stage{min-height:420px}
+  .work-stack{height:285px}
+}
+@media(max-width:600px){
+  .cooking-copy h2{font-size:47px}
+  .cooking-kicker{display:block}.cooking-kicker span{display:block;margin-top:6px}
+  .cooking-stage{min-height:360px;padding:14px}
+  .work-stack{width:94%;height:250px}
+  .work-layer{height:54px;width:84%;padding:0 11px}.work-layer b{font-size:20px}
+  .layer-exams{top:0}.layer-deadlines{top:53px}.layer-projects{top:106px}.layer-hours{top:159px}.work-core{top:202px;height:48px}
+}
+@media(prefers-reduced-motion:reduce){
+  .cooking-hero[data-state="cooked"] .work-stack,.cooking-hero[data-state="cooking"] .work-stack{animation:none}
+  .work-layer,.work-stack{transition:none}
+}
+</style>
 </head><body><main>
 <aside id="appSidebar">
   <div class="brand"><span class="brand-mark">•</span><span class="brand-name">STUDYOS</span></div>
@@ -256,7 +323,6 @@ body[data-page="ai"] #section-planner .planner-grid{max-width:980px}
         <div class="section-line"><b>UP NEXT</b><span>PRIORITIES</span></div>
         <div id="upNext"><div class="side-empty">Upcoming exams and priorities will appear here once you add them.</div></div>
       </section>
-
       </aside>
   </div>
 </div><section id="section-focus" class="section">
@@ -300,6 +366,32 @@ body[data-page="ai"] #section-planner .planner-grid{max-width:980px}
       <p class="page-lede" id="plannerPageLede">StudyOS works around the life you actually have. Add the inputs it needs, then let the engine place the work.</p>
     </div>
     <button class="generate-btn" id="generatePlan">REBUILD MY PLAN</button>
+  </div>
+
+  <div class="cooking-hero" id="cookingHero">
+    <div class="cooking-copy">
+      <div class="cooking-kicker">THE COOKING ENGINE <span id="cookingStateLabel">01 / COOKED</span></div>
+      <h2>LET'S GET YOU<br>FROM <em>COOKED</em><br>TO <strong>COOKING.</strong></h2>
+      <p id="cookingMessage">The oven is cold. Give StudyOS something to work with and we'll start turning the chaos into a run.</p>
+      <div class="cooking-actions">
+        <button class="cooking-primary" id="cookingPrimaryAction">START WITH DEADLINES</button>
+        <span id="cookingStats">0 inputs · 0 planned minutes</span>
+      </div>
+    </div>
+    <div class="cooking-stage" id="cookingStage" aria-label="Interactive workload stack">
+      <div class="stage-topline"><span>LIVE WORKLOAD</span><span id="cookingMeter">00%</span></div>
+      <div class="work-stack" id="workStack">
+        <button class="work-layer layer-exams" data-cooking-jump="exams"><span>EXAMS</span><b id="cookingExamCount">00</b></button>
+        <button class="work-layer layer-deadlines" data-cooking-jump="deadlines"><span>DEADLINES</span><b id="cookingDeadlineCount">00</b></button>
+        <button class="work-layer layer-projects" data-cooking-jump="activities"><span>COMMITMENTS</span><b id="cookingCommitmentCount">00</b></button>
+        <button class="work-layer layer-hours" data-cooking-jump="availability"><span>AVAILABLE HOURS</span><b id="cookingAvailabilityCount">00</b></button>
+        <div class="work-core"><span id="cookingCoreState">COOKED</span><small id="cookingCoreDetail">NO INPUTS YET</small></div>
+      </div>
+      <div class="stage-foot">
+        <span id="cookingStageHint">Hover the stack. Click a layer to edit it.</span>
+        <span id="cookingNext">01 / INPUT</span>
+      </div>
+    </div>
   </div>
 
   <div class="planner-grid">
@@ -427,8 +519,7 @@ body[data-page="ai"] #section-planner .planner-grid{max-width:980px}
     </div>
     <div class="setup-fields">
       <div class="setup-field"><label for="setupCountry">COUNTRY</label><div class="search-select"><input id="setupCountry" type="search" name="studyos-country" autocomplete="new-password" spellcheck="false" placeholder="Type a country..." aria-autocomplete="list" aria-expanded="false" /><div class="search-options" id="countryOptions" role="listbox" hidden></div></div></div>
-      <div class="setup-field"><label for="setupTimezone">TIMEZONE</label><div class="search-select"><input id="setupTimezone" type="search" name="studyos-timezone" autocomplete="new-password" spellcheck="false" placeholder="Type a timezone..." aria-autocomplete="list" aria-expanded="false" /><div class="search-options" id="timezoneOptions" role="listbox" hidden></div></div></div>
-      <script>
+      <div class="setup-field"><label for="setupTimezone">TIMEZONE</label><div class="search-select"><input id="setupTimezone" type="search" name="studyos-timezone" autocomplete="new-password" spellcheck="false" placeholder="Type a timezone..." aria-autocomplete="list" aria-expanded="false" /><div class="search-options" id="timezoneOptions" role="listbox" hidden></div></div></div>      <script>
       (function(){
         const country=document.getElementById("setupCountry"), countryList=document.getElementById("countryOptions");
         const timezone=document.getElementById("setupTimezone"), timezoneList=document.getElementById("timezoneOptions");
@@ -655,6 +746,36 @@ function renderPlanner(){
   if(ext)ext.innerHTML=state.extras.length?state.extras.map((x,i)=>'<div class="data-row"><div><b>'+esc(x.title)+'</b><small>'+DAYS[Number(x.day)]+' · '+esc(x.start)+' → '+esc(x.end)+(x.note?' · '+esc(x.note):'')+'</small></div><button class="remove-btn" onclick="removeExtra('+i+')">×</button></div>').join(""):'<div class="insight">No recurring extra-curriculars yet.</div>';
   const a2=$("availabilityList"); if(a2)a2.innerHTML=al?al.innerHTML:"";
 }
+function updateCookingExperience(){
+  const hero=$("cookingHero");if(!hero)return;
+  const workCount=state.deadlines.length+state.exams.length;
+  const commitmentCount=state.activities.length+state.extras.length;
+  const inputCount=workCount+state.availability.length+commitmentCount+state.vacations.length;
+  const plannedMinutes=state.plan.reduce((s,x)=>s+Number(x.duration||0),0);
+  const requiredMinutes=state.deadlines.reduce((s,x)=>s+Number(x.minutes||0),0)+buildExamTasks().reduce((s,x)=>s+Number(x.minutes||0),0);
+  const complete=requiredMinutes>0&&plannedMinutes>=requiredMinutes&&state.plan.length>0;
+  let stage="cooked",label="01 / COOKED",message="The oven is cold. Give StudyOS something to work with and we'll start turning the chaos into a run.",button="START WITH DEADLINES",next="01 / INPUT",core="COOKED",detail="NO INPUTS YET";
+  if(workCount>0&&!state.availability.length){stage="recovering";label="02 / RECOVERING";message="Okay, we have a situation. The workload is here. Now give me the hours you actually have.",button="ADD STUDY HOURS",next="02 / HOURS",core="RECOVERING",detail=workCount+" WORKLOAD ITEMS";}
+  else if(workCount>0&&state.availability.length&&!state.plan.length){stage="locked";label="03 / LOCKED IN";message="Now we have something real. Build the run and StudyOS will place the work inside those windows.",button="BUILD THE RUN",next="03 / BUILD",core="LOCKED IN",detail=state.availability.length+" STUDY WINDOWS";}
+  else if(state.plan.length){stage="cooking";label="04 / COOKING";message=complete?"Absolutely cooking. Every required minute currently fits the plan.":"We're cooking. The run is built from the time you actually gave me."+ (requiredMinutes>plannedMinutes?" Some work still needs more hours.":"");button="OPEN THE RUN",next="04 / RUN",core="COOKING",detail=state.plan.length+" BLOCKS BUILT";}
+  const meter=Math.min(100,Math.round((plannedMinutes/Math.max(requiredMinutes||1,1))*100));
+  hero.dataset.state=stage;
+  $("cookingStateLabel").textContent=label;$("cookingMessage").textContent=message;$("cookingPrimaryAction").textContent=button;$("cookingStats").textContent=inputCount+" inputs · "+plannedMinutes+" planned minutes";
+  $("cookingMeter").textContent=String(meter).padStart(2,"0")+"%";
+  $("cookingCoreState").textContent=core;$("cookingCoreDetail").textContent=detail;$("cookingNext").textContent=next;
+  $("cookingExamCount").textContent=String(state.exams.length).padStart(2,"0");
+  $("cookingDeadlineCount").textContent=String(state.deadlines.length).padStart(2,"0");
+  $("cookingCommitmentCount").textContent=String(commitmentCount).padStart(2,"0");
+  $("cookingAvailabilityCount").textContent=String(state.availability.length).padStart(2,"0");
+  const primary=$("cookingPrimaryAction");
+  if(primary)primary.onclick=()=>{
+    if(stage==="cooked")showSection("deadlines");
+    else if(stage==="recovering")showSection("availability");
+    else if(stage==="locked"){generatePlan();updateCookingExperience()}
+    else showSection("plan");
+  };
+}
+
 
 function removeDeadline(i){state.deadlines.splice(i,1);saveState();generatePlan();renderPlanner()}
 function removeAvailability(i){state.availability.splice(i,1);saveState();generatePlan();renderPlanner()}
@@ -722,7 +843,7 @@ function generatePlan(){
       }
     }
   }
-  state.plan=newPlan;state.done=state.done.filter(id=>newPlan.some(x=>x.id===id));saveState();renderToday();renderGeneratedPlan();renderPlanner();renderFocusTasks();
+  state.plan=newPlan;state.done=state.done.filter(id=>newPlan.some(x=>x.id===id));saveState();renderToday();renderGeneratedPlan();renderPlanner();renderFocusTasks();updateCookingExperience();
   const unresolved=remaining.filter(x=>x.remaining>0);$("planSummary").textContent=newPlan.length?newPlan.length+" blocks generated"+(unresolved.length?" · "+unresolved.length+" task(s) still need more hours":""):"Add availability before generating";
   if(unresolved.length)addMessage("assistant","Some work could not fit into the study windows you gave me. I kept the plan honest instead of inventing free time. Add study hours or reduce the required work.");
 }
@@ -735,7 +856,7 @@ function renderGeneratedPlan(){
   const el=$("generatedPlan"),days={};
   state.plan.forEach(x=>(days[x.date]??=[]).push(x));
   const keys=Object.keys(days).sort();
-  el.innerHTML=keys.length?keys.map(k=>'<div class="day-label">'+new Date(k+"T12:00:00").toLocaleDateString("en-IN",{weekday:"long",day:"numeric",month:"short"}).toUpperCase()+'</div>'+days[k].sort((a,b)=>a.start.localeCompare(b.start)).map(x=>'<div class="timeline-block"><time>'+x.start+'</time><div><b>'+esc(x.subject)+'</b><p>'+esc(x.task)+'</p></div><span>'+x.duration+' min</span></div>').join("")).join(""):'<div class="insight"><b>Your plan will appear here.</b><br>StudyOS will only place work inside the study windows you give it.</div>';
+  el.innerHTML=keys.length?keys.map(k=>'<div class="day-label">'+new Date(k+"T12:00:00").toLocaleDateString("en-IN",{weekday:"long",day:"numeric",month:"short"}).toUpperCase()+'</div>'+days[k].sort((a,b)=>a.start.localeCompare(b.start)).map(x=>'<div class="timeline-block"><time>'+x.start+'</time><div><b>'+esc(x.subject)+'</b><p>'+esc(x.task)+'</p></div><span>'+x.duration+' min</span></div>').join("")).join(""):'<div class="insight"><b>The run is waiting.</b><br>Give StudyOS your deadlines and real study windows, then build it. No invented hours.</div>';
 }
 function addMessage(role,text){const c=$("chat"),d=document.createElement("div");d.className="message "+role;d.textContent=text;c.appendChild(d);c.scrollTop=c.scrollHeight}
 async function sendChat(extra){
@@ -756,8 +877,7 @@ function applyActions(actions){
   actions.forEach(a=>{
     if(a.type==="add_deadline"&&a.subject&&a.title&&a.due&&Number(a.minutes)>0)state.deadlines.push({subject:a.subject.slice(0,80),title:a.title.slice(0,120),due:a.due,minutes:Math.min(2000,Number(a.minutes)),priority:["high","medium","low"].includes(a.priority)?a.priority:"medium"});
     if(a.type==="remove_deadline"&&a.match)state.deadlines=state.deadlines.filter(x=>!(x.subject+" "+x.title).toLowerCase().includes(String(a.match).toLowerCase()));
-    if(a.type==="set_availability"&&a.day!==undefined&&a.start&&a.end){state.availability=state.availability.filter(x=>!(Number(x.day)===Number(a.day)&&x.start===a.start&&x.end===a.end));state.availability.push({day:Number(a.day),start:a.start,end:a.end})}
-    if(a.type==="remove_availability"&&a.day!==undefined)state.availability=state.availability.filter(x=>Number(x.day)!==Number(a.day));
+    if(a.type==="set_availability"&&a.day!==undefined&&a.start&&a.end){state.availability=state.availability.filter(x=>!(Number(x.day)===Number(a.day)&&x.start===a.start&&x.end===a.end));state.availability.push({day:Number(a.day),start:a.start,end:a.end})}    if(a.type==="remove_availability"&&a.day!==undefined)state.availability=state.availability.filter(x=>Number(x.day)!==Number(a.day));
     if(a.type==="set_vacation"&&a.start&&a.end)state.vacations.push({start:a.start,end:a.end});
     if(a.type==="add_activity"&&a.title&&a.date&&a.start&&a.end)state.activities.push({title:String(a.title).slice(0,100),date:a.date,start:a.start,end:a.end,location:String(a.location||"").slice(0,120)});
     if(a.type==="remove_activity"&&a.match)state.activities=state.activities.filter(x=>!(x.title+" "+x.date).toLowerCase().includes(String(a.match).toLowerCase()));
@@ -912,5 +1032,14 @@ function playPianoLoop(){
 }
 function setSoundVolume(v){if(soundGain)soundGain.gain.value=v}
 document.body.dataset.section="today";$("sundayBlocked").checked=!!state.calendarRules.sundayBlocked;initPlannerWindows();renderToday();renderPlanner();renderProgress();renderGeneratedPlan();renderReminderSection();renderFocusPage();renderFocusHistory();syncFocus();syncReminders();
+const cookingStage=$("cookingStage"),workStack=$("workStack");
+if(cookingStage&&workStack&&!window.matchMedia("(prefers-reduced-motion: reduce)").matches){
+  cookingStage.addEventListener("pointermove",e=>{
+    const r=cookingStage.getBoundingClientRect(),x=(e.clientX-r.left)/r.width-.5,y=(e.clientY-r.top)/r.height-.5;
+    workStack.style.transform="rotateX("+(10-y*12)+"deg) rotateY("+(-15+x*18)+"deg)";
+  });
+  cookingStage.addEventListener("pointerleave",()=>{workStack.style.transform=""});
+}
+document.querySelectorAll("[data-cooking-jump]").forEach(b=>b.addEventListener("click",()=>showSection(b.dataset.cookingJump)));
 </script>
 </body></html>
