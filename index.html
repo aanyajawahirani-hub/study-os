@@ -477,9 +477,9 @@ body[data-page="ai"] #section-planner .planner-grid{max-width:980px}
     const country=countryEl.value.trim();
     const timezone=timezoneEl.value.trim();
     const dateFormat=formatEl.value.trim();
-    const countryValid=!!country && countryEl.dataset.validValue===country;
-    const timezoneValid=!!timezone && timezoneEl.dataset.validValue===timezone;
-    const formatValid=!!dateFormat;
+    const countryValid=!!country && !!COUNTRY_ZONES[country] && countryEl.dataset.validValue===country;
+    const timezoneValid=!!timezone && TIMEZONE_LIST.includes(timezone) && timezoneEl.dataset.validValue===timezone;
+    const formatValid=["DD/MM/YYYY","MM/DD/YYYY","YYYY/MM/DD"].includes(dateFormat);
     if(!countryValid||!timezoneValid||!formatValid){
       if(!countryValid){countryEl.setCustomValidity("Choose a country from the list.");countryEl.reportValidity();countryEl.focus()}
       else if(!timezoneValid){timezoneEl.setCustomValidity("Choose a timezone from the list.");timezoneEl.reportValidity();timezoneEl.focus()}
@@ -492,6 +492,7 @@ body[data-page="ai"] #section-planner .planner-grid{max-width:980px}
     const settings={country,timezone,dateFormat};
     localStorage.setItem("studyos-settings",JSON.stringify(settings));
     window.userSettings=settings;
+    userSettings=settings;
     modal.classList.remove("open");
     document.body.dataset.section="today";document.body.dataset.page="today";
     document.querySelectorAll("main > section").forEach(s=>s.classList.remove("active"));
@@ -505,27 +506,6 @@ body[data-page="ai"] #section-planner .planner-grid{max-width:980px}
 })();
 
 (function(){
-  const clockBtn=document.getElementById("openClockSettings");
-  const modal=document.getElementById("setupModal");
-  const country=document.getElementById("setupCountry");
-  const timezone=document.getElementById("setupTimezone");
-  const format=document.getElementById("setupDateFormat");
-
-  if(clockBtn&&modal){
-    clockBtn.onclick=function(e){
-      e.preventDefault();
-      try{
-        const zones=Intl.supportedValuesOf("timeZone").filter(z=>!z.startsWith("Etc/")).sort();
-        const saved=JSON.parse(localStorage.getItem("studyos-settings")||"null");
-        timezone.innerHTML=zones.map(z=>'<option value="'+z+'">'+z.replace(/_/g," ")+'</option>').join("");
-        country.value=saved?.country||"India";
-        timezone.value=saved?.timezone||"Asia/Kolkata";
-        format.value=saved?.dateFormat||"DD/MM/YYYY";
-      }catch(e){}
-      modal.classList.add("open");
-    };
-  }
-
   const notify=document.getElementById("notify");
   if(notify){
     notify.onclick=async function(e){
@@ -822,15 +802,21 @@ function openSetup(){
   modal.classList.add("open");
   const country=userSettings?.country||"India";
   const selected=userSettings?.timezone||COUNTRY_ZONES[country]||"Asia/Kolkata";
-  timezoneEl.innerHTML=TIMEZONE_LIST.map(zone=>'<option value="'+zone+'">'+zone.replace(/_/g," ")+'</option>').join("");
-  if(!TIMEZONE_LIST.includes(selected))timezoneEl.insertAdjacentHTML("afterbegin",'<option value="'+selected+'">'+selected.replace(/_/g," ")+'</option>');
   countryEl.value=COUNTRY_ZONES[country]?country:"India";
   countryEl.dataset.validValue=countryEl.value;
   timezoneEl.value=selected;
   timezoneEl.dataset.validValue=selected;
   formatEl.value=userSettings?.dateFormat||COUNTRY_DATE_FORMAT[country]||"DD/MM/YYYY";
 }
-$("openClockSettings")?.addEventListener("click",openSetup);$("setupCountry")?.addEventListener("change",()=>{$("setupTimezone").value=COUNTRY_ZONES[$("setupCountry").value]||"Asia/Kolkata";$("setupDateFormat").value=COUNTRY_DATE_FORMAT[$("setupCountry").value]||"DD/MM/YYYY"});
+$("openClockSettings")?.addEventListener("click",openSetup);
+$("setupCountry")?.addEventListener("change",()=>{
+  const countryEl=$("setupCountry"),timezoneEl=$("setupTimezone"),formatEl=$("setupDateFormat"),country=countryEl.value;
+  if(!COUNTRY_ZONES[country])return;
+  countryEl.dataset.validValue=country;
+  timezoneEl.value=COUNTRY_ZONES[country];
+  timezoneEl.dataset.validValue=timezoneEl.value;
+  formatEl.value=COUNTRY_DATE_FORMAT[country]||"DD/MM/YYYY";
+});
 // Clock settings are saved by the isolated handler beside the modal so this control remains functional even if another StudyOS module fails.
 if(!userSettings){openSetup()}else{$("setupModal").classList.remove("open")}
 const focus={seconds:25*60,running:false,mode:25,breakMinutes:5,interval:null};
