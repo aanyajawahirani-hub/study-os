@@ -153,7 +153,7 @@ function renderToday(){
   nextEl.textContent=rows.find(x=>!state.done.includes(x.id))?("Next: "+rows.find(x=>!state.done.includes(x.id)).subject+" · "+rows.find(x=>!state.done.includes(x.id)).task):(rows.length?"Today is cleared.":"Add your constraints to generate a plan.");
   renderFocusTasks();
 }
-function renderPlannfunction buildExamTasks(){
+function buildExamTasks(){
   const tasks=[];
   state.exams.forEach(ex=>{
     const exam=new Date(ex.date+"T12:00:00");
@@ -182,33 +182,6 @@ function generatePlan(){
 }
 }
 function isVacation(key){return state.vacations.some(v=>key>=v.start&&key<=v.end)}
-function generatePlan(){
-  const deadlines=[...state.deadlines].filter(x=>x.due&&x.minutes>0).sort((a,b)=>a.due.localeCompare(b.due)||(a.priority==="high"?-1:1));
-  let newPlan=[],remaining=deadlines.map(x=>({...x,remaining:x.minutes}));
-  const start=todayKey();
-  const end=deadlines.length?deadlines.reduce((m,x)=>x.due>m?x.due:m,start):start;
-  for(let day=0;day<=90&&addDays(start,day)<=end;day++){
-    const key=addDays(start,day),d=new Date(key+"T12:00:00"),dow=d.getDay();
-    if(isVacation(key))continue;
-    const windows=state.availability.filter(x=>Number(x.day)===dow);
-    for(const w of windows){
-      let cursor=mins(w.start),limit=mins(w.end);
-      while(cursor+15<=limit){
-        const target=remaining.find(x=>x.remaining>0&&x.due>=key);
-        if(!target)break;
-        const block=Math.min(target.remaining,Math.min(90,limit-cursor));
-        if(block<15)break;
-        const id=key+"-"+cursor+"-"+Math.random().toString(36).slice(2,7);
-        newPlan.push({id,date:key,start:timeStr(cursor),duration:block,subject:target.subject,task:target.title});
-        target.remaining-=block;cursor+=block+5;
-      }
-    }
-  }
-  state.plan=newPlan;state.done=state.done.filter(id=>newPlan.some(x=>x.id===id));saveState();renderToday();renderGeneratedPlan();
-  const unresolved=remaining.filter(x=>x.remaining>0);
-  $("planSummary").textContent=newPlan.length?newPlan.length+" blocks generated"+(unresolved.length?" · "+unresolved.length+" deadline(s) still need more hours":""):("Add availability before generating");
-  if(unresolved.length)addMessage("assistant","I could not fit everything into the study windows you gave me. I kept the plan honest instead of inventing free time. Add more study hours or reduce a deadline's required minutes.");
-}
 function renderGeneratedPlan(){
   const el=$("generatedPlan"),days={};
   state.plan.forEach(x=>(days[x.date]??=[]).push(x));
