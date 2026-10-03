@@ -78,9 +78,13 @@ aside{width:232px;position:fixed;inset:0 auto 0 0;background:#e5e1d7;border-righ
   .today-list .block{grid-template-columns:55px 22px 1fr}
   .today-list .block>span:last-child{display:none}
 }
-</style></style></head><body><main>
+<style>
+.greeting-prompt{margin:0;color:var(--muted);font-size:13px;line-height:1.4;max-width:520px}
+header h1{font-size:46px;line-height:1;letter-spacing:-.04em;margin:8px 0 5px}
+@media(max-width:800px){header h1{font-size:38px}}
+</style></style></style></head><body><main>
 <aside><div class="brand"><i>•</i> STUDYOS</div><nav><button class="navlink active" data-section="today">Today</button><button class="navlink" data-section="planner">Planner</button><button class="navlink" data-section="focus">Focus</button><button class="navlink" data-section="syllabus">Syllabus</button><button class="navlink" data-section="reminders">Reminders</button><button class="navlink" data-section="progress">Progress</button></nav><div class="streak"><small>STREAK</small><b id="streakValue">0 DAYS</b><small>Start your first study block.</small></div></aside>
-<section class="shell"><header><div><div class="eyebrow" id="date"></div><h1 id="greeting">Good night.<br><em>What are we working on today?</em></h1></div><div style="display:flex;gap:8px;align-items:center"><button class="btn" id="openClockSettings">CLOCK SETTINGS</button><button class="btn" id="notify">ENABLE NOTIFICATIONS</button></div></header>
+<section class="shell"><header><div><div class="eyebrow" id="date"></div><h1 id="greeting">Good night.</h1><p class="greeting-prompt" id="greetingPrompt">How can I help you wind things down?</p></div><div style="display:flex;gap:8px;align-items:center"><button class="btn" id="openClockSettings">CLOCK SETTINGS</button><button class="btn" id="notify">ENABLE NOTIFICATIONS</button></div></header>
 <div class="mobile-nav" id="mobileNav"><button class="active" data-section="today">Today</button><button data-section="planner">Planner</button><button data-section="focus">Focus</button><button data-section="syllabus">Syllabus</button><button data-section="reminders">Reminders</button><button data-section="progress">Progress</button></div><div id="section-today" class="section active">
   <div class="today-intro">
     <div>
@@ -110,7 +114,7 @@ aside{width:232px;position:fixed;inset:0 auto 0 0;background:#e5e1d7;border-righ
     <section class="today-list">
       <div class="section-line"><b>TODAY</b><span id="todayPlanMeta">YOUR SCHEDULE</span></div>
       <div id="blocks"></div>
-      <div class="today-empty" id="todayEmpty">No study blocks yet. Add your constraints in Planner and rebuild your plan.</div>
+       
     </section>
 
     <aside class="today-side">
@@ -412,8 +416,9 @@ function greetingForHour(h){
 }
 function updateClockAndGreeting(){
   const p=zonedParts();
-  const g=$("greeting");
-  if(g)g.innerHTML=greetingForHour(Number(p.hour))+"<br><em>Let’s lock in.</em>";
+  const g=$("greeting"),prompt=$("greetingPrompt"),msg=greetingForHour(Number(p.hour));
+  if(g)g.textContent=msg[0];
+  if(prompt)prompt.textContent=msg[1];
   const d=$("date");
   if(d)d.textContent=new Intl.DateTimeFormat("en-IN",{timeZone:userSettings?.timezone||"Asia/Kolkata",weekday:"long",day:"numeric",month:"long"}).format(new Date()).toUpperCase();
 }
@@ -476,7 +481,11 @@ function renderToday(){
   rows.forEach(x=>{const el=document.querySelector('.block[data-id="'+x.id+'"]');if(el)el.addEventListener("click",()=>{state.done=state.done.includes(x.id)?state.done.filter(i=>i!==x.id):[...state.done,x.id];saveState();renderToday();renderProgress()})});
   countEl.textContent=rows.filter(x=>state.done.includes(x.id)).length;pctEl.textContent=rows.length?Math.round(rows.filter(x=>state.done.includes(x.id)).length/rows.length*100)+"%":"0%";
   plannedEl.textContent=rows.reduce((s,x)=>s+x.duration,0)+" min planned";
-  nextEl.textContent=rows.find(x=>!state.done.includes(x.id))?("Next: "+rows.find(x=>!state.done.includes(x.id)).subject+" · "+rows.find(x=>!state.done.includes(x.id)).task):(rows.length?"Today is cleared.":"Add your constraints to generate a plan.");
+  const nextTask=rows.find(x=>!state.done.includes(x.id));
+  nextEl.textContent=nextTask?("Next: "+nextTask.subject+" · "+nextTask.task):(rows.length?"Today is cleared.":"Add your constraints to generate a plan.");
+  const nextTitle=$("nextTitle"),nextTime=$("nextTime");
+  if(nextTitle)nextTitle.textContent=nextTask?(nextTask.subject+" · "+nextTask.task):(rows.length?"All planned blocks complete.":"Add your first study block.");
+  if(nextTime)nextTime.textContent=nextTask?(nextTask.start+" · "+nextTask.duration+" MIN"):"YOUR NEXT STUDY BLOCK";
   renderFocusTasks();renderFocusPage();
 }
 function buildExamTasks(){
