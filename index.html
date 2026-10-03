@@ -147,7 +147,26 @@ aside{width:232px;position:fixed;inset:0 auto 0 0;background:#e5e1d7;border-righ
     <button class="dark-btn setup-save" id="saveSetup">SAVE SETTINGS</button>
     <div class="schedule-note">Country sets the default timezone and date format. You can change these later.</div>
   </div>
-</div></div><div class="modal" id="focusModal"><div class="focuscard"><button class="close" onclick="closeFocus()">×</button><div class="eyebrow">FOCUS SESSION</div><div class="timer" id="focusTimer">25:00</div><div class="session-meta" id="focusState">Ready when you are.</div><div class="focus-controls" style="justify-content:center;margin-top:22px"><button onclick="setFocus(25)">25 MIN</button><button onclick="setFocus(50)">50 MIN</button><button onclick="setFocus(90)">90 MIN</button><label class="custom-duration">CUSTOM <input id="customFocusMinutes" type="number" min="5" max="180" step="5" placeholder="min" onchange="setCustomFocus()"></label><button onclick="resetFocus()">RESET</button><button class="primary" id="focusAction" onclick="toggleFocus()">START FOCUS</button></div></div></div>
+</div>
+<script>
+(function(){
+  const save=document.getElementById("saveSetup");
+  const modal=document.getElementById("setupModal");
+  if(!save||!modal)return;
+  save.type="button";
+  save.addEventListener("click",function(){
+    const settings={
+      country:document.getElementById("setupCountry").value,
+      timezone:document.getElementById("setupTimezone").value,
+      dateFormat:document.getElementById("setupDateFormat").value
+    };
+    localStorage.setItem("studyos-settings",JSON.stringify(settings));
+    modal.classList.remove("open");
+    window.location.reload();
+  });
+})();
+</script>
+</div><div class="modal" id="focusModal"><div class="focuscard"><button class="close" onclick="closeFocus()">×</button><div class="eyebrow">FOCUS SESSION</div><div class="timer" id="focusTimer">25:00</div><div class="session-meta" id="focusState">Ready when you are.</div><div class="focus-controls" style="justify-content:center;margin-top:22px"><button onclick="setFocus(25)">25 MIN</button><button onclick="setFocus(50)">50 MIN</button><button onclick="setFocus(90)">90 MIN</button><label class="custom-duration">CUSTOM <input id="customFocusMinutes" type="number" min="5" max="180" step="5" placeholder="min" onchange="setCustomFocus()"></label><button onclick="resetFocus()">RESET</button><button class="primary" id="focusAction" onclick="toggleFocus()">START FOCUS</button></div></div></div>
 <script>
 const $=id=>document.getElementById(id);
 const blocksEl=$("blocks"),countEl=$("count"),pctEl=$("pct"),nextEl=$("next"),plannedEl=$("planned"),slotsEl=$("slots"),notifyBtn=$("notify"),timerEl=$("timer"),focusTimerEl=$("focusTimer"),focusHeaderStateEl=$("focusHeaderState"),focusStateEl=$("focusState"),focusActionEl=$("focusAction");
@@ -371,12 +390,7 @@ function openSetup(){
   formatEl.value=userSettings?.dateFormat||COUNTRY_DATE_FORMAT[country]||"DD/MM/YYYY";
 }
 $("openClockSettings").addEventListener("click",openSetup);$("setupCountry").addEventListener("change",()=>{$("setupTimezone").value=COUNTRY_ZONES[$("setupCountry").value]||"Asia/Kolkata";$("setupDateFormat").value=COUNTRY_DATE_FORMAT[$("setupCountry").value]||"DD/MM/YYYY"});
-$("saveSetup").addEventListener("click",()=>{
-  userSettings={country:$("setupCountry").value,timezone:$("setupTimezone").value,dateFormat:$("setupDateFormat").value};
-  localStorage.setItem(settingsKey,JSON.stringify(userSettings));
-  $("setupModal").classList.remove("open");
-  updateClockAndGreeting(); renderToday(); renderGeneratedPlan();
-});
+// Clock settings are saved by the isolated handler beside the modal so this control remains functional even if another StudyOS module fails.
 if(!userSettings){openSetup()}else{$("setupModal").classList.remove("open")}
 const focus={seconds:25*60,running:false,mode:25,breakMinutes:5,interval:null};
 function fmt(s){return String(Math.floor(s/60)).padStart(2,"0")+":"+String(s%60).padStart(2,"0")}
