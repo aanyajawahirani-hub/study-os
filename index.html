@@ -148,9 +148,22 @@ aside{width:232px;position:fixed;inset:0 auto 0 0;background:#e5e1d7;border-righ
         function setupSearch(input,list,items){
           const render=()=>{
             const q=input.value.trim().toLowerCase();
-            const filtered=items.filter(x=>x.toLowerCase().includes(q)).slice(0,80);
-            list.innerHTML=filtered.map(x=>'<button type="button" class="search-option" role="option" data-value="'+x.replace(/"/g,"&quot;")+'">'+x.replace(/_/g," ")+'</button>').join("");
-            list.hidden=!filtered.length;
+            const ranked=items.map(item=>{
+              const label=(item.label||item).toLowerCase(), value=(item.value||item).toLowerCase();
+              let score=999;
+              if(!q)score=0;
+              else if(label===q||value===q)score=0;
+              else if(label.startsWith(q)||value.startsWith(q))score=1;
+              else if(label.split(/[\\s·/,-]+/).some(part=>part.startsWith(q)))score=2;
+              else if(label.includes(q)||value.includes(q))score=3;
+              return {item,score};
+            }).filter(x=>x.score<999).sort((a,b)=>a.score-b.score||String(a.item.label||a.item).localeCompare(String(b.item.label||b.item))).slice(0,12);
+            list.innerHTML=ranked.map(({item})=>{
+              const value=item.value||item, label=item.label||item;
+              const sub=item.sub?'<small>'+item.sub+'</small>':"";
+              return '<button type="button" class="search-option" role="option" data-value="'+value.replace(/"/g,"&quot;")+'"><span>'+label+'</span>'+sub+'</button>';
+            }).join("");
+            list.hidden=!ranked.length;
             input.setAttribute("aria-expanded",String(!list.hidden));
           };
           input.addEventListener("focus",render);
@@ -162,8 +175,14 @@ aside{width:232px;position:fixed;inset:0 auto 0 0;background:#e5e1d7;border-righ
           });
           document.addEventListener("click",e=>{if(!input.parentElement.contains(e.target)){list.hidden=true;input.setAttribute("aria-expanded","false")}});
         }
-        setupSearch(country,countryList,countries);
-        setupSearch(timezone,timezoneList,zones);
+        setupSearch(country,countryList,countries.map(x=>({value:x,label:x})));
+        const zoneLabels=zones.map(z=>{
+          const parts=z.split("/");
+          const region=parts[0], place=parts.slice(1).join(" · ").replace(/_/g," ");
+          const countryName=region==="Asia"&&place.includes("Kolkata")?"India Standard Time":region==="America"&&place.includes("New York")?"Eastern Time (New York)":region==="Europe"&&place.includes("London")?"United Kingdom Time":place;
+          return {value:z,label:countryName,sub:z};
+        });
+        setupSearch(timezone,timezoneList,zoneLabels);
       })();
       </script>
       <div class="setup-field"><label for="setupDateFormat">DATE FORMAT</label><select id="setupDateFormat"><option>DD/MM/YYYY</option><option>MM/DD/YYYY</option><option>YYYY/MM/DD</option></select></div>
