@@ -277,10 +277,10 @@ header h1{font-size:46px;line-height:1;letter-spacing:-.04em;margin:8px 0 5px}
             input.setAttribute("aria-expanded",String(!list.hidden));
           };
           input.addEventListener("focus",render);
-          input.addEventListener("input",render);
+          input.addEventListener("input",()=>{input.dataset.validValue="";render()});
           list.addEventListener("click",e=>{
             const option=e.target.closest(".search-option"); if(!option)return;
-            input.value=option.dataset.value; list.hidden=true; input.setAttribute("aria-expanded","false");
+            input.value=option.dataset.value; input.dataset.validValue=option.dataset.value; list.hidden=true; input.setAttribute("aria-expanded","false");
             input.dispatchEvent(new Event("change",{bubbles:true}));
           });
           document.addEventListener("click",e=>{if(!input.parentElement.contains(e.target)){list.hidden=true;input.setAttribute("aria-expanded","false")}});
@@ -308,11 +308,25 @@ header h1{font-size:46px;line-height:1;letter-spacing:-.04em;margin:8px 0 5px}
   if(!save||!modal)return;
   save.type="button";
   save.addEventListener("click",function(){
-    const settings={
-      country:document.getElementById("setupCountry").value,
-      timezone:document.getElementById("setupTimezone").value,
-      dateFormat:document.getElementById("setupDateFormat").value
-    };
+    const countryEl=document.getElementById("setupCountry");
+    const timezoneEl=document.getElementById("setupTimezone");
+    const formatEl=document.getElementById("setupDateFormat");
+    const country=countryEl.value.trim();
+    const timezone=timezoneEl.value.trim();
+    const dateFormat=formatEl.value.trim();
+    const countryValid=!!country && countryEl.dataset.validValue===country;
+    const timezoneValid=!!timezone && timezoneEl.dataset.validValue===timezone;
+    const formatValid=!!dateFormat;
+    if(!countryValid||!timezoneValid||!formatValid){
+      if(!countryValid){countryEl.setCustomValidity("Choose a country from the list.");countryEl.reportValidity();countryEl.focus()}
+      else if(!timezoneValid){timezoneEl.setCustomValidity("Choose a timezone from the list.");timezoneEl.reportValidity();timezoneEl.focus()}
+      else {formatEl.setCustomValidity("Choose a date format.");formatEl.reportValidity();formatEl.focus()}
+      return;
+    }
+    countryEl.setCustomValidity("");
+    timezoneEl.setCustomValidity("");
+    formatEl.setCustomValidity("");
+    const settings={country,timezone,dateFormat};
     localStorage.setItem("studyos-settings",JSON.stringify(settings));
     window.userSettings=settings;
     modal.classList.remove("open");
@@ -622,7 +636,9 @@ function openSetup(){
   timezoneEl.innerHTML=TIMEZONE_LIST.map(zone=>'<option value="'+zone+'">'+zone.replace(/_/g," ")+'</option>').join("");
   if(!TIMEZONE_LIST.includes(selected))timezoneEl.insertAdjacentHTML("afterbegin",'<option value="'+selected+'">'+selected.replace(/_/g," ")+'</option>');
   countryEl.value=COUNTRY_ZONES[country]?country:"India";
+  countryEl.dataset.validValue=countryEl.value;
   timezoneEl.value=selected;
+  timezoneEl.dataset.validValue=selected;
   formatEl.value=userSettings?.dateFormat||COUNTRY_DATE_FORMAT[country]||"DD/MM/YYYY";
 }
 $("openClockSettings")?.addEventListener("click",openSetup);$("setupCountry")?.addEventListener("change",()=>{$("setupTimezone").value=COUNTRY_ZONES[$("setupCountry").value]||"Asia/Kolkata";$("setupDateFormat").value=COUNTRY_DATE_FORMAT[$("setupCountry").value]||"DD/MM/YYYY"});
