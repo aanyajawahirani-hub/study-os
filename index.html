@@ -136,8 +136,8 @@ aside{width:232px;position:fixed;inset:0 auto 0 0;background:#e5e1d7;border-righ
       <p>Choose the country, timezone and date format StudyOS should use.</p>
     </div>
     <div class="setup-fields">
-      <div class="setup-field"><label for="setupCountry">COUNTRY</label><div class="search-select"><input id="setupCountry" type="search" autocomplete="off" placeholder="Type a country..." aria-autocomplete="list" aria-expanded="false" /><div class="search-options" id="countryOptions" role="listbox" hidden></div></div></div>
-      <div class="setup-field"><label for="setupTimezone">TIMEZONE</label><div class="search-select"><input id="setupTimezone" type="search" autocomplete="off" placeholder="Type a timezone..." aria-autocomplete="list" aria-expanded="false" /><div class="search-options" id="timezoneOptions" role="listbox" hidden></div></div></div>
+      <div class="setup-field"><label for="setupCountry">COUNTRY</label><div class="search-select"><input id="setupCountry" type="search" name="studyos-country" autocomplete="new-password" spellcheck="false" placeholder="Type a country..." aria-autocomplete="list" aria-expanded="false" /><div class="search-options" id="countryOptions" role="listbox" hidden></div></div></div>
+      <div class="setup-field"><label for="setupTimezone">TIMEZONE</label><div class="search-select"><input id="setupTimezone" type="search" name="studyos-timezone" autocomplete="new-password" spellcheck="false" placeholder="Type a timezone..." aria-autocomplete="list" aria-expanded="false" /><div class="search-options" id="timezoneOptions" role="listbox" hidden></div></div></div>
       <script>
       (function(){
         const country=document.getElementById("setupCountry"), countryList=document.getElementById("countryOptions");
