@@ -185,6 +185,70 @@ aside{width:232px;position:fixed;inset:0 auto 0 0;background:#e5e1d7;border-righ
     if(typeof renderToday==="function")renderToday();
   });
 })();
+
+(function(){
+  const clockBtn=document.getElementById("openClockSettings");
+  const modal=document.getElementById("setupModal");
+  const country=document.getElementById("setupCountry");
+  const timezone=document.getElementById("setupTimezone");
+  const format=document.getElementById("setupDateFormat");
+
+  if(clockBtn&&modal){
+    clockBtn.onclick=function(e){
+      e.preventDefault();
+      try{
+        const zones=Intl.supportedValuesOf("timeZone").filter(z=>!z.startsWith("Etc/")).sort();
+        const saved=JSON.parse(localStorage.getItem("studyos-settings")||"null");
+        timezone.innerHTML=zones.map(z=>'<option value="'+z+'">'+z.replace(/_/g," ")+'</option>').join("");
+        country.value=saved?.country||"India";
+        timezone.value=saved?.timezone||"Asia/Kolkata";
+        format.value=saved?.dateFormat||"DD/MM/YYYY";
+      }catch(e){}
+      modal.classList.add("open");
+    };
+  }
+
+  const notify=document.getElementById("notify");
+  if(notify){
+    notify.onclick=async function(e){
+      e.preventDefault();
+      notify.disabled=true;
+      try{
+        if(!("Notification"in window)){
+          notify.textContent="NOTIFICATIONS UNSUPPORTED";
+          return;
+        }
+        const permission=await Notification.requestPermission();
+        if(permission!=="granted"){
+          notify.textContent=permission==="denied"?"NOTIFICATIONS BLOCKED":"NOTIFICATIONS OFF";
+          return;
+        }
+        notify.classList.add("on");
+        notify.textContent="NOTIFICATIONS ON";
+        if("serviceWorker"in navigator){
+          const reg=await navigator.serviceWorker.register("/sw.js");
+          try{
+            const response=await fetch("/api/config");
+            const config=await response.json();
+            if(config.publicKey){
+              const key=config.publicKey;
+              const pad="=".repeat((4-key.length%4)%4);
+              const raw=atob((key+pad).replace(/-/g,"+").replace(/_/g,"/"));
+              let sub=await reg.pushManager.getSubscription();
+              if(!sub)sub=await reg.pushManager.subscribe({userVisibleOnly:true,applicationServerKey:Uint8Array.from(raw,ch=>ch.charCodeAt(0))});
+              await fetch("/api/subscribe",{method:"POST",headers:{"content-type":"application/json"},body:JSON.stringify({subscription:sub})});
+            }
+          }catch(err){}
+        }
+        new Notification("StudyOS notifications enabled",{body:"Your study reminders can now notify you."});
+      }catch(err){
+        notify.textContent="TRY AGAIN";
+      }finally{
+        notify.disabled=false;
+      }
+    };
+  }
+})();
 </script>
 </div><div class="modal" id="focusModal"><div class="focuscard"><button class="close" onclick="closeFocus()">×</button><div class="eyebrow">FOCUS SESSION</div><div class="timer" id="focusTimer">25:00</div><div class="session-meta" id="focusState">Ready when you are.</div><div class="focus-controls" style="justify-content:center;margin-top:22px"><button onclick="setFocus(25)">25 MIN</button><button onclick="setFocus(50)">50 MIN</button><button onclick="setFocus(90)">90 MIN</button><label class="custom-duration">CUSTOM <input id="customFocusMinutes" type="number" min="5" max="180" step="5" placeholder="min" onchange="setCustomFocus()"></label><button onclick="resetFocus()">RESET</button><button class="primary" id="focusAction" onclick="toggleFocus()">START FOCUS</button></div></div></div>
 <script>
