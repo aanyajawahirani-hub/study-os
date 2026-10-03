@@ -6,8 +6,8 @@
 <title>StudyOS</title>
 <style>
 :root{--paper:#f1eee6;--surface:#f8f5ed;--surface2:#e7e2d7;--ink:#202923;--muted:#6e756d;--line:#c9c5b9;--accent:#a94d38;--accent2:#557766}
-*{box-sizing:border-box}body{margin:0;background:var(--paper);color:var(--ink);font-family:Arial,Helvetica,sans-serif}main{min-height:100vh;display:flex}
-aside{width:232px;position:fixed;inset:0 auto 0 0;background:#e5e1d7;border-right:2px solid var(--ink);padding:25px 18px}.brand{font-family:Georgia,serif;font-weight:700;letter-spacing:.08em;font-size:17px;border-bottom:1px solid var(--line);padding-bottom:22px}.brand i{color:var(--accent);font-style:normal;margin-right:7px}nav{margin-top:30px;display:grid;gap:3px}.navlink{padding:12px 10px;border:0;border-left:3px solid transparent;background:transparent;color:var(--muted);font:inherit;font-size:12px;text-align:left;cursor:pointer}.navlink:hover{color:var(--ink);background:#ddd8cd}.navlink.active{border-left-color:var(--accent);background:var(--surface);color:var(--ink);font-weight:700}.streak{position:absolute;bottom:24px;left:18px;right:18px;padding:15px 12px;border-top:2px solid var(--ink)}.streak small{color:var(--muted);font-size:9px;letter-spacing:.15em}.streak b{display:block;font-family:Georgia,serif;font-size:25px;margin:5px 0}
+*{box-sizing:border-box}body{margin:0;background:var(--paper);color:var(--ink);font-family:Arial,Helvetica,sans-serif}main{min-height:100vh;display:block}
+aside#appSidebar{width:232px;position:fixed;inset:0 auto 0 0;background:#e5e1d7;border-right:2px solid var(--ink);padding:25px 18px}.brand{font-family:Georgia,serif;font-weight:700;letter-spacing:.08em;font-size:17px;border-bottom:1px solid var(--line);padding-bottom:22px}.brand i{color:var(--accent);font-style:normal;margin-right:7px}nav{margin-top:30px;display:grid;gap:3px}.navlink{padding:12px 10px;border:0;border-left:3px solid transparent;background:transparent;color:var(--muted);font:inherit;font-size:12px;text-align:left;cursor:pointer}.navlink:hover{color:var(--ink);background:#ddd8cd}.navlink.active{border-left-color:var(--accent);background:var(--surface);color:var(--ink);font-weight:700}.streak{position:absolute;bottom:24px;left:18px;right:18px;padding:15px 12px;border-top:2px solid var(--ink)}.streak small{color:var(--muted);font-size:9px;letter-spacing:.15em}.streak b{display:block;font-family:Georgia,serif;font-size:25px;margin:5px 0}
 .shell{margin-left:232px;padding:42px 50px;max-width:1450px;width:100%}header{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:38px;border-bottom:2px solid var(--ink);padding-bottom:22px}.eyebrow{font-size:9px;letter-spacing:.18em;color:var(--muted);font-weight:700}h1{font-family:Georgia,serif;font-size:58px;line-height:.96;letter-spacing:-.045em;margin:10px 0}h1 em{font-style:italic;color:var(--accent)}
 .btn,.generate-btn,.dark-btn,.send-btn{border:1px solid var(--ink);border-radius:2px;padding:11px 14px;background:var(--ink);color:var(--surface);font-size:10px;font-weight:800;cursor:pointer}.btn:hover,.generate-btn:hover,.dark-btn:hover,.send-btn:hover{background:var(--accent);border-color:var(--accent)}
 .hero{display:grid;grid-template-columns:1fr 150px;border:2px solid var(--ink);padding:28px;background:var(--surface);margin-bottom:18px}.hero h2{font-family:Georgia,serif;margin:8px 0;font-size:34px}.hero p{color:var(--muted);font-size:12px}.ring{width:100px;height:100px;border:2px solid var(--accent);display:grid;place-content:center;text-align:center;justify-self:end}.ring b{font-size:24px}.ring span{font-size:8px;color:var(--muted)}
@@ -20,7 +20,7 @@ aside{width:232px;position:fixed;inset:0 auto 0 0;background:#e5e1d7;border-righ
 .form-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px}.form-grid input,.form-grid select{min-width:0;border:1px solid var(--line);background:#fbf9f2;color:var(--ink);padding:11px;border-radius:0;font:inherit;font-size:11px}.form-grid .dark-btn{grid-column:1/-1}.data-list{margin-top:13px;display:grid;gap:0}.data-row{display:flex;justify-content:space-between;gap:12px;align-items:center;border-top:1px solid var(--line);padding:12px 2px}.data-row b{font-size:11px}.data-row small{display:block;color:var(--muted);margin-top:3px;font-size:9px}.remove-btn{border:0;background:none;color:var(--muted);cursor:pointer;font-size:18px}.schedule-note{margin-top:14px;padding:12px;background:var(--surface2);color:var(--muted);font-size:10px;line-height:1.55}
 .generated-panel{margin-top:18px}.timeline{display:grid;gap:0}.day-label{font-size:9px;letter-spacing:.16em;color:var(--muted);border-top:2px solid var(--ink);padding:15px 0 7px}.timeline-block{display:grid;grid-template-columns:80px 1fr 70px;gap:10px;align-items:center;padding:10px 0;border-top:1px solid var(--line)}.timeline-block time{font-size:10px;color:var(--muted)}.timeline-block b{font-size:11px}.timeline-block p{margin:3px 0 0;color:var(--muted);font-size:10px}.timeline-block span{text-align:right;font-size:9px;color:var(--muted)}
 .focus{margin-top:18px}.focusbox{display:grid;grid-template-columns:1fr auto;gap:20px;align-items:center}.timer{font-size:58px;font-weight:800;letter-spacing:-.06em}.focus-controls{display:flex;gap:7px;flex-wrap:wrap}.focus-controls button,.choice-row button{border:1px solid var(--ink);background:var(--surface);color:var(--ink);border-radius:2px;padding:9px 11px;font-size:9px;font-weight:800;cursor:pointer}.focus-controls button:hover{background:var(--surface2)}.focus-controls button.active,.focus-controls button.primary{background:var(--accent2);color:white;border-color:var(--accent2)}.session-meta{font-size:10px;color:var(--muted);margin-top:6px}.modal{position:fixed;inset:0;background:rgba(241,238,230,.94);display:none;place-items:center;z-index:20;padding:20px}.modal.open{display:grid}.focuscard{width:min(560px,100%);border:2px solid var(--ink);background:var(--surface);padding:30px}.focuscard .timer{font-size:92px;margin:20px 0}.close{float:right;border:0;background:none;color:var(--muted);font-size:18px;cursor:pointer}.custom-duration{border:1px solid var(--ink);background:var(--surface);padding:7px 8px;font-size:9px;font-weight:800;display:flex;gap:5px;align-items:center}.custom-duration input{width:55px;border:0;background:transparent;outline:0;color:var(--ink);font-size:11px}
-@media(max-width:800px){aside{display:none}.mobile-nav{display:flex;position:sticky;top:0;z-index:10;gap:3px;overflow:auto;padding:8px;margin:-8px -8px 18px;background:var(--paper);border-bottom:1px solid var(--line)}.mobile-nav button{white-space:nowrap;border:1px solid var(--line);background:var(--surface);color:var(--muted);padding:9px 12px;font-size:11px}.mobile-nav button.active{background:var(--ink);color:var(--surface)}.shell{margin:0;padding:22px 16px}header{flex-direction:column;gap:16px}h1{font-size:42px}.grid,.planner-grid{grid-template-columns:1fr}.slots{grid-template-columns:1fr}.planner-top{display:block}.generate-btn{margin-top:14px}.page-title{font-size:36px}.focusbox{grid-template-columns:1fr}.form-grid{grid-template-columns:1fr}.timeline-block{grid-template-columns:58px 1fr 48px}}
+@media(max-width:800px){aside{display:none}.mobile-nav{display:none}.mobile-nav{display:flex;position:sticky;top:0;z-index:10;gap:3px;overflow:auto;padding:8px;margin:-8px -8px 18px;background:var(--paper);border-bottom:1px solid var(--line)}.mobile-nav button{white-space:nowrap;border:1px solid var(--line);background:var(--surface);color:var(--muted);padding:9px 12px;font-size:11px}.mobile-nav button.active{background:var(--ink);color:var(--surface)}.shell{margin:0;padding:22px 16px}header{flex-direction:column;gap:16px}h1{font-size:42px}.grid,.planner-grid{grid-template-columns:1fr}.slots{grid-template-columns:1fr}.planner-top{display:block}.generate-btn{margin-top:14px}.page-title{font-size:36px}.focusbox{grid-template-columns:1fr}.form-grid{grid-template-columns:1fr}.timeline-block{grid-template-columns:58px 1fr 48px}}
 .focus-workspace{display:grid;grid-template-columns:minmax(0,1.25fr) minmax(280px,.75fr);gap:18px}.focus-main{border:2px solid var(--ink);background:var(--surface);padding:30px;min-height:600px}.focus-kicker{font-size:9px;letter-spacing:.18em;color:var(--muted);font-weight:800}.focus-title{font-family:Georgia,serif;font-size:48px;line-height:1;margin:8px 0 12px;letter-spacing:-.04em}.focus-sub{color:var(--muted);font-size:12px;line-height:1.6;max-width:620px}.focus-clock{font-size:clamp(72px,10vw,128px);line-height:.9;letter-spacing:-.08em;font-weight:800;margin:58px 0 28px;text-align:center}.focus-task{border-top:1px solid var(--line);border-bottom:1px solid var(--line);padding:15px 0;margin:0 auto 22px;max-width:700px}.focus-task b{font-size:12px}.focus-task small{display:block;color:var(--muted);margin-top:5px;font-size:10px}.focus-actions{display:flex;justify-content:center;gap:8px;flex-wrap:wrap}.focus-actions button{border:1px solid var(--ink);background:var(--surface);color:var(--ink);padding:11px 14px;font-size:9px;font-weight:800;cursor:pointer}.focus-actions button.primary{background:var(--ink);color:var(--surface)}.focus-actions button.active{background:var(--accent2);border-color:var(--accent2);color:#fff}.sound-board{border:1px solid var(--line);background:var(--surface);padding:20px}.sound-list{display:grid;gap:7px;margin-top:13px}.sound-choice{display:grid;grid-template-columns:1fr auto;gap:10px;align-items:center;border:1px solid var(--line);background:transparent;padding:12px;cursor:pointer;text-align:left;color:var(--ink)}.sound-choice:hover,.sound-choice.active{background:var(--surface2);border-color:var(--ink)}.sound-choice b{font-size:11px}.sound-choice small{display:block;color:var(--muted);font-size:9px;margin-top:3px}.sound-volume{width:100%;margin-top:15px}.focus-history{margin-top:18px;border-top:2px solid var(--ink);padding-top:15px}.focus-history-row{display:flex;justify-content:space-between;border-top:1px solid var(--line);padding:10px 0;font-size:10px}.focus-history-row span{color:var(--muted)}.focus-note{margin-top:18px;padding:12px;background:var(--surface2);font-size:10px;color:var(--muted);line-height:1.55}@media(max-width:900px){.focus-workspace{grid-template-columns:1fr}.focus-main{min-height:0}.focus-clock{margin:42px 0 24px}.focus-title{font-size:38px}}.setup-card{width:min(620px,100%);padding:34px}.setup-heading h2{font-family:Georgia,serif;font-size:38px;line-height:1;margin:9px 0 8px}.setup-heading p{margin:0;color:var(--muted);font-size:12px;line-height:1.55}.setup-fields{display:grid;grid-template-columns:1fr;gap:12px;margin-top:25px}.setup-field{display:grid;gap:6px}.setup-field label{font-size:8px;letter-spacing:.16em;font-weight:800;color:var(--muted)}.search-select{position:relative}.search-options{position:absolute;top:calc(100% + 4px);left:0;right:0;max-height:240px;overflow:auto;background:var(--surface);border:2px solid var(--ink);z-index:50}.search-option{display:block;width:100%;padding:10px 12px;border:0;border-bottom:1px solid var(--line);background:var(--surface);color:var(--ink);font:inherit;text-align:left;cursor:pointer}.search-option:hover,.search-option:focus{background:var(--surface2)}.setup-field{position:relative}.setup-field select:focus{outline:2px solid var(--accent);outline-offset:2px}.setup-save{width:100%;margin-top:14px}.setup-card .schedule-note{margin-top:12px}@media(max-width:600px){.setup-card{padding:24px}.setup-heading h2{font-size:32px}}<style>
 /* TODAY / EDITORIAL LAYOUT */
 .today-intro{display:flex;justify-content:space-between;align-items:flex-end;padding:6px 0 30px;border-bottom:2px solid var(--ink)}
@@ -83,6 +83,9 @@ aside{width:232px;position:fixed;inset:0 auto 0 0;background:#e5e1d7;border-righ
 header h1{font-size:46px;line-height:1;letter-spacing:-.04em;margin:8px 0 5px}
 @media(max-width:800px){header h1{font-size:38px}}
 </style></style></style><style id="navigation-overhaul">
+.today-side,.sound-board{position:static;width:auto;background:transparent;padding:0}
+#section-focus .sound-board{min-width:0}
+
 /* StudyOS navigation: one destination at a time, generous page spacing. */
 aside#appSidebar{width:248px;transition:width .28s ease,transform .28s ease;z-index:30;overflow:hidden}
 aside#appSidebar .brand{display:flex;align-items:center;gap:8px;white-space:nowrap}
@@ -167,7 +170,28 @@ body[data-page="ai"] #section-planner .planner-grid{max-width:980px}
   .mobile-nav button{white-space:nowrap;border:1px solid var(--line);background:var(--surface);color:var(--muted);padding:9px 12px;font-size:10px}
   .mobile-nav button.active{background:var(--ink);color:var(--surface)}
 }
-</style></head><body><main>
+<style id="studyos-final-ui">
+  .shell{min-height:100vh;padding:48px 64px 80px}
+  #section-today{max-width:1240px;margin:0 auto}
+  #section-today .today-intro{padding-top:8px;padding-bottom:38px}
+  #section-today .today-intro h2{font-size:clamp(54px,6vw,88px);max-width:720px}
+  #section-today .today-summary{align-self:end}
+  #section-today .today-next{padding:34px 0 32px}
+  #section-today .today-columns{grid-template-columns:minmax(0,1.65fr) minmax(300px,.72fr);gap:52px}
+  #section-today .today-side{display:block}
+  #section-today .today-list,#section-today .today-side{min-width:0}
+  #section-today .today-side{border-left:1px solid var(--line);padding-left:30px}
+  .mobile-nav{display:none}
+  @media(max-width:900px){
+    .shell{padding:38px 24px 60px}
+    #section-today .today-columns{grid-template-columns:1fr;gap:28px}
+    #section-today .today-side{border-left:0;border-top:2px solid var(--ink);padding:25px 0 0}
+  }
+  @media(max-width:800px){
+    .mobile-nav{display:flex}
+  }
+</style>
+</head><body><main>
 <aside id="appSidebar">
   <div class="brand"><span class="brand-mark">•</span><span class="brand-name">STUDYOS</span></div>
   <button class="sidebar-toggle" id="sidebarToggle" type="button" aria-label="Collapse sidebar"><span>←</span><b>CLOSE</b></button>
@@ -194,7 +218,7 @@ body[data-page="ai"] #section-planner .planner-grid{max-width:980px}
   </nav>
   <div class="streak"><small>STREAK</small><b id="streakValue">0 DAYS</b><small>Start your first study block.</small></div>
 </aside>
-<section class="shell"><button class="content-menu-toggle" id="contentMenuToggle" type="button" aria-label="Open sidebar"><span>☰</span><b>MENU</b></button><header><div><div class="eyebrow" id="date"></div><h1 id="greeting">Good night.</h1><p class="greeting-prompt" id="greetingPrompt">How can I help you wind things down?</p></div><div style="display:flex;gap:8px;align-items:center"><button class="btn" id="openClockSettings">CLOCK SETTINGS</button><button class="btn" id="notify">ENABLE NOTIFICATIONS</button></div></header>
+<section class="shell"><button class="content-menu-toggle" id="contentMenuToggle" type="button" aria-label="Open sidebar"><span>☰</span><b>MENU</b></button><header><div><div class="eyebrow" id="date"></div><div class="eyebrow" id="timezoneLabel" style="margin-top:5px"></div><h1 id="greeting">Good night.</h1><p class="greeting-prompt" id="greetingPrompt">How can I help you wind things down?</p></div><div style="display:flex;gap:8px;align-items:center"><button class="btn" id="openClockSettings">CLOCK SETTINGS</button><button class="btn" id="notify">ENABLE NOTIFICATIONS</button></div></header>
 <div class="mobile-nav" id="mobileNav"><button class="active" data-section="today">Today</button><button data-section="plan">Plan</button><button data-section="focus">Focus</button><button data-section="ai">AI</button><button data-section="deadlines">Deadlines</button><button data-section="availability">Availability</button><button data-section="activities">Activities</button><button data-section="extras">Extras</button><button data-section="exams">Exams</button><button data-section="exceptions">Exceptions</button><button data-section="syllabus">Syllabus</button><button data-section="reminders">Reminders</button><button data-section="progress">Progress</button></div><div id="section-today" class="section active">
   <div class="today-intro">
     <div>
@@ -235,7 +259,7 @@ body[data-page="ai"] #section-planner .planner-grid{max-width:980px}
 
       </aside>
   </div>
-</section></div></div><section id="section-focus" class="section">
+</section><section id="section-focus" class="section">
   <div class="planner-top">
     <div><div class="eyebrow">FOCUS ROOM</div><h2 class="page-title">Clear desk.<br><em>Quiet mind.</em></h2><p class="page-lede">Start from the work StudyOS already planned for you. Pick a calm soundscape, choose your pace, and let the session run without leaving your plan.</p></div>
   </div>
@@ -394,7 +418,7 @@ body[data-page="ai"] #section-planner .planner-grid{max-width:980px}
     <div class="head"><b>YOUR ACTUAL STUDY PLAN</b><span id="planSummary">Waiting for your inputs</span></div>
     <div id="generatedPlan" class="timeline"></div>
   </section>
-</section><section id="section-syllabus" class="section"><div class="panel"><div class="head"><b>SYLLABUS</b><span>Track what remains</span></div><div class="insight"><b>No syllabus has been added yet.</b><br>Add subjects and chapters when you want StudyOS to track coverage. Nothing is pre-filled.</div></div></section><section id="section-reminders" class="section"><div class="panel"><div class="head"><b>REMINDERS</b><span>Up to 10/day</span></div><div id="reminderSectionSlots"></div><div class="insight">Reminder slots are synced from the Today view. Push notifications require browser permission and your notification keys to be configured.</div></div></section><section id="section-progress" class="section"><div class="panel"><div class="head"><b>PROGRESS</b><span>Real activity only</span></div><div class="insight"><b>Your progress starts at zero.</b><br>Completed study blocks and focus sessions will appear here. No sample streaks or fake statistics.</div><div id="progressStats" style="display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-top:14px"></div></div></section></section></main><div class="modal open" id="setupModal">
+</section><section id="section-syllabus" class="section"><div class="panel"><div class="head"><b>SYLLABUS</b><span>Track what remains</span></div><div class="insight"><b>No syllabus has been added yet.</b><br>Add subjects and chapters when you want StudyOS to track coverage. Nothing is pre-filled.</div></div></section><section id="section-reminders" class="section"><div class="panel"><div class="head"><b>REMINDERS</b><span>Up to 10/day</span></div><div id="reminderSectionSlots"></div><div class="insight">Reminder slots are synced from the Today view. Push notifications require browser permission and your notification keys to be configured.</div></div></section><section id="section-progress" class="section"><div class="panel"><div class="head"><b>PROGRESS</b><span>Real activity only</span></div><div class="insight"><b>Your progress starts at zero.</b><br>Completed study blocks and focus sessions will appear here. No sample streaks or fake statistics.</div><div id="progressStats" style="display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-top:14px"></div></div></section></section></section></main><div class="modal open" id="setupModal">
   <div class="focuscard setup-card">
     <div class="setup-heading">
       <div class="eyebrow">WELCOME TO STUDYOS</div>
@@ -495,11 +519,7 @@ body[data-page="ai"] #section-planner .planner-grid{max-width:980px}
     userSettings=settings;
     modal.classList.remove("open");
     document.body.dataset.section="today";document.body.dataset.page="today";
-    document.querySelectorAll("main > section").forEach(s=>s.classList.remove("active"));
-    const today=document.getElementById("today");
-    if(today)today.classList.add("active");
-    const nav=document.querySelectorAll("[data-section]");
-    nav.forEach(n=>n.classList.toggle("active",n.dataset.section==="today"));
+    if(typeof showSection==="function")showSection("today");
     if(typeof updateClockAndGreeting==="function")updateClockAndGreeting();
     if(typeof renderToday==="function")renderToday();
   });
@@ -553,8 +573,8 @@ body[data-page="ai"] #section-planner .planner-grid{max-width:980px}
 const $=id=>document.getElementById(id);
 const blocksEl=$("blocks"),countEl=$("count"),pctEl=$("pct"),nextEl=$("next"),plannedEl=$("planned"),slotsEl=$("slots"),notifyBtn=$("notify"),timerEl=$("timer"),focusTimerEl=$("focusTimer"),focusHeaderStateEl=$("focusHeaderState"),focusStateEl=$("focusState"),focusActionEl=$("focusAction");
 const DAYS=["Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"];
-const COUNTRY_ZONES={"India":"Asia/Kolkata","United States":"America/New_York","United Kingdom":"Europe/London","Australia":"Australia/Sydney","Singapore":"Asia/Singapore","United Arab Emirates":"Asia/Dubai","Canada":"America/Toronto","Japan":"Asia/Tokyo","Germany":"Europe/Berlin","France":"Europe/Paris"};
-const COUNTRY_DATE_FORMAT={"India":"DD/MM/YYYY","United States":"MM/DD/YYYY","United Kingdom":"DD/MM/YYYY","Australia":"DD/MM/YYYY","Singapore":"DD/MM/YYYY","United Arab Emirates":"DD/MM/YYYY","Canada":"MM/DD/YYYY","Japan":"YYYY/MM/DD","Germany":"DD/MM/YYYY","France":"DD/MM/YYYY"};
+const COUNTRY_ZONES={"India":"Asia/Kolkata","United States":"America/New_York","United Kingdom":"Europe/London","Australia":"Australia/Sydney","Singapore":"Asia/Singapore","United Arab Emirates":"Asia/Dubai","Canada":"America/Toronto","Japan":"Asia/Tokyo","Germany":"Europe/Berlin","France":"Europe/Paris","Brazil":"America/Sao_Paulo","China":"Asia/Shanghai","South Korea":"Asia/Seoul","New Zealand":"Pacific/Auckland","South Africa":"Africa/Johannesburg","Nepal":"Asia/Kathmandu","Bangladesh":"Asia/Dhaka","Sri Lanka":"Asia/Colombo","Malaysia":"Asia/Kuala_Lumpur","Indonesia":"Asia/Jakarta","Thailand":"Asia/Bangkok"};
+const COUNTRY_DATE_FORMAT={"India":"DD/MM/YYYY","United States":"MM/DD/YYYY","United Kingdom":"DD/MM/YYYY","Australia":"DD/MM/YYYY","Singapore":"DD/MM/YYYY","United Arab Emirates":"DD/MM/YYYY","Canada":"MM/DD/YYYY","Japan":"YYYY/MM/DD","Germany":"DD/MM/YYYY","France":"DD/MM/YYYY","Brazil":"DD/MM/YYYY","China":"YYYY/MM/DD","South Korea":"YYYY/MM/DD","New Zealand":"DD/MM/YYYY","South Africa":"DD/MM/YYYY","Nepal":"DD/MM/YYYY","Bangladesh":"DD/MM/YYYY","Sri Lanka":"DD/MM/YYYY","Malaysia":"DD/MM/YYYY","Indonesia":"DD/MM/YYYY","Thailand":"DD/MM/YYYY"};
 const TIMEZONE_LIST=(()=>{try{return Intl.supportedValuesOf("timeZone").filter(z=>!z.startsWith("Etc/")).sort();}catch(e){return ["Asia/Kolkata","Asia/Dubai","Asia/Singapore","Asia/Tokyo","Australia/Sydney","Europe/London","Europe/Paris","Europe/Berlin","America/New_York","America/Chicago","America/Denver","America/Los_Angeles","Pacific/Auckland"];}})();
 const settingsKey="studyos-settings";
 let userSettings=JSON.parse(localStorage.getItem(settingsKey)||"null");
@@ -576,8 +596,18 @@ function updateClockAndGreeting(){
   const g=$("greeting"),prompt=$("greetingPrompt"),msg=greetingForHour(Number(p.hour));
   if(g)g.textContent=msg[0];
   if(prompt)prompt.textContent=msg[1];
+  const tz=$("timezoneLabel");
+  if(tz)tz.textContent=(userSettings?.timezone||"Asia/Kolkata").replace(/_/g," ");
   const d=$("date");
-  if(d)d.textContent=new Intl.DateTimeFormat("en-IN",{timeZone:userSettings?.timezone||"Asia/Kolkata",weekday:"long",day:"numeric",month:"long"}).format(new Date()).toUpperCase();
+  if(d){
+    const zone=userSettings?.timezone||"Asia/Kolkata";
+    const fmt=userSettings?.dateFormat||"DD/MM/YYYY";
+    const p=zonedParts();
+    const day=String(Number(p.day)),month=String(Number(p.month)),year=p.year;
+    const numeric=fmt==="MM/DD/YYYY"?month+"/"+day+"/"+year:fmt==="YYYY/MM/DD"?year+"/"+month+"/"+day:day+"/"+month+"/"+year;
+    const longDate=new Intl.DateTimeFormat("en-US",{timeZone:zone,weekday:"long",day:"numeric",month:"long",year:"numeric"}).format(new Date());
+    d.textContent=longDate.toUpperCase()+" · "+numeric;
+  }
 }
 
 const todayKey=()=>accountTodayKey();
@@ -817,9 +847,18 @@ $("setupCountry")?.addEventListener("change",()=>{
   timezoneEl.dataset.validValue=timezoneEl.value;
   formatEl.value=COUNTRY_DATE_FORMAT[country]||"DD/MM/YYYY";
 });
+$("setupTimezone")?.addEventListener("change",()=>{
+  const timezoneEl=$("setupTimezone");
+  const timezone=timezoneEl.value.trim();
+  if(TIMEZONE_LIST.includes(timezone)){
+    timezoneEl.dataset.validValue=timezone;
+    timezoneEl.setCustomValidity("");
+  }
+});
 // Clock settings are saved by the isolated handler beside the modal so this control remains functional even if another StudyOS module fails.
 if(!userSettings){openSetup()}else{$("setupModal").classList.remove("open")}
 const focus={seconds:25*60,running:false,mode:25,breakMinutes:5,interval:null};
+let focusTaskIndex=0;
 function fmt(s){return String(Math.floor(s/60)).padStart(2,"0")+":"+String(s%60).padStart(2,"0")}
 function syncFocus(){timerEl.textContent=fmt(focus.seconds);$("focusPageTimer")&&( $("focusPageTimer").textContent=fmt(focus.seconds));focusTimerEl.textContent=fmt(focus.seconds);focusHeaderStateEl.textContent=focus.running?"FOCUS SESSION IN PROGRESS":"Ready when you are.";focusStateEl.textContent=focus.running?"FOCUS SESSION IN PROGRESS":"Ready when you are.";focusActionEl.textContent=focus.running?"PAUSE":"START FOCUS";$("focusPageStart")&&($("focusPageStart").textContent=focus.running?"PAUSE":"START FOCUS");document.querySelectorAll("[data-focus]").forEach(b=>b.classList.toggle("active",Number(b.dataset.focus)===focus.mode));document.querySelectorAll("[data-break]").forEach(b=>b.classList.toggle("active",Number(b.dataset.break)===focus.breakMinutes))}
 function setFocus(min){focus.mode=min;focus.seconds=min*60;focus.running=false;clearInterval(focus.interval);$("customFocusMinutes").value="";syncFocus()}
@@ -832,7 +871,6 @@ document.querySelectorAll("[data-focus]").forEach(b=>b.addEventListener("click",
 document.querySelectorAll("[data-break]").forEach(b=>b.addEventListener("click",()=>{focus.breakMinutes=Number(b.dataset.break);syncFocus()}));
 $("customFocusMinutes")?.addEventListener("change",setCustomFocus);
 
-let focusTaskIndex=0;
 function focusTasks(){return state.plan.filter(x=>x.date===todayKey()).sort((a,b)=>a.start.localeCompare(b.start)).filter(x=>!state.done.includes(x.id))}
 function focusTaskTitle(){const t=focusTasks()[focusTaskIndex];return t?t.subject+" · "+t.task:"Open focus session"}
 function renderFocusPage(){
@@ -877,21 +915,5 @@ function playPianoLoop(){
 }
 function setSoundVolume(v){if(soundGain)soundGain.gain.value=v}
 document.body.dataset.section="today";$("sundayBlocked").checked=!!state.calendarRules.sundayBlocked;initPlannerWindows();renderToday();renderPlanner();renderProgress();renderGeneratedPlan();renderReminderSection();renderFocusPage();renderFocusHistory();syncFocus();syncReminders();
-</script><script>
-(function(){
-  document.addEventListener("click",function(e){
-    const btn=e.target.closest(".navlink[data-section]");
-    if(!btn)return;
-    const name=btn.dataset.section;
-    if(typeof showSection==="function"){
-      e.preventDefault();
-      showSection(name);
-    }else{
-      document.querySelectorAll(".section").forEach(s=>s.classList.toggle("active",s.id==="section-"+name));
-      document.querySelectorAll(".navlink[data-section]").forEach(b=>b.classList.toggle("active",b===btn));
-      document.body.dataset.section=name;
-    }
-  });
-})();
 </script>
 </body></html>
