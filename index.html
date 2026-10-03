@@ -161,8 +161,16 @@ aside{width:232px;position:fixed;inset:0 auto 0 0;background:#e5e1d7;border-righ
       dateFormat:document.getElementById("setupDateFormat").value
     };
     localStorage.setItem("studyos-settings",JSON.stringify(settings));
+    window.userSettings=settings;
     modal.classList.remove("open");
-    window.location.reload();
+    document.body.dataset.section="today";
+    document.querySelectorAll("main > section").forEach(s=>s.classList.remove("active"));
+    const today=document.getElementById("today");
+    if(today)today.classList.add("active");
+    const nav=document.querySelectorAll("[data-section]");
+    nav.forEach(n=>n.classList.toggle("active",n.dataset.section==="today"));
+    if(typeof updateClockAndGreeting==="function")updateClockAndGreeting();
+    if(typeof renderToday==="function")renderToday();
   });
 })();
 </script>
