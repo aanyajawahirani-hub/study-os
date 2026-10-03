@@ -1,0 +1,16 @@
+name: StudyOS Reminder Scheduler
+
+on:
+  schedule:
+    - cron: "*/5 * * * *"
+  workflow_dispatch:
+
+jobs:
+  send-reminders:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Trigger StudyOS reminder checker
+        run: |
+          curl --fail-with-body --silent --show-error \
+            -H "Authorization: Bearer ${{ secrets.STUDYOS_CRON_SECRET }}" \
+            "${{ secrets.STUDYOS_CRON_URL }}/api/cron"
