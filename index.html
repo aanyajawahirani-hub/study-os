@@ -13,7 +13,7 @@ aside{width:232px;position:fixed;inset:0 auto 0 0;background:#e5e1d7;border-righ
 .hero{display:grid;grid-template-columns:1fr 150px;border:2px solid var(--ink);padding:28px;background:var(--surface);margin-bottom:18px}.hero h2{font-family:Georgia,serif;margin:8px 0;font-size:34px}.hero p{color:var(--muted);font-size:12px}.ring{width:100px;height:100px;border:2px solid var(--accent);display:grid;place-content:center;text-align:center;justify-self:end}.ring b{font-size:24px}.ring span{font-size:8px;color:var(--muted)}
 .grid,.planner-grid{display:grid;grid-template-columns:1.25fr .9fr;gap:18px}.panel{border:1px solid var(--line);background:var(--surface);padding:20px}.panel:hover{border-color:#8f9188}.head{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:12px;border-bottom:1px solid var(--line);padding-bottom:9px}.head b{font-size:10px;letter-spacing:.15em}.head span{font-size:10px;color:var(--muted)}
 .block{width:100%;display:grid;grid-template-columns:58px 24px 1fr 40px;gap:10px;align-items:center;background:none;color:inherit;border:0;border-top:1px solid var(--line);text-align:left;padding:15px 3px;cursor:pointer}.block:hover{background:#ece8de}.block time,.block>span{font-size:10px;color:var(--muted)}.dot{width:20px;height:20px;border:1px solid var(--ink);display:grid;place-content:center;font-size:11px}.done .dot{background:var(--accent2);color:white;border-color:var(--accent2)}.done .copy{opacity:.45;text-decoration:line-through}.copy b{font-size:12px}.copy p{margin:4px 0 0;color:var(--muted);font-size:11px}.insight{margin-top:15px;padding:14px;border-left:3px solid var(--accent2);background:var(--surface2);font-size:11px;color:var(--muted);line-height:1.55}.insight b{color:var(--ink)}
-.reminders{margin-top:18px}.slots{display:grid;grid-template-columns:repeat(2,1fr);gap:8px}.slot{display:flex;align-items:center;gap:10px;padding:11px;border:1px solid var(--line);background:var(--surface2)}.slot input{background:var(--surface);color:var(--ink);border:1px solid var(--line);padding:5px}.section{display:none}.section.active{display:block}.mobile-nav{display:none}body[data-section="today"] header{display:flex}body[data-section="planner"] header,body[data-section="syllabus"] header,body[data-section="reminders"] header,body[data-section="progress"] header{display:none}
+.reminders{margin-top:18px}.slots{display:grid;grid-template-columns:repeat(2,1fr);gap:8px}.slot{display:flex;align-items:center;gap:10px;padding:11px;border:1px solid var(--line);background:var(--surface2)}.slot input{background:var(--surface);color:var(--ink);border:1px solid var(--line);padding:5px}.section{display:none}.section.active{display:block}.mobile-nav{display:none}body[data-section="today"] header{display:flex}body[data-section="planner"] header,body[data-section="focus"] header,body[data-section="syllabus"] header,body[data-section="reminders"] header,body[data-section="progress"] header{display:none}
 .page-title{font-family:Georgia,serif;font-size:45px;line-height:1.03;letter-spacing:-.035em;margin:10px 0}.page-title em{font-style:italic;color:var(--accent)}.page-lede{max-width:680px;color:var(--muted);font-size:13px;line-height:1.65}.planner-tabs{display:flex;flex-wrap:wrap;gap:0;border:2px solid var(--ink);background:var(--surface);margin:0 0 18px}.planner-tab{flex:1;min-width:150px;border:0;border-right:1px solid var(--line);background:transparent;color:var(--muted);padding:14px 12px;font-size:9px;font-weight:800;letter-spacing:.08em;cursor:pointer}.planner-tab:last-child{border-right:0}.planner-tab:hover{background:var(--surface2);color:var(--ink)}.planner-tab.active{background:var(--ink);color:var(--surface)}.planner-window{display:none}.planner-window.active{display:block}.planner-window>.panel{min-height:360px}@media(max-width:800px){.planner-tabs{overflow-x:auto;flex-wrap:nowrap}.planner-tab{min-width:145px}.planner-window>.panel{min-height:0}}
 .planner-top{display:flex;justify-content:space-between;gap:30px;align-items:end;margin-bottom:22px}.planner-grid.lower{margin-top:18px}.ai-panel{min-height:460px}
 .chat{height:300px;overflow:auto;padding:4px 2px 12px;display:grid;align-content:start;gap:10px}.message{max-width:88%;padding:12px 14px;border:1px solid var(--line);background:var(--surface2);font-size:12px;line-height:1.55}.message.assistant{justify-self:start}.message.user{justify-self:end;background:var(--ink);color:var(--surface);border-color:var(--ink)}.chat-compose{border-top:1px solid var(--line);padding-top:12px}.chat-compose textarea{width:100%;resize:vertical;border:1px solid var(--line);background:#fbf9f2;color:var(--ink);padding:12px;font:inherit;font-size:12px;outline:none}.compose-row{display:flex;align-items:center;gap:9px;margin-top:8px}.file-btn{display:inline-block;border:1px solid var(--ink);background:var(--surface);padding:10px 12px;font-size:9px;font-weight:800;cursor:pointer}.file-btn input{display:none}.compose-row span{font-size:9px;color:var(--muted);flex:1}
@@ -21,10 +21,10 @@ aside{width:232px;position:fixed;inset:0 auto 0 0;background:#e5e1d7;border-righ
 .generated-panel{margin-top:18px}.timeline{display:grid;gap:0}.day-label{font-size:9px;letter-spacing:.16em;color:var(--muted);border-top:2px solid var(--ink);padding:15px 0 7px}.timeline-block{display:grid;grid-template-columns:80px 1fr 70px;gap:10px;align-items:center;padding:10px 0;border-top:1px solid var(--line)}.timeline-block time{font-size:10px;color:var(--muted)}.timeline-block b{font-size:11px}.timeline-block p{margin:3px 0 0;color:var(--muted);font-size:10px}.timeline-block span{text-align:right;font-size:9px;color:var(--muted)}
 .focus{margin-top:18px}.focusbox{display:grid;grid-template-columns:1fr auto;gap:20px;align-items:center}.timer{font-size:58px;font-weight:800;letter-spacing:-.06em}.focus-controls{display:flex;gap:7px;flex-wrap:wrap}.focus-controls button,.choice-row button{border:1px solid var(--ink);background:var(--surface);color:var(--ink);border-radius:2px;padding:9px 11px;font-size:9px;font-weight:800;cursor:pointer}.focus-controls button:hover{background:var(--surface2)}.focus-controls button.active,.focus-controls button.primary{background:var(--accent2);color:white;border-color:var(--accent2)}.session-meta{font-size:10px;color:var(--muted);margin-top:6px}.modal{position:fixed;inset:0;background:rgba(241,238,230,.94);display:none;place-items:center;z-index:20;padding:20px}.modal.open{display:grid}.focuscard{width:min(560px,100%);border:2px solid var(--ink);background:var(--surface);padding:30px}.focuscard .timer{font-size:92px;margin:20px 0}.close{float:right;border:0;background:none;color:var(--muted);font-size:18px;cursor:pointer}.custom-duration{border:1px solid var(--ink);background:var(--surface);padding:7px 8px;font-size:9px;font-weight:800;display:flex;gap:5px;align-items:center}.custom-duration input{width:55px;border:0;background:transparent;outline:0;color:var(--ink);font-size:11px}
 @media(max-width:800px){aside{display:none}.mobile-nav{display:flex;position:sticky;top:0;z-index:10;gap:3px;overflow:auto;padding:8px;margin:-8px -8px 18px;background:var(--paper);border-bottom:1px solid var(--line)}.mobile-nav button{white-space:nowrap;border:1px solid var(--line);background:var(--surface);color:var(--muted);padding:9px 12px;font-size:11px}.mobile-nav button.active{background:var(--ink);color:var(--surface)}.shell{margin:0;padding:22px 16px}header{flex-direction:column;gap:16px}h1{font-size:42px}.grid,.planner-grid{grid-template-columns:1fr}.slots{grid-template-columns:1fr}.planner-top{display:block}.generate-btn{margin-top:14px}.page-title{font-size:36px}.focusbox{grid-template-columns:1fr}.form-grid{grid-template-columns:1fr}.timeline-block{grid-template-columns:58px 1fr 48px}}
-</style></head><body><main>
-<aside><div class="brand"><i>✦</i> STUDYOS</div><nav><button class="navlink active" data-section="today">Today</button><button class="navlink" data-section="planner">Planner</button><button class="navlink" data-section="syllabus">Syllabus</button><button class="navlink" data-section="reminders">Reminders</button><button class="navlink" data-section="progress">Progress</button></nav><div class="streak"><small>STREAK</small><b id="streakValue">0 DAYS</b><small>Start your first study block.</small></div></aside>
+.focus-workspace{display:grid;grid-template-columns:minmax(0,1.25fr) minmax(280px,.75fr);gap:18px}.focus-main{border:2px solid var(--ink);background:var(--surface);padding:30px;min-height:600px}.focus-kicker{font-size:9px;letter-spacing:.18em;color:var(--muted);font-weight:800}.focus-title{font-family:Georgia,serif;font-size:48px;line-height:1;margin:8px 0 12px;letter-spacing:-.04em}.focus-sub{color:var(--muted);font-size:12px;line-height:1.6;max-width:620px}.focus-clock{font-size:clamp(72px,10vw,128px);line-height:.9;letter-spacing:-.08em;font-weight:800;margin:58px 0 28px;text-align:center}.focus-task{border-top:1px solid var(--line);border-bottom:1px solid var(--line);padding:15px 0;margin:0 auto 22px;max-width:700px}.focus-task b{font-size:12px}.focus-task small{display:block;color:var(--muted);margin-top:5px;font-size:10px}.focus-actions{display:flex;justify-content:center;gap:8px;flex-wrap:wrap}.focus-actions button{border:1px solid var(--ink);background:var(--surface);color:var(--ink);padding:11px 14px;font-size:9px;font-weight:800;cursor:pointer}.focus-actions button.primary{background:var(--ink);color:var(--surface)}.focus-actions button.active{background:var(--accent2);border-color:var(--accent2);color:#fff}.sound-board{border:1px solid var(--line);background:var(--surface);padding:20px}.sound-list{display:grid;gap:7px;margin-top:13px}.sound-choice{display:grid;grid-template-columns:1fr auto;gap:10px;align-items:center;border:1px solid var(--line);background:transparent;padding:12px;cursor:pointer;text-align:left;color:var(--ink)}.sound-choice:hover,.sound-choice.active{background:var(--surface2);border-color:var(--ink)}.sound-choice b{font-size:11px}.sound-choice small{display:block;color:var(--muted);font-size:9px;margin-top:3px}.sound-volume{width:100%;margin-top:15px}.focus-history{margin-top:18px;border-top:2px solid var(--ink);padding-top:15px}.focus-history-row{display:flex;justify-content:space-between;border-top:1px solid var(--line);padding:10px 0;font-size:10px}.focus-history-row span{color:var(--muted)}.focus-note{margin-top:18px;padding:12px;background:var(--surface2);font-size:10px;color:var(--muted);line-height:1.55}@media(max-width:900px){.focus-workspace{grid-template-columns:1fr}.focus-main{min-height:0}.focus-clock{margin:42px 0 24px}.focus-title{font-size:38px}}</style></head><body><main>
+<aside><div class="brand"><i>✦</i> STUDYOS</div><nav><button class="navlink active" data-section="today">Today</button><button class="navlink" data-section="planner">Planner</button><button class="navlink" data-section="focus">Focus</button><button class="navlink" data-section="syllabus">Syllabus</button><button class="navlink" data-section="reminders">Reminders</button><button class="navlink" data-section="progress">Progress</button></nav><div class="streak"><small>STREAK</small><b id="streakValue">0 DAYS</b><small>Start your first study block.</small></div></aside>
 <section class="shell"><header><div><div class="eyebrow" id="date"></div><h1 id="greeting">Good night.<br><em>Let’s lock in.</em></h1></div><button class="btn" id="notify">◉ ENABLE NOTIFICATIONS</button></header>
-<div class="mobile-nav" id="mobileNav"><button class="active" data-section="today">Today</button><button data-section="planner">Planner</button><button data-section="syllabus">Syllabus</button><button data-section="reminders">Reminders</button><button data-section="progress">Progress</button></div><div id="section-today" class="section active"><div class="hero"><div><div class="eyebrow">TODAY'S MISSION</div><h2><span id="count">0</span> blocks complete</h2><p id="next">Add your first study block to get started.</p></div><div class="ring"><b id="pct">0%</b><span>DONE</span></div></div>
+<div class="mobile-nav" id="mobileNav"><button class="active" data-section="today">Today</button><button data-section="planner">Planner</button><button data-section="focus">Focus</button><button data-section="syllabus">Syllabus</button><button data-section="reminders">Reminders</button><button data-section="progress">Progress</button></div><div id="section-today" class="section active"><div class="hero"><div><div class="eyebrow">TODAY'S MISSION</div><h2><span id="count">0</span> blocks complete</h2><p id="next">Add your first study block to get started.</p></div><div class="ring"><b id="pct">0%</b><span>DONE</span></div></div>
 <div class="grid"><section class="panel"><div class="head"><b>THE RUNWAY</b><span id="planned">0 min planned</span></div><div id="blocks"></div></section>
 <section class="panel"><div class="head"><b>UP NEXT</b></div><div id="upNext"><div class="insight">Your upcoming exams and priorities will appear here once you add them.</div></div></section></div>
 <section class="panel focus">
@@ -42,7 +42,40 @@ aside{width:232px;position:fixed;inset:0 auto 0 0;background:#e5e1d7;border-righ
     </div>
   </div>
 </section><section class="panel reminders"><div class="head"><b>REMINDER SLOTS</b><span>Up to 10/day</span></div><div class="slots" id="slots"></div></section>
-</section></div><section id="section-planner" class="section">
+</section></div><section id="section-focus" class="section">
+  <div class="planner-top">
+    <div><div class="eyebrow">FOCUS ROOM</div><h2 class="page-title">Clear desk.<br><em>Quiet mind.</em></h2><p class="page-lede">Start from the work StudyOS already planned for you. Pick a calm soundscape, choose your pace, and let the session run without leaving your plan.</p></div>
+  </div>
+  <div class="focus-workspace">
+    <section class="focus-main">
+      <div class="focus-kicker" id="focusModeLabel">FOCUS SESSION</div>
+      <div class="focus-clock" id="focusPageTimer">25:00</div>
+      <div class="focus-task" id="focusCurrentTask"><b>No focus task selected.</b><small>Build your plan first, then StudyOS will surface the next unfinished block here.</small></div>
+      <div class="focus-actions">
+        <button data-page-focus="25" class="active">25 MIN</button><button data-page-focus="50">50 MIN</button><button data-page-focus="90">90 MIN</button>
+        <button id="focusPageStart" class="primary">START FOCUS</button><button id="focusPageReset">RESET</button>
+      </div>
+      <div class="focus-actions" style="margin-top:8px">
+        <button id="focusPagePrev">PREVIOUS TASK</button><button id="focusPageNext">NEXT TASK</button>
+      </div>
+      <div class="focus-note" id="focusPageStatus">Your completed session will count toward Progress and can be tied back to the task you were working on.</div>
+    </section>
+    <aside class="sound-board">
+      <div class="head"><b>CALMING SOUNDS</b><span id="soundStatus">Off</span></div>
+      <div class="sound-list">
+        <button class="sound-choice" data-sound="rain"><span><b>Rain</b><small>soft continuous rainfall</small></span><span>01</span></button>
+        <button class="sound-choice" data-sound="brown"><span><b>Brown noise</b><small>low, steady background</small></span><span>02</span></button>
+        <button class="sound-choice" data-sound="forest"><span><b>Forest</b><small>wind and distant birds</small></span><span>03</span></button>
+        <button class="sound-choice" data-sound="cafe"><span><b>Quiet café</b><small>soft room texture</small></span><span>04</span></button>
+        <button class="sound-choice" data-sound="night"><span><b>Night</b><small>low hum and sparse tones</small></span><span>05</span></button>
+        <button class="sound-choice" data-sound="piano"><span><b>Soft piano</b><small>slow generated notes</small></span><span>06</span></button>
+      </div>
+      <input class="sound-volume" id="soundVolume" type="range" min="0" max="1" step=".01" value=".28" aria-label="Sound volume">
+      <div class="focus-history"><div class="head"><b>RECENT SESSIONS</b><span id="focusSessionCount">0</span></div><div id="focusHistory"></div></div>
+      <div class="focus-note">The soundscapes are generated locally by StudyOS, so the Focus room does not depend on a separate music tab or a copyrighted stream.</div>
+    </aside>
+  </div>
+</section><section id="section-planner" class="section">
   <div class="planner-top">
     <div>
       <div class="eyebrow">STUDYOS PLANNER ENGINE</div>
@@ -85,49 +118,7 @@ aside{width:232px;position:fixed;inset:0 auto 0 0;background:#e5e1d7;border-righ
   </div>
 
   <div class="planner-tabs" id="plannerTabs"><button class="planner-tab active" data-window="deadlines">01 DEADLINES</button><button class="planner-tab" data-window="availability">02 AVAILABILITY</button><button class="planner-tab" data-window="activities">03 ACTIVITIES</button><button class="planner-tab" data-window="extras">04 EXTRA-CURRICULARS</button><button class="planner-tab" data-window="exams">05 EXAMS</button><button class="planner-tab" data-window="exceptions">06 EXCEPTIONS</button></div>
-  <div class="planner-window active" data-window-panel="deadlines"><section class="panel">
-      <div class="head"><b>WHEN I CAN STUDY</b><span>Weekly availability</span></div>
-      <div class="form-grid availability-form">
-        <select id="availDay"><option value="1">Monday</option><option value="2">Tuesday</option><option value="3">Wednesday</option><option value="4">Thursday</option><option value="5">Friday</option><option value="6">Saturday</option><option value="0">Sunday</option></select>
-        <input id="availStart" type="time" value="20:00">
-        <input id="availEnd" type="time" value="22:00">
-        <button class="dark-btn" id="addAvailability">ADD STUDY WINDOW</button>
-      </div>
-      <div id="availabilityList" class="data-list"></div>
-      <div class="schedule-note">You can also just tell the AI your school, tuition, sports, travel, sleep, or preferred study hours. It will update these constraints.</div>
-    </section>
-
-    <section class="panel">
-      <div class="head"><b>EXAM PREP ENGINE</b><span>Work backwards from the exam</span></div>
-      <div class="form-grid">
-        <input id="examSubject" placeholder="Subject">
-        <input id="examDate" type="date">
-        <input id="syllabusHours" type="number" min="0" step="0.5" placeholder="Syllabus hours">
-        <input id="pyqCount" type="number" min="0" step="1" placeholder="PYQs">
-        <input id="pyqMinutes" type="number" min="15" step="15" value="60" placeholder="Minutes per PYQ">
-        <input id="sampleCount" type="number" min="0" step="1" placeholder="Sample papers">
-        <input id="sampleMinutes" type="number" min="30" step="15" value="120" placeholder="Minutes per paper">
-        <input id="errorMinutes" type="number" min="15" step="15" value="45" placeholder="Error analysis minutes">
-        <input id="finalDays" type="number" min="0" step="1" value="2" placeholder="Final revision days">
-        <input id="finalMinutes" type="number" min="15" step="15" value="60" placeholder="Final revision min/day">
-        <button class="dark-btn" id="addExam">BUILD EXAM PREP PLAN</button>
-      </div>
-      <div id="examList" class="data-list"></div>
-      <div class="schedule-note">StudyOS stages the work as syllabus → PYQs → timed sample papers → error analysis → final revision, then fits those tasks around your real availability.</div>
-    </section>
-
-    <section class="panel">
-      <div class="head"><b>EXCEPTIONS</b><span>Days StudyOS must protect</span></div>
-      <div class="form-grid">
-        <input id="vacStart" type="date">
-        <input id="vacEnd" type="date">
-        <button class="dark-btn" id="addVacation">ADD VACATION / BLOCK</button>
-      </div>
-      <div id="vacationList" class="data-list"></div>
-      <div class="schedule-note">Vacations, trips and no-study days are excluded automatically when the plan is rebuilt.</div>
-    </section>
-  </div>
-  <div class="planner-window" data-window-panel="availability"><section class="panel"><div class="head"><b>WHEN I CAN STUDY</b><span>Weekly availability</span></div><div class="form-grid availability-form"><select id="availDay2"><option value="1">Monday</option><option value="2">Tuesday</option><option value="3">Wednesday</option><option value="4">Thursday</option><option value="5">Friday</option><option value="6">Saturday</option><option value="0">Sunday</option></select><input id="availStart2" type="time" value="20:00"><input id="availEnd2" type="time" value="22:00"><button class="dark-btn" id="addAvailability2">ADD STUDY WINDOW</button></div><div id="availabilityList2" class="data-list"></div></section></div>
+  <div class="planner-window active" data-window-panel="deadlines">  <div class="planner-window" data-window-panel="availability"><section class="panel"><div class="head"><b>WHEN I CAN STUDY</b><span>Weekly availability</span></div><div class="form-grid availability-form"><select id="availDay2"><option value="1">Monday</option><option value="2">Tuesday</option><option value="3">Wednesday</option><option value="4">Thursday</option><option value="5">Friday</option><option value="6">Saturday</option><option value="0">Sunday</option></select><input id="availStart2" type="time" value="20:00"><input id="availEnd2" type="time" value="22:00"><button class="dark-btn" id="addAvailability2">ADD STUDY WINDOW</button></div><div id="availabilityList2" class="data-list"></div></section></div>
   <div class="planner-window" data-window-panel="activities"><section class="panel"><div class="head"><b>ACTIVITIES</b><span>Life commitments</span></div><div class="form-grid"><input id="activityTitle" placeholder="Activity"><input id="activityDay" type="date"><input id="activityStart" type="time"><input id="activityEnd" type="time"><input id="activityLocation" placeholder="Location / note"><button class="dark-btn" id="addActivity">ADD ACTIVITY</button></div><div id="activityList" class="data-list"></div><div class="schedule-note">Classes, appointments, family commitments and other fixed events belong here. StudyOS protects them when building your study plan.</div></section></div>
   <div class="planner-window" data-window-panel="extras"><section class="panel"><div class="head"><b>EXTRA-CURRICULARS</b><span>Clubs · sports · competitions</span></div><div class="form-grid"><input id="extraTitle" placeholder="Club, sport, robotics, competition..."><select id="extraDay"><option value="1">Monday</option><option value="2">Tuesday</option><option value="3">Wednesday</option><option value="4">Thursday</option><option value="5">Friday</option><option value="6">Saturday</option><option value="0">Sunday</option></select><input id="extraStart" type="time"><input id="extraEnd" type="time"><input id="extraNote" placeholder="Coach / location / note"><button class="dark-btn" id="addExtra">ADD EXTRA-CURRICULAR</button></div><div id="extraList" class="data-list"></div><div class="schedule-note">Sports, clubs, music, robotics, competitions and recurring activities are treated as real commitments, not spare-time filler.</div></section></div>
   <div class="planner-window" data-window-panel="exams"><section class="panel"><div class="head"><b>EXAM PREP ENGINE</b><span>Work backwards from the exam</span></div><div class="form-grid"><input id="examSubject2" placeholder="Subject"><input id="examDate2" type="date"><input id="syllabusHours2" type="number" min="0" step="0.5" placeholder="Syllabus hours"><input id="pyqCount2" type="number" min="0" step="1" placeholder="PYQs"><input id="sampleCount2" type="number" min="0" step="1" placeholder="Sample papers"><button class="dark-btn" id="addExam2">BUILD EXAM PREP PLAN</button></div><div id="examList2" class="data-list"></div></section></div>
@@ -162,14 +153,17 @@ function updateClockAndGreeting(){
 }
 
 const todayKey=()=>accountTodayKey();
-let state=JSON.parse(localStorage.getItem("studyos-state")||"null")||{deadlines:[],availability:[],vacations:[],exams:[],plan:[],done:[],times:[]};
+let state=JSON.parse(localStorage.getItem("studyos-state")||"null")||{deadlines:[],availability:[],activities:[],extras:[],vacations:[],exams:[],plan:[],done:[],times:[],focusSessions:[]};
 state.deadlines=Array.isArray(state.deadlines)?state.deadlines:[];
 state.availability=Array.isArray(state.availability)?state.availability:[];
+state.activities=Array.isArray(state.activities)?state.activities:[];
+state.extras=Array.isArray(state.extras)?state.extras:[];
 state.vacations=Array.isArray(state.vacations)?state.vacations:[];
 state.exams=Array.isArray(state.exams)?state.exams:[];
 state.plan=Array.isArray(state.plan)?state.plan:[];
 state.done=Array.isArray(state.done)?state.done:[];
 state.times=Array.isArray(state.times)?state.times:[];
+state.focusSessions=Array.isArray(state.focusSessions)?state.focusSessions:[];
 let times=state.times||[];
 function saveState(){localStorage.setItem("studyos-state",JSON.stringify(state))}
 function esc(v){return String(v??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;","\"":"&quot;","'":"&#039;"}[c]))}
@@ -192,17 +186,23 @@ function initPlannerWindows(){
   }));
 }
 function renderPlanner(){
-  const dc=$("deadlineCount"),dl=$("deadlineList"),al=$("availabilityList"),vl=$("vacationList"),el=$("examList");
+  const dc=$("deadlineCount"),dl=$("deadlineList"),al=$("availabilityList2"),vl=$("vacationList2"),el=$("examList2"),act=$("activityList"),ext=$("extraList");
   if(dc)dc.textContent=state.deadlines.length+" saved";
   if(dl)dl.innerHTML=state.deadlines.length?state.deadlines.map((x,i)=>'<div class="data-row"><div><b>'+esc(x.subject)+' · '+esc(x.title)+'</b><small>'+esc(x.due)+' · '+x.minutes+' min · '+esc(x.priority)+'</small></div><button class="remove-btn" onclick="removeDeadline('+i+')">×</button></div>').join(""):'<div class="insight">No deadlines yet.</div>';
   if(al)al.innerHTML=state.availability.length?state.availability.map((x,i)=>'<div class="data-row"><div><b>'+DAYS[Number(x.day)]+'</b><small>'+esc(x.start)+' → '+esc(x.end)+'</small></div><button class="remove-btn" onclick="removeAvailability('+i+')">×</button></div>').join(""):'<div class="insight">No study windows yet.</div>';
   if(vl)vl.innerHTML=state.vacations.length?state.vacations.map((x,i)=>'<div class="data-row"><div><b>Protected day</b><small>'+esc(x.start)+' → '+esc(x.end)+'</small></div><button class="remove-btn" onclick="removeVacation('+i+')">×</button></div>').join(""):'<div class="insight">No exceptions yet.</div>';
   if(el)el.innerHTML=state.exams.length?state.exams.map((x,i)=>'<div class="data-row"><div><b>'+esc(x.subject)+'</b><small>Exam '+esc(x.date)+' · '+x.pyqCount+' PYQs · '+x.sampleCount+' sample papers · '+x.finalDays+' final days</small></div><button class="remove-btn" onclick="removeExam('+i+')">×</button></div>').join(""):'<div class="insight">No exam plans yet.</div>';
+  if(act)act.innerHTML=state.activities.length?state.activities.map((x,i)=>'<div class="data-row"><div><b>'+esc(x.title)+'</b><small>'+esc(x.date)+' · '+esc(x.start)+' → '+esc(x.end)+(x.location?' · '+esc(x.location):'')+'</small></div><button class="remove-btn" onclick="removeActivity('+i+')">×</button></div>').join(""):'<div class="insight">No fixed activities yet.</div>';
+  if(ext)ext.innerHTML=state.extras.length?state.extras.map((x,i)=>'<div class="data-row"><div><b>'+esc(x.title)+'</b><small>'+DAYS[Number(x.day)]+' · '+esc(x.start)+' → '+esc(x.end)+(x.note?' · '+esc(x.note):'')+'</small></div><button class="remove-btn" onclick="removeExtra('+i+')">×</button></div>').join(""):'<div class="insight">No recurring extra-curriculars yet.</div>';
+  const a2=$("availabilityList"); if(a2)a2.innerHTML=al?al.innerHTML:"";
 }
+
 function removeDeadline(i){state.deadlines.splice(i,1);saveState();generatePlan();renderPlanner()}
 function removeAvailability(i){state.availability.splice(i,1);saveState();generatePlan();renderPlanner()}
 function removeVacation(i){state.vacations.splice(i,1);saveState();generatePlan();renderPlanner()}
 function removeExam(i){state.exams.splice(i,1);saveState();generatePlan();renderPlanner()}
+function removeActivity(i){state.activities.splice(i,1);saveState();generatePlan();renderPlanner()}
+function removeExtra(i){state.extras.splice(i,1);saveState();generatePlan();renderPlanner()}
 function renderToday(){
   const key=todayKey(), rows=state.plan.filter(x=>x.date===key).sort((a,b)=>a.start.localeCompare(b.start));
   blocksEl.innerHTML=rows.length?rows.map(x=>'<button class="block '+(state.done.includes(x.id)?"done":"")+'" data-id="'+x.id+'"><time>'+x.start+'</time><span class="dot">'+(state.done.includes(x.id)?"✓":"")+'</span><span class="copy"><b>'+esc(x.subject)+'</b><p>'+esc(x.task)+'</p></span><span>'+x.duration+'m</span></button>').join(""):'<div class="insight"><b>No study blocks today.</b><br>Tell StudyOS when you can study and what is due, then rebuild the plan.</div>';
@@ -210,7 +210,7 @@ function renderToday(){
   countEl.textContent=rows.filter(x=>state.done.includes(x.id)).length;pctEl.textContent=rows.length?Math.round(rows.filter(x=>state.done.includes(x.id)).length/rows.length*100)+"%":"0%";
   plannedEl.textContent=rows.reduce((s,x)=>s+x.duration,0)+" min planned";
   nextEl.textContent=rows.find(x=>!state.done.includes(x.id))?("Next: "+rows.find(x=>!state.done.includes(x.id)).subject+" · "+rows.find(x=>!state.done.includes(x.id)).task):(rows.length?"Today is cleared.":"Add your constraints to generate a plan.");
-  renderFocusTasks();
+  renderFocusTasks();renderFocusPage();
 }
 function buildExamTasks(){
   const tasks=[];
@@ -227,17 +227,41 @@ function buildExamTasks(){
     if(syllabusMinutes>0){const d=new Date(exam);d.setDate(d.getDate()-(finalDays+samples*2+pyqs+4));tasks.push({subject:ex.subject,title:"Syllabus coverage · "+ex.subject,due:iso(d),minutes:syllabusMinutes,priority:"high",kind:"syllabus"});}
   });return tasks;
 }
+function protectedIntervals(key,dow){
+  const out=[];
+  state.activities.filter(x=>x.date===key).forEach(x=>out.push({start:mins(x.start),end:mins(x.end)}));
+  state.extras.filter(x=>Number(x.day)===dow).forEach(x=>out.push({start:mins(x.start),end:mins(x.end)}));
+  return out.filter(x=>x.end>x.start).sort((a,b)=>a.start-b.start);
+}
+function freeSlices(start,end,blocked){
+  const slices=[];let cursor=start;
+  blocked.forEach(b=>{if(b.start>cursor)slices.push([cursor,Math.min(b.start,end)]);cursor=Math.max(cursor,b.end)});
+  if(cursor<end)slices.push([cursor,end]);
+  return slices;
+}
 function generatePlan(){
   const deadlines=[...state.deadlines.filter(x=>x.due&&x.minutes>0),...buildExamTasks()].sort((a,b)=>a.due.localeCompare(b.due)||(a.priority==="high"?-1:1));
   let newPlan=[],remaining=deadlines.map(x=>({...x,remaining:x.minutes}));
   const start=todayKey(),end=deadlines.length?deadlines.reduce((m,x)=>x.due>m?x.due:m,start):start;
   for(let day=0;day<=180&&addDays(start,day)<=end;day++){
     const key=addDays(start,day),dow=new Date(key+"T12:00:00").getDay();if(isVacation(key))continue;
-    for(const w of state.availability.filter(x=>Number(x.day)===dow)){let cursor=mins(w.start),limit=mins(w.end);while(cursor+15<=limit){const target=remaining.find(x=>x.remaining>0&&x.due>=key);if(!target)break;const block=Math.min(target.remaining,Math.min(90,limit-cursor));if(block<15)break;const id=key+"-"+cursor+"-"+Math.random().toString(36).slice(2,7);newPlan.push({id,date:key,start:timeStr(cursor),duration:block,subject:target.subject,task:target.title,kind:target.kind||"deadline"});target.remaining-=block;cursor+=block+5;}}
+    for(const w of state.availability.filter(x=>Number(x.day)===dow)){
+      const slices=freeSlices(mins(w.start),mins(w.end),protectedIntervals(key,dow));
+      for(const slice of slices){
+        let cursor=slice[0],limit=slice[1];
+        while(cursor+15<=limit){
+          const target=remaining.find(x=>x.remaining>0&&x.due>=key);if(!target)break;
+          const block=Math.min(target.remaining,Math.min(90,limit-cursor));if(block<15)break;
+          const id=key+"-"+cursor+"-"+Math.random().toString(36).slice(2,7);
+          newPlan.push({id,date:key,start:timeStr(cursor),duration:block,subject:target.subject,task:target.title,kind:target.kind||"deadline"});
+          target.remaining-=block;cursor+=block+5;
+        }
+      }
+    }
   }
-  state.plan=newPlan;state.done=state.done.filter(id=>newPlan.some(x=>x.id===id));saveState();renderToday();renderGeneratedPlan();renderPlanner();
+  state.plan=newPlan;state.done=state.done.filter(id=>newPlan.some(x=>x.id===id));saveState();renderToday();renderGeneratedPlan();renderPlanner();renderFocusTasks();
   const unresolved=remaining.filter(x=>x.remaining>0);$("planSummary").textContent=newPlan.length?newPlan.length+" blocks generated"+(unresolved.length?" · "+unresolved.length+" task(s) still need more hours":""):"Add availability before generating";
-  if(unresolved.length)addMessage("assistant","Some exam work could not fit into the study windows you gave me. I kept the plan honest instead of inventing free time. Add study hours or reduce the required work.");
+  if(unresolved.length)addMessage("assistant","Some work could not fit into the study windows you gave me. I kept the plan honest instead of inventing free time. Add study hours or reduce the required work.");
 }
 function isVacation(key){return state.vacations.some(v=>key>=v.start&&key<=v.end)}
 function renderGeneratedPlan(){
@@ -250,7 +274,7 @@ function addMessage(role,text){const c=$("chat"),d=document.createElement("div")
 async function sendChat(extra){
   const input=$("chatInput"),msg=(extra||input.value).trim();if(!msg&&!pendingAttachment)return;
   if(!extra)input.value="";addMessage("user",msg||"I uploaded my schedule.");
-  const payload={message:msg,context:{deadlines:state.deadlines,availability:state.availability,vacations:state.vacations,exams:state.exams},attachment:pendingAttachment||null};
+  const payload={message:msg,context:{deadlines:state.deadlines,availability:state.availability,activities:state.activities,extras:state.extras,vacations:state.vacations,exams:state.exams},attachment:pendingAttachment||null};
   pendingAttachment=null;$("fileStatus").textContent="Nothing attached";
   try{
     const r=await fetch("/api/ai",{method:"POST",headers:{"content-type":"application/json"},body:JSON.stringify(payload)});
@@ -268,6 +292,10 @@ function applyActions(actions){
     if(a.type==="set_availability"&&a.day!==undefined&&a.start&&a.end){state.availability=state.availability.filter(x=>!(Number(x.day)===Number(a.day)&&x.start===a.start&&x.end===a.end));state.availability.push({day:Number(a.day),start:a.start,end:a.end})}
     if(a.type==="remove_availability"&&a.day!==undefined)state.availability=state.availability.filter(x=>Number(x.day)!==Number(a.day));
     if(a.type==="set_vacation"&&a.start&&a.end)state.vacations.push({start:a.start,end:a.end});
+    if(a.type==="add_activity"&&a.title&&a.date&&a.start&&a.end)state.activities.push({title:String(a.title).slice(0,100),date:a.date,start:a.start,end:a.end,location:String(a.location||"").slice(0,120)});
+    if(a.type==="remove_activity"&&a.match)state.activities=state.activities.filter(x=>!(x.title+" "+x.date).toLowerCase().includes(String(a.match).toLowerCase()));
+    if(a.type==="add_extra"&&a.title&&a.start&&a.end&&a.day!==undefined)state.extras.push({title:String(a.title).slice(0,100),day:Number(a.day),start:a.start,end:a.end,note:String(a.note||"").slice(0,120)});
+    if(a.type==="remove_extra"&&a.match)state.extras=state.extras.filter(x=>!(x.title+" "+x.day).toLowerCase().includes(String(a.match).toLowerCase()));
     if(a.type==="add_exam"&&a.subject&&a.date)state.exams.push({subject:String(a.subject).slice(0,80),date:a.date,syllabusHours:Math.max(0,Number(a.syllabusHours)||0),pyqCount:Math.max(0,Number(a.pyqCount)||0),pyqMinutes:Math.max(15,Number(a.pyqMinutes)||60),sampleCount:Math.max(0,Number(a.sampleCount)||0),sampleMinutes:Math.max(30,Number(a.sampleMinutes)||120),errorMinutes:Math.max(15,Number(a.errorMinutes)||45),finalDays:Math.max(0,Number(a.finalDays)||0),finalMinutes:Math.max(15,Number(a.finalMinutes)||60)});
     if(a.type==="remove_exam"&&a.match)state.exams=state.exams.filter(x=>!(x.subject+" "+x.date).toLowerCase().includes(String(a.match).toLowerCase()));
     if(a.type==="clear_plan")state.plan=[];
@@ -288,13 +316,18 @@ $("addDeadline").onclick=()=>{const subject=$("deadlineSubject").value.trim(),ti
 $("addAvailability").onclick=()=>{const day=Number($("availDay").value),start=$("availStart").value,end=$("availEnd").value;if(!start||!end||mins(end)<=mins(start))return alert("Choose a valid study window.");state.availability.push({day,start,end});saveState();generatePlan();renderPlanner()};
 $("addVacation").onclick=()=>{const start=$("vacStart").value,end=$("vacEnd").value;if(!start||!end||end<start)return alert("Choose valid dates.");state.vacations.push({start,end});saveState();generatePlan();renderPlanner()};
 $("addExam").onclick=()=>{const subject=$("examSubject").value.trim(),date=$("examDate").value;if(!subject||!date)return alert("Add the subject and exam date.");const ex={subject,date,syllabusHours:Math.max(0,Number($("syllabusHours").value)||0),pyqCount:Math.max(0,Number($("pyqCount").value)||0),pyqMinutes:Math.max(15,Number($("pyqMinutes").value)||60),sampleCount:Math.max(0,Number($("sampleCount").value)||0),sampleMinutes:Math.max(30,Number($("sampleMinutes").value)||120),errorMinutes:Math.max(15,Number($("errorMinutes").value)||45),finalDays:Math.max(0,Number($("finalDays").value)||0),finalMinutes:Math.max(15,Number($("finalMinutes").value)||60)};state.exams=state.exams.filter(x=>!(x.subject.toLowerCase()===subject.toLowerCase()&&x.date===date));state.exams.push(ex);saveState();generatePlan();renderPlanner();["examSubject","examDate","syllabusHours","pyqCount","sampleCount"].forEach(id=>$(id).value="")};
+$("addAvailability2").onclick=()=>{const day=Number($("availDay2").value),start=$("availStart2").value,end=$("availEnd2").value;if(!start||!end||mins(end)<=mins(start))return alert("Choose a valid study window.");state.availability.push({day,start,end});saveState();generatePlan();renderPlanner()};
+$("addActivity").onclick=()=>{const title=$("activityTitle").value.trim(),date=$("activityDay").value,start=$("activityStart").value,end=$("activityEnd").value,location=$("activityLocation").value.trim();if(!title||!date||!start||!end||mins(end)<=mins(start))return alert("Add the activity and a valid time.");state.activities.push({title,date,start,end,location});saveState();generatePlan();renderPlanner();["activityTitle","activityDay","activityStart","activityEnd","activityLocation"].forEach(id=>$(id).value="")};
+$("addExtra").onclick=()=>{const title=$("extraTitle").value.trim(),day=Number($("extraDay").value),start=$("extraStart").value,end=$("extraEnd").value,note=$("extraNote").value.trim();if(!title||!start||!end||mins(end)<=mins(start))return alert("Add the commitment and a valid time.");state.extras.push({title,day,start,end,note});saveState();generatePlan();renderPlanner();["extraTitle","extraStart","extraEnd","extraNote"].forEach(id=>$(id).value="")};
+$("addExam2").onclick=()=>{const subject=$("examSubject2").value.trim(),date=$("examDate2").value;if(!subject||!date)return alert("Add the subject and exam date.");state.exams=state.exams.filter(x=>!(x.subject.toLowerCase()===subject.toLowerCase()&&x.date===date));state.exams.push({subject,date,syllabusHours:Math.max(0,Number($("syllabusHours2").value)||0),pyqCount:Math.max(0,Number($("pyqCount2").value)||0),pyqMinutes:60,sampleCount:Math.max(0,Number($("sampleCount2").value)||0),sampleMinutes:120,errorMinutes:45,finalDays:2,finalMinutes:60});saveState();generatePlan();renderPlanner()};
+$("addVacation2").onclick=()=>{const start=$("vacStart2").value,end=$("vacEnd2").value;if(!start||!end||end<start)return alert("Choose valid dates.");state.vacations.push({start,end});saveState();generatePlan();renderPlanner()};
 $("generatePlan").onclick=generatePlan;
 
 function renderReminderSection(){const target=$("reminderSectionSlots");target.innerHTML=times.length?times.map((t,i)=>'<label class="slot"><input type="time" value="'+t+'" onchange="saveTime('+i+',this.value)"><span>Reminder '+(i+1)+'</span></label>').join(""):'<div class="insight">No reminder slots yet.</div>'}
 function saveTime(i,v){times[i]=v;state.times=times;saveState();syncReminders()}
 async function syncReminders(){try{await fetch("/api/reminders",{method:"POST",headers:{"content-type":"application/json"},body:JSON.stringify({times,labels:state.plan.map(x=>x.subject+" · "+x.task)})})}catch(e){}}
 function renderProgress(){const el=$("progressStats"),sessions=Number(localStorage.getItem("studyos-focus-count")||0);el.innerHTML='<div class="insight"><b>'+state.done.length+'</b><br>blocks completed</div><div class="insight"><b>'+sessions+'</b><br>focus sessions</div><div class="insight"><b>'+times.length+'</b><br>reminder slots</div>'}
-function showSection(name){document.body.dataset.section=name;document.querySelectorAll(".section").forEach(s=>s.classList.remove("active"));const t=$("section-"+name);if(t)t.classList.add("active");document.querySelectorAll("[data-section]").forEach(b=>b.classList.toggle("active",b.dataset.section===name));if(name==="reminders")renderReminderSection();if(name==="progress")renderProgress();if(name==="planner")renderPlanner()}
+function showSection(name){document.body.dataset.section=name;document.querySelectorAll(".section").forEach(s=>s.classList.remove("active"));const t=$("section-"+name);if(t)t.classList.add("active");document.querySelectorAll("[data-section]").forEach(b=>b.classList.toggle("active",b.dataset.section===name));if(name==="reminders")renderReminderSection();if(name==="progress")renderProgress();if(name==="planner")renderPlanner();if(name==="focus")renderFocusPage()}
 document.querySelectorAll("[data-section]").forEach(b=>b.addEventListener("click",()=>showSection(b.dataset.section)));
 
 async function enable(){if(!("Notification"in window))return alert("Notifications are not supported here.");const p=await Notification.requestPermission();if(p==="granted"){notifyBtn.classList.add("on");notifyBtn.textContent="NOTIFICATIONS ON";const reg=await navigator.serviceWorker.ready;try{const c=await fetch("/api/config");const j=await c.json();if(j.publicKey){const key=j.publicKey;const pad="=".repeat((4-key.length%4)%4),raw=atob((key+pad).replace(/-/g,"+").replace(/_/g,"/"));const sub=await reg.pushManager.subscribe({userVisibleOnly:true,applicationServerKey:Uint8Array.from(raw,ch=>ch.charCodeAt(0))});await fetch("/api/subscribe",{method:"POST",headers:{"content-type":"application/json"},body:JSON.stringify({subscription:sub})})}else reg.showNotification("StudyOS notifications enabled",{body:"Server push still needs its Vercel keys."})}catch(e){reg.showNotification("StudyOS notifications enabled",{body:"Your browser permission is on."})}}}
@@ -317,16 +350,60 @@ $("saveSetup").addEventListener("click",()=>{
 if(!userSettings){openSetup()}else{$("setupModal").classList.remove("open")}
 const focus={seconds:25*60,running:false,mode:25,breakMinutes:5,interval:null};
 function fmt(s){return String(Math.floor(s/60)).padStart(2,"0")+":"+String(s%60).padStart(2,"0")}
-function syncFocus(){timerEl.textContent=fmt(focus.seconds);focusTimerEl.textContent=fmt(focus.seconds);focusHeaderStateEl.textContent=focus.running?"FOCUS SESSION IN PROGRESS":"Ready when you are.";focusStateEl.textContent=focus.running?"FOCUS SESSION IN PROGRESS":"Ready when you are.";focusActionEl.textContent=focus.running?"PAUSE":"START FOCUS";document.querySelectorAll("[data-focus]").forEach(b=>b.classList.toggle("active",Number(b.dataset.focus)===focus.mode));document.querySelectorAll("[data-break]").forEach(b=>b.classList.toggle("active",Number(b.dataset.break)===focus.breakMinutes))}
+function syncFocus(){timerEl.textContent=fmt(focus.seconds);$("focusPageTimer")&&( $("focusPageTimer").textContent=fmt(focus.seconds));focusTimerEl.textContent=fmt(focus.seconds);focusHeaderStateEl.textContent=focus.running?"FOCUS SESSION IN PROGRESS":"Ready when you are.";focusStateEl.textContent=focus.running?"FOCUS SESSION IN PROGRESS":"Ready when you are.";focusActionEl.textContent=focus.running?"PAUSE":"START FOCUS";$("focusPageStart")&&($("focusPageStart").textContent=focus.running?"PAUSE":"START FOCUS");document.querySelectorAll("[data-focus]").forEach(b=>b.classList.toggle("active",Number(b.dataset.focus)===focus.mode));document.querySelectorAll("[data-break]").forEach(b=>b.classList.toggle("active",Number(b.dataset.break)===focus.breakMinutes))}
 function setFocus(min){focus.mode=min;focus.seconds=min*60;focus.running=false;clearInterval(focus.interval);$("customFocusMinutes").value="";syncFocus()}
 function setCustomFocus(){const n=Math.max(5,Math.min(180,Number($("customFocusMinutes").value)||25));focus.mode=Math.round(n/5)*5;focus.seconds=focus.mode*60;focus.running=false;syncFocus()}
 function openFocus(){ $("focusModal").classList.add("open");syncFocus() }
 function closeFocus(){ $("focusModal").classList.remove("open") }
-function toggleFocus(){if(focus.running){focus.running=false;clearInterval(focus.interval);syncFocus();return}focus.running=true;clearInterval(focus.interval);focus.interval=setInterval(()=>{focus.seconds--;syncFocus();if(focus.seconds<=0){clearInterval(focus.interval);focus.running=false;localStorage.setItem("studyos-focus-count",String(Number(localStorage.getItem("studyos-focus-count")||0)+1));if("serviceWorker"in navigator)navigator.serviceWorker.ready.then(r=>r.showNotification("Focus session complete",{body:"Session complete. Take your selected break, then choose what is next."}));syncFocus();renderProgress()}},1000);syncFocus()}
+function toggleFocus(){if(focus.running){focus.running=false;clearInterval(focus.interval);syncFocus();return}focus.running=true;clearInterval(focus.interval);focus.interval=setInterval(()=>{focus.seconds--;syncFocus();if(focus.seconds<=0){clearInterval(focus.interval);focus.running=false;localStorage.setItem("studyos-focus-count",String(Number(localStorage.getItem("studyos-focus-count")||0)+1));state.focusSessions.unshift({date:todayKey(),duration:focus.mode,task:focusTaskTitle()});state.focusSessions=state.focusSessions.slice(0,20);saveState();renderFocusHistory();if("serviceWorker"in navigator)navigator.serviceWorker.ready.then(r=>r.showNotification("Focus session complete",{body:"Session complete. Take your selected break, then choose what is next."}));syncFocus();renderProgress()}},1000);syncFocus()}
 function resetFocus(){focus.running=false;clearInterval(focus.interval);focus.seconds=focus.mode*60;syncFocus()}
 document.querySelectorAll("[data-focus]").forEach(b=>b.addEventListener("click",()=>setFocus(Number(b.dataset.focus))));
 document.querySelectorAll("[data-break]").forEach(b=>b.addEventListener("click",()=>{focus.breakMinutes=Number(b.dataset.break);syncFocus()}));
 $("customFocusMinutes").addEventListener("change",setCustomFocus);
 
-document.body.dataset.section="today";initPlannerWindows();renderToday();renderPlanner();renderProgress();renderGeneratedPlan();renderReminderSection();syncFocus();syncReminders();
+let focusTaskIndex=0;
+function focusTasks(){return state.plan.filter(x=>x.date===todayKey()).sort((a,b)=>a.start.localeCompare(b.start)).filter(x=>!state.done.includes(x.id))}
+function focusTaskTitle(){const t=focusTasks()[focusTaskIndex];return t?t.subject+" · "+t.task:"Open focus session"}
+function renderFocusPage(){
+  const rows=focusTasks(); if(focusTaskIndex>=rows.length)focusTaskIndex=0;
+  const t=rows[focusTaskIndex],el=$("focusCurrentTask");
+  if(el)el.innerHTML=t?"<b>"+esc(t.subject)+" · "+esc(t.task)+"</b><small>"+esc(t.start)+" · "+t.duration+" min planned</small>":"<b>No unfinished task for today.</b><small>Generate a plan or complete your current blocks to give Focus a target.</small>";
+  renderFocusHistory();
+}
+function renderFocusHistory(){
+  const el=$("focusHistory");if(!el)return;
+  const rows=state.focusSessions||[];$("focusSessionCount").textContent=rows.length;
+  el.innerHTML=rows.length?rows.slice(0,6).map(x=>'<div class="focus-history-row"><b>'+esc(x.task)+'</b><span>'+x.duration+' min · '+esc(x.date)+'</span></div>').join(""):'<div class="insight">No completed focus sessions yet.</div>';
+}
+document.querySelectorAll("[data-page-focus]").forEach(b=>b.addEventListener("click",()=>{setFocus(Number(b.dataset.pageFocus));renderFocusPage()}));
+$("focusPageStart").addEventListener("click",()=>toggleFocus());
+$("focusPageReset").addEventListener("click",()=>resetFocus());
+$("focusPagePrev").addEventListener("click",()=>{const n=focusTasks().length;focusTaskIndex=n?((focusTaskIndex-1+n)%n):0;renderFocusPage()});
+$("focusPageNext").addEventListener("click",()=>{const n=focusTasks().length;focusTaskIndex=n?((focusTaskIndex+1)%n):0;renderFocusPage()});
+document.querySelectorAll("[data-sound]").forEach(b=>b.addEventListener("click",()=>setSound(b.dataset.sound)));
+$("soundVolume").addEventListener("input",e=>setSoundVolume(Number(e.target.value)));
+let audioCtx=null,soundNodes=[],soundGain=null,currentSound="";
+function stopSound(){soundNodes.forEach(n=>{try{n.stop()}catch(e){}});soundNodes.forEach(n=>{try{n.disconnect()}catch(e){}});soundNodes=[];if(soundGain)try{soundGain.disconnect()}catch(e){}currentSound="";$("soundStatus")&&($("soundStatus").textContent="Off");document.querySelectorAll("[data-sound]").forEach(b=>b.classList.remove("active"))}
+function noiseBuffer(type){
+  const len=audioCtx.sampleRate*2,buf=audioCtx.createBuffer(1,len,audioCtx.sampleRate),d=buf.getChannelData(0);let last=0;
+  for(let i=0;i<len;i++){let r=Math.random()*2-1;if(type==="brown"){last=(last+.02*r)/1.02;d[i]=last*3.2}else d[i]=r*.7}
+  return buf;
+}
+function setSound(name){
+  if(currentSound===name){stopSound();return}
+  stopSound();audioCtx=audioCtx||new (window.AudioContext||window.webkitAudioContext)();audioCtx.resume();
+  soundGain=audioCtx.createGain();soundGain.gain.value=Number($("soundVolume").value||.28);soundGain.connect(audioCtx.destination);currentSound=name;$("soundStatus").textContent=name.toUpperCase();document.querySelectorAll("[data-sound]").forEach(b=>b.classList.toggle("active",b.dataset.sound===name));
+  if(name==="rain"||name==="brown"||name==="cafe"||name==="forest"){
+    const src=audioCtx.createBufferSource();src.buffer=noiseBuffer(name==="brown"?"brown":"white");src.loop=true;const filter=audioCtx.createBiquadFilter();filter.type="lowpass";filter.frequency.value=name==="rain"?2800:name==="cafe"?900:name==="forest"?4200:900;src.connect(filter).connect(soundGain);src.start();soundNodes.push(src);
+    if(name==="forest"||name==="cafe"){const osc=audioCtx.createOscillator(),g=audioCtx.createGain();osc.type="sine";osc.frequency.value=name==="forest"?190:120;g.gain.value=.018;osc.connect(g).connect(soundGain);osc.start();soundNodes.push(osc)}
+  }else if(name==="night"){const osc=audioCtx.createOscillator();osc.type="sine";osc.frequency.value=110;const g=audioCtx.createGain();g.gain.value=.018;osc.connect(g).connect(soundGain);osc.start();soundNodes.push(osc)}
+  else if(name==="piano"){playPianoLoop()}
+}
+function playPianoLoop(){
+  if(currentSound!=="piano")return;
+  const notes=[220,261.63,329.63,392,329.63,261.63],i=Math.floor(Date.now()/2400)%notes.length;
+  const osc=audioCtx.createOscillator(),g=audioCtx.createGain();osc.type="sine";osc.frequency.value=notes[i];g.gain.setValueAtTime(0.0001,audioCtx.currentTime);g.gain.exponentialRampToValueAtTime(.035,audioCtx.currentTime+.08);g.gain.exponentialRampToValueAtTime(.0001,audioCtx.currentTime+2.1);osc.connect(g).connect(soundGain);osc.start();osc.stop(audioCtx.currentTime+2.2);setTimeout(playPianoLoop,2300);soundNodes.push(osc)
+}
+function setSoundVolume(v){if(soundGain)soundGain.gain.value=v}
+document.body.dataset.section="today";initPlannerWindows();renderToday();renderPlanner();renderProgress();renderGeneratedPlan();renderReminderSection();renderFocusPage();renderFocusHistory();syncFocus();syncReminders();
 </script></body></html>
