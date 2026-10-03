@@ -1,0 +1,15 @@
+node_modules/
+.git/
+.github/
+api/
+.env
+.env.*
+.vercel/
+README.md
+package.json
+package-lock.json
+bun.lock
+wrangler.json
+wrangler.jsonc
+vercel.json
+vercel-deploy-trigger.txt
