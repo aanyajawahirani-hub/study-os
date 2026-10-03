@@ -4,7 +4,7 @@ const webpush = require("web-push");
 module.exports = async function (req, res) {
   try {
     const expected = process.env.STUDYOS_CRON_SECRET;
-    if (expected && req.headers.authorization !== `Bearer ${expected}`) {
+    if (!expected || req.headers.authorization !== `Bearer ${expected}`) {
       return res.status(401).json({ error: "Unauthorized" });
     }
 
