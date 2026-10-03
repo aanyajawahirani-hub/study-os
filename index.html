@@ -82,10 +82,120 @@ aside{width:232px;position:fixed;inset:0 auto 0 0;background:#e5e1d7;border-righ
 .greeting-prompt{margin:0;color:var(--muted);font-size:13px;line-height:1.4;max-width:520px}
 header h1{font-size:46px;line-height:1;letter-spacing:-.04em;margin:8px 0 5px}
 @media(max-width:800px){header h1{font-size:38px}}
-</style></style></style></head><body><main>
-<aside><div class="brand"><i>•</i> STUDYOS</div><nav><button class="navlink active" data-section="today">Today</button><button class="navlink" data-section="planner">Planner</button><button class="navlink" data-section="focus">Focus</button><button class="navlink" data-section="syllabus">Syllabus</button><button class="navlink" data-section="reminders">Reminders</button><button class="navlink" data-section="progress">Progress</button></nav><div class="streak"><small>STREAK</small><b id="streakValue">0 DAYS</b><small>Start your first study block.</small></div></aside>
-<section class="shell"><header><div><div class="eyebrow" id="date"></div><h1 id="greeting">Good night.</h1><p class="greeting-prompt" id="greetingPrompt">How can I help you wind things down?</p></div><div style="display:flex;gap:8px;align-items:center"><button class="btn" id="openClockSettings">CLOCK SETTINGS</button><button class="btn" id="notify">ENABLE NOTIFICATIONS</button></div></header>
-<div class="mobile-nav" id="mobileNav"><button class="active" data-section="today">Today</button><button data-section="planner">Planner</button><button data-section="focus">Focus</button><button data-section="syllabus">Syllabus</button><button data-section="reminders">Reminders</button><button data-section="progress">Progress</button></div><div id="section-today" class="section active">
+</style></style></style><style id="navigation-overhaul">
+/* StudyOS navigation: one destination at a time, generous page spacing. */
+aside#appSidebar{width:248px;transition:width .28s ease,transform .28s ease;z-index:30;overflow:hidden}
+aside#appSidebar .brand{display:flex;align-items:center;gap:8px;white-space:nowrap}
+.brand-mark{color:var(--accent);font-size:17px}
+.sidebar-toggle,.content-menu-toggle{border:1px solid var(--line);background:transparent;color:var(--ink);font:inherit;cursor:pointer;letter-spacing:.08em}
+.sidebar-toggle{width:100%;margin-top:18px;padding:10px 11px;display:flex;align-items:center;justify-content:space-between;font-size:9px}
+.sidebar-toggle span{font-size:15px}
+.side-nav{margin-top:26px;display:grid;gap:24px}
+.nav-group{display:grid;gap:3px}
+.nav-group-label{font-size:8px;letter-spacing:.18em;color:var(--muted);padding:0 10px 7px;border-bottom:1px solid var(--line)}
+.side-nav .navlink{display:flex;align-items:center;gap:12px;width:100%;padding:10px;border:0;background:transparent;border-left:2px solid transparent;color:var(--muted);font-size:11px;text-align:left;cursor:pointer}
+.side-nav .navlink:hover{background:#ddd8cd;color:var(--ink)}
+.side-nav .navlink.active{background:var(--surface);border-left-color:var(--accent);color:var(--ink);font-weight:700}
+.nav-index{font-family:Georgia,serif;font-size:10px;color:var(--muted);width:20px}
+.streak{left:18px;right:18px}
+.content-menu-toggle{display:none;position:fixed;top:18px;left:18px;z-index:25;padding:9px 11px;font-size:9px}
+body.sidebar-collapsed aside#appSidebar{width:72px}
+body.sidebar-collapsed .brand-name,
+body.sidebar-collapsed .nav-label,
+body.sidebar-collapsed .nav-group-label,
+body.sidebar-collapsed .sidebar-toggle b,
+body.sidebar-collapsed .streak{display:none}
+body.sidebar-collapsed .brand{justify-content:center}
+body.sidebar-collapsed .side-nav .navlink{justify-content:center;padding:11px 5px}
+body.sidebar-collapsed .nav-index{width:auto}
+body.sidebar-collapsed .sidebar-toggle{justify-content:center}
+body.sidebar-collapsed .sidebar-toggle span{transform:rotate(180deg)}
+body.sidebar-collapsed .shell{margin-left:72px}
+body.sidebar-collapsed .content-menu-toggle{display:block}
+.shell{margin-left:248px;padding:54px 58px 80px;max-width:none;transition:margin-left .28s ease}
+.section{min-height:calc(100vh - 100px)}
+.section.active{display:block}
+#section-today .today-side{grid-template-columns:1fr}
+#section-today .today-side .side-section{min-height:130px}
+#section-today .today-side .focus-mini,#section-today .today-side .reminders{display:none}
+#section-planner .planner-grid{display:block}
+#section-planner .planner-grid>.ai-panel{max-width:900px}
+#section-planner .planner-pages{margin-top:30px}
+#section-planner .planner-window{display:none}
+#section-planner .planner-window.active{display:block}
+#section-planner .generated-panel{margin-top:30px}
+body[data-page="ai"] #section-planner .planner-top,
+body[data-page="ai"] #section-planner .planner-pages,
+body[data-page="ai"] #section-planner .generated-panel,
+body[data-page="ai"] #section-planner #generatePlan{display:none}
+body[data-page="ai"] #section-planner .planner-grid{display:block;margin-top:10px}
+body[data-page="ai"] #section-planner .ai-panel{display:block}
+body[data-page="plan"] #section-planner .planner-grid,
+body[data-page="plan"] #section-planner .planner-pages,
+body[data-page="plan"] #section-planner .planner-top .page-lede{display:none}
+body[data-page="plan"] #section-planner .planner-top{margin-bottom:28px}
+body[data-page="plan"] #section-planner .generated-panel{display:block;margin-top:0}
+body[data-page="deadlines"] #section-planner .planner-grid,
+body[data-page="deadlines"] #section-planner .generated-panel{display:none}
+body[data-page="availability"] #section-planner .planner-grid,
+body[data-page="availability"] #section-planner .generated-panel{display:none}
+body[data-page="activities"] #section-planner .planner-grid,
+body[data-page="activities"] #section-planner .generated-panel{display:none}
+body[data-page="extras"] #section-planner .planner-grid,
+body[data-page="extras"] #section-planner .generated-panel{display:none}
+body[data-page="exams"] #section-planner .planner-grid,
+body[data-page="exams"] #section-planner .generated-panel{display:none}
+body[data-page="exceptions"] #section-planner .planner-grid,
+body[data-page="exceptions"] #section-planner .generated-panel{display:none}
+body[data-page="deadlines"] #section-planner .planner-window[data-window-panel="deadlines"],
+body[data-page="availability"] #section-planner .planner-window[data-window-panel="availability"],
+body[data-page="activities"] #section-planner .planner-window[data-window-panel="activities"],
+body[data-page="extras"] #section-planner .planner-window[data-window-panel="extras"],
+body[data-page="exams"] #section-planner .planner-window[data-window-panel="exams"],
+body[data-page="exceptions"] #section-planner .planner-window[data-window-panel="exceptions"]{display:block}
+body[data-page="ai"] #section-planner .planner-top .page-title{font-size:clamp(44px,6vw,82px)}
+body[data-page="ai"] #section-planner .planner-top{display:block}
+body[data-page="ai"] #section-planner .planner-top .page-title{display:block}
+body[data-page="ai"] #section-planner .planner-top .eyebrow{display:block}
+body[data-page="ai"] #section-planner .planner-top{margin-bottom:20px}
+body[data-page="ai"] #section-planner .planner-grid{max-width:980px}
+@media(max-width:800px){
+  aside#appSidebar{display:none}
+  .shell,body.sidebar-collapsed .shell{margin-left:0;padding:66px 20px 40px}
+  .content-menu-toggle{display:block}
+  .mobile-nav{display:flex;position:sticky;top:0;z-index:20;gap:3px;overflow:auto;padding:8px;margin:-8px -8px 28px;background:var(--paper);border-bottom:1px solid var(--line)}
+  .mobile-nav button{white-space:nowrap;border:1px solid var(--line);background:var(--surface);color:var(--muted);padding:9px 12px;font-size:10px}
+  .mobile-nav button.active{background:var(--ink);color:var(--surface)}
+}
+</style></head><body><main>
+<aside id="appSidebar">
+  <div class="brand"><span class="brand-mark">•</span><span class="brand-name">STUDYOS</span></div>
+  <button class="sidebar-toggle" id="sidebarToggle" type="button" aria-label="Collapse sidebar"><span>←</span><b>CLOSE</b></button>
+  <nav class="side-nav">
+    <div class="nav-group"><span class="nav-group-label">WORKSPACE</span>
+      <button class="navlink active" data-section="today"><span class="nav-index">01</span><span class="nav-label">Today</span></button>
+      <button class="navlink" data-section="plan"><span class="nav-index">02</span><span class="nav-label">Plan</span></button>
+      <button class="navlink" data-section="focus"><span class="nav-index">03</span><span class="nav-label">Focus</span></button>
+      <button class="navlink" data-section="ai"><span class="nav-index">04</span><span class="nav-label">AI Assistant</span></button>
+    </div>
+    <div class="nav-group"><span class="nav-group-label">INPUTS</span>
+      <button class="navlink" data-section="deadlines"><span class="nav-index">05</span><span class="nav-label">Deadlines</span></button>
+      <button class="navlink" data-section="availability"><span class="nav-index">06</span><span class="nav-label">Availability</span></button>
+      <button class="navlink" data-section="activities"><span class="nav-index">07</span><span class="nav-label">Activities</span></button>
+      <button class="navlink" data-section="extras"><span class="nav-index">08</span><span class="nav-label">Extra-curriculars</span></button>
+      <button class="navlink" data-section="exams"><span class="nav-index">09</span><span class="nav-label">Exams</span></button>
+      <button class="navlink" data-section="exceptions"><span class="nav-index">10</span><span class="nav-label">Exceptions</span></button>
+    </div>
+    <div class="nav-group"><span class="nav-group-label">TRACK</span>
+      <button class="navlink" data-section="syllabus"><span class="nav-index">11</span><span class="nav-label">Syllabus</span></button>
+      <button class="navlink" data-section="reminders"><span class="nav-index">12</span><span class="nav-label">Reminders</span></button>
+      <button class="navlink" data-section="progress"><span class="nav-index">13</span><span class="nav-label">Progress</span></button>
+    </div>
+  </nav>
+  <div class="streak"><small>STREAK</small><b id="streakValue">0 DAYS</b><small>Start your first study block.</small></div>
+</aside>
+<section class="shell"><button class="content-menu-toggle" id="contentMenuToggle" type="button" aria-label="Open sidebar"><span>☰</span><b>MENU</b></button><header><div><div class="eyebrow" id="date"></div><h1 id="greeting">Good night.</h1><p class="greeting-prompt" id="greetingPrompt">How can I help you wind things down?</p></div><div style="display:flex;gap:8px;align-items:center"><button class="btn" id="openClockSettings">CLOCK SETTINGS</button><button class="btn" id="notify">ENABLE NOTIFICATIONS</button></div></header>
+<div class="mobile-nav" id="mobileNav"><button class="active" data-section="today">Today</button><button data-section="plan">Plan</button><button data-section="focus">Focus</button><button data-section="ai">AI</button><button data-section="deadlines">Deadlines</button><button data-section="availability">Availability</button><button data-section="activities">Activities</button><button data-section="extras">Extras</button><button data-section="exams">Exams</button><button data-section="exceptions">Exceptions</button><button data-section="syllabus">Syllabus</button><button data-section="reminders">Reminders</button><button data-section="progress">Progress</button></div><div id="section-today" class="section active">
   <div class="today-intro">
     <div>
       <div class="eyebrow">YOUR DAY</div>
@@ -123,27 +233,7 @@ header h1{font-size:46px;line-height:1;letter-spacing:-.04em;margin:8px 0 5px}
         <div id="upNext"><div class="side-empty">Upcoming exams and priorities will appear here once you add them.</div></div>
       </section>
 
-      <section class="side-section focus-mini">
-        <div class="section-line"><b>FOCUS</b><span id="focusHeaderState">READY</span></div>
-        <div class="mini-focus">
-          <div>
-            <div class="mini-timer" id="timer">25:00</div>
-            <div class="session-meta" id="focusMeta">Choose a duration or make your own.</div>
-          </div>
-          <div class="mini-controls">
-            <button class="duration active" data-focus="25">25</button>
-            <button class="duration" data-focus="50">50</button>
-            <button class="duration" data-focus="90">90</button>
-            <button onclick="openFocus()">OPEN</button>
-          </div>
-        </div>
-      </section>
-
-      <section class="side-section reminders">
-        <div class="section-line"><b>REMINDERS</b><span>UP TO 10/DAY</span></div>
-        <div class="slots" id="slots"></div>
-      </section>
-    </aside>
+      </aside>
   </div>
 </section></div></div><section id="section-focus" class="section">
   <div class="planner-top">
@@ -182,8 +272,8 @@ header h1{font-size:46px;line-height:1;letter-spacing:-.04em;margin:8px 0 5px}
   <div class="planner-top">
     <div>
       <div class="eyebrow">STUDYOS PLANNER ENGINE</div>
-      <h2 class="page-title">Tell me what is due.<br><em>I will work around your life.</em></h2>
-      <p class="page-lede">No calendar grid. Give StudyOS your deadlines and the hours you can actually study. It turns that into a realistic sequence of study blocks.</p>
+      <h2 class="page-title" id="plannerPageTitle">Your actual study plan.</h2>
+      <p class="page-lede" id="plannerPageLede">StudyOS works around the life you actually have. Add the inputs it needs, then let the engine place the work.</p>
     </div>
     <button class="generate-btn" id="generatePlan">REBUILD MY PLAN</button>
   </div>
@@ -205,27 +295,100 @@ header h1{font-size:46px;line-height:1;letter-spacing:-.04em;margin:8px 0 5px}
         </div>
       </div>
     </section>
-
-    <section class="panel">
-      <div class="head"><b>DEADLINES</b><span id="deadlineCount">0 saved</span></div>
-      <div class="form-grid">
-        <input id="deadlineSubject" placeholder="Subject">
-        <input id="deadlineTitle" placeholder="Exam, assignment or topic">
-        <input id="deadlineDate" type="date">
-        <input id="deadlineMinutes" type="number" min="15" step="15" placeholder="Study minutes needed">
-        <select id="deadlinePriority"><option value="high">High priority</option><option value="medium" selected>Medium priority</option><option value="low">Low priority</option></select>
-        <button class="dark-btn" id="addDeadline">ADD DEADLINE</button>
-      </div>
-      <div id="deadlineList" class="data-list"></div>
-    </section>
   </div>
 
-  <div class="schedule-note" style="margin:14px 0 18px"><b>Separate schedules, separate rules.</b> School, tuition, classes, clubs, sports, robotics, competitions and personal commitments are independent. A school closure never cancels another schedule unless you explicitly add that closure.</div><div class="planner-tabs" id="plannerTabs"><button class="planner-tab active" data-window="deadlines">01 DEADLINES</button><button class="planner-tab" data-window="availability">02 AVAILABILITY</button><button class="planner-tab" data-window="activities">03 ACTIVITIES</button><button class="planner-tab" data-window="extras">04 EXTRA-CURRICULARS</button><button class="planner-tab" data-window="exams">05 EXAMS</button><button class="planner-tab" data-window="exceptions">06 EXCEPTIONS</button></div>
-  <div class="planner-window active" data-window-panel="deadlines">  <div class="planner-window" data-window-panel="availability"><section class="panel"><div class="head"><b>WHEN I CAN STUDY</b><span>Weekly availability</span></div><div class="form-grid availability-form"><select id="availDay2"><option value="1">Monday</option><option value="2">Tuesday</option><option value="3">Wednesday</option><option value="4">Thursday</option><option value="5">Friday</option><option value="6">Saturday</option><option value="0">Sunday</option></select><input id="availStart2" type="time" value="20:00"><input id="availEnd2" type="time" value="22:00"><button class="dark-btn" id="addAvailability2">ADD STUDY WINDOW</button></div><div id="availabilityList2" class="data-list"></div></section></div>
-  <div class="planner-window" data-window-panel="activities"><section class="panel"><div class="head"><b>ACTIVITIES</b><span>Life commitments</span></div><div class="form-grid"><input id="activityTitle" placeholder="Activity"><select id="activityScope"><option value="school">School</option><option value="tuition">Tuition / coaching</option><option value="class">Class</option><option value="personal">Personal</option><option value="other">Other</option></select><input id="activityDay" type="date"><input id="activityStart" type="time"><input id="activityEnd" type="time"><input id="activityLocation" placeholder="Location / note"><button class="dark-btn" id="addActivity">ADD ACTIVITY</button></div><div id="activityList" class="data-list"></div><div class="schedule-note">Classes, appointments, family commitments and other fixed events belong here. StudyOS protects them when building your study plan.</div></section></div>
-  <div class="planner-window" data-window-panel="extras"><section class="panel"><div class="head"><b>EXTRA-CURRICULARS</b><span>Clubs · sports · competitions</span></div><div class="form-grid"><input id="extraTitle" placeholder="Club, sport, robotics, competition..."><select id="extraScope"><option value="club">Club</option><option value="sport">Sport</option><option value="robotics">Robotics</option><option value="competition">Competition</option><option value="other">Other</option></select><select id="extraDay"><option value="1">Monday</option><option value="2">Tuesday</option><option value="3">Wednesday</option><option value="4">Thursday</option><option value="5">Friday</option><option value="6">Saturday</option><option value="0">Sunday</option></select><input id="extraStart" type="time"><input id="extraEnd" type="time"><input id="extraNote" placeholder="Coach / location / note"><button class="dark-btn" id="addExtra">ADD EXTRA-CURRICULAR</button></div><div id="extraList" class="data-list"></div><div class="schedule-note">Sports, clubs, music, robotics, competitions and recurring activities are treated as real commitments, not spare-time filler.</div></section></div>
-  <div class="planner-window" data-window-panel="exams"><section class="panel"><div class="head"><b>EXAM PREP ENGINE</b><span>Work backwards from the exam</span></div><div class="form-grid"><input id="examSubject2" placeholder="Subject"><input id="examDate2" type="date"><input id="syllabusHours2" type="number" min="0" step="0.5" placeholder="Syllabus hours"><input id="pyqCount2" type="number" min="0" step="1" placeholder="PYQs"><input id="sampleCount2" type="number" min="0" step="1" placeholder="Sample papers"><button class="dark-btn" id="addExam2">BUILD EXAM PREP PLAN</button></div><div id="examList2" class="data-list"></div></section></div>
-  <div class="planner-window" data-window-panel="exceptions"><section class="panel"><div class="head"><b>EXCEPTIONS</b><span>Protected days</span></div><div class="form-grid"><input id="vacStart2" type="date"><input id="vacEnd2" type="date"><select id="vacScope"><option value="personal">Personal vacation</option><option value="all">Global closure</option><option value="school">School holiday / closure</option><option value="tuition">Tuition / coaching holiday</option><option value="club">Club holiday</option><option value="sport">Sports holiday</option><option value="robotics">Robotics holiday</option><option value="competition">Competition pause</option></select><label class="check-row"><input id="sundayBlocked" type="checkbox"> Keep Sundays study-free</label><button class="dark-btn" id="addVacation2">ADD CALENDAR CONSTRAINT</button></div><div id="vacationList2" class="data-list"></div></section></div>
+  <div class="planner-pages" id="plannerPages">
+    <section class="planner-window" data-window-panel="deadlines">
+      <div class="panel page-panel">
+        <div class="head"><b>DEADLINES</b><span id="deadlineCount">0 saved</span></div>
+        <div class="form-grid">
+          <input id="deadlineSubject" placeholder="Subject">
+          <input id="deadlineTitle" placeholder="Exam, assignment or topic">
+          <input id="deadlineDate" type="date">
+          <input id="deadlineMinutes" type="number" min="15" step="15" placeholder="Study minutes needed">
+          <select id="deadlinePriority"><option value="high">High priority</option><option value="medium" selected>Medium priority</option><option value="low">Low priority</option></select>
+          <button class="dark-btn" id="addDeadline">ADD DEADLINE</button>
+        </div>
+        <div id="deadlineList" class="data-list"></div>
+      </div>
+    </section>
+
+    <section class="planner-window" data-window-panel="availability">
+      <div class="panel page-panel">
+        <div class="head"><b>WHEN I CAN STUDY</b><span>Weekly availability</span></div>
+        <div class="form-grid availability-form">
+          <select id="availDay2"><option value="1">Monday</option><option value="2">Tuesday</option><option value="3">Wednesday</option><option value="4">Thursday</option><option value="5">Friday</option><option value="6">Saturday</option><option value="0">Sunday</option></select>
+          <input id="availStart2" type="time" value="20:00">
+          <input id="availEnd2" type="time" value="22:00">
+          <button class="dark-btn" id="addAvailability2">ADD STUDY WINDOW</button>
+        </div>
+        <div id="availabilityList2" class="data-list"></div>
+      </div>
+    </section>
+
+    <section class="planner-window" data-window-panel="activities">
+      <div class="panel page-panel">
+        <div class="head"><b>ACTIVITIES</b><span>Life commitments</span></div>
+        <div class="form-grid">
+          <input id="activityTitle" placeholder="Activity">
+          <select id="activityScope"><option value="school">School</option><option value="tuition">Tuition / coaching</option><option value="class">Class</option><option value="personal">Personal</option><option value="other">Other</option></select>
+          <input id="activityDay" type="date">
+          <input id="activityStart" type="time">
+          <input id="activityEnd" type="time">
+          <input id="activityLocation" placeholder="Location / note">
+          <button class="dark-btn" id="addActivity">ADD ACTIVITY</button>
+        </div>
+        <div id="activityList" class="data-list"></div>
+        <div class="schedule-note">Classes, appointments, family commitments and other fixed events belong here. StudyOS protects them when building your study plan.</div>
+      </div>
+    </section>
+
+    <section class="planner-window" data-window-panel="extras">
+      <div class="panel page-panel">
+        <div class="head"><b>EXTRA-CURRICULARS</b><span>Clubs · sports · competitions</span></div>
+        <div class="form-grid">
+          <input id="extraTitle" placeholder="Club, sport, robotics, competition...">
+          <select id="extraScope"><option value="club">Club</option><option value="sport">Sport</option><option value="robotics">Robotics</option><option value="competition">Competition</option><option value="other">Other</option></select>
+          <select id="extraDay"><option value="1">Monday</option><option value="2">Tuesday</option><option value="3">Wednesday</option><option value="4">Thursday</option><option value="5">Friday</option><option value="6">Saturday</option><option value="0">Sunday</option></select>
+          <input id="extraStart" type="time">
+          <input id="extraEnd" type="time">
+          <input id="extraNote" placeholder="Coach / location / note">
+          <button class="dark-btn" id="addExtra">ADD EXTRA-CURRICULAR</button>
+        </div>
+        <div id="extraList" class="data-list"></div>
+        <div class="schedule-note">Sports, clubs, music, robotics, competitions and recurring activities are treated as real commitments, not spare-time filler.</div>
+      </div>
+    </section>
+
+    <section class="planner-window" data-window-panel="exams">
+      <div class="panel page-panel">
+        <div class="head"><b>EXAM PREP ENGINE</b><span>Work backwards from the exam</span></div>
+        <div class="form-grid">
+          <input id="examSubject2" placeholder="Subject">
+          <input id="examDate2" type="date">
+          <input id="syllabusHours2" type="number" min="0" step="0.5" placeholder="Syllabus hours">
+          <input id="pyqCount2" type="number" min="0" step="1" placeholder="PYQs">
+          <input id="sampleCount2" type="number" min="0" step="1" placeholder="Sample papers">
+          <button class="dark-btn" id="addExam2">BUILD EXAM PREP PLAN</button>
+        </div>
+        <div id="examList2" class="data-list"></div>
+      </div>
+    </section>
+
+    <section class="planner-window" data-window-panel="exceptions">
+      <div class="panel page-panel">
+        <div class="head"><b>EXCEPTIONS</b><span>Calendar constraints</span></div>
+        <div class="form-grid">
+          <input id="vacStart2" type="date">
+          <input id="vacEnd2" type="date">
+          <select id="vacScope"><option value="personal">Personal vacation</option><option value="all">Global closure</option><option value="school">School holiday / closure</option><option value="tuition">Tuition / coaching holiday</option><option value="club">Club holiday</option><option value="sport">Sports holiday</option><option value="robotics">Robotics holiday</option><option value="competition">Competition pause</option></select>
+          <label class="check-row"><input id="sundayBlocked" type="checkbox"> Keep Sundays study-free</label>
+          <button class="dark-btn" id="addVacation2">ADD CALENDAR CONSTRAINT</button>
+        </div>
+        <div id="vacationList2" class="data-list"></div>
+      </div>
+    </section>
+  </div>
 
   <section class="panel generated-panel">
     <div class="head"><b>YOUR ACTUAL STUDY PLAN</b><span id="planSummary">Waiting for your inputs</span></div>
@@ -330,7 +493,7 @@ header h1{font-size:46px;line-height:1;letter-spacing:-.04em;margin:8px 0 5px}
     localStorage.setItem("studyos-settings",JSON.stringify(settings));
     window.userSettings=settings;
     modal.classList.remove("open");
-    document.body.dataset.section="today";
+    document.body.dataset.section="today";document.body.dataset.page="today";
     document.querySelectorAll("main > section").forEach(s=>s.classList.remove("active"));
     const today=document.getElementById("today");
     if(today)today.classList.add("active");
@@ -621,8 +784,34 @@ function renderReminderSection(){const target=$("reminderSectionSlots");target.i
 function saveTime(i,v){times[i]=v;state.times=times;saveState();syncReminders()}
 async function syncReminders(){try{await fetch("/api/reminders",{method:"POST",headers:{"content-type":"application/json"},body:JSON.stringify({times,labels:state.plan.map(x=>x.subject+" · "+x.task)})})}catch(e){}}
 function renderProgress(){const el=$("progressStats"),sessions=Number(localStorage.getItem("studyos-focus-count")||0);el.innerHTML='<div class="insight"><b>'+state.done.length+'</b><br>blocks completed</div><div class="insight"><b>'+sessions+'</b><br>focus sessions</div><div class="insight"><b>'+times.length+'</b><br>reminder slots</div>'}
-function showSection(name){document.body.dataset.section=name;document.querySelectorAll(".section").forEach(s=>s.classList.remove("active"));const t=$("section-"+name);if(t)t.classList.add("active");document.querySelectorAll("[data-section]").forEach(b=>b.classList.toggle("active",b.dataset.section===name));if(name==="reminders")renderReminderSection();if(name==="progress")renderProgress();if(name==="planner")renderPlanner();if(name==="focus")renderFocusPage()}
-document.querySelectorAll("[data-section]").forEach(b=>b.addEventListener("click",()=>showSection(b.dataset.section)));
+const PLANNER_PAGE_MAP={plan:null,ai:null,deadlines:"deadlines",availability:"availability",activities:"activities",extras:"extras",exams:"exams",exceptions:"exceptions"};
+function showSection(name){
+  const plannerPages=Object.prototype.hasOwnProperty.call(PLANNER_PAGE_MAP,name);
+  const sectionName=plannerPages?"planner":name;
+  document.body.dataset.section=sectionName;
+  document.body.dataset.page=name;
+  document.querySelectorAll(".section").forEach(s=>s.classList.remove("active"));
+  const target=$("section-"+sectionName);
+  if(target)target.classList.add("active");
+  document.querySelectorAll("[data-section]").forEach(b=>b.classList.toggle("active",b.dataset.section===name));
+  document.querySelectorAll(".planner-window").forEach(w=>w.classList.remove("active"));
+  if(plannerPages&&PLANNER_PAGE_MAP[name]){
+    const w=document.querySelector('[data-window-panel="'+PLANNER_PAGE_MAP[name]+'"]');
+    if(w)w.classList.add("active");
+  }
+  if(name==="reminders")renderReminderSection();
+  if(name==="progress")renderProgress();
+  if(plannerPages)renderPlanner();
+  if(name==="focus")renderFocusPage();
+}
+document.querySelectorAll("[data-section]").forEach(b=>b.addEventListener("click",()=>showSection(b.dataset.section)));document.getElementById("sidebarToggle")?.addEventListener("click",()=>{
+  document.body.classList.toggle("sidebar-collapsed");
+  const collapsed=document.body.classList.contains("sidebar-collapsed");
+  const btn=document.getElementById("sidebarToggle");
+  if(btn){btn.querySelector("b").textContent=collapsed?"OPEN":"CLOSE";btn.querySelector("span").textContent=collapsed?"→":"←";btn.setAttribute("aria-label",collapsed?"Open sidebar":"Collapse sidebar")}
+});
+document.getElementById("contentMenuToggle")?.addEventListener("click",()=>document.body.classList.remove("sidebar-collapsed"));
+
 
 async function enable(){if(!("Notification"in window))return alert("Notifications are not supported here.");const p=await Notification.requestPermission();if(p==="granted"){notifyBtn.classList.add("on");notifyBtn.textContent="NOTIFICATIONS ON";const reg=await navigator.serviceWorker.ready;try{const c=await fetch("/api/config");const j=await c.json();if(j.publicKey){const key=j.publicKey;const pad="=".repeat((4-key.length%4)%4),raw=atob((key+pad).replace(/-/g,"+").replace(/_/g,"/"));const sub=await reg.pushManager.subscribe({userVisibleOnly:true,applicationServerKey:Uint8Array.from(raw,ch=>ch.charCodeAt(0))});await fetch("/api/subscribe",{method:"POST",headers:{"content-type":"application/json"},body:JSON.stringify({subscription:sub})})}else reg.showNotification("StudyOS notifications enabled",{body:"Server push still needs its Vercel keys."})}catch(e){reg.showNotification("StudyOS notifications enabled",{body:"Your browser permission is on."})}}}
 if("serviceWorker"in navigator)navigator.serviceWorker.register("/sw.js");notifyBtn?.addEventListener("click",enable);
