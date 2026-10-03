@@ -23,7 +23,8 @@ Rules:
 - If the user asks to "plan", "replan", "move", "change", "remove", or "cancel", make the state-changing actions needed. The client will regenerate the plan after applying them.
 - For a vacation, do not add individual fake study blocks. Use a protected date range.
 - Use ISO dates YYYY-MM-DD. Today is ${new Date().toISOString().slice(0,10)}.
-- Actions allowed: add_deadline {subject,title,due,minutes,priority}, remove_deadline {match}, set_availability {day,start,end}, remove_availability {day}, set_vacation {start,end}, clear_vacations {}, clear_plan {}.
+- Actions allowed: add_deadline {subject,title,due,minutes,priority}, remove_deadline {match}, set_availability {day,start,end}, remove_availability {day}, set_vacation {start,end}, clear_vacations {}, clear_plan {}, add_exam {subject,date,syllabusHours,pyqCount,pyqMinutes,sampleCount,sampleMinutes,errorMinutes,finalDays,finalMinutes}, remove_exam {match}.
+- For an exam, understand the user's requested PYQ count, sample-paper count, and final-revision time. Do not invent those quantities when the user has explicitly specified them.
 JSON shape:
 {"reply":"string","actions":[{"type":"..."}]}`;
   let content;
