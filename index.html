@@ -1079,7 +1079,7 @@ function renderPlanner(){
   if(al)al.innerHTML=state.availability.length?state.availability.map((x,i)=>'<div class="data-row"><div><b>'+DAYS[Number(x.day)]+'</b><small>'+esc(x.start)+' → '+esc(x.end)+'</small></div><button class="remove-btn" onclick="removeAvailability('+i+')">×</button></div>').join(""):'<div class="insight">No study windows yet.</div>';
   if(vl)vl.innerHTML=state.vacations.length?state.vacations.map((x,i)=>'<div class="data-row"><div><b>Protected day</b><small>'+esc(x.start)+' → '+esc(x.end)+'</small></div><button class="remove-btn" onclick="removeVacation('+i+')">×</button></div>').join(""):'<div class="insight">No exceptions yet.</div>';
   if(el)el.innerHTML=state.exams.length?state.exams.map((x,i)=>'<div class="data-row"><div><b>'+esc(x.subject)+'</b><small>Exam '+esc(x.date)+' · '+x.pyqCount+' PYQs · '+x.sampleCount+' sample papers · '+x.finalDays+' final days</small></div><button class="remove-btn" onclick="removeExam('+i+')">×</button></div>').join(""):'<div class="insight">No exam plans yet.</div>';
-  if(act)act.innerHTML=state.activities.length?state.activities.map((x,i)=>'<div class="data-row"><div><b>'+esc(x.title)+'</b><small>'+esc(x.from||x.date)+' → '+esc(x.to||x.date)+' · '+(x.mode==="hours"?esc(x.hours)+" h/day · no fixed time":esc(x.start)+" → "+esc(x.end))+(x.location?' · '+esc(x.location):'')+'</small></div><button class="remove-btn" onclick="removeActivity('+i+')">×</button></div>').join(""):'<div class="insight">No academic commitments yet.</div>';
+  if(act)act.innerHTML=state.activities.length?state.activities.map((x,i)=>'<div class="data-row"><div><b>'+esc(x.title)+'</b><small>'+esc(x.subject||"All subjects")+(x.teacher?' · '+esc(x.teacher):'')+' · '+esc(x.from||x.date)+' → '+esc(x.to||x.date)+' · '+(x.repeat&&Array.isArray(x.slots)?esc(x.slots.map(s=>(s.days||[]).map(d=>DAYS[d]).join("/")).join(" + "))+" · "+esc(x.start)+" → "+esc(x.end):esc(x.start)+" → "+esc(x.end))+(x.location?' · '+esc(x.location):'')+(x.meetingLink?' · online':'')+'</small></div><button class="remove-btn" onclick="removeActivity('+i+')">×</button></div>').join(""):'<div class="insight">No academic commitments yet.</div>';
   if(ext)ext.innerHTML=state.extras.length?state.extras.map((x,i)=>'<div class="data-row"><div><b>'+esc(x.title)+'</b><small>'+esc(x.from)+' → '+esc(x.to)+' · '+DAYS[Number(x.day)]+' · '+(x.mode==="hours"?esc(x.hours)+" h/day · no fixed time":esc(x.start)+" → "+esc(x.end))+(x.note?' · '+esc(x.note):'')+'</small></div><button class="remove-btn" onclick="removeExtra('+i+')">×</button></div>').join(""):'<div class="insight">No other commitments yet.</div>';
   const a2=$("availabilityList"); if(a2)a2.innerHTML=al?al.innerHTML:"";
 }
@@ -1500,12 +1500,21 @@ document.querySelectorAll("[data-cooking-jump]").forEach(b=>b.addEventListener("
 function commitmentActiveOnDay(x,key,dow){
   const from=x.from||x.date||"9999-12-31",to=x.to||x.date||from;
   if(key<from||key>to)return false;
-  if(x.day!==undefined && Number(x.day)!==dow)return false;
+  if(x.repeat){
+    const slotDays=Array.isArray(x.slots)?x.slots.flatMap(s=>Array.isArray(s.days)?s.days:[]):[];
+    if(slotDays.length)return slotDays.includes(Number(dow));
+    if(x.day!==undefined&&x.day!==null)return Number(x.day)===Number(dow);
+    return false;
+  }
   return true;
 }
 function protectedIntervals(key,dow){
   const out=[];
-  state.activities.filter(x=>x.mode!=="hours"&&x.start&&x.end&&commitmentActiveOnDay(x,key,dow)&&!commitmentCancelled(commitmentScope(x),key)).forEach(x=>out.push({start:mins(x.start),end:mins(x.end)}));
+  state.activities.filter(x=>x.mode!=="hours"&&x.start&&x.end&&commitmentActiveOnDay(x,key,dow)&&!commitmentCancelled(commitmentScope(x),key)).forEach(x=>{
+    if(x.repeat&&Array.isArray(x.slots)&&x.slots.length){
+      x.slots.filter(s=>Array.isArray(s.days)&&s.days.includes(Number(dow))&&s.start&&s.end).forEach(s=>out.push({start:mins(s.start),end:mins(s.end)}));
+    }else out.push({start:mins(x.start),end:mins(x.end)});
+  });
   state.extras.filter(x=>x.mode!=="hours"&&x.start&&x.end&&commitmentActiveOnDay(x,key,dow)&&!commitmentCancelled(commitmentScope(x),key)).forEach(x=>out.push({start:mins(x.start),end:mins(x.end)}));
   return out.filter(x=>x.end>x.start).sort((a,b)=>a.start-b.start);
 }
@@ -2016,7 +2025,7 @@ function generatePlan(){
   const DAYS=["Sun","Mon","Tue","Wed","Thu","Fri","Sat"];
   const defaultSubjects=[
     ["ALL","all"],["English","english"],["Mathematics","mathematics"],["Science","science"],["SST","sst"],
-    ["Chemistry","chemistry"],["Physics","physics"],["Biology","biology"],["Computer Science","computer-science"]
+    ["Chemistry","chemistry"],["Physics","physics"],["Biology","biology"],["History","history"],["Geography","geography"],["Hindi","hindi"],["Computer Science","computer-science"]
   ];
   const savedSubjects=JSON.parse(localStorage.getItem("studyos-subjects")||"null");
   const subjects=Array.isArray(savedSubjects)&&savedSubjects.length?savedSubjects:defaultSubjects;
@@ -2143,19 +2152,28 @@ function generatePlan(){
     const title=$("activityTitle").value.trim(),subject=$("activitySubject").value.trim(),teacher=$("activityTeacher").value.trim(),location=$("activityLocation").value.trim(),meetingLink=$("activityMeetingLink").value.trim();
     if(!title||!subject)return alert("Add the class name and choose a subject.");
     let from="",to="",day=null,start="",end="";
+    let activeSlots=[];
     if(whenMode==="once"){
       const date=$("activityOnceDate").value;if(!date)return alert("Choose a date.");
-      from=date;to=date;
       start=$("activityStart").value;end=$("activityEnd").value;
       if(!start||!end||mins(end)<=mins(start))return alert("Choose valid start and end times.");
+      if(selectedRange==="manual"){
+        from=$("activityFrom").value;to=$("activityTo").value;
+        if(!from||!to||to<from)return alert("Choose a valid manual date range.");
+      }else if(selectedRange==="term"){
+        from=date;to=addDays(date,120);
+      }else{
+        from=date;to=date;
+      }
     }else{
-      const activeSlots=slots.filter(s=>s.days.length&&s.start&&s.end&&mins(s.end)>mins(s.start));if(!activeSlots.length)return alert("Add at least one complete repeating time slot.");
+      activeSlots=slots.filter(s=>s.days.length&&s.start&&s.end&&mins(s.end)>mins(s.start));
+      if(!activeSlots.length)return alert("Add at least one complete repeating time slot.");
       day=activeSlots[0].days[0];start=activeSlots[0].start;end=activeSlots[0].end;
-      if(selectedRange==="term"){from=new Date().toISOString().slice(0,10);to=new Date(Date.now()+120*86400000).toISOString().slice(0,10)}
+      if(selectedRange==="term"){from=new Date().toISOString().slice(0,10);to=addDays(from,120)}
       else if(selectedRange==="manual"){from=$("activityFrom").value;to=$("activityTo").value;if(!from||!to||to<from)return alert("Choose a valid manual date range.")}
-      else{from=new Date().toISOString().slice(0,10);to=new Date(Date.now()+365*86400000).toISOString().slice(0,10)}
+      else{from=new Date().toISOString().slice(0,10);to="9999-12-31"}
     }
-    const item={title,subject,teacher,scope:title.toLowerCase().includes("school")?"school":"tuition",from,to,day,start,end,mode:"exact",location,meetingLink,repeat:whenMode==="repeating",slots:whenMode==="repeating"?activeSlots:[]};
+    const item={title,subject,teacher,scope:title.toLowerCase().includes("school")?"school":"tuition",from,to,day,start,end,mode:"exact",location,meetingLink,repeat:whenMode==="repeating",range:selectedRange,slots:whenMode==="repeating"?activeSlots:[]};
     state.activities.push(item);saveState();generatePlan();renderPlanner();closeModal();
   };
   $("openAddClass")?.addEventListener("dblclick",openModal);
