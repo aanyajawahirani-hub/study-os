@@ -897,6 +897,55 @@ $("googleSignup")?.addEventListener("click",()=>{
   }catch(e){$("googleStatus").textContent="Could not load Google sign-in configuration.";}
 })();
 $("notificationSkip")?.addEventListener("click",()=>{$("notificationModal").classList.remove("open")});
+
+async function enableStudyOSNotifications(button){
+  if(!button)return;
+  const original=button.textContent;
+  button.disabled=true;
+  try{
+    if(!("Notification" in window)){
+      button.textContent="OPEN IN SAFARI";
+      alert("Notifications are not supported in this browser. Open StudyOS in Safari or Chrome.");
+      return;
+    }
+    if(Notification.permission==="denied"){
+      button.textContent="NOTIFICATIONS BLOCKED";
+      alert("Notifications are blocked for StudyOS in this browser. Allow notifications for this site in your browser settings, then try again.");
+      return;
+    }
+    const permission=await Notification.requestPermission();
+    if(permission!=="granted"){
+      button.textContent=permission==="denied"?"NOTIFICATIONS BLOCKED":"NOTIFICATIONS OFF";
+      return;
+    }
+    if("serviceWorker" in navigator){
+      const reg=await navigator.serviceWorker.register("/sw.js");
+      await navigator.serviceWorker.ready;
+      try{
+        const response=await fetch("/api/config",{cache:"no-store"});
+        const config=response.ok?await response.json():{};
+        if(config.publicKey){
+          const key=config.publicKey;
+          const pad="=".repeat((4-key.length%4)%4);
+          const raw=atob((key+pad).replace(/-/g,"+").replace(/_/g,"/"));
+          let sub=await reg.pushManager.getSubscription();
+          if(!sub)sub=await reg.pushManager.subscribe({userVisibleOnly:true,applicationServerKey:Uint8Array.from(raw,ch=>ch.charCodeAt(0))});
+          await fetch("/api/subscribe",{method:"POST",headers:{"content-type":"application/json"},body:JSON.stringify({subscription:sub})});
+        }
+      }catch(pushError){console.warn("StudyOS push setup failed:",pushError);}
+    }
+    button.textContent="NOTIFICATIONS ON";
+    localStorage.setItem("studyos-notifications-enabled","1");
+    $("notificationModal")?.classList.remove("open");
+    new Notification("StudyOS notifications enabled",{body:"Your study reminders can now notify you."});
+  }catch(err){
+    console.error("StudyOS notification setup failed:",err);
+    button.textContent="TRY AGAIN";
+  }finally{
+    setTimeout(()=>{button.disabled=false;if(button.textContent==="TRY AGAIN")button.textContent=original},900);
+  }
+}
+$("notificationEnable")?.addEventListener("click",()=>enableStudyOSNotifications($("notificationEnable")));
 document.addEventListener("click",e=>{const b=e.target.closest("button");if(!b||b.closest("#authModal"))return;const safe=["sidebarToggle","contentMenuToggle","openClockSettings","notify","saveSetup","closeSetup","notificationEnable","notificationSkip"].includes(b.id)||!!b.closest("#setupModal");if(!safe&&!authUser){e.preventDefault();e.stopImmediatePropagation();openAuth("feature");}},true);
 if(!authUser){$("authModal").classList.add("open");}$("focusAudioFile")?.addEventListener("change",e=>{const f=e.target.files[0];if(!f)return;focusAudio=focusAudio||new Audio();focusAudio.src=URL.createObjectURL(f);$("focusAudioName").textContent=f.name;$("focusSoundStatus").textContent="LOCAL SOUND READY";});
 document.body.dataset.section="today";document.body.dataset.page="today";
