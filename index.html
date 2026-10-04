@@ -1786,30 +1786,21 @@ function generatePlan(){
 <style id="clock-tutorial-ui">
   #clockTutorialLayer{
     position:fixed;inset:0;z-index:2147483000;pointer-events:none;
-    isolation:isolate;
   }
-  /* The spotlight itself creates the darkened page. This is more reliable than a
-     full-screen shade because it guarantees a real transparent hole around the target. */
+  /* Tutorial guidance must never alter, blur, or visually obscure the page. */
   #clockTutorialShade{display:none}
   #clockTutorialSpotlight{
     position:fixed;z-index:1;border:3px solid #4b94e2;border-radius:12px;
     background:transparent;
-    box-shadow:
-      0 0 0 5px rgba(75,148,226,.30),
-      0 0 0 9999px rgba(10,18,30,.58),
-      0 0 32px rgba(75,148,226,.45);
+    box-shadow:0 0 0 5px rgba(75,148,226,.18),0 0 22px rgba(75,148,226,.18);
     pointer-events:none;
-    transition:
-      left .38s cubic-bezier(.2,.8,.2,1),
-      top .38s cubic-bezier(.2,.8,.2,1),
-      width .38s cubic-bezier(.2,.8,.2,1),
-      height .38s cubic-bezier(.2,.8,.2,1);
+    transition:left .22s ease,top .22s ease,width .22s ease,height .22s ease;
   }
   #clockTutorialCard{
     position:fixed;z-index:4;width:min(340px,calc(100vw - 28px));padding:20px 20px 18px;
     background:#fff;color:#18243d;border:2px solid #18243d;border-radius:16px;
     box-shadow:0 20px 70px rgba(23,35,55,.35);pointer-events:auto;
-    transition:all .38s cubic-bezier(.2,.8,.2,1);
+    transition:opacity .18s ease,transform .18s ease;
   }
   #clockTutorialArrow{
     position:fixed;z-index:3;font-size:34px;line-height:1;color:var(--accent);
@@ -1847,8 +1838,16 @@ function generatePlan(){
   .clock-tutorial-action:hover{background:var(--accent);border-color:var(--accent)}
   #clockTutorialLayer.tutorial-hidden{display:none}
   @media(max-width:700px){
-    #clockTutorialCard{width:min(330px,calc(100vw - 24px));padding:17px}
+    #clockTutorialSpotlight{border-width:2px;border-radius:10px;box-shadow:0 0 0 4px rgba(75,148,226,.14),0 0 16px rgba(75,148,226,.12)}
+    #clockTutorialArrow{display:none}
+    #clockTutorialCard{
+      left:12px !important;right:12px !important;bottom:12px !important;top:auto !important;
+      width:auto !important;padding:16px;border-radius:14px;
+    }
     #clockTutorialCard:after{display:none}
+    .clock-tutorial-title{font-size:23px}
+    .clock-tutorial-copy{font-size:12px}
+    .clock-tutorial-action{width:100%;padding:12px}
   }
 </style>
 <script id="clock-tutorial">
@@ -1962,7 +1961,7 @@ function generatePlan(){
     state.step=step;state.active=true;
     ensureLayer();
     $("clockTutorialLayer").classList.remove("tutorial-hidden");
-    if(step>=1){
+    if(step>=1 && step<=3){
       setup.classList.add("open");
       setup.style.display="grid";
       setup.style.zIndex="9999";
@@ -2033,10 +2032,9 @@ function generatePlan(){
       return;
     }
     if(b?.id==="clockTutorialAction"){
-      if(state.step===0)openStep(0);
-      else if(state.step===1)openStep(1);
-      else if(state.step===2)openStep(2);
-      else if(state.step===3)openStep(3);
+      // "Got it" is a navigation control, not a second click on the same target.
+      // It moves the guide forward without changing the underlying page layout.
+      if(state.step<4)openStep(state.step+1);
       else finish();
     }
   },true);
