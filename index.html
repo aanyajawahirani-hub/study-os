@@ -1295,7 +1295,7 @@ $("setupTimezone")?.addEventListener("change",()=>{
   }
 });
 // Clock settings are saved by the isolated handler beside the modal so this control remains functional even if another StudyOS module fails.
-if(needsFirstRun||!userSettings){document.body.classList.add("setup-first","setup-gate");$("setupModal")?.classList.add("open");setTimeout(()=>openSetup(),0)}else{$("setupModal").classList.remove("open");document.body.classList.remove("setup-first","setup-gate")}
+/* Clock setup is intentionally not a startup gate. The guided tutorial opens it when the user clicks the highlighted settings control. */ $("setupModal")?.classList.remove("open"); document.body.classList.remove("setup-first","setup-gate");
 const focus={seconds:25*60,running:false,mode:25,breakMinutes:5,interval:null};
 let focusTaskIndex=0;
 function fmt(s){return String(Math.floor(s/60)).padStart(2,"0")+":"+String(s%60).padStart(2,"0")}
