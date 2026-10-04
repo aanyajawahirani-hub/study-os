@@ -1854,7 +1854,7 @@ function generatePlan(){
 <script id="clock-tutorial">
 (function(){
   const $=id=>document.getElementById(id);
-  const TUTORIAL_KEY="studyos-clock-tutorial-v1";
+  const TUTORIAL_KEY="studyos-clock-tutorial-v2";
   const setup=$("setupModal"), notif=$("notificationModal");
   if(!setup)return;
 
@@ -2048,14 +2048,14 @@ function generatePlan(){
 
   function startIfNeeded(){
     hideOtherOnboarding();
-    const hasSettings=!!localStorage.getItem("studyos-settings");
-    if(hasSettings){
+    // Show this version of the guide once per browser, even if clock settings
+    // already exist from an earlier test/session. That makes the tutorial
+    // discoverable instead of silently disappearing for returning users.
+    if(localStorage.getItem(TUTORIAL_KEY)==="1"){
       setup.classList.remove("open");
       setup.style.removeProperty("display");
       return;
     }
-    // The guide is tied to completion of clock setup, not to a stale tutorial flag.
-    // If setup has never been completed, always bring the user back to the guided entry point.
     openStep(0);
   }
 
