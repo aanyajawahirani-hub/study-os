@@ -358,6 +358,27 @@ body[data-page="exceptions"] .sunday-card input{width:20px;height:20px;accent-co
 .spotify-link-row button{border:1px solid var(--focus);background:var(--focus);color:#fff;padding:10px 12px;font-size:8px;font-weight:800;cursor:pointer}
 .commitment-mode-note{grid-column:1/-1}
 @media(max-width:600px){.spotify-link-row{grid-template-columns:1fr}.spotify-link-row button{width:100%}}
+</style><style id="schedule-class-ui">
+.schedule-empty-state{display:flex;justify-content:space-between;align-items:end;gap:24px;border:1px solid var(--line);background:var(--surface2);padding:28px;margin-top:20px}
+.schedule-empty-state>div{max-width:720px}.schedule-empty-kicker{font-size:8px;letter-spacing:.18em;font-weight:900;color:var(--accent3)}
+.schedule-empty-state h2{font-family:Georgia,serif;font-size:34px;line-height:1;margin:9px 0 10px}.schedule-empty-state p{margin:0;color:var(--muted);font-size:11px;line-height:1.6}
+.add-class-launch{white-space:nowrap;display:inline-flex;align-items:center;gap:8px}.add-class-launch span{font-size:18px;line-height:0}
+#classScheduleModal{z-index:120;background:rgba(31,38,43,.34);backdrop-filter:blur(4px);-webkit-backdrop-filter:blur(4px);place-items:center;padding:24px}
+.class-schedule-shell{width:min(1120px,100%);max-height:calc(100vh - 48px);overflow:auto;background:#fff;color:#17233f;border-radius:22px;box-shadow:0 28px 90px rgba(17,29,45,.28);padding:26px 30px 34px}
+.class-schedule-head{display:flex;align-items:center;justify-content:center;position:relative;margin-bottom:18px}.class-schedule-head h2{font-size:28px;font-weight:500;letter-spacing:-.04em;margin:0}.class-schedule-close{position:absolute;right:0;top:-2px;border:0;background:none;color:#151515;font-size:32px;line-height:1;cursor:pointer}
+.scout-row{display:grid;grid-template-columns:auto 1fr auto;align-items:center;gap:14px;border:2px solid #9bd3ff;border-radius:20px;padding:12px 14px;background:#fff;box-shadow:0 0 0 7px rgba(115,190,255,.12)}
+.scout-plus{width:42px;height:42px;border-radius:50%;display:grid;place-items:center;background:#2ca4ed;color:#fff;font-size:26px;box-shadow:0 7px 18px rgba(44,164,237,.24)}.scout-input{border:0;outline:0;background:transparent;font:inherit;font-size:20px;color:#17233f;min-width:0}.scout-input::placeholder{color:#9aa2b1}.scout-label{font-weight:800;margin-right:4px}.scout-send{width:44px;height:44px;border-radius:50%;border:1px solid #a7d5fb;background:#eff8ff;color:#218fe0;font-size:24px;cursor:pointer}
+.schedule-divider{display:flex;align-items:center;gap:16px;color:#77849b;font-weight:800;letter-spacing:.12em;font-size:11px;margin:26px 0 20px}.schedule-divider:before,.schedule-divider:after{content:"";height:1px;background:#cdd3dc;flex:1}
+.class-fields{display:grid;gap:20px}.class-field-label{display:block;color:#687b9e;font-size:12px;font-weight:900;letter-spacing:.07em;margin-bottom:10px}.class-field-label em{font-style:normal;color:#2f9be9}
+.class-input,.class-select,.class-textarea{width:100%;box-sizing:border-box;border:1px solid transparent;background:#f0f2f6;border-radius:14px;padding:18px 22px;color:#17233f;font:inherit;font-size:18px;outline:none}.class-input:focus,.class-select:focus,.class-textarea:focus{border-color:#91cdf7;box-shadow:0 0 0 3px rgba(75,168,239,.12)}.class-input::placeholder{color:#9aabc3}.class-two{display:grid;grid-template-columns:1fr 1fr;gap:18px}
+.subject-picker{position:relative}.subject-trigger{width:100%;text-align:left;cursor:pointer}.subject-trigger:after{content:"⌄";float:right;color:#aab0ba;font-size:25px;line-height:.7}.subject-menu{position:absolute;left:0;right:0;top:calc(100% + 10px);z-index:8;background:#fff;border-radius:16px;box-shadow:0 16px 36px rgba(28,43,61,.18);overflow:hidden;border:1px solid #e1e6ee}.subject-option{width:100%;display:flex;align-items:center;gap:12px;border:0;border-bottom:1px solid #e7ebf0;background:#fff;padding:16px 18px;text-align:left;font:inherit;font-size:17px;color:#202a3c;cursor:pointer}.subject-option:hover{background:#f5f8fb}.subject-dot{width:13px;height:13px;border-radius:50%;background:#4477e6}.subject-menu-footer{padding:14px 18px;border:0;background:#fff;color:#4c91ef;font-size:16px;cursor:pointer;width:100%;text-align:center}
+.when-card,.where-card{background:#f0f2f6;border-radius:20px;padding:22px 24px}.when-tabs{display:grid;grid-template-columns:1fr 1fr;gap:18px;margin:8px 0 20px}.when-tab,.range-tab,.where-tab{border:1px solid #e0e6ee;background:#fff;color:#9babc2;border-radius:13px;padding:16px;font:inherit;font-size:17px;font-weight:700;cursor:pointer}.when-tab.active,.range-tab.active{background:#4c94e2;border-color:#4c94e2;color:#fff}.sub-card{background:#fff;border:1px solid #e1e6ed;border-radius:16px;padding:18px 20px}.field-row{display:grid;grid-template-columns:1fr 1fr;gap:18px}.days-row{display:flex;gap:9px;flex-wrap:wrap}.day-chip{border:0;background:#eef1f5;color:#687b9e;border-radius:11px;padding:12px 16px;font:inherit;font-size:16px;font-weight:700;cursor:pointer}.day-chip.active{background:#4c94e2;color:#fff}
+.time-slot-card{display:grid;gap:15px}.slot-head{display:flex;justify-content:space-between;align-items:center;color:#8b9ab1;font-size:12px;font-weight:900;letter-spacing:.1em}.remove-slot{border:0;background:none;color:#a1aaba;cursor:pointer;font-size:12px}.add-slot-btn{width:100%;border:1px dashed #d8e0ea;background:transparent;color:#9babc2;border-radius:13px;padding:14px;font:inherit;font-size:16px;font-weight:700;cursor:pointer}.add-slot-btn:hover{background:#fff;color:#4c94e2}
+.range-row{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;margin-top:18px}.range-panel{display:none;margin-top:15px}.range-panel.open{display:grid;grid-template-columns:1fr 1fr;gap:18px}
+.where-tabs{display:flex;gap:12px;margin:8px 0 18px}.where-tab{border-radius:999px;padding:12px 20px}.where-tab.active{border-color:#99cbfa;color:#398ee0;background:#eef8ff}.where-fields{display:grid;gap:15px}.where-online{display:none}.where-online.open{display:block}
+.class-footer{display:flex;justify-content:flex-end;gap:10px;margin-top:24px}.class-cancel{border:1px solid #d8dee7;background:#fff;color:#65748e;border-radius:12px;padding:13px 20px;font-weight:800;cursor:pointer}.class-save{border:0;background:#4c94e2;color:#fff;border-radius:12px;padding:13px 22px;font-weight:800;cursor:pointer}
+.time-picker-backdrop{position:fixed;inset:0;z-index:150;background:rgba(20,30,40,.32);display:none;place-items:center;padding:20px}.time-picker-backdrop.open{display:grid}.time-picker{width:min(720px,100%);background:#fff;border-radius:28px;padding:34px 42px 26px;box-shadow:0 25px 80px rgba(0,0,0,.25)}.time-picker h3{font-size:22px;font-weight:500;margin:0 0 25px}.picker-main{display:grid;grid-template-columns:1fr 1.2fr;gap:25px;align-items:center}.picker-display{font-size:72px;letter-spacing:-.06em;display:grid;justify-items:center}.picker-segment{padding:8px 12px;border-radius:12px;cursor:pointer}.picker-segment.active{background:#cfeaff}.ampm{display:grid;grid-template-columns:1fr 1fr;margin-top:18px}.ampm button{border:1px solid #6db9ef;background:#fff;padding:12px;font-weight:800;font-size:16px;cursor:pointer}.ampm button.active{background:#b8def7}.clock-face{position:relative;width:min(360px,70vw);aspect-ratio:1;margin:auto;border-radius:50%}.clock-face:before{content:"";position:absolute;inset:18%;border-radius:50%;background:#fff}.clock-number{position:absolute;left:50%;top:50%;width:46px;height:46px;margin:-23px;border:0;background:transparent;color:#111;font:inherit;font-size:18px;cursor:pointer;transform:rotate(var(--angle)) translateY(calc(-1 * var(--radius))) rotate(calc(-1 * var(--angle)));z-index:2}.clock-number.selected{background:#1497e9;color:#fff;border-radius:50%}.clock-hand{position:absolute;left:50%;top:50%;width:2px;height:38%;background:#1497e9;transform-origin:50% 100%;transform:translate(-50%,-100%) rotate(0deg);border-radius:3px;transition:transform .24s cubic-bezier(.2,.9,.2,1);z-index:1}.clock-center{position:absolute;left:50%;top:50%;width:14px;height:14px;background:#1497e9;border-radius:50%;transform:translate(-50%,-50%);z-index:3}.picker-actions{display:flex;justify-content:flex-end;gap:28px;margin-top:8px}.picker-actions button{border:0;background:none;color:#118de5;font-size:16px;cursor:pointer}
+@media(max-width:760px){#classScheduleModal{padding:8px}.class-schedule-shell{padding:18px;max-height:calc(100vh - 16px);border-radius:16px}.class-two,.field-row,.range-panel.open,.picker-main{grid-template-columns:1fr}.range-row{grid-template-columns:1fr}.schedule-empty-state{align-items:stretch;flex-direction:column}.scout-input{font-size:16px}.picker-display{font-size:54px}.clock-face{width:min(310px,82vw)}}
 </style></head><body><main>
 <aside id="appSidebar">
   <div class="brand"><span class="brand-mark">•</span><span class="brand-name">STUDYOS</span></div>
@@ -575,37 +596,19 @@ body[data-page="exceptions"] .sunday-card input{width:20px;height:20px;accent-co
     <section class="planner-window" data-window-panel="availability"><div class="panel page-panel"><div class="head"><b>OPTIONAL STUDY PREFERENCES</b><span>Not required</span></div><div class="schedule-note">You can leave this completely empty. StudyOS will otherwise calculate study time from your booked commitments, holidays and the sleep boundary. Add windows only when you want to tell StudyOS that you prefer studying at specific times.</div><div class="form-grid availability-form"><select id="availDay2"><option value="1">Monday</option><option value="2">Tuesday</option><option value="3">Wednesday</option><option value="4">Thursday</option><option value="5">Friday</option><option value="6">Saturday</option><option value="0">Sunday</option></select><input id="availStart2" type="time" value="20:00"><input id="availEnd2" type="time" value="22:00"><button class="dark-btn" id="addAvailability2">ADD PREFERRED WINDOW</button></div><div id="availabilityList2" class="data-list"></div></div></section>
 
     <section class="planner-window" data-window-panel="activities">
-      <div class="panel page-panel academics-engine">
-        <div class="head"><b>ACADEMICS</b><span>School · coaching · tuition · other</span></div>
-        <p class="page-lede schedule-lede">Add the academic commitments that actually occupy your week. Exact times become hard calendar constraints. If a commitment has no fixed time, give StudyOS the hours you must dedicate to it instead.</p>
-        <div class="schedule-mode-row">
-          <button type="button" class="schedule-mode active" data-activity-mode="once">ONCE</button>
-          <button type="button" class="schedule-mode" data-activity-mode="repeating">REPEATING</button>
-        </div>
-        <div class="form-grid academic-form">
-          <input id="activityTitle" placeholder="e.g. School / Maths tuition">
-          <select id="activityScope"><option value="school">School</option><option value="tuition">Tuition / coaching</option><option value="class">Class</option><option value="personal">Personal</option><option value="other">Other</option></select>
-          <label class="field-stack"><span>FROM DATE</span><input id="activityFrom" type="date"></label>
-          <label class="field-stack"><span>TO DATE</span><input id="activityTo" type="date"></label>
-          <label class="field-stack exact-time-field"><span>START TIME</span><input id="activityStart" type="time"></label>
-          <label class="field-stack exact-time-field"><span>END TIME</span><input id="activityEnd" type="time"></label>
-          <label class="field-stack hours-field" hidden><span>HOURS TO DEDICATE <i>PER ACTIVE DAY</i></span><input id="activityHours" type="number" min="0.25" max="12" step="0.25" placeholder="e.g. 2"></label>
-          <div class="time-mode-card">
-            <b>TIME CONSTRAINT</b>
-            <div class="schedule-mode-row compact">
-              <button type="button" class="schedule-mode active" data-activity-time="exact">EXACT TIME</button>
-              <button type="button" class="schedule-mode" data-activity-time="hours">NO SPECIFIC TIME</button>
-            </div>
-            <small id="activityTimeHint">StudyOS will protect this exact interval.</small>
-          </div>
-          <select id="activityDay" class="repeat-day-field" hidden><option value="1">Monday</option><option value="2">Tuesday</option><option value="3">Wednesday</option><option value="4">Thursday</option><option value="5">Friday</option><option value="6">Saturday</option><option value="0">Sunday</option></select>
-          <input id="activityLocation" placeholder="Location / note">
-          <button class="dark-btn" id="addActivity" type="button">ADD ACADEMIC COMMITMENT</button>
-        </div>
-        <div id="activityList" class="data-list"></div>
-        <div class="schedule-note">A recurring school timetable can run from one date to another. Sunday can be marked free separately in Days Off. StudyOS will not cancel tuition or other commitments just because school is closed.</div>
+  <div class="panel page-panel academics-engine">
+    <div class="head"><b>ACADEMICS</b><span>School · tuition · coaching · classes</span></div>
+    <div class="schedule-empty-state">
+      <div>
+        <span class="schedule-empty-kicker">YOUR TIMETABLE</span>
+        <h2>Build your real-world schedule.</h2>
+        <p>Add school, tuition, coaching, classes, or any recurring academic commitment. StudyOS will use the exact times you give it as hard calendar constraints.</p>
       </div>
-    </section>
+      <button class="dark-btn add-class-launch" id="openAddClass" type="button"><span>＋</span> ADD CLASS</button>
+    </div>
+    <div id="activityList" class="data-list"></div>
+  </div>
+</section>
 
     <section class="planner-window" data-window-panel="extras">
       <div class="panel page-panel extras-engine">
@@ -924,6 +927,68 @@ document.body.dataset.section="today";document.body.dataset.page="today";
     <div class="notification-preview"><span>STUDYOS</span><b>Study block coming up</b><small>Your next planned block is ready.</small></div>
     <div class="schedule-note">Your browser will ask for notification permission only after you press the button. Browsers require that permission request to come from a user action.</div>
     <div class="notification-actions"><button class="dark-btn" id="notificationEnable" type="button">ENABLE NOTIFICATIONS</button><button class="btn" id="notificationSkip" type="button">NOT NOW</button></div>
+  </div>
+</div><div class="modal" id="classScheduleModal" aria-hidden="true">
+  <div class="class-schedule-shell" role="dialog" aria-modal="true" aria-labelledby="classScheduleTitle">
+    <div class="class-schedule-head"><h2 id="classScheduleTitle">Add Classes</h2><button class="class-schedule-close" id="closeClassSchedule" type="button" aria-label="Close">×</button></div>
+    <div class="scout-row">
+      <div class="scout-plus">+</div>
+      <div><span class="scout-label">Add with Scout AI</span><input class="scout-input" id="scheduleScoutInput" placeholder=" — type it like you'd say it: history every tuesday 2pm with Ms. Rao"></div>
+      <button class="scout-send" id="scheduleScoutSend" type="button" aria-label="Parse schedule">→</button>
+    </div>
+    <div class="schedule-divider">OR FILL IT IN MANUALLY</div>
+    <div class="class-fields">
+      <div><label class="class-field-label">CLASS NAME <em>*</em></label><input class="class-input" id="activityTitle" placeholder="e.g. Calculus II"></div>
+      <div class="class-two">
+        <div><label class="class-field-label">SUBJECT <em>*</em></label>
+          <div class="subject-picker">
+            <button class="class-select subject-trigger" id="activitySubjectTrigger" type="button">Select Subject</button>
+            <div class="subject-menu" id="activitySubjectMenu" hidden></div>
+          </div>
+          <input id="activitySubject" type="hidden">
+        </div>
+        <div><label class="class-field-label">TEACHER <span style="font-weight:500;color:#a0acc0">Optional</span></label><input class="class-input" id="activityTeacher" placeholder="e.g. Prof. Thompson"></div>
+      </div>
+      <div class="when-card">
+        <label class="class-field-label">WHEN</label>
+        <div class="when-tabs"><button class="when-tab active" data-class-when="once" type="button">Once</button><button class="when-tab" data-class-when="repeating" type="button">Repeating</button></div>
+        <div id="onceScheduleFields">
+          <div class="sub-card">
+            <label class="class-field-label">DATE <em>*</em></label><input class="class-input" id="activityOnceDate" type="date">
+            <div class="field-row" style="margin-top:16px"><div><label class="class-field-label">START</label><button class="class-input time-display" id="activityStartButton" type="button">Select time</button><input id="activityStart" type="hidden"></div><div><label class="class-field-label">END</label><button class="class-input time-display" id="activityEndButton" type="button">Select time</button><input id="activityEnd" type="hidden"></div></div>
+          </div>
+        </div>
+        <div id="repeatingScheduleFields" hidden>
+          <div id="timeSlots"></div>
+          <button class="add-slot-btn" id="addTimeSlot" type="button">＋ Add time slot</button>
+        </div>
+        <label class="class-field-label" style="margin-top:18px">DATE RANGE</label>
+        <div class="range-row"><button class="range-tab active" data-class-range="none" type="button">None</button><button class="range-tab" data-class-range="term" type="button">Term</button><button class="range-tab" data-class-range="manual" type="button">Manual</button></div>
+        <div class="range-panel" id="classRangePanel"><label class="class-field-label">RANGE</label><input class="class-input" id="activityFrom" type="date"><input class="class-input" id="activityTo" type="date"></div>
+      </div>
+      <div class="where-card">
+        <label class="class-field-label">WHERE</label>
+        <div class="where-tabs"><button class="where-tab active" data-class-where="inperson" type="button">In Person</button><button class="where-tab" data-class-where="online" type="button">Online</button></div>
+        <div class="where-fields">
+          <div id="whereLocationField"><label class="class-field-label">LOCATION <span style="font-weight:500;color:#a0acc0">Optional</span></label><input class="class-input" id="activityLocation" placeholder="e.g. Room 204, Building A"></div>
+          <div class="where-online" id="whereOnlineField"><label class="class-field-label">MEETING LINK <span style="font-weight:500;color:#a0acc0">Optional</span></label><input class="class-input" id="activityMeetingLink" placeholder="e.g. Google Meet or Zoom link"></div>
+        </div>
+      </div>
+    </div>
+    <div class="class-footer"><button class="class-cancel" id="cancelClassSchedule" type="button">Cancel</button><button class="class-save" id="addActivity" type="button">Save Class</button></div>
+  </div>
+</div>
+<div class="time-picker-backdrop" id="timePickerBackdrop">
+  <div class="time-picker" role="dialog" aria-modal="true" aria-labelledby="timePickerTitle">
+    <h3 id="timePickerTitle">Select time</h3>
+    <div class="picker-main">
+      <div>
+        <div class="picker-display"><span><button class="picker-segment active" id="pickerHour" type="button">1</button><span>:</span><button class="picker-segment" id="pickerMinute" type="button">30</button></span></div>
+        <div class="ampm"><button id="pickerAM" type="button">AM</button><button class="active" id="pickerPM" type="button">PM</button></div>
+      </div>
+      <div class="clock-face" id="clockFace"><div class="clock-hand" id="clockHand"></div><div class="clock-center"></div></div>
+    </div>
+    <div class="picker-actions"><button id="cancelTimePicker" type="button">Cancel</button><button id="confirmTimePicker" type="button">OK</button></div>
   </div>
 </div><div class="modal" id="focusModal"><div class="focuscard"><button class="close" onclick="closeFocus()">×</button><div class="eyebrow">FOCUS SESSION</div><div class="timer" id="focusTimer">25:00</div><div class="session-meta" id="focusState">Ready when you are.</div><div class="focus-controls" style="justify-content:center;margin-top:22px"><button onclick="setFocus(25)">25 MIN</button><button onclick="setFocus(50)">50 MIN</button><button onclick="setFocus(90)">90 MIN</button><label class="custom-duration">CUSTOM <input id="customFocusMinutes" type="number" min="5" max="180" step="5" placeholder="min" onchange="setCustomFocus()"></label><button onclick="resetFocus()">RESET</button><button class="primary" id="focusAction" onclick="toggleFocus()">START FOCUS</button></div></div></div>
 <script>
@@ -1945,4 +2010,155 @@ function generatePlan(){
   setTimeout(startIfNeeded,220);
 })();
 </script>
-</body></html>
+<script id="class-schedule-engine">
+(function(){
+  const $=id=>document.getElementById(id);
+  const DAYS=["Sun","Mon","Tue","Wed","Thu","Fri","Sat"];
+  const defaultSubjects=[
+    ["ALL","all"],["English","english"],["Mathematics","mathematics"],["Science","science"],["SST","sst"],
+    ["Chemistry","chemistry"],["Physics","physics"],["Biology","biology"],["Computer Science","computer-science"]
+  ];
+  const savedSubjects=JSON.parse(localStorage.getItem("studyos-subjects")||"null");
+  const subjects=Array.isArray(savedSubjects)&&savedSubjects.length?savedSubjects:defaultSubjects;
+  let subjectList=[...subjects.map(x=>Array.isArray(x)?x:[String(x),String(x).toLowerCase()])];
+  let selectedSubject="";
+  let selectedWhere="inperson";
+  let selectedRange="none";
+  let whenMode="once";
+  let slots=[{days:[1],start:"",end:""}];
+  let pickerTarget=null;
+  let pickerMode="hour";
+  let pickerTime={hour:1,minute:30,ampm:"PM"};
+
+  function openModal(){const m=$("classScheduleModal");if(!m)return;m.classList.add("open");m.setAttribute("aria-hidden","false");resetForm();setTimeout(()=>$("activityTitle")?.focus(),80)}
+  function closeModal(){const m=$("classScheduleModal");m?.classList.remove("open");m?.setAttribute("aria-hidden","true");$("timePickerBackdrop")?.classList.remove("open")}
+  function resetForm(){
+    $("activityTitle").value="";$("activityTeacher").value="";$("activitySubject").value="";selectedSubject="";$("activitySubjectTrigger").textContent="Select Subject";
+    $("activityOnceDate").value="";$("activityStart").value="";$("activityEnd").value="";$("activityStartButton").textContent="Select time";$("activityEndButton").textContent="Select time";
+    $("activityFrom").value="";$("activityTo").value="";$("activityLocation").value="";$("activityMeetingLink").value="";
+    selectedWhere="inperson";selectedRange="none";whenMode="once";slots=[{days:[1],start:"",end:""}];
+    document.querySelectorAll("[data-class-when]").forEach(b=>b.classList.toggle("active",b.dataset.classWhen==="once"));
+    document.querySelectorAll("[data-class-range]").forEach(b=>b.classList.toggle("active",b.dataset.classRange==="none"));
+    document.querySelectorAll("[data-class-where]").forEach(b=>b.classList.toggle("active",b.dataset.classWhere==="inperson"));
+    $("repeatingScheduleFields").hidden=true;$("onceScheduleFields").hidden=false;$("classRangePanel").classList.remove("open");
+    renderSlots();renderSubjects();
+  }
+  function renderSubjects(){
+    const menu=$("activitySubjectMenu");if(!menu)return;
+    menu.innerHTML=subjectList.map(([label,value])=>'<button class="subject-option" type="button" data-subject="'+escAttr(value)+'"><span class="subject-dot"></span>'+esc(label)+'</button>').join("")+
+      '<button class="subject-menu-footer" id="addNewSubject" type="button">＋ Add new subject</button>';
+  }
+  function esc(v){return String(v).replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;","\"":"&quot;","'":"&#39;"}[c]));}
+  function escAttr(v){return esc(v).replace(/"/g,"&quot;")}
+  function renderSlots(){
+    const box=$("timeSlots");if(!box)return;
+    box.innerHTML=slots.map((slot,i)=>'<div class="sub-card time-slot-card" data-slot-index="'+i+'"><div class="slot-head"><span>TIME SLOT '+(i+1)+'</span>'+(slots.length>1?'<button class="remove-slot" data-remove-slot="'+i+'" type="button">REMOVE</button>':'')+'</div><label class="class-field-label">SELECT DAYS <em>*</em></label><div class="days-row">'+[1,2,3,4,5,6,0].map(d=>'<button class="day-chip '+(slot.days.includes(d)?"active":"")+'" data-slot-day="'+d+'" type="button">'+DAYS[d]+'</button>').join("")+'</div><div class="field-row"><div><label class="class-field-label">START</label><button class="class-input time-display" data-slot-time="'+i+'" data-slot-part="start" type="button">'+(slot.start?formatTime(slot.start):"Select time")+'</button></div><div><label class="class-field-label">END</label><button class="class-input time-display" data-slot-time="'+i+'" data-slot-part="end" type="button">'+(slot.end?formatTime(slot.end):"Select time")+'</button></div></div></div>').join("");
+  }
+  function formatTime(v){const [h,m]=v.split(":").map(Number);return new Intl.DateTimeFormat("en-US",{hour:"numeric",minute:"2-digit"}).format(new Date(2000,0,1,h,m))}
+  function openTimePicker(target){
+    pickerTarget=target;pickerMode="hour";
+    const current=target?.value||"";
+    if(current){const [h,m]=current.split(":").map(Number);pickerTime={hour:((h+11)%12)+1,minute:m,ampm:h>=12?"PM":"AM"}}
+    else pickerTime={hour:1,minute:30,ampm:"PM"};
+    $("pickerHour").textContent=pickerTime.hour;$("pickerMinute").textContent=String(pickerTime.minute).padStart(2,"0");
+    $("pickerHour").classList.add("active");$("pickerMinute").classList.remove("active");
+    $("timePickerBackdrop").classList.add("open");renderClock();
+  }
+  function closePicker(){$("timePickerBackdrop").classList.remove("open");pickerTarget=null}
+  function renderClock(){
+    const face=$("clockFace"),hand=$("clockHand");face.querySelectorAll(".clock-number").forEach(x=>x.remove());
+    const isHour=pickerMode==="hour",count=isHour?12:12;
+    for(let n=1;n<=count;n++){
+      const val=isHour?n:n===12?0:(n*5)%60;
+      const angle=(n%12)*30;
+      const b=document.createElement("button");b.type="button";b.className="clock-number";b.textContent=isHour?n:String(val).padStart(2,"0");
+      b.style.setProperty("--angle",angle+"deg");b.style.setProperty("--radius","42%");
+      const selected=isHour?pickerTime.hour===n:pickerTime.minute===val;
+      if(selected)b.classList.add("selected");
+      b.onclick=()=>selectClockValue(val,n);
+      face.appendChild(b);
+    }
+    const value=isHour?pickerTime.hour:Math.round(pickerTime.minute/5)%12;
+    const deg=(value%12)*30;
+    hand.style.transform="translate(-50%,-100%) rotate("+deg+"deg)";
+    $("pickerAM").classList.toggle("active",pickerTime.ampm==="AM");$("pickerPM").classList.toggle("active",pickerTime.ampm==="PM");
+  }
+  function selectClockValue(val,n){
+    if(pickerMode==="hour"){pickerTime.hour=n;pickerMode="minute";$("pickerHour").classList.remove("active");$("pickerMinute").classList.add("active")}
+    else pickerTime.minute=val;
+    $("pickerHour").textContent=pickerTime.hour;$("pickerMinute").textContent=String(pickerTime.minute).padStart(2,"0");renderClock();
+  }
+  function pickerTo24(){let h=pickerTime.hour%12;if(pickerTime.ampm==="PM")h+=12;return String(h).padStart(2,"0")+":"+String(pickerTime.minute).padStart(2,"0")}
+  function savePickedTime(){
+    const v=pickerTo24();if(!pickerTarget)return;
+    if(pickerTarget.el)pickerTarget.el.value=v;
+    if(pickerTarget.button)pickerTarget.button.textContent=formatTime(v);
+    if(pickerTarget.slot!==undefined){slots[pickerTarget.slot][pickerTarget.part]=v;renderSlots()}
+    closePicker();
+  }
+  $("pickerHour").onclick=()=>{pickerMode="hour";renderClock()};$("pickerMinute").onclick=()=>{pickerMode="minute";renderClock()};
+  $("pickerAM").onclick=()=>{pickerTime.ampm="AM";renderClock()};$("pickerPM").onclick=()=>{pickerTime.ampm="PM";renderClock()};
+  $("cancelTimePicker").onclick=closePicker;$("confirmTimePicker").onclick=savePickedTime;
+  $("timePickerBackdrop").addEventListener("click",e=>{if(e.target.id==="timePickerBackdrop")closePicker()});
+  $("activityStartButton").onclick=()=>openTimePicker({el:$("activityStart"),button:$("activityStartButton")});
+  $("activityEndButton").onclick=()=>openTimePicker({el:$("activityEnd"),button:$("activityEndButton")});
+  $("timeSlots").addEventListener("click",e=>{
+    const day=e.target.closest("[data-slot-day]"),time=e.target.closest("[data-slot-time]"),remove=e.target.closest("[data-remove-slot]");
+    if(day){const i=Number(day.closest("[data-slot-index]").dataset.slotIndex),d=Number(day.dataset.slotDay),arr=slots[i].days;slots[i].days=arr.includes(d)?arr.filter(x=>x!==d):[...arr,d];renderSlots()}
+    if(time){openTimePicker({slot:Number(time.dataset.slotTime),part:time.dataset.slotPart})}
+    if(remove){slots.splice(Number(remove.dataset.removeSlot),1);renderSlots()}
+  });
+  $("addTimeSlot").onclick=()=>{slots.push({days:[1],start:"",end:""});renderSlots()};
+  document.querySelectorAll("[data-class-when]").forEach(b=>b.onclick=()=>{
+    whenMode=b.dataset.classWhen;document.querySelectorAll("[data-class-when]").forEach(x=>x.classList.toggle("active",x===b));
+    $("onceScheduleFields").hidden=whenMode!=="once";$("repeatingScheduleFields").hidden=whenMode!=="repeating";renderSlots();
+  });
+  document.querySelectorAll("[data-class-range]").forEach(b=>b.onclick=()=>{
+    selectedRange=b.dataset.classRange;document.querySelectorAll("[data-class-range]").forEach(x=>x.classList.toggle("active",x===b));$("classRangePanel").classList.toggle("open",selectedRange!=="none");
+  });
+  document.querySelectorAll("[data-class-where]").forEach(b=>b.onclick=()=>{
+    selectedWhere=b.dataset.classWhere;document.querySelectorAll("[data-class-where]").forEach(x=>x.classList.toggle("active",x===b));$("whereOnlineField").classList.toggle("open",selectedWhere==="online");$("whereLocationField").style.display=selectedWhere==="online"?"none":"block";
+  });
+  $("activitySubjectTrigger").onclick=()=>{$("activitySubjectMenu").hidden=!$("activitySubjectMenu").hidden};
+  $("activitySubjectMenu").addEventListener("click",e=>{
+    const b=e.target.closest("[data-subject]");
+    if(b){selectedSubject=b.dataset.subject;$("activitySubject").value=selectedSubject;$("activitySubjectTrigger").textContent=b.textContent.trim();$("activitySubjectMenu").hidden=true;return}
+    if(e.target.closest("#addNewSubject")){const name=prompt("Subject name");if(name?.trim()){const n=name.trim();const value=n.toLowerCase().replace(/[^a-z0-9]+/g,"-");subjectList.push([n,value]);localStorage.setItem("studyos-subjects",JSON.stringify(subjectList));selectedSubject=value;$("activitySubject").value=value;$("activitySubjectTrigger").textContent=n;$("activitySubjectMenu").hidden=true;renderSubjects()}}
+  });
+  document.addEventListener("click",e=>{if(!e.target.closest(".subject-picker"))$("activitySubjectMenu")?.setAttribute("hidden","")});
+  $("openAddClass")?.addEventListener("click",openModal);$("closeClassSchedule")?.addEventListener("click",closeModal);$("cancelClassSchedule")?.addEventListener("click",closeModal);
+  function parseScout(text){
+    const t=text.toLowerCase();const title=(text.match(/^(.*?)\s+(?:every|on|at)\b/i)||[])[1]?.trim()||"";
+    const time=(text.match(/\b(\d{1,2})(?::(\d{2}))?\s*(am|pm)?\b/i)||[]);const dayMap={sunday:0,monday:1,tuesday:2,wednesday:3,thursday:4,friday:5,saturday:6};
+    const days=Object.keys(dayMap).filter(d=>t.includes(d)).map(d=>dayMap[d]);
+    if(title)$("activityTitle").value=title;
+    const found=subjectList.find(([n])=>title.toLowerCase().includes(n.toLowerCase()));if(found){selectedSubject=found[1];$("activitySubject").value=found[1];$("activitySubjectTrigger").textContent=found[0]}
+    if(days.length){whenMode="repeating";document.querySelector('[data-class-when="repeating"]').click();slots[0].days=days}
+    if(time[1]){const h=Number(time[1]),m=Number(time[2]||0),ampm=(time[3]||"PM").toUpperCase();slots[0].start=(h%12+(ampm==="PM"?12:0)).toString().padStart(2,"0")+":"+String(m).padStart(2,"0");slots[0].end=String((h%12+(ampm==="PM"?12:0)+1)%24).padStart(2,"0")+":"+String(m).padStart(2,"0")}
+    renderSlots();
+  }
+  $("scheduleScoutSend")?.addEventListener("click",()=>parseScout($("scheduleScoutInput").value.trim()));
+  $("scheduleScoutInput")?.addEventListener("keydown",e=>{if(e.key==="Enter"){e.preventDefault();parseScout(e.currentTarget.value.trim())}});
+  $("addActivity").onclick=function(){
+    const title=$("activityTitle").value.trim(),subject=$("activitySubject").value.trim(),teacher=$("activityTeacher").value.trim(),location=$("activityLocation").value.trim(),meetingLink=$("activityMeetingLink").value.trim();
+    if(!title||!subject)return alert("Add the class name and choose a subject.");
+    let from="",to="",day=null,start="",end="";
+    if(whenMode==="once"){
+      const date=$("activityOnceDate").value;if(!date)return alert("Choose a date.");
+      from=date;to=date;
+      start=$("activityStart").value;end=$("activityEnd").value;
+      if(!start||!end||mins(end)<=mins(start))return alert("Choose valid start and end times.");
+    }else{
+      const activeSlots=slots.filter(s=>s.days.length&&s.start&&s.end&&mins(s.end)>mins(s.start));if(!activeSlots.length)return alert("Add at least one complete repeating time slot.");
+      day=activeSlots[0].days[0];start=activeSlots[0].start;end=activeSlots[0].end;
+      if(selectedRange==="term"){from=new Date().toISOString().slice(0,10);to=new Date(Date.now()+120*86400000).toISOString().slice(0,10)}
+      else if(selectedRange==="manual"){from=$("activityFrom").value;to=$("activityTo").value;if(!from||!to||to<from)return alert("Choose a valid manual date range.")}
+      else{from=new Date().toISOString().slice(0,10);to=new Date(Date.now()+365*86400000).toISOString().slice(0,10)}
+    }
+    const item={title,subject,teacher,scope:title.toLowerCase().includes("school")?"school":"tuition",from,to,day,start,end,mode:"exact",location,meetingLink,repeat:whenMode==="repeating",slots:whenMode==="repeating"?activeSlots:[]};
+    state.activities.push(item);saveState();generatePlan();renderPlanner();closeModal();
+  };
+  $("openAddClass")?.addEventListener("dblclick",openModal);
+  renderSlots();renderSubjects();
+})();
+</script></body></html>
