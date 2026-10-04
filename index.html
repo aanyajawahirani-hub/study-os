@@ -379,6 +379,36 @@ body[data-page="exceptions"] .sunday-card input{width:20px;height:20px;accent-co
 .class-footer{display:flex;justify-content:flex-end;gap:10px;margin-top:24px}.class-cancel{border:1px solid #d8dee7;background:#fff;color:#65748e;border-radius:12px;padding:13px 20px;font-weight:800;cursor:pointer}.class-save{border:0;background:#4c94e2;color:#fff;border-radius:12px;padding:13px 22px;font-weight:800;cursor:pointer}
 .time-picker-backdrop{position:fixed;inset:0;z-index:150;background:rgba(20,30,40,.32);display:none;place-items:center;padding:20px}.time-picker-backdrop.open{display:grid}.time-picker{width:min(720px,100%);background:#fff;border-radius:28px;padding:34px 42px 26px;box-shadow:0 25px 80px rgba(0,0,0,.25)}.time-picker h3{font-size:22px;font-weight:500;margin:0 0 25px}.picker-main{display:grid;grid-template-columns:1fr 1.2fr;gap:25px;align-items:center}.picker-display{font-size:72px;letter-spacing:-.06em;display:grid;justify-items:center}.picker-segment{padding:8px 12px;border-radius:12px;cursor:pointer}.picker-segment.active{background:#cfeaff}.ampm{display:grid;grid-template-columns:1fr 1fr;margin-top:18px}.ampm button{border:1px solid #6db9ef;background:#fff;padding:12px;font-weight:800;font-size:16px;cursor:pointer}.ampm button.active{background:#b8def7}.clock-face{position:relative;width:min(360px,70vw);aspect-ratio:1;margin:auto;border-radius:50%}.clock-face:before{content:"";position:absolute;inset:18%;border-radius:50%;background:#fff}.clock-number{position:absolute;left:50%;top:50%;width:46px;height:46px;margin:-23px;border:0;background:transparent;color:#111;font:inherit;font-size:18px;cursor:pointer;transform:rotate(var(--angle)) translateY(calc(-1 * var(--radius))) rotate(calc(-1 * var(--angle)));z-index:2}.clock-number.selected{background:#1497e9;color:#fff;border-radius:50%}.clock-hand{position:absolute;left:50%;top:50%;width:2px;height:38%;background:#1497e9;transform-origin:50% 100%;transform:translate(-50%,-100%) rotate(0deg);border-radius:3px;transition:transform .24s cubic-bezier(.2,.9,.2,1);z-index:1}.clock-center{position:absolute;left:50%;top:50%;width:14px;height:14px;background:#1497e9;border-radius:50%;transform:translate(-50%,-50%);z-index:3}.picker-actions{display:flex;justify-content:flex-end;gap:28px;margin-top:8px}.picker-actions button{border:0;background:none;color:#118de5;font-size:16px;cursor:pointer}
 @media(max-width:760px){#classScheduleModal{padding:8px}.class-schedule-shell{padding:18px;max-height:calc(100vh - 16px);border-radius:16px}.class-two,.field-row,.range-panel.open,.picker-main{grid-template-columns:1fr}.range-row{grid-template-columns:1fr}.schedule-empty-state{align-items:stretch;flex-direction:column}.scout-input{font-size:16px}.picker-display{font-size:54px}.clock-face{width:min(310px,82vw)}}
+</style><style id="studyos-reference-ui">
+:root{
+  --paper:#f7f9fc;--surface:#fff;--surface2:#f0f3f8;--ink:#18243d;--muted:#71809a;--line:#dfe6ef;
+  --accent:#4b94e2;--accent2:#8edc9a;--accent3:#21b7e9;
+}
+body{background:#f7f9fc;color:#18243d;font-family:Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif}
+aside#appSidebar{background:#fff;border-right:1px solid #e3e9f1}
+.brand{font-family:Inter,ui-sans-serif,system-ui,sans-serif;font-weight:800;border-bottom:1px solid #e3e9f1}
+.navlink{border-left:3px solid transparent;border-radius:10px;color:#71809a}.navlink:hover{background:#f1f6fc;color:#18243d}.navlink.active{border-left-color:#4b94e2;background:#edf6ff;color:#18243d}
+.shell{padding:42px 52px}
+header{border-bottom:1px solid #dfe6ef}
+h1,.page-title,.hero h2{font-family:Inter,ui-sans-serif,system-ui,sans-serif;color:#18243d}
+h1{font-weight:700}
+.btn,.generate-btn,.dark-btn,.send-btn{border:0;border-radius:12px;background:#4b94e2;color:#fff;padding:13px 18px;box-shadow:0 8px 22px rgba(75,148,226,.16)}
+.btn:hover,.generate-btn:hover,.dark-btn:hover,.send-btn:hover{background:#3887dc;border-color:transparent;transform:translateY(-1px)}
+.panel,.hero{border:1px solid #e0e7f0;border-radius:20px;background:#fff;box-shadow:0 8px 28px rgba(33,54,82,.05)}
+.panel{padding:24px}.head{border-bottom:1px solid #e5eaf1}
+.insight,.schedule-note{background:#f1f6fc;border-left:3px solid #4b94e2;border-radius:0 12px 12px 0}
+input,select,textarea,.form-grid input,.form-grid select,.form-grid textarea{
+  border:1px solid #e0e6ef!important;background:#f2f4f8!important;color:#18243d!important;border-radius:12px!important;padding:14px 16px!important;outline:none;
+}
+input:focus,select:focus,textarea:focus{border-color:#91c9f5!important;box-shadow:0 0 0 4px rgba(75,148,226,.12)!important}
+input::placeholder,textarea::placeholder{color:#9baac0}
+.planner-tabs{border:1px solid #dfe6ef;border-radius:16px;overflow:hidden;background:#fff}
+.planner-tab{color:#71809a}.planner-tab.active{background:#18243d;color:#fff}
+.block{border-top:1px solid #e7ebf1;border-radius:10px}.block:hover{background:#f4f8fc}
+.data-row{border:1px solid #e2e8f0!important;border-radius:14px!important;background:#fff!important;margin-top:9px!important;padding:15px!important}
+.modal{background:rgba(23,35,55,.22)!important;backdrop-filter:blur(5px)}
+.focuscard,.auth-card,.setup-card{border-radius:22px!important;background:#fff!important;box-shadow:0 24px 70px rgba(23,35,55,.2)!important}
+.schedule-mode,.schedule-mode-row .schedule-mode{border-radius:12px}
 </style></head><body><main>
 <aside id="appSidebar">
   <div class="brand"><span class="brand-mark">•</span><span class="brand-name">STUDYOS</span></div>
@@ -1264,7 +1294,6 @@ $("sendChat").onclick=()=>sendChat();
 $("chatInput")?.addEventListener("keydown",e=>{if(e.key==="Enter"&&(e.metaKey||e.ctrlKey)){e.preventDefault();sendChat()}});
 $("addDeadline").onclick=()=>{const subject=$("deadlineSubject").value.trim(),title=$("deadlineTitle").value.trim(),due=$("deadlineDate").value,dueTime=$("deadlineTime")?.value||"",minutes=Number($("deadlineMinutes").value),priority=$("deadlinePriority").value;if(!subject||!title||!due||!Number.isFinite(minutes)||minutes<15)return alert("Add the subject, deadline date, and approximate time required (15+ minutes). Deadline time is optional.");state.deadlines.push({subject,title,due,dueTime,minutes,priority});["deadlineSubject","deadlineTitle","deadlineDate","deadlineTime","deadlineMinutes"].forEach(id=>{const el=$(id);if(el)el.value=""});$("deadlineEstimate").textContent="Ask Academic Weapon if you want a rough estimate.";saveState();generatePlan();renderPlanner()};
 $("addAvailability2").onclick=()=>{const day=Number($("availDay2").value),start=$("availStart2").value,end=$("availEnd2").value;if(!start||!end||mins(end)<=mins(start))return alert("Choose a valid study window.");state.availability.push({day,start,end});saveState();generatePlan();renderPlanner()};
-$("addActivity").onclick=()=>{const title=$("activityTitle").value.trim(),scope=$("activityScope").value,from=$("activityFrom").value,to=$("activityTo").value,day=Number($("activityDay").value),start=$("activityStart").value,end=$("activityEnd").value,hours=Number($("activityHours").value),location=$("activityLocation").value.trim(),mode=document.querySelector("[data-activity-time].active")?.dataset.activityTime||"exact";if(!title||!from||!to||to<from)return alert("Add the commitment and a valid FROM / TO date.");if(mode==="exact"&&(!start||!end||mins(end)<=mins(start)))return alert("Choose a valid exact start and end time.");if(mode==="hours"&&(!Number.isFinite(hours)||hours<=0))return alert("Add the hours you need to dedicate per active day.");state.activities.push({title,scope,from,to,day,start:mode==="exact"?start:"",end:mode==="exact"?end:"",hours:mode==="hours"?hours:0,mode,location});saveState();generatePlan();renderPlanner();["activityTitle","activityFrom","activityTo","activityStart","activityEnd","activityHours","activityLocation"].forEach(id=>{const el=$(id);if(el)el.value=""})};
 $("addExtra").onclick=()=>{const title=$("extraTitle").value.trim(),scope=$("extraScope").value,from=$("extraFrom").value,to=$("extraTo").value,day=Number($("extraDay").value),start=$("extraStart").value,end=$("extraEnd").value,hours=Number($("extraHours").value),note=$("extraNote").value.trim(),mode=document.querySelector("[data-extra-time].active")?.dataset.extraTime||"exact";if(!title||!from||!to||to<from)return alert("Add the commitment and a valid FROM / TO date.");if(mode==="exact"&&(!start||!end||mins(end)<=mins(start)))return alert("Choose a valid exact start and end time.");if(mode==="hours"&&(!Number.isFinite(hours)||hours<=0))return alert("Add the hours you need to dedicate per active day.");state.extras.push({title,scope,from,to,day,start:mode==="exact"?start:"",end:mode==="exact"?end:"",hours:mode==="hours"?hours:0,mode,note});saveState();generatePlan();renderPlanner();["extraTitle","extraFrom","extraTo","extraStart","extraEnd","extraHours","extraNote"].forEach(id=>{const el=$(id);if(el)el.value=""})};
 $("prepareExamSubjects").onclick=prepareExamSubjects;
 $("applyBulkExamPractice").onclick=()=>{document.querySelectorAll(".exam-subject-row").forEach(row=>{const p=row.querySelector(".exam-pyq"),s=row.querySelector(".exam-sample");if($("bulkPyqCount").value!=="")p.value=$("bulkPyqCount").value;if($("bulkSampleCount").value!=="")s.value=$("bulkSampleCount").value})};
@@ -1662,22 +1691,7 @@ function generatePlan(){
     if(hours?.closest(".hours-extra-field"))hours.closest(".hours-extra-field").hidden=exact;
   }));
 
-  /* Replace the two broken add handlers with strict mode-aware handlers. */
-  const addActivity=$f("addActivity");
-  if(addActivity) addActivity.onclick=function(){
-    const title=$f("activityTitle").value.trim(),scope=$f("activityScope").value,from=$f("activityFrom").value,to=$f("activityTo").value;
-    const day=Number($f("activityDay").value),start=$f("activityStart").value,end=$f("activityEnd").value;
-    const hours=Number($f("activityHours").value),location=$f("activityLocation").value.trim();
-    const mode=document.querySelector("[data-activity-time].active")?.dataset.activityTime||"exact";
-    const repeat=document.querySelector("[data-activity-mode].active")?.dataset.activityMode==="repeating";
-    if(!title)return alert("Add the academic commitment.");
-    if(!from||!to||to<from)return alert("Choose a valid FROM and TO date.");
-    if(mode==="exact"&&(!start||!end||mins(end)<=mins(start)))return alert("Choose a valid exact start and end time.");
-    if(mode==="hours"&&(!Number.isFinite(hours)||hours<=0))return alert("Add the hours to dedicate per active day.");
-    state.activities.push({title,scope,from,to,day:repeat?day:null,start:mode==="exact"?start:"",end:mode==="exact"?end:"",hours:mode==="hours"?hours:0,mode,location,repeat});
-    saveState();generatePlan();renderPlanner();
-    ["activityTitle","activityFrom","activityTo","activityStart","activityEnd","activityHours","activityLocation"].forEach(id=>{const el=$f(id);if(el)el.value=""});
-  };
+  /* Academic commitments are handled by the canonical Add Classes builder above. */
 
   const addExtra=$f("addExtra");
   if(addExtra) addExtra.onclick=function(){
