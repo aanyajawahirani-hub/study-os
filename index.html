@@ -895,15 +895,8 @@ function freeSlices(start,end,blocked){
   return slices;
 }
 function estimateDeadlineMinutes(x){
-  if(Number(x.minutes)>0)return Number(x.minutes);
-  const text=(String(x.subject||"")+" "+String(x.title||"")).toLowerCase();
-  let base=60;
-  if(/exam|test|paper|prelim|final/.test(text))base=150;
-  else if(/project|presentation|assignment|report|lab/.test(text))base=120;
-  else if(/chapter|revision|learn|study/.test(text))base=90;
-  if(x.priority==="high")base+=30;
-  if(x.priority==="low")base-=15;
-  return Math.max(30,Math.round(base/15)*15);
+  const n=Number(x.minutes);
+  return Number.isFinite(n)&&n>0?n:null;
 }
 function studyWindowsForDay(dow){
   const preferred=state.availability.filter(x=>Number(x.day)===dow);
@@ -911,7 +904,13 @@ function studyWindowsForDay(dow){
   return [{start:"06:00",end:"23:00",derived:true}];
 }
 function generatePlan(){
-  const deadlines=[...state.deadlines.filter(x=>x.due),...buildExamTasks()].map(x=>({...x,minutes:estimateDeadlineMinutes(x)})).sort((a,b)=>a.due.localeCompare(b.due)||(a.priority==="high"?-1:1));
+  const missingTime=state.deadlines.filter(x=>x.due&&!estimateDeadlineMinutes(x));
+  if(missingTime.length){
+    alert("Add an approximate time required for each deadline before rebuilding your plan. StudyOS will not guess the workload.");
+    showSection("deadlines");
+    return;
+  }
+  const deadlines=[...state.deadlines.filter(x=>x.due),...buildExamTasks()].map(x=>({...x,minutes:estimateDeadlineMinutes(x)})).filter(x=>Number(x.minutes)>0).sort((a,b)=>a.due.localeCompare(b.due)||(a.priority==="high"?-1:1));
   let newPlan=[],remaining=deadlines.map(x=>({...x,remaining:x.minutes}));
   const start=todayKey(),end=deadlines.length?deadlines.reduce((m,x)=>x.due>m?x.due:m,start):start;
   for(let day=0;day<=180&&addDays(start,day)<=end;day++){
