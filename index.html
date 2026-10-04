@@ -971,15 +971,20 @@ async function sendChat(extra){
 }
 function applyActions(actions){
   actions.forEach(a=>{
-    if(a.type==="add_deadline"&&a.subject&&a.title&&a.due&&Number(a.minutes)>0)state.deadlines.push({subject:a.subject.slice(0,80),title:a.title.slice(0,120),due:a.due,minutes:Math.min(2000,Number(a.minutes)),priority:["high","medium","low"].includes(a.priority)?a.priority:"medium"});
+    if(a.type==="add_deadline"&&a.subject&&a.title&&a.due)state.deadlines.push({subject:a.subject.slice(0,80),title:a.title.slice(0,120),due:a.due,minutes:Number(a.minutes)>0?Math.min(2000,Number(a.minutes)):null,priority:["high","medium","low"].includes(a.priority)?a.priority:"medium"});
+    if(a.type==="update_deadline"&&a.match){const x=state.deadlines.find(x=>(x.subject+" "+x.title).toLowerCase().includes(String(a.match).toLowerCase()));if(x){if(a.subject)x.subject=String(a.subject).slice(0,80);if(a.title)x.title=String(a.title).slice(0,120);if(a.due)x.due=a.due;if(a.minutes!==undefined)x.minutes=Number(a.minutes)>0?Math.min(2000,Number(a.minutes)):null;if(a.priority)x.priority=["high","medium","low"].includes(a.priority)?a.priority:x.priority;}}
     if(a.type==="remove_deadline"&&a.match)state.deadlines=state.deadlines.filter(x=>!(x.subject+" "+x.title).toLowerCase().includes(String(a.match).toLowerCase()));
-    if(a.type==="set_availability"&&a.day!==undefined&&a.start&&a.end){state.availability=state.availability.filter(x=>!(Number(x.day)===Number(a.day)&&x.start===a.start&&x.end===a.end));state.availability.push({day:Number(a.day),start:a.start,end:a.end})}    if(a.type==="remove_availability"&&a.day!==undefined)state.availability=state.availability.filter(x=>Number(x.day)!==Number(a.day));
-    if(a.type==="set_vacation"&&a.start&&a.end)state.vacations.push({start:a.start,end:a.end});
-    if(a.type==="add_activity"&&a.title&&a.date&&a.start&&a.end)state.activities.push({title:String(a.title).slice(0,100),date:a.date,start:a.start,end:a.end,location:String(a.location||"").slice(0,120)});
+    if(a.type==="set_availability"&&a.day!==undefined&&a.start&&a.end){state.availability=state.availability.filter(x=>!(Number(x.day)===Number(a.day)&&x.start===a.start&&x.end===a.end));state.availability.push({day:Number(a.day),start:a.start,end:a.end})}
+    if(a.type==="remove_availability"&&a.day!==undefined)state.availability=state.availability.filter(x=>Number(x.day)!==Number(a.day));
+    if(a.type==="set_vacation"&&a.start&&a.end)state.vacations.push({start:a.start,end:a.end,scope:a.scope||"personal"});
+    if(a.type==="remove_vacation"&&a.match)state.vacations=state.vacations.filter(x=>!(x.start+" "+x.end+" "+x.scope).toLowerCase().includes(String(a.match).toLowerCase()));
+    if(a.type==="add_activity"&&a.title&&a.date&&a.start&&a.end)state.activities.push({title:String(a.title).slice(0,100),scope:a.scope||"other",date:a.date,start:a.start,end:a.end,location:String(a.location||"").slice(0,120)});
     if(a.type==="remove_activity"&&a.match)state.activities=state.activities.filter(x=>!(x.title+" "+x.date).toLowerCase().includes(String(a.match).toLowerCase()));
-    if(a.type==="add_extra"&&a.title&&a.start&&a.end&&a.day!==undefined)state.extras.push({title:String(a.title).slice(0,100),day:Number(a.day),start:a.start,end:a.end,note:String(a.note||"").slice(0,120)});
+    if(a.type==="add_extra"&&a.title&&a.start&&a.end&&a.day!==undefined)state.extras.push({title:String(a.title).slice(0,100),scope:a.scope||"other",day:Number(a.day),start:a.start,end:a.end,note:String(a.note||"").slice(0,120)});
     if(a.type==="remove_extra"&&a.match)state.extras=state.extras.filter(x=>!(x.title+" "+x.day).toLowerCase().includes(String(a.match).toLowerCase()));
+    if(a.type==="set_calendar_rule"&&a.sundayBlocked!==undefined){state.calendarRules.sundayBlocked=!!a.sundayBlocked}
     if(a.type==="add_exam"&&a.subject&&a.date)state.exams.push({subject:String(a.subject).slice(0,80),date:a.date,syllabusHours:Math.max(0,Number(a.syllabusHours)||0),pyqCount:Math.max(0,Number(a.pyqCount)||0),pyqMinutes:Math.max(15,Number(a.pyqMinutes)||60),sampleCount:Math.max(0,Number(a.sampleCount)||0),sampleMinutes:Math.max(30,Number(a.sampleMinutes)||120),errorMinutes:Math.max(15,Number(a.errorMinutes)||45),finalDays:Math.max(0,Number(a.finalDays)||0),finalMinutes:Math.max(15,Number(a.finalMinutes)||60)});
+    if(a.type==="update_exam"&&a.match){const x=state.exams.find(x=>(x.subject+" "+x.date).toLowerCase().includes(String(a.match).toLowerCase()));if(x){if(a.subject)x.subject=String(a.subject).slice(0,80);if(a.date)x.date=a.date;if(a.pyqCount!==undefined)x.pyqCount=Math.max(0,Number(a.pyqCount)||0);if(a.sampleCount!==undefined)x.sampleCount=Math.max(0,Number(a.sampleCount)||0);if(a.finalDays!==undefined)x.finalDays=Math.max(0,Number(a.finalDays)||0);}}
     if(a.type==="remove_exam"&&a.match)state.exams=state.exams.filter(x=>!(x.subject+" "+x.date).toLowerCase().includes(String(a.match).toLowerCase()));
     if(a.type==="clear_plan")state.plan=[];
     if(a.type==="clear_vacations")state.vacations=[];
