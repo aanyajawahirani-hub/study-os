@@ -409,6 +409,48 @@ input::placeholder,textarea::placeholder{color:#9baac0}
 .modal{background:rgba(23,35,55,.22)!important;backdrop-filter:blur(5px)}
 .focuscard,.auth-card,.setup-card{border-radius:22px!important;background:#fff!important;box-shadow:0 24px 70px rgba(23,35,55,.2)!important}
 .schedule-mode,.schedule-mode-row .schedule-mode{border-radius:12px}
+</style><style id="responsive-system-final">
+html,body{width:100%;max-width:100%;overflow-x:hidden}
+*,*::before,*::after{box-sizing:border-box}
+.shell,#section-today,.section,main{max-width:100%;min-width:0}
+.grid,.planner-grid,.today-columns,.today-intro,.today-summary,.hero,.panel,.focus-workspace,.pomo-grid,.form-grid,.class-two,.manual-adjust{min-width:0}
+img,video,canvas,iframe{max-width:100%}
+input,select,textarea,button{max-width:100%}
+@media (max-width:800px){
+  .shell,body.sidebar-collapsed .shell{width:100%;max-width:100%;margin-left:0;padding:24px 16px 48px}
+  .content-menu-toggle{position:static;display:inline-flex;align-items:center;gap:7px;width:auto;margin:0 0 24px;padding:10px 12px}
+  header{width:100%;min-width:0;margin-bottom:30px;padding-bottom:22px}
+  header>div:first-child{width:100%;min-width:0}
+  header h1{max-width:100%;overflow-wrap:normal}
+  header>div:last-child{width:100%;display:grid!important;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px!important}
+  header>div:last-child .btn{width:100%;min-width:0;min-height:58px;padding:10px 8px;line-height:1.15}
+  .mobile-nav{width:100%;max-width:100%;margin:0 0 28px;padding:8px 0;overflow-x:auto;overflow-y:hidden;scrollbar-width:none}
+  .mobile-nav::-webkit-scrollbar{display:none}
+  .mobile-nav button{flex:0 0 auto}
+  #section-today{width:100%;max-width:100%;margin:0}
+  #section-today .today-intro{width:100%;display:block;overflow:hidden}
+  #section-today .today-intro h2{width:100%;max-width:100%;font-size:clamp(48px,14vw,72px);overflow-wrap:break-word}
+  #section-today .today-summary{width:100%;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:0}
+  #section-today .today-summary>div{min-width:0;margin:0;padding:0 10px 0 0}
+  #section-today .today-summary span{font-size:clamp(24px,7vw,34px);white-space:nowrap}
+  #section-today .today-summary small{font-size:7px;white-space:normal}
+  #section-today .today-columns{width:100%;grid-template-columns:minmax(0,1fr)}
+  #section-today .today-list,#section-today .today-side{width:100%;min-width:0}
+  .today-list .block{min-width:0}
+  .today-list .block .copy{min-width:0}
+  .today-list .block .copy b,.today-list .block .copy p{overflow-wrap:anywhere}
+  .planner-tabs{width:100%;max-width:100%;overflow-x:auto;flex-wrap:nowrap}
+  .planner-tab{flex:0 0 auto}
+  .schedule-empty-state,.notification-actions{width:100%}
+}
+@media (max-width:480px){
+  .shell,body.sidebar-collapsed .shell{padding-inline:14px}
+  header>div:last-child{grid-template-columns:1fr}
+  header>div:last-child .btn{min-height:54px}
+  #section-today .today-intro h2{font-size:clamp(46px,13.5vw,62px)}
+  #section-today .today-summary>div{padding-right:6px}
+  #section-today .today-summary span{font-size:clamp(22px,7vw,30px)}
+}
 </style></head><body><main>
 <aside id="appSidebar">
   <div class="brand"><span class="brand-mark">•</span><span class="brand-name">STUDYOS</span></div>
