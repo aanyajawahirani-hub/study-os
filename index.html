@@ -375,9 +375,9 @@ body:not(.authed) .section{filter:none}body:not(.authed) .content-menu-toggle{z-
         <button class="sound-choice focus-sound-choice" data-focus-sound="silence"><span><b>Silence</b><small>no audio</small></span><span>04</span></button>
       </div>
       <div class="spotify-strip">
-        <div><b>YOUR SPOTIFY</b><small>Paste a playlist, album or track link. StudyOS will remember it and open it when your focus session starts.</small></div>
-        <input id="spotifyFocusLink" placeholder="https://open.spotify.com/..." autocomplete="off">
-        <div class="spotify-actions"><button id="saveSpotifyFocus" class="focus-special">SAVE LINK</button><button id="openSpotifyFocus" class="focus-special">OPEN IN SPOTIFY</button></div>
+        <div><b>YOUR SOUND</b><small>Use one of the sound preferences above, or load an audio file from your own device. It will only play after the focus session starts.</small></div>
+        <input id="focusAudioFile" type="file" accept="audio/*">
+        <div class="spotify-actions"><span id="focusAudioName" class="focus-file-name">No local sound selected</span></div>
       </div>
       <div class="focus-history"><div class="head"><b>RECENT SESSIONS</b><span id="focusSessionCount">0</span></div><div id="focusHistory"></div></div>
     </aside>
@@ -679,9 +679,7 @@ $("localSignupForm")?.addEventListener("submit",e=>{e.preventDefault();completeA
 $("restoreAccount")?.addEventListener("click",()=>{const saved=localStorage.getItem("studyos-auth");if(saved)location.reload();else openAuth("restore")});
 $("googleSignup")?.addEventListener("click",()=>{const clientId=window.STUDYOS_GOOGLE_CLIENT_ID||"";if(!clientId){$("googleStatus").textContent="Google sign-in needs the StudyOS Google OAuth client ID configured on the deployment. The account form above is ready now.";return}if(window.google?.accounts?.id){google.accounts.id.initialize({client_id:clientId,callback:r=>{try{const payload=JSON.parse(atob(r.credential.split(".")[1].replace(/-/g,"+").replace(/_/g,"/")));completeAuth({name:payload.name||"StudyOS user",email:payload.email||"",picture:payload.picture||"",method:"google",googleSub:payload.sub})}catch(e){$("googleStatus").textContent="Google sign-in could not be completed."}}});google.accounts.id.prompt()}else $("googleStatus").textContent="Google Identity Services is still loading. Try again in a moment."});
 document.addEventListener("click",e=>{const b=e.target.closest("button");if(!b||b.closest("#authModal"))return;const safe=["sidebarToggle","contentMenuToggle","openClockSettings","notify","setupSave","closeSetup"].includes(b.id);if(!safe&&!authUser){e.preventDefault();e.stopImmediatePropagation();openAuth("feature");}},true);
-if(!authUser){$("authModal").classList.add("open");}$("saveSpotifyFocus")?.addEventListener("click",()=>{const v=$("spotifyFocusLink").value.trim();if(!v||!/^https:\/\/(open\.)?spotify\.com\//.test(v))return alert("Paste a Spotify playlist, album or track link.");state.spotifyFocusLink=v;saveState();$("focusSoundStatus").textContent="SPOTIFY SAVED";});
-$("openSpotifyFocus")?.addEventListener("click",()=>{const v=state.spotifyFocusLink||$("spotifyFocusLink").value.trim();if(!v)return alert("Save a Spotify link first.");window.open(v,"_blank","noopener")});
-if($("spotifyFocusLink"))$("spotifyFocusLink").value=state.spotifyFocusLink||"";
+if(!authUser){$("authModal").classList.add("open");}$("focusAudioFile")?.addEventListener("change",e=>{const f=e.target.files[0];if(!f)return;focusAudio=focusAudio||new Audio();focusAudio.src=URL.createObjectURL(f);$("focusAudioName").textContent=f.name;$("focusSoundStatus").textContent="LOCAL SOUND READY";});
 document.body.dataset.section="today";document.body.dataset.page="today";
     if(typeof showSection==="function")showSection("today");
     if(typeof updateClockAndGreeting==="function")updateClockAndGreeting();
@@ -1138,8 +1136,9 @@ $("focusPageNext")?.addEventListener("click",()=>{const n=focusTasks().length;fo
 document.querySelectorAll("[data-sound]").forEach(b=>b.addEventListener("click",()=>setSound(b.dataset.sound)));
 $("soundVolume")?.addEventListener("input",e=>setSoundVolume(Number(e.target.value)));
 let audioCtx=null,soundNodes=[],soundGain=null,currentSound="";
-function stopSound(){soundNodes.forEach(n=>{try{n.stop()}catch(e){}});soundNodes.forEach(n=>{try{n.disconnect()}catch(e){}});soundNodes=[];currentSound="";$("focusSoundStatus")&&($("focusSoundStatus").textContent=focus.running?"READY":"NOT PLAYING")}
-function startFocusSound(){stopSound();if(state.focusSound==="silence"){$("focusSoundStatus").textContent="SILENT";return}const link=state.spotifyFocusLink||{"deep":"https://open.spotify.com/playlist/2FntHf2R0HPW7VGYCfRX7J","lofi":"https://open.spotify.com/playlist/44HfbmAh8MsezZPy6MCOQK","piano":"https://open.spotify.com/playlist/1kXt8RunvAkVjZd0oi4CAC"}[state.focusSound]||"https://open.spotify.com/playlist/2FntHf2R0HPW7VGYCfRX7J";window.open(link,"_blank","noopener");$("focusSoundStatus").textContent="SPOTIFY OPEN";}
+function stopSound(){if(focusAudio){focusAudio.pause();focusAudio.currentTime=0}soundNodes.forEach(n=>{try{n.stop()}catch(e){}});soundNodes.forEach(n=>{try{n.disconnect()}catch(e){}});soundNodes=[];currentSound="";$("focusSoundStatus")&&($("focusSoundStatus").textContent=focus.running?"READY":"NOT PLAYING")}
+let focusAudio=null;
+function startFocusSound(){stopSound();if(state.focusSound==="silence"){$("focusSoundStatus").textContent="SILENT";return}if(focusAudio){focusAudio.currentTime=0;focusAudio.loop=true;focusAudio.volume=.5;focusAudio.play().catch(()=>{});$("focusSoundStatus").textContent="LOCAL SOUND";return}$("focusSoundStatus").textContent="SELECTED · STARTED";}
 // StudyOS intentionally does not play generated placeholder audio. Sound choices are preferences; playback is started by the focus session via Spotify or a connected sound source.
 function setSoundVolume(v){if(soundGain)soundGain.gain.value=v}
 
