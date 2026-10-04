@@ -738,6 +738,20 @@ td,th{border:1px solid var(--ink)!important;border-radius:0!important}
   header>div:last-child{grid-template-columns:1fr!important}
   .hero{padding:22px!important}
 }
+</style><style id="studyos-final-fixes">
+.today-intro-copy{display:flex;flex-direction:column;align-items:flex-start;gap:14px;min-width:0}
+.today-intro-copy .eyebrow{margin:0;line-height:1.1}
+.today-intro-copy h2{margin:0!important;line-height:.94}
+aside#appSidebar{overflow-x:hidden;overflow-y:auto;scrollbar-width:thin;padding-bottom:150px}
+aside#appSidebar .side-nav{padding-bottom:28px}
+aside#appSidebar .streak{position:sticky;bottom:auto;margin-top:22px}
+.workload-input{display:grid;grid-template-columns:minmax(0,1fr) 112px;gap:7px}
+.workload-input input,.workload-input select{min-width:0;border:1px solid var(--line);background:#fbf9f2;color:var(--ink);padding:11px;font:inherit;font-size:11px}
+.holiday-mode{min-width:0;border:1px solid var(--line);background:#fbf9f2;color:var(--ink);padding:11px;font:inherit;font-size:10px}
+.holiday-engine .form-grid{align-items:end}
+.holiday-end.is-single{display:none}
+.exam-engine .upload-grid{grid-template-columns:1fr 1fr}
+@media(max-width:700px){.today-intro-copy{gap:11px}.workload-input{grid-template-columns:1fr 100px}.exam-engine .upload-grid{grid-template-columns:1fr}}
 </style></head><body><main>
 <aside id="appSidebar">
   <div class="brand"><span class="brand-mark">•</span><span class="brand-name">STUDYOS</span></div>
@@ -767,7 +781,7 @@ td,th{border:1px solid var(--ink)!important;border-radius:0!important}
 <section class="shell"><button class="content-menu-toggle" id="contentMenuToggle" type="button" aria-label="Open sidebar"><span>☰</span><b>MENU</b></button><header><div><div class="eyebrow" id="date"></div><div class="eyebrow" id="timezoneLabel" style="margin-top:5px"></div><h1 id="greeting">Good night.</h1><p class="greeting-prompt" id="greetingPrompt">How can I help you wind things down?</p></div><div style="display:flex;gap:8px;align-items:center"><button class="btn" id="openClockSettings">CLOCK SETTINGS</button><button class="btn" id="notify">ENABLE NOTIFICATIONS</button></div></header>
 <div class="mobile-nav" id="mobileNav"><button class="active" data-section="today">Today</button><button data-section="plan">Plan</button><button data-section="focus">Focus</button><button data-section="ai">Academic Weapon</button><button data-section="deadlines">Deadlines</button><button data-section="activities">Activities</button><button data-section="extras">Extras</button><button data-section="exams">Exams</button><button data-section="exceptions">Days Off</button><button data-section="syllabus">Syllabus</button><button data-section="reminders">Reminders</button><button data-section="progress">Progress</button></div><div id="section-today" class="section active">
   <div class="today-intro">
-    <div>
+    <div class="today-intro-copy">
       <div class="eyebrow">YOUR DAY</div>
       <h2>What matters<br><em>right now.</em></h2>
     </div>
@@ -940,7 +954,7 @@ td,th{border:1px solid var(--ink)!important;border-radius:0!important}
           <input id="deadlineTitle" placeholder="Exam, assignment or topic">
           <label class="field-stack"><span>DEADLINE DATE</span><input id="deadlineDate" type="date"></label>
           <label class="field-stack"><span>DEADLINE TIME <i>OPTIONAL</i></span><input id="deadlineTime" type="time"></label>
-          <label class="field-stack workload-field"><span>APPROXIMATE TIME REQUIRED · MINUTES <i>REQUIRED</i></span><input id="deadlineMinutes" type="number" min="15" step="15" placeholder="e.g. 90 minutes"></label>
+          <label class="field-stack workload-field"><span>APPROXIMATE TIME REQUIRED <i>REQUIRED</i></span><div class="workload-input"><input id="deadlineMinutes" type="number" min="15" step="15" placeholder="e.g. 90"><select id="deadlineUnit" aria-label="Time required unit"><option value="minutes">Minutes</option><option value="hours">Hours</option></select></div></label>
           <div class="estimate-field">
             <div><span>AI SUGGESTION</span><b id="deadlineEstimate">Ask Academic Weapon if you want a rough estimate.</b></div>
             <button type="button" class="btn ai-estimate-btn" id="askDeadlineAI">ASK AI</button>
@@ -1000,8 +1014,8 @@ td,th{border:1px solid var(--ink)!important;border-radius:0!important}
     <h2 class="exam-guide-title">YOUR ULTIMATE <em>EXAM PREP GUIDE.</em></h2>
     <p class="page-lede exam-lede">Start with the timetable and syllabus if you have them. Then adjust every subject manually. Nothing is locked to the upload.</p>
     <div class="upload-grid">
-      <label class="upload-card"><span>01 · EXAM TIMETABLE</span><strong>Upload your exam dates & order</strong><small>PDF, image, CSV, JSON or text</small><input id="examTimetableFile" type="file" accept=".pdf,.png,.jpg,.jpeg,.webp,.txt,.csv,.json"><b id="examTimetableName">Not uploaded</b></label>
-      <label class="upload-card"><span>02 · SYLLABUS</span><strong>Upload what each subject contains</strong><small>PDF, image, CSV, JSON or text</small><input id="examSyllabusFile" type="file" accept=".pdf,.png,.jpg,.jpeg,.webp,.txt,.csv,.json"><b id="examSyllabusName">Not uploaded</b></label>
+      <label class="upload-card"><span>01 · EXAM TIMETABLE</span><strong>Upload your exam dates & order</strong><small>Up to 20 files · PDF, image, CSV, JSON or text</small><input id="examTimetableFile" type="file" multiple accept=".pdf,.png,.jpg,.jpeg,.webp,.txt,.csv,.json"><b id="examTimetableName">Not uploaded</b></label>
+      <label class="upload-card"><span>02 · SYLLABUS</span><strong>Upload what each subject contains</strong><small>Up to 20 files · PDF, image, CSV, JSON or text</small><input id="examSyllabusFile" type="file" multiple accept=".pdf,.png,.jpg,.jpeg,.webp,.txt,.csv,.json"><b id="examSyllabusName">Not uploaded</b></label>
     </div>
     <div class="manual-adjust">
       <div><b>MANUAL SETUP</b><small>Use this even if you upload nothing. Add or adjust each subject yourself.</small></div>
@@ -1026,11 +1040,11 @@ td,th{border:1px solid var(--ink)!important;border-radius:0!important}
     <section class="planner-window" data-window-panel="exceptions">
   <div class="panel page-panel holiday-engine">
     <div class="head"><b>MARK YOUR HOLIDAYS / DAYS OFF</b><span>Only what changes the calendar</span></div>
-    <div class="holiday-group"><div class="holiday-group-head"><b>SCHOOL</b><span>School-specific closures</span></div><div class="form-grid"><input id="schoolHolidayStart" type="date"><input id="schoolHolidayEnd" type="date"><button class="dark-btn" id="addSchoolHoliday">ADD SCHOOL DAYS OFF</button></div><div id="schoolHolidayList" class="data-list"></div></div>
-    <div class="holiday-group"><div class="holiday-group-head"><b>OTHER CLASSES · COACHING · TUITION</b><span>Only those commitments</span></div><div class="form-grid"><input id="tuitionHolidayStart" type="date"><input id="tuitionHolidayEnd" type="date"><button class="dark-btn" id="addTuitionHoliday">ADD COACHING / TUITION DAYS OFF</button></div><div id="tuitionHolidayList" class="data-list"></div></div>
-    <div class="holiday-group"><div class="holiday-group-head"><b>EXTRA-CURRICULARS</b><span>Clubs · sports · robotics · competitions</span></div><div class="form-grid"><input id="extraHolidayStart" type="date"><input id="extraHolidayEnd" type="date"><select id="extraHolidayScope"><option value="club">Club</option><option value="sport">Sport</option><option value="robotics">Robotics</option><option value="competition">Competition</option><option value="other">Other</option></select><button class="dark-btn" id="addExtraHoliday">ADD EXTRA-CURRICULAR DAYS OFF</button></div><div id="extraHolidayList" class="data-list"></div></div>
+    <div class="holiday-group"><div class="holiday-group-head"><b>SCHOOL</b><span>School-specific closures</span></div><div class="form-grid"><select id="schoolHolidayMode" class="holiday-mode" aria-label="Day off type"><option value="single">SINGLE DAY</option><option value="range">DATE RANGE</option></select><input id="schoolHolidayStart" type="date"><input id="schoolHolidayEnd" type="date" class="holiday-end"><button class="dark-btn" id="addSchoolHoliday">ADD SCHOOL DAYS OFF</button></div><div id="schoolHolidayList" class="data-list"></div></div>
+    <div class="holiday-group"><div class="holiday-group-head"><b>OTHER CLASSES · COACHING · TUITION</b><span>Only those commitments</span></div><div class="form-grid"><select id="tuitionHolidayMode" class="holiday-mode" aria-label="Day off type"><option value="single">SINGLE DAY</option><option value="range">DATE RANGE</option></select><input id="tuitionHolidayStart" type="date"><input id="tuitionHolidayEnd" type="date" class="holiday-end"><button class="dark-btn" id="addTuitionHoliday">ADD COACHING / TUITION DAYS OFF</button></div><div id="tuitionHolidayList" class="data-list"></div></div>
+    <div class="holiday-group"><div class="holiday-group-head"><b>EXTRA-CURRICULARS</b><span>Clubs · sports · robotics · competitions</span></div><div class="form-grid"><select id="extraHolidayMode" class="holiday-mode" aria-label="Day off type"><option value="single">SINGLE DAY</option><option value="range">DATE RANGE</option></select><input id="extraHolidayStart" type="date"><input id="extraHolidayEnd" type="date" class="holiday-end"><select id="extraHolidayScope"><option value="club">Club</option><option value="sport">Sport</option><option value="robotics">Robotics</option><option value="competition">Competition</option><option value="other">Other</option></select><button class="dark-btn" id="addExtraHoliday">ADD EXTRA-CURRICULAR DAYS OFF</button></div><div id="extraHolidayList" class="data-list"></div></div>
     <div class="sunday-card"><label><input id="sundayBlocked" type="checkbox"> <span>KEEP SUNDAYS FREE</span></label><small>When enabled, StudyOS will not schedule study blocks on Sundays.</small></div>
-    <div class="holiday-group"><div class="holiday-group-head"><b>PERSONAL</b><span>Your own days off</span></div><div class="form-grid"><input id="vacStart2" type="date"><input id="vacEnd2" type="date"><button class="dark-btn" id="addPersonalHoliday">ADD PERSONAL DAYS OFF</button></div><div id="personalHolidayList" class="data-list"></div></div>
+    <div class="holiday-group"><div class="holiday-group-head"><b>PERSONAL</b><span>Your own days off</span></div><div class="form-grid"><select id="personalHolidayMode" class="holiday-mode" aria-label="Day off type"><option value="single">SINGLE DAY</option><option value="range">DATE RANGE</option></select><input id="vacStart2" type="date"><input id="vacEnd2" type="date" class="holiday-end"><button class="dark-btn" id="addPersonalHoliday">ADD PERSONAL DAYS OFF</button></div><div id="personalHolidayList" class="data-list"></div></div>
   </div>
 </section>
   </div>
@@ -2686,4 +2700,129 @@ function generatePlan(){
   document.head.appendChild(style);
 })();
 </script>
-</body></html>
+<script id="studyos-final-reliability">
+(function(){
+  const $=id=>document.getElementById(id);
+
+  const saveSetup=$("saveSetup");
+  if(saveSetup){
+    saveSetup.onclick=function(e){
+      e.preventDefault();
+      const countryEl=$("setupCountry"),zoneEl=$("setupTimezone"),fmtEl=$("setupDateFormat"),modal=$("setupModal");
+      const country=(countryEl?.dataset.validValue||countryEl?.value||"India").trim();
+      const timezone=(zoneEl?.dataset.validValue||zoneEl?.value||"Asia/Kolkata").trim();
+      const dateFormat=(fmtEl?.value||"DD/MM/YYYY").trim();
+      if(!country||!timezone||!dateFormat)return;
+      const settings={country,timezone,dateFormat};
+      localStorage.setItem("studyos-settings",JSON.stringify(settings));
+      window.userSettings=settings;
+      try{userSettings=settings}catch(_){}
+      modal?.classList.remove("open");
+      document.body.classList.remove("setup-first","setup-gate");
+      localStorage.setItem("studyos-onboarding-v3","1");
+      if(typeof updateClockAndGreeting==="function")updateClockAndGreeting();
+      if(typeof renderToday==="function")renderToday();
+    };
+  }
+
+  const cooking=$("cookingPrimaryAction");
+  if(cooking)cooking.onclick=function(){
+    if(typeof state==="undefined")return;
+    if(!state.deadlines.length){showSection("deadlines");setTimeout(()=>$("deadlineSubject")?.focus(),60);return}
+    const missing=state.deadlines.some(x=>!Number(x.minutes)||Number(x.minutes)<=0);
+    if(missing){showSection("deadlines");return}
+    generatePlan();showSection("plan");
+  };
+
+  document.querySelectorAll("[data-page-focus]").forEach(b=>b.addEventListener("click",function(){
+    if(typeof setFocus==="function"){setFocus(Number(this.dataset.pageFocus));if(typeof renderFocusPage==="function")renderFocusPage()}
+  },true));
+  $("focusPageStart")?.addEventListener("click",()=>{if(typeof toggleFocus==="function")toggleFocus()},true);
+  $("focusPageReset")?.addEventListener("click",()=>{if(typeof resetFocus==="function")resetFocus()},true);
+  $("focusPagePrev")?.addEventListener("click",()=>{if(typeof focusTasks==="function"){const n=focusTasks().length;if(typeof focusTaskIndex!=="undefined")focusTaskIndex=n?((focusTaskIndex-1+n)%n):0;if(typeof renderFocusPage==="function")renderFocusPage()}},true);
+  $("focusPageNext")?.addEventListener("click",()=>{if(typeof focusTasks==="function"){const n=focusTasks().length;if(typeof focusTaskIndex!=="undefined")focusTaskIndex=n?((focusTaskIndex-1+n)%n):0;if(typeof renderFocusPage==="function")renderFocusPage()}},true);
+  document.querySelectorAll("[data-focus-sound]").forEach(b=>b.addEventListener("click",function(){if(typeof state!=="undefined"){state.focusSound=this.dataset.focusSound;if(typeof saveState==="function")saveState();$("focusSoundStatus")&&($("focusSoundStatus").textContent=this.dataset.focusSound==="silence"?"SILENT":"SELECTED")}},true));
+
+  function workloadMinutes(){
+    const n=Number($("deadlineMinutes")?.value);
+    if(!Number.isFinite(n)||n<=0)return 0;
+    return $("deadlineUnit")?.value==="hours"?Math.round(n*60):Math.round(n);
+  }
+  window.editDeadline=function(i){
+    const x=state.deadlines?.[i];if(!x)return;
+    $("deadlineSubject").value=x.subject||"";
+    $("deadlineTitle").value=x.title||"";
+    $("deadlineDate").value=x.due||"";
+    if($("deadlineTime"))$("deadlineTime").value=x.dueTime||"";
+    const m=Number(x.minutes)||0;
+    if($("deadlineUnit"))$("deadlineUnit").value=m>=60&&m%60===0?"hours":"minutes";
+    if($("deadlineMinutes"))$("deadlineMinutes").value=m>=60&&m%60===0?m/60:m;
+    if($("deadlinePriority"))$("deadlinePriority").value=x.priority||"medium";
+    const add=$("addDeadline");if(add){add.dataset.editIndex=String(i);add.textContent="SAVE DEADLINE CHANGES"}
+    $("deadlineSubject")?.focus();
+  };
+  const addDeadline=$("addDeadline");
+  if(addDeadline)addDeadline.onclick=function(){
+    const subject=$("deadlineSubject")?.value.trim(),title=$("deadlineTitle")?.value.trim(),due=$("deadlineDate")?.value;
+    const minutes=workloadMinutes(),dueTime=$("deadlineTime")?.value||"",priority=$("deadlinePriority")?.value||"medium";
+    if(!subject||!title||!due||minutes<15){alert("Add the subject, deadline date, and a time required of at least 15 minutes.");return}
+    const item={subject,title,due,dueTime,minutes,priority};
+    const idx=addDeadline.dataset.editIndex;
+    if(idx!==undefined){state.deadlines[Number(idx)]=item;delete addDeadline.dataset.editIndex;addDeadline.textContent="ADD DEADLINE"}else state.deadlines.push(item);
+    ["deadlineSubject","deadlineTitle","deadlineDate","deadlineTime","deadlineMinutes"].forEach(id=>{if($(id))$(id).value=""});
+    if($("deadlineUnit"))$("deadlineUnit").value="minutes";
+    saveState();generatePlan();renderPlanner();
+  };
+
+  function bindHoliday(modeId,startId,endId,scope){
+    const mode=$(modeId),start=$(startId),end=$(endId);if(!mode||!start||!end)return ()=>{};
+    function sync(){const single=mode.value==="single";end.hidden=single;end.classList.toggle("is-single",single);end.required=!single}
+    mode.addEventListener("change",sync);sync();
+    return function(){
+      const a=start.value,b=mode.value==="single"?start.value:end.value;
+      if(!a||!b||b<a){alert(mode.value==="single"?"Choose the day off.":"Choose a valid FROM and TO date.");return}
+      state.vacations.push({start:a,end:b,scope});saveState();generatePlan();renderPlanner();renderHolidayLists();start.value="";if(mode.value==="range")end.value="";
+    };
+  }
+  const holidayFns=[["schoolHolidayMode","schoolHolidayStart","schoolHolidayEnd","school"],["tuitionHolidayMode","tuitionHolidayStart","tuitionHolidayEnd","tuition"],["personalHolidayMode","vacStart2","vacEnd2","personal"]];
+  const handlers={};
+  holidayFns.forEach(x=>{handlers[x[0]]=bindHoliday(x[0],x[1],x[2],x[3]);});
+  $("addSchoolHoliday")&&($("addSchoolHoliday").onclick=()=>handlers.schoolHolidayMode?.());
+  $("addTuitionHoliday")&&($("addTuitionHoliday").onclick=()=>handlers.tuitionHolidayMode?.());
+  $("addPersonalHoliday")&&($("addPersonalHoliday").onclick=()=>handlers.personalHolidayMode?.());
+  $("addExtraHoliday")&&($("addExtraHoliday").onclick=()=>{
+    const f=bindHoliday("extraHolidayMode","extraHolidayStart","extraHolidayEnd",$("extraHolidayScope")?.value||"other");f();
+  });
+
+  function wireExamFiles(id,nameId){
+    const input=$(id),name=$(nameId);if(!input)return;
+    input.addEventListener("change",function(){
+      const files=[...this.files];
+      if(files.length>20){alert("You can select up to 20 files here.");this.value="";if(name)name.textContent="Not uploaded";return}
+      if(name)name.textContent=files.length?files.length+" file"+(files.length===1?"":"s")+" selected":"Not uploaded";
+      const status=$("examFileStatus");if(status)status.textContent=files.length?files.length+" file"+(files.length===1?"":"s")+" selected":"No files selected";
+    },true);
+  }
+  wireExamFiles("examTimetableFile","examTimetableName");wireExamFiles("examSyllabusFile","examSyllabusName");
+
+  const build=$("buildExamSeason");
+  if(build)build.addEventListener("click",function(){
+    if(typeof state==="undefined")return;
+    state.examMeta=state.examMeta||{};
+    state.examMeta.timetableFiles=[...( $("examTimetableFile")?.files||[] )].slice(0,20).map(f=>f.name);
+    state.examMeta.syllabusFiles=[...( $("examSyllabusFile")?.files||[] )].slice(0,20).map(f=>f.name);
+    saveState();
+  },true);
+
+  document.querySelectorAll(".scout-label").forEach(x=>x.textContent="Add with Your Academic Weapon");
+  $("scheduleScoutInput")&&($("scheduleScoutInput").placeholder="Tell Your Academic Weapon: history every tuesday 2pm with Ms. Rao");
+
+  const examStyle=document.createElement("style");
+  examStyle.textContent=".exam-engine{padding:21px!important}.exam-engine .upload-grid{gap:12px!important}.exam-engine .manual-adjust{padding:15px!important}.exam-engine .exam-subject-rows{gap:9px!important}.exam-engine .exam-subject-row{padding:11px!important}";
+  document.head.appendChild(examStyle);
+
+  const sidebar=$("appSidebar");if(sidebar){sidebar.style.overflowY="auto";sidebar.style.overflowX="hidden";sidebar.style.paddingBottom="150px"}
+
+  $("sendChat")?.addEventListener("click",function(){if(typeof sendChat==="function")sendChat()},true);
+})();
+</script></body></html>
