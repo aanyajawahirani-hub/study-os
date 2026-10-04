@@ -308,6 +308,8 @@ body[data-page="ai"] #section-planner .file-btn{padding:13px 15px}
 .notification-onboard{z-index:60}.notification-preview{border:1px solid var(--line);padding:16px;margin-top:18px;background:var(--surface2);display:grid;gap:5px}.notification-preview span{font-size:8px;letter-spacing:.15em;color:var(--accent3);font-weight:800}.notification-preview b{font-family:Georgia,serif;font-size:20px}.notification-preview small{color:var(--muted)}.notification-actions{display:flex;gap:8px;margin-top:18px}.notification-actions button{flex:1}
 @media(max-width:900px){.upload-grid{grid-template-columns:1fr}.manual-adjust{grid-template-columns:1fr 1fr}body[data-page="ai"] #section-planner .planner-top .page-title{font-size:clamp(52px,13vw,88px)}body[data-page="ai"] #section-planner .chat{height:430px}}
 @media(max-width:600px){.manual-adjust{grid-template-columns:1fr}.deadline-form .estimate-field{display:grid}.notification-actions{display:grid}.schedule-mode-row{overflow:auto}.schedule-mode{white-space:nowrap}}
+</style><style id="google-auth-fix">
+.google-render-button{min-height:44px;margin-top:8px}.google-signup{cursor:pointer}
 </style></head><body><main>
 <aside id="appSidebar">
   <div class="brand"><span class="brand-mark">•</span><span class="brand-name">STUDYOS</span></div>
@@ -629,7 +631,11 @@ body[data-page="ai"] #section-planner .file-btn{padding:13px 15px}
     <div class="eyebrow">STUDYOS</div>
     <h2>Sign up before you cook.</h2>
     <p>Create your StudyOS account to save your schedule, exams, focus history and AI changes. You can still explore every screen before signing up.</p>
-    <div id="googleButtonWrap"><button id="googleSignup" class="google-signup">CONTINUE WITH GOOGLE</button><small id="googleStatus">Google sign-in connects once a Google OAuth client is configured.</small></div>
+    <div id="googleButtonWrap">
+      <button id="googleSignup" class="google-signup" type="button">CONTINUE WITH GOOGLE</button>
+      <div id="googleRenderButton" class="google-render-button" hidden></div>
+      <small id="googleStatus">Connecting to Google…</small>
+    </div>
     <div class="auth-divider"><span>OR</span></div>
     <form id="localSignupForm" class="auth-form"><input id="signupName" required maxlength="80" placeholder="Your name"><input id="signupEmail" required type="email" maxlength="160" placeholder="Email address"><button class="dark-btn" type="submit">CREATE ACCOUNT</button></form>
     <small class="auth-foot">Already signed up on this browser? <button id="restoreAccount" type="button">Continue my account</button></small>
@@ -744,7 +750,46 @@ function requireAuth(){if(authUser)return true;openAuth("feature");return false}
 function completeAuth(user){localStorage.setItem("studyos-auth",JSON.stringify(user));location.reload()}
 $("localSignupForm")?.addEventListener("submit",e=>{e.preventDefault();completeAuth({name:$("signupName").value.trim(),email:$("signupEmail").value.trim(),method:"email",createdAt:Date.now()})});
 $("restoreAccount")?.addEventListener("click",()=>{const saved=localStorage.getItem("studyos-auth");if(saved)location.reload();else openAuth("restore")});
-$("googleSignup")?.addEventListener("click",()=>{const clientId=window.STUDYOS_GOOGLE_CLIENT_ID||"";if(!clientId){$("googleStatus").textContent="Google sign-in needs the StudyOS Google OAuth client ID configured on the deployment. The account form above is ready now.";return}if(window.google?.accounts?.id){google.accounts.id.initialize({client_id:clientId,callback:r=>{try{const payload=JSON.parse(atob(r.credential.split(".")[1].replace(/-/g,"+").replace(/_/g,"/")));completeAuth({name:payload.name||"StudyOS user",email:payload.email||"",picture:payload.picture||"",method:"google",googleSub:payload.sub})}catch(e){$("googleStatus").textContent="Google sign-in could not be completed."}}});google.accounts.id.prompt()}else $("googleStatus").textContent="Google Identity Services is still loading. Try again in a moment."});
+let studyOSGoogleReady=false;
+let studyOSGoogleClientId="";
+function finishGoogleSignIn(response){
+  try{
+    if(!response?.credential)throw new Error("Missing Google credential");
+    const payload=JSON.parse(atob(response.credential.split(".")[1].replace(/-/g,"+").replace(/_/g,"/")));
+    if(!payload.sub||!payload.email)throw new Error("Incomplete Google profile");
+    completeAuth({name:payload.name||"StudyOS user",email:payload.email,picture:payload.picture||"",method:"google",googleSub:payload.sub,createdAt:Date.now()});
+  }catch(e){$("googleStatus").textContent="Google sign-in could not be completed. Please try again.";}
+}
+function initStudyOSGoogle(clientId){
+  if(!clientId)return;
+  studyOSGoogleClientId=clientId;
+  if(!window.google?.accounts?.id){$("googleStatus").textContent="Google sign-in is loading…";return;}
+  google.accounts.id.initialize({client_id:clientId,callback:finishGoogleSignIn,auto_select:false,cancel_on_tap_outside:true});
+  studyOSGoogleReady=true;
+  $("googleStatus").textContent="Google is ready. Continue with your Google account.";
+}
+$("googleSignup")?.addEventListener("click",()=>{
+  if(!studyOSGoogleReady){
+    $("googleStatus").textContent=studyOSGoogleClientId?"Google is still loading. Try again in a moment.":"Google sign-in is not configured on this deployment yet.";
+    return;
+  }
+  google.accounts.id.prompt(notification=>{if(notification.isNotDisplayed?.())$("googleStatus").textContent="Google could not open here. Check the site's Google OAuth origin settings.";});
+});
+(async function loadStudyOSGoogle(){
+  try{
+    const cfg=await fetch("/api/config",{cache:"no-store"}).then(r=>r.ok?r.json():{});
+    const clientId=cfg.googleClientId||"";
+    if(!clientId){$("googleStatus").textContent="Google sign-in is not configured on this deployment yet.";return;}
+    window.STUDYOS_GOOGLE_CLIENT_ID=clientId;
+    if(window.google?.accounts?.id){initStudyOSGoogle(clientId);return;}
+    const s=document.createElement("script");
+    s.src="https://accounts.google.com/gsi/client";
+    s.async=true;s.defer=true;
+    s.onload=()=>initStudyOSGoogle(clientId);
+    s.onerror=()=>{$("googleStatus").textContent="Google sign-in could not load. Check your connection or deployment settings.";};
+    document.head.appendChild(s);
+  }catch(e){$("googleStatus").textContent="Could not load Google sign-in configuration.";}
+})();
 document.addEventListener("click",e=>{const b=e.target.closest("button");if(!b||b.closest("#authModal"))return;const safe=["sidebarToggle","contentMenuToggle","openClockSettings","notify","saveSetup","closeSetup","notificationEnable","notificationSkip"].includes(b.id);if(!safe&&!authUser){e.preventDefault();e.stopImmediatePropagation();openAuth("feature");}},true);
 if(!authUser){$("authModal").classList.add("open");}$("focusAudioFile")?.addEventListener("change",e=>{const f=e.target.files[0];if(!f)return;focusAudio=focusAudio||new Audio();focusAudio.src=URL.createObjectURL(f);$("focusAudioName").textContent=f.name;$("focusSoundStatus").textContent="LOCAL SOUND READY";});
 document.body.dataset.section="today";document.body.dataset.page="today";
