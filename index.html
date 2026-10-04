@@ -850,8 +850,8 @@ input,select,textarea,button{max-width:100%}
     const country=(countryEl.dataset.validValue||countryEl.value||"").trim();
     const timezone=(timezoneEl.dataset.validValue||timezoneEl.value||"").trim();
     const dateFormat=(formatEl.value||"").trim();
-    const countryValid=Object.prototype.hasOwnProperty.call(window.COUNTRY_ZONES||{},country);
-    const timezoneValid=!!timezone && (!Array.isArray(window.TIMEZONE_LIST)||window.TIMEZONE_LIST.includes(timezone));
+    const countryValid=typeof COUNTRY_ZONES!=="undefined" && Object.prototype.hasOwnProperty.call(COUNTRY_ZONES,country);
+    const timezoneValid=!!timezone && typeof TIMEZONE_LIST!=="undefined" && Array.isArray(TIMEZONE_LIST) && TIMEZONE_LIST.includes(timezone);
     const formatValid=["DD/MM/YYYY","MM/DD/YYYY","YYYY/MM/DD"].includes(dateFormat);
     if(!countryValid||!timezoneValid||!formatValid){
       const field=!countryValid?countryEl:!timezoneValid?timezoneEl:formatEl;
