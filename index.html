@@ -738,7 +738,7 @@ body[data-page="ai"] #section-planner .file-btn{padding:13px 15px}
     localStorage.setItem("studyos-settings",JSON.stringify(settings));
     window.userSettings=settings;
     userSettings=settings;
-    modal.classList.remove("open"); document.body.classList.remove("setup-first"); if($("notificationModal") && Notification.permission!=="granted") setTimeout(()=>$("notificationModal").classList.add("open"),120);
+    modal.classList.remove("open"); document.body.classList.remove("setup-first"); localStorage.setItem(onboardingKey,"1"); if($("notificationModal") && Notification.permission!=="granted") setTimeout(()=>{$("notificationModal").classList.add("open")},120);
     let pomo={mode:25,work:25,break:5,seconds:1500,running:false,onBreak:false,cycle:1,interval:null};
 function syncPomodoro(){const t=$("pomoTimer");if(!t)return;t.textContent=fmt(pomo.seconds);$("pomoCycleLabel").textContent=(pomo.onBreak?"BREAK":"FOCUS")+" · CYCLE "+pomo.cycle;$("pomoProgress").style.width=Math.max(0,Math.min(100,(1-pomo.seconds/((pomo.onBreak?pomo.break:pomo.work)*60))*100))+"%";$("pomoStatus").textContent=pomo.running?(pomo.onBreak?"BREAK IN PROGRESS":"FOCUS IN PROGRESS"):"READY. START WHEN YOU MEAN IT.";document.querySelectorAll("[data-pomo]").forEach(b=>b.classList.toggle("active",String(b.dataset.pomo)===String(pomo.mode)));}
 function setPomoMode(mode){if(mode==="custom"){$("pomoCustomFields").hidden=false;pomo.work=Math.max(5,Number($("pomoWork").value)||25);pomo.break=Math.max(1,Number($("pomoBreak").value)||5)}else{$("pomoCustomFields").hidden=true;pomo.work=Number(mode);pomo.break=mode==="50"?10:5}pomo.mode=mode;pomo.seconds=pomo.work*60;pomo.onBreak=false;pomo.running=false;clearInterval(pomo.interval);syncPomodoro();}
@@ -861,7 +861,9 @@ const COUNTRY_ZONES={"India":"Asia/Kolkata","United States":"America/New_York","
 const COUNTRY_DATE_FORMAT={"India":"DD/MM/YYYY","United States":"MM/DD/YYYY","United Kingdom":"DD/MM/YYYY","Australia":"DD/MM/YYYY","Singapore":"DD/MM/YYYY","United Arab Emirates":"DD/MM/YYYY","Canada":"MM/DD/YYYY","Japan":"YYYY/MM/DD","Germany":"DD/MM/YYYY","France":"DD/MM/YYYY","Brazil":"DD/MM/YYYY","China":"YYYY/MM/DD","South Korea":"YYYY/MM/DD","New Zealand":"DD/MM/YYYY","South Africa":"DD/MM/YYYY","Nepal":"DD/MM/YYYY","Bangladesh":"DD/MM/YYYY","Sri Lanka":"DD/MM/YYYY","Malaysia":"DD/MM/YYYY","Indonesia":"DD/MM/YYYY","Thailand":"DD/MM/YYYY"};
 const TIMEZONE_LIST=(()=>{try{return Array.from(new Set(["Asia/Kolkata",...Intl.supportedValuesOf("timeZone").filter(z=>!z.startsWith("Etc/")&&!z.startsWith("Indian/")&&z!=="Asia/Calcutta")])).sort();}catch(e){return ["Asia/Kolkata","Asia/Dubai","Asia/Singapore","Asia/Tokyo","Australia/Sydney","Europe/London","Europe/Paris","Europe/Berlin","America/New_York","America/Chicago","America/Denver","America/Los_Angeles","Pacific/Auckland"];}})();
 const settingsKey="studyos-settings";
+const onboardingKey="studyos-onboarding-v1";
 let userSettings=JSON.parse(localStorage.getItem(settingsKey)||"null");
+const needsFirstRun=!localStorage.getItem(onboardingKey);
 function localNow(){return new Date(new Intl.DateTimeFormat("en-US",{timeZone:userSettings?.timezone||"Asia/Kolkata",year:"numeric",month:"2-digit",day:"2-digit",hour:"2-digit",minute:"2-digit",second:"2-digit",hourCycle:"h23"}).formatToParts(new Date()).reduce((o,p)=>(o[p.type]=p.value,o),{}).year+"-"+new Intl.DateTimeFormat("en-US",{timeZone:userSettings?.timezone||"Asia/Kolkata",year:"numeric",month:"2-digit",day:"2-digit"}).format(new Date()).split("/")[0]+"-01T00:00:00");}
 function zonedParts(){
   const parts=new Intl.DateTimeFormat("en-US",{timeZone:userSettings?.timezone||"Asia/Kolkata",weekday:"long",year:"numeric",month:"2-digit",day:"2-digit",hour:"2-digit",minute:"2-digit",hourCycle:"h23"}).formatToParts(new Date());
@@ -1220,7 +1222,7 @@ $("setupTimezone")?.addEventListener("change",()=>{
   }
 });
 // Clock settings are saved by the isolated handler beside the modal so this control remains functional even if another StudyOS module fails.
-if(!userSettings){document.body.classList.add("setup-first");openSetup()}else{$("setupModal").classList.remove("open");document.body.classList.remove("setup-first")}
+if(needsFirstRun||!userSettings){document.body.classList.add("setup-first");setTimeout(()=>openSetup(),0)}else{$("setupModal").classList.remove("open");document.body.classList.remove("setup-first")}
 const focus={seconds:25*60,running:false,mode:25,breakMinutes:5,interval:null};
 let focusTaskIndex=0;
 function fmt(s){return String(Math.floor(s/60)).padStart(2,"0")+":"+String(s%60).padStart(2,"0")}
