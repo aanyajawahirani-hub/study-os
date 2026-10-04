@@ -2088,15 +2088,7 @@ function generatePlan(){
     ["extraTitle","extraFrom","extraTo","extraStart","extraEnd","extraHours","extraNote"].forEach(id=>{const el=$f(id);if(el)el.value=""});
   };
 
-  /* Focus: no sound can start before START FOCUS. Choices are preferences only. */
-  const oldToggleFocus=window.toggleFocus;
-  window.toggleFocus=function(){
-    if(!authUser){openAuth("focus");return}
-    oldToggleFocus();
-  };
-  $f("focusPageStart")?.addEventListener("click",()=>{if(!authUser)openAuth("focus")});
-  $f("openPomodoro")?.addEventListener("click",()=>{if(!authUser){openAuth("pomodoro");return}showSection("pomodoro")});
-
+  /* Focus is usable without signup. Authentication remains optional. */
   /* Better sound labels, plus a real Spotify hand-off instead of pretending the browser can play arbitrary Spotify URLs. */
   const spotifyBtn=$f("openSpotifyLink");
   spotifyBtn?.addEventListener("click",()=>{
