@@ -1945,7 +1945,7 @@ function generatePlan(){
       "CLICK SAVE SETTINGS",
       "CLICK NOTIFICATIONS ON"
     ];
-    $("clockTutorialTitle").textContent=titles[state.step];
+    $("clockTutorialLayer").dataset.step=String(state.step);\n    $("clockTutorialCard").dataset.step=String(state.step);\n    $("clockTutorialTitle").textContent=titles[state.step];
     $("clockTutorialCopy").textContent=copies[state.step];
     $("clockTutorialStep").textContent=steps[state.step];
     $("clockTutorialCount").textContent=(state.step+1)+"/5";
