@@ -1263,11 +1263,6 @@ document.querySelectorAll("[data-cooking-jump]").forEach(b=>b.addEventListener("
     generatePlan();
     showSection("plan");
   });
-  // Focus page controls are explicitly rebound so the page cannot become a dead surface.
-  document.querySelectorAll("[data-page-focus]").forEach(b=>b.addEventListener("click",()=>{setFocus(Number(b.dataset.pageFocus));renderFocusPage();}));
-  $("focusPageStart")?.addEventListener("click",toggleFocus);$("focusPageReset")?.addEventListener("click",resetFocus);
-  $("focusPagePrev")?.addEventListener("click",()=>{const n=focusTasks().length;focusTaskIndex=n?((focusTaskIndex-1+n)%n):0;renderFocusPage()});
-  $("focusPageNext")?.addEventListener("click",()=>{const n=focusTasks().length;focusTaskIndex=n?((focusTaskIndex+1)%n):0;renderFocusPage()});
   document.querySelectorAll("[data-focus-sound]").forEach(b=>b.addEventListener("click",()=>{state.focusSound=b.dataset.focusSound;saveState();document.querySelectorAll("[data-focus-sound]").forEach(x=>x.classList.toggle("active",x===b));$("focusSoundStatus").textContent=b.dataset.focusSound==="silence"?"SILENT":"SELECTED";}));
   // Deadline AI estimate is opt-in. It does not alter the required time until the user chooses to use it.
   $("askDeadlineAI")?.addEventListener("click",async()=>{
