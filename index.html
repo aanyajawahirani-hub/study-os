@@ -310,6 +310,54 @@ body[data-page="ai"] #section-planner .file-btn{padding:13px 15px}
 @media(max-width:600px){.manual-adjust{grid-template-columns:1fr}.deadline-form .estimate-field{display:grid}.notification-actions{display:grid}.schedule-mode-row{overflow:auto}.schedule-mode{white-space:nowrap}}
 </style><style id="google-auth-fix">
 .google-render-button{min-height:44px;margin-top:8px;width:100%;display:flex;justify-content:center}.google-render-button iframe{max-width:100%!important}.google-signup{cursor:pointer}
+</style><style id="studyos-final-request-ui">
+/* Final interaction + visual pass */
+body[data-page="ai"] #section-planner .ai-panel{
+  background:#e8efec;
+  border-color:#263a39;
+  box-shadow:18px 18px 0 #d1ddd9;
+}
+body[data-page="ai"] #section-planner .ai-panel:after{
+  content:"AI / LIVE";
+  position:absolute;left:26px;bottom:24px;z-index:2;
+  font-size:8px;letter-spacing:.18em;font-weight:900;color:#315c63;
+  animation:ai-pulse 2.2s ease-in-out infinite;
+}
+@keyframes ai-pulse{0%,100%{opacity:.35}50%{opacity:1}}
+body[data-page="ai"] #section-planner .chat{
+  background:
+    linear-gradient(rgba(49,92,99,.045) 1px,transparent 1px),
+    linear-gradient(90deg,rgba(49,92,99,.045) 1px,transparent 1px);
+  background-size:34px 34px;
+}
+body[data-page="ai"] #section-planner .message.assistant{
+  border-left:4px solid #315c63;
+  transform:translateX(0);
+  transition:transform .35s ease, border-color .35s ease;
+}
+body[data-page="ai"] #section-planner .message.assistant:hover{transform:translateX(7px)}
+body[data-page="ai"] #section-planner .chat-compose{
+  background:#d7e5e1;
+}
+body[data-page="ai"] #section-planner .send-btn{
+  background:#315c63;border-color:#315c63;
+}
+body[data-page="exams"] .exam-engine{border-top:4px solid #315c63}
+body[data-page="exams"] .exam-guide-title{font-size:clamp(48px,7vw,96px)}
+body[data-page="exceptions"] .sunday-card{
+  padding:24px;border-width:3px;background:#efe1dc;
+  transform:translateZ(0);
+}
+body[data-page="exceptions"] .sunday-card label{font-size:18px}
+body[data-page="exceptions"] .sunday-card input{width:20px;height:20px;accent-color:#7a4f46}
+[data-window-panel="availability"]{display:none!important}
+.focus-sound-choice{transition:transform .25s ease,border-color .25s ease,background .25s ease}
+.focus-sound-choice:hover{transform:translateX(4px)}
+.spotify-link-row{display:grid;grid-template-columns:1fr auto;gap:7px;margin-top:8px}
+.spotify-link-row input{min-width:0;border:1px solid var(--line);padding:10px;background:var(--surface);font:inherit;font-size:10px}
+.spotify-link-row button{border:1px solid var(--focus);background:var(--focus);color:#fff;padding:10px 12px;font-size:8px;font-weight:800;cursor:pointer}
+.commitment-mode-note{grid-column:1/-1}
+@media(max-width:600px){.spotify-link-row{grid-template-columns:1fr}.spotify-link-row button{width:100%}}
 </style></head><body><main>
 <aside id="appSidebar">
   <div class="brand"><span class="brand-mark">•</span><span class="brand-name">STUDYOS</span></div>
@@ -408,7 +456,10 @@ body[data-page="ai"] #section-planner .file-btn{padding:13px 15px}
       <div class="spotify-strip">
         <div><b>YOUR SOUND</b><small>Use one of the sound preferences above, or load an audio file from your own device. It will only play after the focus session starts.</small></div>
         <input id="focusAudioFile" type="file" accept="audio/*">
-        <div class="spotify-actions"><span id="focusAudioName" class="focus-file-name">No local sound selected</span></div>
+        <div class="spotify-actions"><span id="focusAudioName" class="focus-file-name">No local sound selected</span></div><div class="spotify-link-row">
+  <input id="spotifyLink" type="url" placeholder="Paste a Spotify track / album / playlist link">
+  <button id="openSpotifyLink" type="button">OPEN IN SPOTIFY ↗</button>
+</div>
       </div>
       <div class="focus-history"><div class="head"><b>RECENT SESSIONS</b><span id="focusSessionCount">0</span></div><div id="focusHistory"></div></div>
     </aside>
@@ -876,7 +927,7 @@ const COUNTRY_ZONES={"India":"Asia/Kolkata","United States":"America/New_York","
 const COUNTRY_DATE_FORMAT={"India":"DD/MM/YYYY","United States":"MM/DD/YYYY","United Kingdom":"DD/MM/YYYY","Australia":"DD/MM/YYYY","Singapore":"DD/MM/YYYY","United Arab Emirates":"DD/MM/YYYY","Canada":"MM/DD/YYYY","Japan":"YYYY/MM/DD","Germany":"DD/MM/YYYY","France":"DD/MM/YYYY","Brazil":"DD/MM/YYYY","China":"YYYY/MM/DD","South Korea":"YYYY/MM/DD","New Zealand":"DD/MM/YYYY","South Africa":"DD/MM/YYYY","Nepal":"DD/MM/YYYY","Bangladesh":"DD/MM/YYYY","Sri Lanka":"DD/MM/YYYY","Malaysia":"DD/MM/YYYY","Indonesia":"DD/MM/YYYY","Thailand":"DD/MM/YYYY"};
 const TIMEZONE_LIST=(()=>{try{return Array.from(new Set(["Asia/Kolkata",...Intl.supportedValuesOf("timeZone").filter(z=>!z.startsWith("Etc/")&&!z.startsWith("Indian/")&&z!=="Asia/Calcutta")])).sort();}catch(e){return ["Asia/Kolkata","Asia/Dubai","Asia/Singapore","Asia/Tokyo","Australia/Sydney","Europe/London","Europe/Paris","Europe/Berlin","America/New_York","America/Chicago","America/Denver","America/Los_Angeles","Pacific/Auckland"];}})();
 const settingsKey="studyos-settings";
-const onboardingKey="studyos-onboarding-v2";
+const onboardingKey="studyos-onboarding-v3";
 let userSettings=JSON.parse(localStorage.getItem(settingsKey)||"null");
 const needsFirstRun=!localStorage.getItem(onboardingKey);
 function localNow(){return new Date(new Intl.DateTimeFormat("en-US",{timeZone:userSettings?.timezone||"Asia/Kolkata",year:"numeric",month:"2-digit",day:"2-digit",hour:"2-digit",minute:"2-digit",second:"2-digit",hourCycle:"h23"}).formatToParts(new Date()).reduce((o,p)=>(o[p.type]=p.value,o),{}).year+"-"+new Intl.DateTimeFormat("en-US",{timeZone:userSettings?.timezone||"Asia/Kolkata",year:"numeric",month:"2-digit",day:"2-digit"}).format(new Date()).split("/")[0]+"-01T00:00:00");}
@@ -1368,7 +1419,7 @@ document.querySelectorAll("[data-cooking-jump]").forEach(b=>b.addEventListener("
     }
   };
   // If settings already exist on a later visit, do not reopen the clock modal. If it is first entry, the existing setup modal stays visible.
-  if(userSettings && setup)setup.classList.remove("open");
+  if(userSettings && setup && !needsFirstRun)setup.classList.remove("open");
   if(userSettings && window.Notification && Notification.permission!=="granted" && localStorage.getItem("studyos-notification-onboarding-seen")!=="1"){
     setTimeout(maybeNotificationOnboarding,250);
   }
@@ -1419,4 +1470,228 @@ function generatePlan(){
   if(unresolved.length)addMessage("assistant","Some work could not fit before the deadline. I kept the plan honest. Add more free study time, reduce the workload, or move a commitment.");
 }
 </script>
-</body></html>
+<script id="studyos-final-request-fixes">
+(function(){
+  const $f=id=>document.getElementById(id);
+
+  /* Clock onboarding is a hard first-entry gate. Old v1/v2 flags cannot suppress it. */
+  const firstRun=!localStorage.getItem("studyos-onboarding-v3");
+  if(firstRun){
+    document.body.classList.add("setup-first","setup-gate");
+    const setup=$f("setupModal"),auth=$f("authModal");
+    if(setup){setup.classList.add("open");setup.style.display="grid";setup.style.zIndex="9999";}
+    if(auth)auth.classList.remove("open");
+  }
+
+  /* Rebuild must always be a real action, not a view switch. */
+  window.generatePlan=function(){
+    const deadlines=state.deadlines||[];
+    const missing=deadlines.filter(x=>x.due&&!estimateDeadlineMinutes(x));
+    if(missing.length){
+      alert("Add an approximate time required for each deadline before rebuilding. StudyOS will never invent that number.");
+      showSection("deadlines"); return;
+    }
+    const tasks=[...deadlines.filter(x=>x.due),...buildExamTasks()]
+      .map(x=>({...x,minutes:estimateDeadlineMinutes(x)}))
+      .filter(x=>Number(x.minutes)>0)
+      .sort((a,b)=>a.due.localeCompare(b.due)||(a.dueTime||"99:99").localeCompare(b.dueTime||"99:99")||(a.priority==="high"?-1:1));
+
+    const start=todayKey();
+    const end=tasks.length?tasks.reduce((m,x)=>x.due>m?x.due:m,start):start;
+    const remaining=tasks.map(x=>({...x,remaining:Number(x.minutes)}));
+    const out=[];
+
+    for(let day=0;day<=180;day++){
+      const key=addDays(start,day);
+      if(key>end)break;
+      const dow=new Date(key+"T12:00:00").getDay();
+      if(isVacation(key))continue;
+
+      /* Availability is only a preference. The real constraints are booked commitments. */
+      const windows=studyWindowsForDay(dow);
+      const blocked=protectedIntervals(key,dow);
+      let dailyCapacity=windows.reduce((s,w)=>s+Math.max(0,mins(w.end)-mins(w.start)),0)-reservedMinutesForDay(key,dow);
+      dailyCapacity=Math.max(0,dailyCapacity);
+
+      for(const w of windows){
+        const slices=freeSlices(mins(w.start),mins(w.end),blocked);
+        for(const slice of slices){
+          let cursor=slice[0],limit=Math.min(slice[1],cursor+dailyCapacity);
+          while(cursor+15<=limit&&dailyCapacity>=15){
+            const target=remaining.find(x=>x.remaining>0&&x.due>=key);
+            if(!target)break;
+            const block=Math.min(target.remaining,Math.min(90,limit-cursor,dailyCapacity));
+            if(block<15)break;
+            out.push({
+              id:key+"-"+cursor+"-"+Math.random().toString(36).slice(2,8),
+              date:key,start:timeStr(cursor),duration:block,
+              subject:target.subject,task:target.title,kind:target.kind||"deadline"
+            });
+            target.remaining-=block;
+            cursor+=block+5;
+            dailyCapacity-=block+5;
+          }
+        }
+      }
+    }
+    state.plan=out;
+    state.done=(state.done||[]).filter(id=>out.some(x=>x.id===id));
+    saveState();
+    renderToday();renderGeneratedPlan();renderPlanner();renderFocusTasks();updateCookingExperience();
+    const unresolved=remaining.filter(x=>x.remaining>0);
+    const summary=$f("planSummary");
+    if(summary)summary.textContent=out.length?out.length+" blocks generated"+(unresolved.length?" · "+unresolved.length+" task(s) still need more time":""):"No study blocks could be placed";
+    if(unresolved.length)addMessage("assistant","Some work could not fit before the deadline. I kept the plan honest instead of inventing free time.");
+  };
+
+  /* Correct calendar constraints for both Academics and Other Commitments. */
+  window.protectedIntervals=function(key,dow){
+    const out=[];
+    (state.activities||[]).filter(x=>x.mode!=="hours"&&x.start&&x.end&&commitmentActiveOnDay(x,key,dow)&&!commitmentCancelled(commitmentScope(x),key))
+      .forEach(x=>out.push({start:mins(x.start),end:mins(x.end)}));
+    (state.extras||[]).filter(x=>x.mode!=="hours"&&x.start&&x.end&&commitmentActiveOnDay(x,key,dow)&&!commitmentCancelled(commitmentScope(x),key))
+      .forEach(x=>out.push({start:mins(x.start),end:mins(x.end)}));
+    return out.filter(x=>x.end>x.start).sort((a,b)=>a.start-b.start);
+  };
+  window.reservedMinutesForDay=function(key,dow){
+    const a=(state.activities||[]).filter(x=>x.mode==="hours"&&commitmentActiveOnDay(x,key,dow)&&!commitmentCancelled(commitmentScope(x),key)).reduce((s,x)=>s+Number(x.hours||0)*60,0);
+    const e=(state.extras||[]).filter(x=>x.mode==="hours"&&commitmentActiveOnDay(x,key,dow)&&!commitmentCancelled(commitmentScope(x),key)).reduce((s,x)=>s+Number(x.hours||0)*60,0);
+    return Math.max(0,Math.round(a+e));
+  };
+  window.studyWindowsForDay=function(dow){
+    const preferred=(state.availability||[]).filter(x=>Number(x.day)===dow);
+    return preferred.length?preferred:[{start:"06:00",end:"23:00",derived:true}];
+  };
+
+  /* Academic commitment: ONCE vs REPEATING is now functional. */
+  document.querySelectorAll("[data-activity-mode]").forEach(b=>b.addEventListener("click",()=>{
+    document.querySelectorAll("[data-activity-mode]").forEach(x=>x.classList.toggle("active",x===b));
+    const repeat=b.dataset.activityMode==="repeating";
+    const day=$f("activityDay");
+    if(day)day.hidden=!repeat;
+  }));
+  /* Exact time vs hours-only is explicit and never validates the hidden mode. */
+  document.querySelectorAll("[data-activity-time]").forEach(b=>b.addEventListener("click",()=>{
+    document.querySelectorAll("[data-activity-time]").forEach(x=>x.classList.toggle("active",x===b));
+    const exact=b.dataset.activityTime==="exact";
+    document.querySelectorAll(".exact-time-field").forEach(x=>x.hidden=!exact);
+    const hours=$f("activityHours");
+    if(hours?.closest(".hours-field"))hours.closest(".hours-field").hidden=exact;
+    const hint=$f("activityTimeHint");
+    if(hint)hint.textContent=exact?"Exact interval is protected on the calendar.":"No clock time required. StudyOS reserves only the hours-per-active-day.";
+  }));
+  document.querySelectorAll("[data-extra-time]").forEach(b=>b.addEventListener("click",()=>{
+    document.querySelectorAll("[data-extra-time]").forEach(x=>x.classList.toggle("active",x===b));
+    const exact=b.dataset.extraTime==="exact";
+    document.querySelectorAll(".exact-extra-field").forEach(x=>x.hidden=!exact);
+    const hours=$f("extraHours");
+    if(hours?.closest(".hours-extra-field"))hours.closest(".hours-extra-field").hidden=exact;
+  }));
+
+  /* Replace the two broken add handlers with strict mode-aware handlers. */
+  const addActivity=$f("addActivity");
+  if(addActivity) addActivity.onclick=function(){
+    const title=$f("activityTitle").value.trim(),scope=$f("activityScope").value,from=$f("activityFrom").value,to=$f("activityTo").value;
+    const day=Number($f("activityDay").value),start=$f("activityStart").value,end=$f("activityEnd").value;
+    const hours=Number($f("activityHours").value),location=$f("activityLocation").value.trim();
+    const mode=document.querySelector("[data-activity-time].active")?.dataset.activityTime||"exact";
+    const repeat=document.querySelector("[data-activity-mode].active")?.dataset.activityMode==="repeating";
+    if(!title)return alert("Add the academic commitment.");
+    if(!from||!to||to<from)return alert("Choose a valid FROM and TO date.");
+    if(mode==="exact"&&(!start||!end||mins(end)<=mins(start)))return alert("Choose a valid exact start and end time.");
+    if(mode==="hours"&&(!Number.isFinite(hours)||hours<=0))return alert("Add the hours to dedicate per active day.");
+    state.activities.push({title,scope,from,to,day:repeat?day:null,start:mode==="exact"?start:"",end:mode==="exact"?end:"",hours:mode==="hours"?hours:0,mode,location,repeat});
+    saveState();generatePlan();renderPlanner();
+    ["activityTitle","activityFrom","activityTo","activityStart","activityEnd","activityHours","activityLocation"].forEach(id=>{const el=$f(id);if(el)el.value=""});
+  };
+
+  const addExtra=$f("addExtra");
+  if(addExtra) addExtra.onclick=function(){
+    const title=$f("extraTitle").value.trim(),scope=$f("extraScope").value,from=$f("extraFrom").value,to=$f("extraTo").value;
+    const day=Number($f("extraDay").value),start=$f("extraStart").value,end=$f("extraEnd").value;
+    const hours=Number($f("extraHours").value),note=$f("extraNote").value.trim();
+    const mode=document.querySelector("[data-extra-time].active")?.dataset.extraTime||"exact";
+    if(!title)return alert("Add the commitment name.");
+    if(!from||!to||to<from)return alert("Choose a valid FROM and TO date.");
+    if(mode==="exact"&&(!start||!end||mins(end)<=mins(start)))return alert("Choose a valid exact start and end time.");
+    if(mode==="hours"&&(!Number.isFinite(hours)||hours<=0))return alert("Add the hours to dedicate per active day.");
+    state.extras.push({title,scope,from,to,day,start:mode==="exact"?start:"",end:mode==="exact"?end:"",hours:mode==="hours"?hours:0,mode,note});
+    saveState();generatePlan();renderPlanner();
+    ["extraTitle","extraFrom","extraTo","extraStart","extraEnd","extraHours","extraNote"].forEach(id=>{const el=$f(id);if(el)el.value=""});
+  };
+
+  /* Focus: no sound can start before START FOCUS. Choices are preferences only. */
+  const oldToggleFocus=window.toggleFocus;
+  window.toggleFocus=function(){
+    if(!window.authUser){openAuth("focus");return}
+    oldToggleFocus();
+  };
+  $f("focusPageStart")?.addEventListener("click",()=>{if(!window.authUser)openAuth("focus")});
+  $f("openPomodoro")?.addEventListener("click",()=>{if(!window.authUser){openAuth("pomodoro");return}showSection("pomodoro")});
+
+  /* Better sound labels, plus a real Spotify hand-off instead of pretending the browser can play arbitrary Spotify URLs. */
+  const spotifyBtn=$f("openSpotifyLink");
+  spotifyBtn?.addEventListener("click",()=>{
+    const value=$f("spotifyLink")?.value.trim();
+    if(!value||!/^https?:\/\/(open\.)?spotify\.com\//i.test(value))return alert("Paste a Spotify track, album, or playlist link.");
+    window.open(value,"_blank","noopener,noreferrer");
+  });
+  $f("focusAudioFile")?.addEventListener("change",e=>{
+    const f=e.target.files?.[0]; if(!f)return;
+    focusAudio=focusAudio||new Audio();
+    focusAudio.src=URL.createObjectURL(f);
+    $f("focusAudioName").textContent=f.name;
+    $f("focusSoundStatus").textContent="READY · START FOCUS TO PLAY";
+  });
+
+  /* Date/time whole-field interaction. */
+  document.addEventListener("click",e=>{
+    const input=e.target.closest('input[type="date"],input[type="time"],input[type="datetime-local"],input[type="month"]');
+    if(!input)return;
+    try{input.showPicker?.()}catch(_){}
+  },true);
+
+  /* First-run notification follows clock save and never competes with it. */
+  const setup=$f("setupModal"),notif=$f("notificationModal");
+  $f("saveSetup")?.addEventListener("click",()=>{
+    setTimeout(()=>{
+      if(!localStorage.getItem("studyos-onboarding-v3"))return;
+      setup?.classList.remove("open");
+      if(notif && (!("Notification" in window)||Notification.permission!=="granted"))notif.classList.add("open");
+    },180);
+  });
+  $f("notificationSkip")?.addEventListener("click",()=>{
+    localStorage.setItem("studyos-notification-onboarding-seen","1");
+    notif?.classList.remove("open");
+  });
+
+  /* Keep feature buttons responsive before signup: they open the signup gate rather than becoming dead. */
+  document.addEventListener("click",e=>{
+    const b=e.target.closest("button");
+    if(!b||window.authUser)return;
+    if(b.closest("#setupModal,#notificationModal,#authModal,#appSidebar,.content-menu-toggle"))return;
+    const navigation=b.matches("[data-section],[data-cooking-jump]");
+    if(navigation)return;
+    if(["openClockSettings","notify","saveSetup","closeSetup","notificationEnable","notificationSkip"].includes(b.id))return;
+    e.preventDefault();e.stopImmediatePropagation();openAuth("feature");
+  },true);
+
+  /* Make the Academic Weapon feel like an actual command surface. */
+  const aiTitle=$f("plannerPageTitle");
+  if(aiTitle)aiTitle.innerHTML="YOUR <em>ACADEMIC WEAPON.</em>";
+  const aiLede=$f("plannerPageLede");
+  if(aiLede)aiLede.textContent="Let’s make your new schedule so that you actually cook in your exams. Ask me to change your schedule directly instead of doing it manually. Let me know when you have holidays or miss a deadline, and I’ll reschedule around them.";
+
+  /* Exam metadata is visibly mandatory in the manual flow, while uploads remain optional. */
+  $f("prepareExamSubjects")?.addEventListener("click",()=>{
+    if(!$f("examStandard").value)return alert("Choose your standard / class first.");
+    if(!$f("examBoard").value)return alert("Choose your board of education first.");
+    if(!Number($f("examSubjectCount").value))return alert("Add the number of subjects first.");
+  });
+
+  /* Stronger Sunday copy without changing the planner's AI identity. */
+  const sunday=$f("sundayBlocked");
+  const sundayLabel=sunday?.closest("label")?.querySelector("span");
+  if(sundayLabel)sundayLabel.textContent="KEEP SUNDAYS FREE FOR SCHOOL";
+})();
+</script></body></html>
