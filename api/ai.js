@@ -1,5 +1,24 @@
+import { Redis } from "@upstash/redis";
+
 export default async function handler(req,res){
   if(req.method!=="POST")return res.status(405).json({error:"Method not allowed"});
+
+  const origin=req.headers.origin;
+  const allowedOrigin=process.env.STUDYOS_APP_ORIGIN||"https://study-k0ehdto7a-aanyajawahirani-hub.vercel.app";
+  if(origin && origin!==allowedOrigin)return res.status(403).json({error:"Origin not allowed"});
+
+  /* Abuse guard: AI calls are metered. Keep the public endpoint from becoming an open relay. */
+  try{
+    const redis=Redis.fromEnv();
+    const ip=String(req.headers["x-forwarded-for"]||req.headers["x-real-ip"]||"unknown").split(",")[0].trim().slice(0,80);
+    const bucket=Math.floor(Date.now()/3600000);
+    const key=`studyos:ai-rate:${ip}:${bucket}`;
+    const count=await redis.incr(key);
+    if(count===1)await redis.expire(key,3700);
+    if(count>30)return res.status(429).json({error:"AI rate limit reached. Try again later."});
+  }catch(_){
+    /* Redis is optional for development. Core AI behavior remains available if rate limiting is unavailable. */
+  }
 
   const apiKey=process.env.OPENAI_API_KEY||process.env.GROQ_API_KEY;
   if(!apiKey)return res.status(503).json({error:"Planner AI is not configured. Add OPENAI_API_KEY to the server environment."});
