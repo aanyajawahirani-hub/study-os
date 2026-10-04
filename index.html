@@ -2827,4 +2827,41 @@ function generatePlan(){
 
   $("sendChat")?.addEventListener("click",function(e){if(typeof sendChat==="function")sendChat();e.stopImmediatePropagation()},true);
 })();
+</script><script id="studyos-focus-reliability">
+(function(){
+  function el(id){return document.getElementById(id)}
+  function activateFocus(){
+    document.querySelectorAll(".section").forEach(s=>s.classList.remove("active"));
+    const s=el("section-focus"); if(s)s.classList.add("active");
+    document.body.dataset.section="focus"; document.body.dataset.page="focus";
+    document.querySelectorAll("[data-section]").forEach(b=>b.classList.toggle("active",b.dataset.section==="focus"));
+    if(typeof renderFocusPage==="function")renderFocusPage();
+  }
+  function fmt(n){return String(Math.floor(n/60)).padStart(2,"0")+":"+String(n%60).padStart(2,"0")}
+  const F=window.__studyOSFocusFallback=window.__studyOSFocusFallback||{seconds:1500,mode:25,running:false,timer:null};
+  function sync(){
+    const t=fmt(F.seconds), ids=["focusPageTimer","focusTimer"];
+    ids.forEach(id=>{const x=el(id);if(x)x.textContent=t});
+    ["focusHeaderState","focusState"].forEach(id=>{const x=el(id);if(x)x.textContent=F.running?"FOCUS SESSION IN PROGRESS":"Ready when you are."});
+    const b=el("focusPageStart");if(b)b.textContent=F.running?"PAUSE":"START FOCUS";
+    const m=el("focusAction");if(m)m.textContent=F.running?"PAUSE":"START FOCUS";
+    document.querySelectorAll("[data-page-focus]").forEach(b=>b.classList.toggle("active",Number(b.dataset.pageFocus)===F.mode));
+  }
+  function set(n){F.mode=Math.max(5,Math.min(180,Number(n)||25));F.mode=Math.round(F.mode/5)*5;F.seconds=F.mode*60;F.running=false;clearInterval(F.timer);sync()}
+  function start(){if(F.running){F.running=false;clearInterval(F.timer);sync();return}F.running=true;clearInterval(F.timer);F.timer=setInterval(()=>{F.seconds--;if(F.seconds<=0){F.seconds=0;F.running=false;clearInterval(F.timer);try{navigator.vibrate?.([150,80,150])}catch(_){ } }sync()},1000);sync()}
+  function reset(){F.running=false;clearInterval(F.timer);F.seconds=F.mode*60;sync()}
+  document.addEventListener("click",function(e){
+    const b=e.target.closest("button,[data-section]");
+    if(!b)return;
+    if(b.matches('[data-section="focus"]')){e.preventDefault();e.stopImmediatePropagation();activateFocus();return}
+    if(b.matches("[data-page-focus]")){e.preventDefault();e.stopImmediatePropagation();set(b.dataset.pageFocus);return}
+    if(b.id==="focusPageStart"||b.id==="focusAction"){e.preventDefault();e.stopImmediatePropagation();start();return}
+    if(b.id==="focusPageReset"){e.preventDefault();e.stopImmediatePropagation();reset();return}
+    if(b.id==="focusPagePrev"||b.id==="focusPageNext"){e.preventDefault();e.stopImmediatePropagation();const tasks=typeof focusTasks==="function"?focusTasks():[];if(tasks.length&&typeof focusTaskIndex!=="undefined"){focusTaskIndex=b.id==="focusPagePrev"?((focusTaskIndex-1+tasks.length)%tasks.length):((focusTaskIndex+1)%tasks.length);if(typeof renderFocusPage==="function")renderFocusPage()}return}
+    if(b.matches("[data-focus-sound]")){e.preventDefault();e.stopImmediatePropagation();try{const s=JSON.parse(localStorage.getItem("studyos-state")||"{}");s.focusSound=b.dataset.focusSound;localStorage.setItem("studyos-state",JSON.stringify(s))}catch(_){};document.querySelectorAll("[data-focus-sound]").forEach(x=>x.classList.toggle("active",x===b));const st=el("focusSoundStatus");if(st)st.textContent=b.dataset.focusSound==="silence"?"SILENT":"SELECTED";return}
+    if(b.id==="openPomodoro"){e.preventDefault();e.stopImmediatePropagation();if(typeof showSection==="function")showSection("pomodoro");return}
+  },true);
+  el("customFocusMinutesPage")?.addEventListener("change",e=>{e.stopImmediatePropagation();set(e.target.value)},true);
+  sync();
+})();
 </script></body></html>
