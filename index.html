@@ -1785,26 +1785,34 @@ function generatePlan(){
 </script>
 <style id="clock-tutorial-ui">
   #clockTutorialLayer{
-    position:fixed;inset:0;z-index:10000;pointer-events:none;
+    position:fixed;inset:0;z-index:2147483000;pointer-events:none;
+    isolation:isolate;
   }
-  #clockTutorialShade{
-    position:absolute;inset:0;background:rgba(20,24,22,.34);
-    backdrop-filter:blur(2px);-webkit-backdrop-filter:blur(2px);
-    pointer-events:none;
-  }
+  /* The spotlight itself creates the darkened page. This is more reliable than a
+     full-screen shade because it guarantees a real transparent hole around the target. */
+  #clockTutorialShade{display:none}
   #clockTutorialSpotlight{
-    position:fixed;border:2px solid var(--accent);border-radius:8px;
-    box-shadow:0 0 0 6px rgba(169,77,56,.12),0 12px 40px rgba(32,41,35,.16);
-    pointer-events:none;transition:all .38s cubic-bezier(.2,.8,.2,1);
+    position:fixed;z-index:1;border:3px solid #4b94e2;border-radius:12px;
+    background:transparent;
+    box-shadow:
+      0 0 0 5px rgba(75,148,226,.30),
+      0 0 0 9999px rgba(10,18,30,.58),
+      0 0 32px rgba(75,148,226,.45);
+    pointer-events:none;
+    transition:
+      left .38s cubic-bezier(.2,.8,.2,1),
+      top .38s cubic-bezier(.2,.8,.2,1),
+      width .38s cubic-bezier(.2,.8,.2,1),
+      height .38s cubic-bezier(.2,.8,.2,1);
   }
   #clockTutorialCard{
-    position:fixed;width:min(340px,calc(100vw - 28px));padding:20px 20px 18px;
-    background:var(--surface);color:var(--ink);border:2px solid var(--ink);
-    box-shadow:0 20px 70px rgba(32,41,35,.22);pointer-events:auto;
+    position:fixed;z-index:4;width:min(340px,calc(100vw - 28px));padding:20px 20px 18px;
+    background:#fff;color:#18243d;border:2px solid #18243d;border-radius:16px;
+    box-shadow:0 20px 70px rgba(23,35,55,.35);pointer-events:auto;
     transition:all .38s cubic-bezier(.2,.8,.2,1);
   }
   #clockTutorialArrow{
-    position:fixed;z-index:2;font-size:34px;line-height:1;color:var(--accent);
+    position:fixed;z-index:3;font-size:34px;line-height:1;color:var(--accent);
     font-weight:900;text-shadow:0 4px 16px rgba(75,148,226,.28);
     pointer-events:none;transform-origin:left center;
     animation:clockGuidePulse 1.35s ease-in-out infinite;
