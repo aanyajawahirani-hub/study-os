@@ -37,6 +37,8 @@ export default async function handler(req,res){
     else if(baseURL==="https://api.groq.com/openai")baseURL="https://api.groq.com/openai/v1";
   }
   let model=process.env.AI_MODEL||process.env.STUDYOS_AI_MODEL||(provider==="openai"?"gpt-4.1-mini":"openai/gpt-oss-20b");
+  // Never send a Groq-style model name to OpenAI. A stale AI_MODEL env var can otherwise make every planner request fail.
+  if(provider==="openai"&&(model.includes("/")||model.startsWith("llama")||model.startsWith("mixtral")||model.startsWith("gemma")))model="gpt-4.1-mini";
   if(provider==="groq"&&model==="llama-3.3-70b-versatile")model="openai/gpt-oss-20b";
 
   const system=`You are StudyOS, an action-taking student scheduling assistant. You are not a generic chatbot. Your job is to change the user's planner state when they ask.
@@ -94,7 +96,10 @@ When mode=estimate_deadline, return estimateMinutes as a positive approximate nu
     });
 
     const data=await r.json();
-    if(!r.ok)return res.status(502).json({error:"Planner AI provider error"});
+    if(!r.ok){
+      const providerMessage=String(data?.error?.message||data?.message||"").slice(0,300);
+      return res.status(502).json({error:providerMessage?`Planner AI provider error: ${providerMessage}`:"Planner AI provider error"});
+    }
 
     let parsed;
     try{
