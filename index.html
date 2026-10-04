@@ -1134,7 +1134,7 @@ document.querySelectorAll("[data-sound]").forEach(b=>b.addEventListener("click",
 $("soundVolume")?.addEventListener("input",e=>setSoundVolume(Number(e.target.value)));
 let audioCtx=null,soundNodes=[],soundGain=null,currentSound="";
 function stopSound(){soundNodes.forEach(n=>{try{n.stop()}catch(e){}});soundNodes.forEach(n=>{try{n.disconnect()}catch(e){}});soundNodes=[];currentSound="";$("focusSoundStatus")&&($("focusSoundStatus").textContent=focus.running?"READY":"NOT PLAYING")}
-function startFocusSound(){stopSound();if(state.spotifyFocusLink){window.open(state.spotifyFocusLink,"_blank","noopener");$("focusSoundStatus").textContent="SPOTIFY OPEN";return}if(state.focusSound==="silence"){ $("focusSoundStatus").textContent="SILENT";return}$("focusSoundStatus").textContent=state.focusSound.toUpperCase();}
+function startFocusSound(){stopSound();if(state.focusSound==="silence"){$("focusSoundStatus").textContent="SILENT";return}const link=state.spotifyFocusLink||{"deep":"https://open.spotify.com/playlist/2FntHf2R0HPW7VGYCfRX7J","lofi":"https://open.spotify.com/playlist/44HfbmAh8MsezZPy6MCOQK","piano":"https://open.spotify.com/playlist/1kXt8RunvAkVjZd0oi4CAC"}[state.focusSound]||"https://open.spotify.com/playlist/2FntHf2R0HPW7VGYCfRX7J";window.open(link,"_blank","noopener");$("focusSoundStatus").textContent="SPOTIFY OPEN";}
 // StudyOS intentionally does not play generated placeholder audio. Sound choices are preferences; playback is started by the focus session via Spotify or a connected sound source.
 function setSoundVolume(v){if(soundGain)soundGain.gain.value=v}
 
