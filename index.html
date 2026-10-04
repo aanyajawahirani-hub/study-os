@@ -2735,13 +2735,13 @@ function generatePlan(){
   };
 
   document.querySelectorAll("[data-page-focus]").forEach(b=>b.addEventListener("click",function(){
-    if(typeof setFocus==="function"){setFocus(Number(this.dataset.pageFocus));if(typeof renderFocusPage==="function")renderFocusPage()}
+    if(typeof setFocus==="function"){setFocus(Number(this.dataset.pageFocus));if(typeof renderFocusPage==="function")renderFocusPage();arguments[0]?.stopImmediatePropagation()}
   },true));
-  $("focusPageStart")?.addEventListener("click",()=>{if(typeof toggleFocus==="function")toggleFocus()},true);
-  $("focusPageReset")?.addEventListener("click",()=>{if(typeof resetFocus==="function")resetFocus()},true);
-  $("focusPagePrev")?.addEventListener("click",()=>{if(typeof focusTasks==="function"){const n=focusTasks().length;if(typeof focusTaskIndex!=="undefined")focusTaskIndex=n?((focusTaskIndex-1+n)%n):0;if(typeof renderFocusPage==="function")renderFocusPage()}},true);
-  $("focusPageNext")?.addEventListener("click",()=>{if(typeof focusTasks==="function"){const n=focusTasks().length;if(typeof focusTaskIndex!=="undefined")focusTaskIndex=n?((focusTaskIndex-1+n)%n):0;if(typeof renderFocusPage==="function")renderFocusPage()}},true);
-  document.querySelectorAll("[data-focus-sound]").forEach(b=>b.addEventListener("click",function(){if(typeof state!=="undefined"){state.focusSound=this.dataset.focusSound;if(typeof saveState==="function")saveState();$("focusSoundStatus")&&($("focusSoundStatus").textContent=this.dataset.focusSound==="silence"?"SILENT":"SELECTED")}},true));
+  $("focusPageStart")?.addEventListener("click",e=>{if(typeof toggleFocus==="function")toggleFocus();e.stopImmediatePropagation()},true);
+  $("focusPageReset")?.addEventListener("click",e=>{if(typeof resetFocus==="function")resetFocus();e.stopImmediatePropagation()},true);
+  $("focusPagePrev")?.addEventListener("click",()=>{if(typeof focusTasks==="function"){const n=focusTasks().length;if(typeof focusTaskIndex!=="undefined")focusTaskIndex=n?((focusTaskIndex-1+n)%n):0;if(typeof renderFocusPage==="function")renderFocusPage();e.stopImmediatePropagation()}},true);
+  $("focusPageNext")?.addEventListener("click",()=>{if(typeof focusTasks==="function"){const n=focusTasks().length;if(typeof focusTaskIndex!=="undefined")focusTaskIndex=n?((focusTaskIndex+1)%n):0;if(typeof renderFocusPage==="function")renderFocusPage();e.stopImmediatePropagation()}},true);
+  document.querySelectorAll("[data-focus-sound]").forEach(b=>b.addEventListener("click",function(e){if(typeof state!=="undefined"){state.focusSound=this.dataset.focusSound;if(typeof saveState==="function")saveState();$("focusSoundStatus")&&($("focusSoundStatus").textContent=this.dataset.focusSound==="silence"?"SILENT":"SELECTED")}e.stopImmediatePropagation()},true));
 
   function workloadMinutes(){
     const n=Number($("deadlineMinutes")?.value);
@@ -2823,6 +2823,6 @@ function generatePlan(){
 
   const sidebar=$("appSidebar");if(sidebar){sidebar.style.overflowY="auto";sidebar.style.overflowX="hidden";sidebar.style.paddingBottom="150px"}
 
-  $("sendChat")?.addEventListener("click",function(){if(typeof sendChat==="function")sendChat()},true);
+  $("sendChat")?.addEventListener("click",function(e){if(typeof sendChat==="function")sendChat();e.stopImmediatePropagation()},true);
 })();
 </script></body></html>
