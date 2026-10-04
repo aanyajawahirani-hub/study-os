@@ -940,7 +940,7 @@ td,th{border:1px solid var(--ink)!important;border-radius:0!important}
           <input id="deadlineTitle" placeholder="Exam, assignment or topic">
           <label class="field-stack"><span>DEADLINE DATE</span><input id="deadlineDate" type="date"></label>
           <label class="field-stack"><span>DEADLINE TIME <i>OPTIONAL</i></span><input id="deadlineTime" type="time"></label>
-          <label class="field-stack workload-field"><span>APPROXIMATE TIME REQUIRED <i>REQUIRED</i></span><input id="deadlineMinutes" type="number" min="15" step="15" placeholder="e.g. 90"></label>
+          <label class="field-stack workload-field"><span>APPROXIMATE TIME REQUIRED · MINUTES <i>REQUIRED</i></span><input id="deadlineMinutes" type="number" min="15" step="15" placeholder="e.g. 90 minutes"></label>
           <div class="estimate-field">
             <div><span>AI SUGGESTION</span><b id="deadlineEstimate">Ask Academic Weapon if you want a rough estimate.</b></div>
             <button type="button" class="btn ai-estimate-btn" id="askDeadlineAI">ASK AI</button>
@@ -1343,7 +1343,7 @@ document.body.dataset.section="today";document.body.dataset.page="today";
     <div class="class-schedule-head"><h2 id="classScheduleTitle">Add Classes</h2><button class="class-schedule-close" id="closeClassSchedule" type="button" aria-label="Close">×</button></div>
     <div class="scout-row">
       <div class="scout-plus">+</div>
-      <div><span class="scout-label">Add with Scout AI</span><input class="scout-input" id="scheduleScoutInput" placeholder=" — type it like you'd say it: history every tuesday 2pm with Ms. Rao"></div>
+      <div><span class="scout-label">Add with Your Academic Weapon</span><input class="scout-input" id="scheduleScoutInput" placeholder=" — type it like you'd say it: history every tuesday 2pm with Ms. Rao"></div>
       <button class="scout-send" id="scheduleScoutSend" type="button" aria-label="Parse schedule">→</button>
     </div>
     <div class="schedule-divider">OR FILL IT IN MANUALLY</div>
@@ -1485,7 +1485,7 @@ function initPlannerWindows(){
 function renderPlanner(){
   const dc=$("deadlineCount"),dl=$("deadlineList"),al=$("availabilityList2"),vl=$("vacationList2"),el=$("examList2"),act=$("activityList"),ext=$("extraList");
   if(dc)dc.textContent=state.deadlines.length+" saved";
-  if(dl)dl.innerHTML=state.deadlines.length?state.deadlines.map((x,i)=>'<div class="data-row"><div><b>'+esc(x.subject)+' · '+esc(x.title)+'</b><small>'+esc(x.due)+(x.dueTime?' · due '+esc(x.dueTime):'')+' · '+x.minutes+' min required · '+esc(x.priority)+'</small></div><button class="remove-btn" onclick="removeDeadline('+i+')">×</button></div>').join(""):'<div class="insight">No deadlines yet.</div>';
+  if(dl)dl.innerHTML=state.deadlines.length?state.deadlines.map((x,i)=>'<div class="data-row"><div><b>'+esc(x.subject)+' · '+esc(x.title)+'</b><small>'+esc(x.due)+(x.dueTime?' · due '+esc(x.dueTime):'')+' · '+x.minutes+' min required · '+esc(x.priority)+'</small></div><div class="row-actions"><button class="edit-btn" type="button" onclick="editDeadline('+i+')">EDIT</button><button class="remove-btn" type="button" onclick="removeDeadline('+i+')">×</button></div></div>').join(""):'<div class="insight">No deadlines yet.</div>';
   if(al)al.innerHTML=state.availability.length?state.availability.map((x,i)=>'<div class="data-row"><div><b>'+DAYS[Number(x.day)]+'</b><small>'+esc(x.start)+' → '+esc(x.end)+'</small></div><button class="remove-btn" onclick="removeAvailability('+i+')">×</button></div>').join(""):'<div class="insight">No study windows yet.</div>';
   if(vl)vl.innerHTML=state.vacations.length?state.vacations.map((x,i)=>'<div class="data-row"><div><b>Protected day</b><small>'+esc(x.start)+' → '+esc(x.end)+'</small></div><button class="remove-btn" onclick="removeVacation('+i+')">×</button></div>').join(""):'<div class="insight">No exceptions yet.</div>';
   if(el)el.innerHTML=state.exams.length?state.exams.map((x,i)=>'<div class="data-row"><div><b>'+esc(x.subject)+'</b><small>Exam '+esc(x.date)+' · '+x.pyqCount+' PYQs · '+x.sampleCount+' sample papers · '+x.finalDays+' final days</small></div><button class="remove-btn" onclick="removeExam('+i+')">×</button></div>').join(""):'<div class="insight">No exam plans yet.</div>';
@@ -2133,17 +2133,7 @@ function generatePlan(){
     notif?.classList.remove("open");
   });
 
-  /* Keep feature buttons responsive before signup: they open the signup gate rather than becoming dead. */
-  document.addEventListener("click",e=>{
-    const b=e.target.closest("button");
-    if(!b||authUser)return;
-    if(b.closest("#setupModal,#notificationModal,#authModal,#appSidebar,.content-menu-toggle"))return;
-    const navigation=b.matches("[data-section],[data-cooking-jump]");
-    if(navigation)return;
-    if(["openClockSettings","notify","saveSetup","closeSetup","notificationEnable","notificationSkip"].includes(b.id))return;
-    e.preventDefault();e.stopImmediatePropagation();openAuth("feature");
-  },true);
-
+  /* Feature controls remain usable without an account. Auth is optional. */
   /* Make the Academic Weapon feel like an actual command surface. */
   const aiTitle=$f("plannerPageTitle");
   if(aiTitle)aiTitle.innerHTML="YOUR <em>ACADEMIC WEAPON.</em>";
@@ -2603,4 +2593,105 @@ function generatePlan(){
   $("openAddClass")?.addEventListener("dblclick",openModal);
   renderSlots();renderSubjects();
 })();
-</script></body></html>
+</script><script id="studyos-reliability-patch">
+(function(){
+  const $f=id=>document.getElementById(id);
+
+  const saveSetup=$f("saveSetup"), setupModal=$f("setupModal");
+  if(saveSetup){
+    saveSetup.type="button";
+    saveSetup.addEventListener("click",function(){
+      const countryEl=$f("setupCountry"), timezoneEl=$f("setupTimezone"), formatEl=$f("setupDateFormat");
+      if(!countryEl||!timezoneEl||!formatEl)return;
+      const country=(countryEl.dataset.validValue||countryEl.value||"").trim();
+      const timezone=(timezoneEl.dataset.validValue||timezoneEl.value||"").trim();
+      const dateFormat=formatEl.value||"DD/MM/YYYY";
+      const validCountry=typeof COUNTRY_ZONES!=="undefined" && Object.prototype.hasOwnProperty.call(COUNTRY_ZONES,country);
+      const validZone=typeof TIMEZONE_LIST!=="undefined" && Array.isArray(TIMEZONE_LIST) && TIMEZONE_LIST.includes(timezone);
+      if(!validCountry){countryEl.setCustomValidity("Choose a country from the list.");countryEl.reportValidity?.();countryEl.focus();return}
+      if(!validZone){timezoneEl.setCustomValidity("Choose a timezone from the list.");timezoneEl.reportValidity?.();timezoneEl.focus();return}
+      countryEl.setCustomValidity("");timezoneEl.setCustomValidity("");
+      const settings={country,timezone,dateFormat};
+      localStorage.setItem("studyos-settings",JSON.stringify(settings));
+      window.userSettings=settings;
+      if(setupModal){setupModal.classList.remove("open");setupModal.style.removeProperty("display")}
+      document.body.classList.remove("setup-first","setup-gate");
+      localStorage.setItem("studyos-onboarding-v3","1");
+      if(typeof updateClockAndGreeting==="function")updateClockAndGreeting();
+      if(typeof renderToday==="function")renderToday();
+    },true);
+  }
+
+  window.editDeadline=function(i){
+    const x=state.deadlines?.[i]; if(!x)return;
+    $f("deadlineSubject").value=x.subject||"";
+    $f("deadlineTitle").value=x.title||"";
+    $f("deadlineDate").value=x.due||"";
+    if($f("deadlineTime"))$f("deadlineTime").value=x.dueTime||"";
+    $f("deadlineMinutes").value=Number(x.minutes)||"";
+    $f("deadlinePriority").value=x.priority||"medium";
+    const add=$f("addDeadline");
+    if(add){add.dataset.editIndex=String(i);add.textContent="SAVE DEADLINE CHANGES";}
+    $f("deadlineSubject")?.focus();
+  };
+
+  const addDeadline=$f("addDeadline");
+  if(addDeadline){
+    addDeadline.onclick=function(){
+      const subject=$f("deadlineSubject").value.trim(), title=$f("deadlineTitle").value.trim();
+      const due=$f("deadlineDate").value, dueTime=$f("deadlineTime")?.value||"";
+      const minutes=Number($f("deadlineMinutes").value), priority=$f("deadlinePriority").value;
+      if(!subject||!title||!due||!Number.isFinite(minutes)||minutes<15){
+        alert("Add the subject, deadline date, and approximate time required in minutes (15+). Deadline time is optional.");
+        return;
+      }
+      const editIndex=addDeadline.dataset.editIndex;
+      const item={subject,title,due,dueTime,minutes,priority};
+      if(editIndex!==undefined){state.deadlines[Number(editIndex)]=item;delete addDeadline.dataset.editIndex;addDeadline.textContent="ADD DEADLINE";}
+      else state.deadlines.push(item);
+      ["deadlineSubject","deadlineTitle","deadlineDate","deadlineTime","deadlineMinutes"].forEach(id=>{const el=$f(id);if(el)el.value=""});
+      $f("deadlineEstimate").textContent="Ask Academic Weapon if you want a rough estimate.";
+      saveState();generatePlan();renderPlanner();
+    };
+  }
+
+  let nativeTimeProxy=null,nativeTimeCallback=null;
+  function ensureNativeTimeProxy(){
+    if(nativeTimeProxy)return nativeTimeProxy;
+    nativeTimeProxy=document.createElement("input");
+    nativeTimeProxy.type="time";nativeTimeProxy.id="nativeTimeProxy";nativeTimeProxy.tabIndex=-1;
+    nativeTimeProxy.style.cssText="position:fixed;left:-10000px;top:-10000px;width:1px;height:1px;opacity:0;pointer-events:none";
+    document.body.appendChild(nativeTimeProxy);
+    nativeTimeProxy.addEventListener("change",function(){const value=nativeTimeProxy.value;if(nativeTimeCallback)nativeTimeCallback(value);nativeTimeCallback=null});
+    return nativeTimeProxy;
+  }
+  function openNativeTime(callback,current){
+    const p=ensureNativeTimeProxy();p.value=current||"";nativeTimeCallback=callback;
+    try{p.showPicker?.()}catch(_){p.focus();p.click()}
+  }
+  function prettyTime(v){
+    if(!v)return "Select time";
+    const [h,m]=v.split(":").map(Number);
+    return new Intl.DateTimeFormat("en-US",{hour:"numeric",minute:"2-digit"}).format(new Date(2000,0,1,h,m));
+  }
+  document.addEventListener("click",function(e){
+    const button=e.target.closest("#activityStartButton,#activityEndButton,[data-slot-time]");
+    if(!button)return;
+    e.preventDefault();e.stopImmediatePropagation();
+    if(button.id==="activityStartButton"){
+      openNativeTime(v=>{$f("activityStart").value=v;$f("activityStartButton").textContent=prettyTime(v)},$f("activityStart").value);
+    }else if(button.id==="activityEndButton"){
+      openNativeTime(v=>{$f("activityEnd").value=v;$f("activityEndButton").textContent=prettyTime(v)},$f("activityEnd").value);
+    }else{
+      const i=Number(button.dataset.slotTime),part=button.dataset.slotPart;
+      const current=(typeof slots!=="undefined"&&slots[i])?slots[i][part]:"";
+      openNativeTime(v=>{if(typeof slots!=="undefined"&&slots[i]){slots[i][part]=v;if(typeof renderSlots==="function")renderSlots()}},current);
+    }
+  },true);
+
+  const style=document.createElement("style");
+  style.textContent=".exam-engine{padding:17px!important}.exam-guide-title{font-size:clamp(27px,3.2vw,42px)!important;margin:12px 0 8px!important}.exam-lede{margin-top:6px!important}.upload-grid{gap:10px!important}.upload-card{padding:14px!important}.manual-adjust{gap:8px!important;padding:13px!important}.exam-material-note{margin-top:12px!important;padding:11px!important}.exam-subject-rows{gap:8px!important;margin-top:12px!important}.exam-bulk{padding:12px!important;margin-top:12px!important}.exam-build-btn{margin-top:13px!important}.row-actions{display:flex;align-items:center;gap:8px}.edit-btn{border:1px solid var(--ink);background:transparent;color:var(--ink);padding:7px 9px;font-size:8px;font-weight:800;cursor:pointer}.edit-btn:hover{background:var(--surface2)}";
+  document.head.appendChild(style);
+})();
+</script>
+</body></html>
