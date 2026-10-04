@@ -790,7 +790,8 @@ $("googleSignup")?.addEventListener("click",()=>{
     document.head.appendChild(s);
   }catch(e){$("googleStatus").textContent="Could not load Google sign-in configuration.";}
 })();
-$("notificationSkip")?.addEventListener("click",()=>{$("notificationModal").classList.remove("open")});\ndocument.addEventListener("click",e=>{const b=e.target.closest("button");if(!b||b.closest("#authModal"))return;const safe=["sidebarToggle","contentMenuToggle","openClockSettings","notify","saveSetup","closeSetup","notificationEnable","notificationSkip"].includes(b.id);if(!safe&&!authUser){e.preventDefault();e.stopImmediatePropagation();openAuth("feature");}},true);
+$("notificationSkip")?.addEventListener("click",()=>{$("notificationModal").classList.remove("open")});
+document.addEventListener("click",e=>{const b=e.target.closest("button");if(!b||b.closest("#authModal"))return;const safe=["sidebarToggle","contentMenuToggle","openClockSettings","notify","saveSetup","closeSetup","notificationEnable","notificationSkip"].includes(b.id);if(!safe&&!authUser){e.preventDefault();e.stopImmediatePropagation();openAuth("feature");}},true);
 if(!authUser){$("authModal").classList.add("open");}$("focusAudioFile")?.addEventListener("change",e=>{const f=e.target.files[0];if(!f)return;focusAudio=focusAudio||new Audio();focusAudio.src=URL.createObjectURL(f);$("focusAudioName").textContent=f.name;$("focusSoundStatus").textContent="LOCAL SOUND READY";});
 document.body.dataset.section="today";document.body.dataset.page="today";
     if(typeof showSection==="function")showSection("today");
