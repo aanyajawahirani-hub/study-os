@@ -844,7 +844,7 @@ $("googleSignup")?.addEventListener("click",()=>{
 (async function loadStudyOSGoogle(){
   try{
     const cfg=await fetch("/api/config",{cache:"no-store"}).then(r=>r.ok?r.json():{});
-    const fallbackConfigUrls=["/api/config","https://study-os-xi-three.vercel.app/api/config"]; let remoteCfg=cfg; if(!remoteCfg.googleClientId){for(const u of fallbackConfigUrls.slice(1)){try{const rr=await fetch(u,{cache:"no-store",mode:"cors"}); if(rr.ok){const x=await rr.json(); if(x?.googleClientId){remoteCfg=x;break;}}}catch(e){}}} const clientId=remoteCfg.googleClientId||window.STUDYOS_GOOGLE_CLIENT_ID||"";
+    const clientId=cfg.googleClientId||window.STUDYOS_GOOGLE_CLIENT_ID||"";
     if(!clientId){$("googleStatus").textContent="Google sign-in is not configured on this deployment yet.";return;}
     window.STUDYOS_GOOGLE_CLIENT_ID=clientId;
     if(window.google?.accounts?.id){initStudyOSGoogle(clientId);return;}
