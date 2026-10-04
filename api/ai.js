@@ -20,8 +20,9 @@ export default async function handler(req,res){
     /* Redis is optional for development. Core AI behavior remains available if rate limiting is unavailable. */
   }
 
-  const apiKey=process.env.OPENAI_API_KEY||process.env.GROQ_API_KEY;
-  if(!apiKey)return res.status(503).json({error:"Planner AI is not configured. Add OPENAI_API_KEY to the server environment."});
+  const provider=process.env.OPENAI_API_KEY?"openai":"groq";
+  const apiKey=provider==="openai"?process.env.OPENAI_API_KEY:process.env.GROQ_API_KEY;
+  if(!apiKey)return res.status(503).json({error:"Planner AI is not configured. Add OPENAI_API_KEY or GROQ_API_KEY to the server environment."});
 
   const body=req.body||{};
   const message=typeof body.message==="string"?body.message.slice(0,4000):"";
@@ -29,17 +30,14 @@ export default async function handler(req,res){
   const attachment=body.attachment||null;
   const mode=typeof body.mode==="string"?body.mode:"planner";
 
-  let baseURL=process.env.OPENAI_BASE_URL||"https://api.groq.com/openai/v1";
+  let baseURL=provider==="openai"?"https://api.openai.com/v1":(process.env.OPENAI_BASE_URL||"https://api.groq.com/openai/v1");
   baseURL=baseURL.replace(/\/$/,"");
-  if(baseURL==="https://groq.com"||baseURL==="https://api.groq.com"){
-    baseURL="https://api.groq.com/openai/v1";
-  }else if(baseURL==="https://api.groq.com/openai"){
-    baseURL="https://api.groq.com/openai/v1";
+  if(provider==="groq"){
+    if(baseURL==="https://groq.com"||baseURL==="https://api.groq.com")baseURL="https://api.groq.com/openai/v1";
+    else if(baseURL==="https://api.groq.com/openai")baseURL="https://api.groq.com/openai/v1";
   }
-
-  let model=process.env.AI_MODEL||process.env.STUDYOS_AI_MODEL||"openai/gpt-oss-20b";
-  if(model==="llama-3.3-70b-versatile")model="openai/gpt-oss-20b";
-  if(attachment&&attachment.type==="image")model="qwen/qwen3.8-27b";
+  let model=process.env.AI_MODEL||process.env.STUDYOS_AI_MODEL||(provider==="openai"?"gpt-4.1-mini":"openai/gpt-oss-20b");
+  if(provider==="groq"&&model==="llama-3.3-70b-versatile")model="openai/gpt-oss-20b";
 
   const system=`You are StudyOS, an action-taking student scheduling assistant. You are not a generic chatbot. Your job is to change the user's planner state when they ask.
 
