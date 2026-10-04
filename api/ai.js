@@ -8,6 +8,7 @@ export default async function handler(req,res){
   const message=typeof body.message==="string"?body.message.slice(0,4000):"";
   const context=body.context||{};
   const attachment=body.attachment||null;
+  const mode=typeof body.mode==="string"?body.mode:"planner";
 
   let baseURL=process.env.OPENAI_BASE_URL||"https://api.groq.com/openai/v1";
   baseURL=baseURL.replace(/\/$/,"");
@@ -33,7 +34,9 @@ Rules:
 - If the user gives available study hours, add availability actions. day uses 0=Sunday through 6=Saturday.
 - If the user says they are on vacation, travelling, unavailable, or cannot study on dates, add set_vacation actions.
 - If the user changes a previous fact, use remove_deadline, remove_availability, remove_activity, or remove_extra before adding the corrected fact when needed.
-- Never invent a schedule, deadline, free time, exam date, or required study duration that the user did not provide.
+- Never invent a schedule, deadline, free time, exam date, or exact required study duration as a fact. When asked to estimate workload, return an approximate estimate clearly marked as an estimate.
+- The user may give incomplete information. Prefer changing the existing planner state with the smallest set of actions needed rather than asking them to manually repeat it.
+- For deadline workload estimates, consider subject, task type, priority, and any context in the message. Return an approximate estimate in minutes when mode=estimate_deadline.
 - If a schedule image is attached, extract classes, tuition, activities, and explicit free/study windows. Treat fixed commitments as unavailable and only create study availability when the image or user's text clearly indicates free/study time.
 - If the user mentions a fixed appointment, class, tuition session, meeting, family commitment, trip event, or other one-off commitment, use add_activity. Use scope=school, tuition, class, personal, or other. with {title,date,start,end,location}. These are protected from study scheduling.
 - If the user mentions a recurring club, sport, robotics session, music class, competition practice, or other weekly commitment, use add_extra. Use scope=club, sport, robotics, competition, or other. with {title,day,start,end,note}. day uses 0=Sunday through 6=Saturday. These are protected from study scheduling.
@@ -41,10 +44,11 @@ Rules:
 - If the user asks to "plan", "replan", "move", "change", "remove", or "cancel", make the state-changing actions needed. The client will regenerate the plan after applying them.
 - For a vacation, do not add individual fake study blocks. Use a protected date range.
 - Use ISO dates YYYY-MM-DD. Today is ${new Date().toISOString().slice(0,10)}.
-- Actions allowed: add_deadline {subject,title,due,minutes,priority}, remove_deadline {match}, set_availability {day,start,end}, remove_availability {day}, add_activity {title,scope,date,start,end,location}, remove_activity {match}, add_extra {title,scope,day,start,end,note}, remove_extra {match}, set_vacation {start,end}, clear_vacations {}, clear_plan {}, add_exam {subject,date,syllabusHours,pyqCount,pyqMinutes,sampleCount,sampleMinutes,errorMinutes,finalDays,finalMinutes}, remove_exam {match}.
+- Actions allowed: add_deadline {subject,title,due,minutes,priority}, update_deadline {match,subject,title,due,minutes,priority}, remove_deadline {match}, set_availability {day,start,end}, remove_availability {day}, add_activity {title,scope,date,start,end,location}, remove_activity {match}, add_extra {title,scope,day,start,end,note}, remove_extra {match}, set_vacation {start,end,scope}, remove_vacation {match}, clear_vacations {}, clear_plan {}, set_calendar_rule {sundayBlocked}, add_exam {subject,date,syllabusHours,pyqCount,pyqMinutes,sampleCount,sampleMinutes,errorMinutes,finalDays,finalMinutes}, update_exam {match,subject,date,pyqCount,sampleCount,finalDays}, remove_exam {match}.
 - For an exam, understand the user's requested PYQ count, sample-paper count, and final-revision time. Do not invent those quantities when the user has explicitly specified them.
 JSON shape:
-{"reply":"string","actions":[{"type":"..."}]}`;
+{"reply":"string","estimateMinutes":0,"actions":[{"type":"..."}]}
+When mode=estimate_deadline, return estimateMinutes as a positive approximate number and actions as an empty array unless the user explicitly asked for a planner change.`;
 
   let content;
   if(attachment&&attachment.type==="image"){
