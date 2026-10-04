@@ -2739,8 +2739,8 @@ function generatePlan(){
   },true));
   $("focusPageStart")?.addEventListener("click",e=>{if(typeof toggleFocus==="function")toggleFocus();e.stopImmediatePropagation()},true);
   $("focusPageReset")?.addEventListener("click",e=>{if(typeof resetFocus==="function")resetFocus();e.stopImmediatePropagation()},true);
-  $("focusPagePrev")?.addEventListener("click",()=>{if(typeof focusTasks==="function"){const n=focusTasks().length;if(typeof focusTaskIndex!=="undefined")focusTaskIndex=n?((focusTaskIndex-1+n)%n):0;if(typeof renderFocusPage==="function")renderFocusPage();e.stopImmediatePropagation()}},true);
-  $("focusPageNext")?.addEventListener("click",()=>{if(typeof focusTasks==="function"){const n=focusTasks().length;if(typeof focusTaskIndex!=="undefined")focusTaskIndex=n?((focusTaskIndex+1)%n):0;if(typeof renderFocusPage==="function")renderFocusPage();e.stopImmediatePropagation()}},true);
+  $("focusPagePrev")?.addEventListener("click",e=>{if(typeof focusTasks==="function"){const n=focusTasks().length;if(typeof focusTaskIndex!=="undefined")focusTaskIndex=n?((focusTaskIndex-1+n)%n):0;if(typeof renderFocusPage==="function")renderFocusPage()}e.stopImmediatePropagation()},true);
+  $("focusPageNext")?.addEventListener("click",e=>{if(typeof focusTasks==="function"){const n=focusTasks().length;if(typeof focusTaskIndex!=="undefined")focusTaskIndex=n?((focusTaskIndex+1)%n):0;if(typeof renderFocusPage==="function")renderFocusPage()}e.stopImmediatePropagation()},true);
   document.querySelectorAll("[data-focus-sound]").forEach(b=>b.addEventListener("click",function(e){if(typeof state!=="undefined"){state.focusSound=this.dataset.focusSound;if(typeof saveState==="function")saveState();$("focusSoundStatus")&&($("focusSoundStatus").textContent=this.dataset.focusSound==="silence"?"SILENT":"SELECTED")}e.stopImmediatePropagation()},true));
 
   function workloadMinutes(){
