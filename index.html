@@ -2321,7 +2321,8 @@ function generatePlan(){
       "CLICK SAVE SETTINGS",
       "CLICK NOTIFICATIONS ON"
     ];
-    $("clockTutorialLayer").dataset.step=String(state.step); $("clockTutorialCard").dataset.step=String(state.step);\n    $("clockTutorialTitle").textContent=titles[state.step];
+    $("clockTutorialLayer").dataset.step=String(state.step); $("clockTutorialCard").dataset.step=String(state.step);
+    $("clockTutorialTitle").textContent=titles[state.step];
     $("clockTutorialCopy").textContent=copies[state.step];
     $("clockTutorialStep").textContent=steps[state.step];
     $("clockTutorialCount").textContent=(state.step+1)+"/5";
