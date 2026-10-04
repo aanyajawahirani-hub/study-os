@@ -4,8 +4,8 @@ export default async function handler(req,res){
   if(req.method!=="POST")return res.status(405).json({error:"Method not allowed"});
 
   const origin=req.headers.origin;
-  const allowedOrigin=process.env.STUDYOS_APP_ORIGIN||"https://study-k0ehdto7a-aanyajawahirani-hub.vercel.app";
-  if(origin && origin!==allowedOrigin)return res.status(403).json({error:"Origin not allowed"});
+  const allowedOrigins=new Set([process.env.STUDYOS_APP_ORIGIN,"https://study-os-xi-three.vercel.app","https://study-k0ehdto7a-aanyajawahirani-hub.vercel.app"].filter(Boolean));
+  if(origin && !allowedOrigins.has(origin))return res.status(403).json({error:"Origin not allowed"});
 
   /* Abuse guard: AI calls are metered. Keep the public endpoint from becoming an open relay. */
   try{
