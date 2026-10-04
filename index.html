@@ -1623,11 +1623,11 @@ function generatePlan(){
   /* Focus: no sound can start before START FOCUS. Choices are preferences only. */
   const oldToggleFocus=window.toggleFocus;
   window.toggleFocus=function(){
-    if(!window.authUser){openAuth("focus");return}
+    if(!authUser){openAuth("focus");return}
     oldToggleFocus();
   };
-  $f("focusPageStart")?.addEventListener("click",()=>{if(!window.authUser)openAuth("focus")});
-  $f("openPomodoro")?.addEventListener("click",()=>{if(!window.authUser){openAuth("pomodoro");return}showSection("pomodoro")});
+  $f("focusPageStart")?.addEventListener("click",()=>{if(!authUser)openAuth("focus")});
+  $f("openPomodoro")?.addEventListener("click",()=>{if(!authUser){openAuth("pomodoro");return}showSection("pomodoro")});
 
   /* Better sound labels, plus a real Spotify hand-off instead of pretending the browser can play arbitrary Spotify URLs. */
   const spotifyBtn=$f("openSpotifyLink");
@@ -1668,7 +1668,7 @@ function generatePlan(){
   /* Keep feature buttons responsive before signup: they open the signup gate rather than becoming dead. */
   document.addEventListener("click",e=>{
     const b=e.target.closest("button");
-    if(!b||window.authUser)return;
+    if(!b||authUser)return;
     if(b.closest("#setupModal,#notificationModal,#authModal,#appSidebar,.content-menu-toggle"))return;
     const navigation=b.matches("[data-section],[data-cooking-jump]");
     if(navigation)return;
