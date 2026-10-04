@@ -258,7 +258,28 @@ body[data-page="ai"] #section-planner .cooking-hero{display:none}
   .work-layer,.work-stack{transition:none}
 }
 </style>
-</head><body><main>
+<style id="studyos-v3-ui">
+:root{--accent3:#315c63;--accent4:#b77b2a;--focus:#6b5b3e;--holiday:#7a4f46}
+.nav-subnote{display:block;font-size:7px;letter-spacing:.1em;color:var(--accent3);padding:0 10px 5px;text-transform:uppercase}
+.nav-group:has(.nav-subnote){margin-bottom:0}
+body[data-page="focus"] .page-title em{color:var(--focus)}
+body[data-page="ai"] .page-title em{color:var(--accent3)}
+body[data-page="exams"] .page-title em{color:var(--accent3)}
+body[data-page="exceptions"] .page-title em{color:var(--holiday)}
+.estimate-field{grid-column:1/-1;border:1px solid var(--accent3);background:#e9efed;padding:11px;display:flex;justify-content:space-between;gap:15px;align-items:center;font-size:9px}.estimate-field span{color:var(--muted);letter-spacing:.1em}.estimate-field b{color:var(--accent3)}
+.deadline-note{border-left-color:var(--accent3)}
+.focus-main-new{border-color:var(--focus)}.focus-kicker span{float:right;color:var(--focus)}
+.focus-special{border-color:var(--accent3)!important;color:var(--accent3)!important}.focus-special:hover{background:#e5eeec!important}
+.focus-sound-intro{font-size:10px;color:var(--muted);line-height:1.55;margin:0 0 13px}.focus-sound-choice.active{border-color:var(--focus);background:#eeeae2}.focus-sound-choice.active b{color:var(--focus)}
+.spotify-strip{margin-top:18px;border-top:2px solid var(--focus);padding-top:14px;display:grid;gap:8px}.spotify-strip b{font-size:9px;letter-spacing:.13em}.spotify-strip small{display:block;color:var(--muted);font-size:9px;line-height:1.5;margin-top:4px}.spotify-strip input{border:1px solid var(--line);padding:10px;background:var(--surface);font:inherit;font-size:10px}.spotify-actions{display:flex;gap:7px;flex-wrap:wrap}.spotify-actions button{font-size:8px;padding:9px 10px}
+.pomodoro-page{max-width:1100px}.pomo-grid{display:grid;grid-template-columns:minmax(0,1.5fr) minmax(280px,.7fr);gap:18px;margin-top:28px}.pomo-clock,.pomo-side{border:2px solid var(--ink);background:var(--surface);padding:32px}.pomo-cycle-label{font-size:9px;letter-spacing:.16em;color:var(--accent3);font-weight:800}.pomo-time{font-size:clamp(90px,13vw,170px);font-weight:800;letter-spacing:-.08em;line-height:.85;margin:58px 0 32px;text-align:center}.pomo-progress{height:4px;background:var(--surface2);overflow:hidden}.pomo-progress span{display:block;height:100%;width:0;background:var(--accent3);transition:width .2s linear}.pomo-controls{display:flex;gap:7px;flex-wrap:wrap;justify-content:center;margin-top:20px}.pomo-controls button{border:1px solid var(--ink);background:var(--surface);padding:10px 13px;font-size:9px;font-weight:800;cursor:pointer}.pomo-controls button.active,.pomo-controls button.primary{background:var(--accent3);border-color:var(--accent3);color:white}.pomo-custom{display:flex;gap:5px;align-items:center;border:1px solid var(--line);padding:7px}.pomo-custom input{width:55px;border:0;background:transparent;font:inherit}.pomo-status{text-align:center;font-size:9px;letter-spacing:.12em;color:var(--muted);margin-top:18px}.pomo-steps{display:grid;gap:0}.pomo-steps div{display:grid;grid-template-columns:34px 1fr;gap:10px;border-top:1px solid var(--line);padding:15px 0;font-size:10px}.pomo-steps b{font-family:Georgia,serif;color:var(--accent3)}
+.exam-lede{font-size:11px;margin:0 0 20px}.exam-material-note{display:grid;grid-template-columns:auto 1fr auto 1fr;gap:8px;align-items:center;margin-top:14px;padding:11px;background:#edf0eb;font-size:8px;letter-spacing:.1em}.exam-material-note b{font-size:9px;letter-spacing:0}.exam-subject-rows{display:grid;gap:10px;margin-top:18px}.exam-subject-row{border-top:1px solid var(--line);padding-top:12px;display:grid;grid-template-columns:1.3fr 1fr 1fr 1fr 1fr;gap:7px;align-items:center}.exam-subject-row input{min-width:0;border:1px solid var(--line);background:#fbf9f2;padding:10px;font:inherit;font-size:10px}.exam-subject-row .subject-name{font-weight:700}.exam-bulk{display:grid;grid-template-columns:1.3fr 1fr 1fr auto;gap:8px;align-items:center;margin-top:18px;border-top:2px solid var(--accent3);padding-top:15px}.exam-bulk small{display:block;color:var(--muted);font-size:8px;margin-top:4px}.exam-build-btn{margin-top:18px;width:100%}
+.holiday-group{margin-top:18px;padding-top:16px;border-top:1px solid var(--line)}.holiday-group-head{display:flex;justify-content:space-between;gap:10px;align-items:baseline;margin-bottom:10px}.holiday-group-head b{font-size:10px;letter-spacing:.12em;color:var(--holiday)}.holiday-group-head span{font-size:9px;color:var(--muted)}.sunday-card{margin-top:22px;border:2px solid var(--holiday);background:#f1e8e4;padding:18px}.sunday-card label{display:flex;gap:10px;align-items:center;font-weight:900;font-size:15px;letter-spacing:.05em}.sunday-card small{display:block;margin:8px 0 0 27px;color:var(--muted);font-size:9px;line-height:1.5}
+.auth-modal{background:rgba(241,238,230,.96);z-index:100}.auth-card{width:min(520px,100%);padding:36px}.auth-card h2{font-family:Georgia,serif;font-size:43px;line-height:.95;margin:12px 0}.auth-card>p{font-size:11px;color:var(--muted);line-height:1.6}.google-signup{width:100%;border:1px solid var(--ink);background:white;color:var(--ink);padding:12px;font-size:10px;font-weight:800;cursor:pointer}.google-signup:hover{background:#eef2f1}.auth-divider{display:flex;align-items:center;gap:10px;margin:18px 0;color:var(--muted);font-size:8px}.auth-divider:before,.auth-divider:after{content:"";height:1px;background:var(--line);flex:1}.auth-form{display:grid;gap:8px}.auth-form input{border:1px solid var(--line);background:#fbf9f2;padding:12px;font:inherit;font-size:11px}.auth-foot{display:block;margin-top:14px;color:var(--muted);font-size:9px}.auth-foot button{border:0;background:none;text-decoration:underline;cursor:pointer;font:inherit;color:var(--ink)}#googleStatus{display:block;color:var(--muted);font-size:8px;margin-top:7px;line-height:1.4}
+body:not(.authed) .section{filter:none}body:not(.authed) .content-menu-toggle{z-index:101}
+@media(max-width:900px){.pomo-grid{grid-template-columns:1fr}.exam-subject-row{grid-template-columns:1fr 1fr}.exam-bulk{grid-template-columns:1fr 1fr}}
+@media(max-width:600px){.auth-card{padding:25px}.auth-card h2{font-size:36px}.pomo-clock,.pomo-side{padding:23px}.exam-subject-row{grid-template-columns:1fr}.exam-bulk{grid-template-columns:1fr}.exam-material-note{grid-template-columns:1fr 1fr}}
+</style></head><body><main>
 <aside id="appSidebar">
   <div class="brand"><span class="brand-mark">•</span><span class="brand-name">STUDYOS</span></div>
   <button class="sidebar-toggle" id="sidebarToggle" type="button" aria-label="Close sidebar"><span>←</span><b>CLOSE SIDEBAR</b></button>
@@ -267,15 +288,14 @@ body[data-page="ai"] #section-planner .cooking-hero{display:none}
       <button class="navlink active" data-section="today"><span class="nav-index">01</span><span class="nav-label">Today</span></button>
       <button class="navlink" data-section="plan"><span class="nav-index">02</span><span class="nav-label">Plan</span></button>
       <button class="navlink" data-section="focus"><span class="nav-index">03</span><span class="nav-label">Focus</span></button>
-      <button class="navlink" data-section="ai"><span class="nav-index">04</span><span class="nav-label">AI Assistant</span></button>
+      <button class="navlink" data-section="ai"><span class="nav-index">04</span><span class="nav-label">Your Academic Weapon</span></button><span class="nav-subnote">Your AI assistant</span>
     </div>
     <div class="nav-group"><span class="nav-group-label">INPUTS</span>
       <button class="navlink" data-section="deadlines"><span class="nav-index">05</span><span class="nav-label">Deadlines</span></button>
-      <button class="navlink" data-section="availability"><span class="nav-index">06</span><span class="nav-label">Availability</span></button>
       <button class="navlink" data-section="activities"><span class="nav-index">07</span><span class="nav-label">Activities</span></button>
       <button class="navlink" data-section="extras"><span class="nav-index">08</span><span class="nav-label">Extra-curriculars</span></button>
       <button class="navlink" data-section="exams"><span class="nav-index">09</span><span class="nav-label">Exams</span></button>
-      <button class="navlink" data-section="exceptions"><span class="nav-index">10</span><span class="nav-label">Exceptions</span></button>
+      <button class="navlink" data-section="exceptions"><span class="nav-index">10</span><span class="nav-label">Mark Your Holidays / Days Off</span></button>
     </div>
     <div class="nav-group"><span class="nav-group-label">TRACK</span>
       <button class="navlink" data-section="syllabus"><span class="nav-index">11</span><span class="nav-label">Syllabus</span></button>
@@ -286,7 +306,7 @@ body[data-page="ai"] #section-planner .cooking-hero{display:none}
   <div class="streak"><small>STREAK</small><b id="streakValue">0 DAYS</b><small>Start your first study block.</small></div>
 </aside>
 <section class="shell"><button class="content-menu-toggle" id="contentMenuToggle" type="button" aria-label="Open sidebar"><span>☰</span><b>MENU</b></button><header><div><div class="eyebrow" id="date"></div><div class="eyebrow" id="timezoneLabel" style="margin-top:5px"></div><h1 id="greeting">Good night.</h1><p class="greeting-prompt" id="greetingPrompt">How can I help you wind things down?</p></div><div style="display:flex;gap:8px;align-items:center"><button class="btn" id="openClockSettings">CLOCK SETTINGS</button><button class="btn" id="notify">ENABLE NOTIFICATIONS</button></div></header>
-<div class="mobile-nav" id="mobileNav"><button class="active" data-section="today">Today</button><button data-section="plan">Plan</button><button data-section="focus">Focus</button><button data-section="ai">AI</button><button data-section="deadlines">Deadlines</button><button data-section="availability">Availability</button><button data-section="activities">Activities</button><button data-section="extras">Extras</button><button data-section="exams">Exams</button><button data-section="exceptions">Exceptions</button><button data-section="syllabus">Syllabus</button><button data-section="reminders">Reminders</button><button data-section="progress">Progress</button></div><div id="section-today" class="section active">
+<div class="mobile-nav" id="mobileNav"><button class="active" data-section="today">Today</button><button data-section="plan">Plan</button><button data-section="focus">Focus</button><button data-section="ai">Academic Weapon</button><button data-section="deadlines">Deadlines</button><button data-section="activities">Activities</button><button data-section="extras">Extras</button><button data-section="exams">Exams</button><button data-section="exceptions">Days Off</button><button data-section="syllabus">Syllabus</button><button data-section="reminders">Reminders</button><button data-section="progress">Progress</button></div><div id="section-today" class="section active">
   <div class="today-intro">
     <div>
       <div class="eyebrow">YOUR DAY</div>
@@ -327,36 +347,67 @@ body[data-page="ai"] #section-planner .cooking-hero{display:none}
   </div>
 </div><section id="section-focus" class="section">
   <div class="planner-top">
-    <div><div class="eyebrow">FOCUS ROOM</div><h2 class="page-title">Clear desk.<br><em>Quiet mind.</em></h2><p class="page-lede">Start from the work StudyOS already planned for you. Pick a calm soundscape, choose your pace, and let the session run without leaving your plan.</p></div>
+    <div><div class="eyebrow">FOCUS ROOM</div><h2 class="page-title">Clear desk.<br><em>Cook something real.</em></h2><p class="page-lede">Pick what you are working on, choose your sound preference, then start. Nothing plays before the session begins.</p></div>
   </div>
   <div class="focus-workspace">
-    <section class="focus-main">
-      <div class="focus-kicker" id="focusModeLabel">FOCUS SESSION</div>
+    <section class="focus-main focus-main-new">
+      <div class="focus-kicker">FOCUS SESSION <span id="focusHeaderState">READY</span></div>
       <div class="focus-clock" id="focusPageTimer">25:00</div>
       <div class="focus-task" id="focusCurrentTask"><b>No focus task selected.</b><small>Build your plan first, then StudyOS will surface the next unfinished block here.</small></div>
       <div class="focus-actions">
-        <button data-page-focus="25" class="active">25 MIN</button><button data-page-focus="50">50 MIN</button><button data-page-focus="90">90 MIN</button>
-        <button id="focusPageStart" class="primary">START FOCUS</button><button id="focusPageReset">RESET</button>
+        <button data-page-focus="25" class="active">25 MIN</button><button data-page-focus="50">50 MIN</button><button data-page-focus="90">90 MIN</button><label class="custom-duration">CUSTOM <input id="customFocusMinutesPage" type="number" min="5" max="180" step="5" placeholder="min"></label>
       </div>
-      <div class="focus-actions" style="margin-top:8px">
-        <button id="focusPagePrev">PREVIOUS TASK</button><button id="focusPageNext">NEXT TASK</button>
+      <div class="focus-actions" style="margin-top:9px">
+        <button id="focusPageStart" class="primary">START FOCUS</button><button id="focusPageReset">RESET</button><button id="focusPagePrev">PREVIOUS</button><button id="focusPageNext">NEXT</button>
       </div>
-      <div class="focus-note" id="focusPageStatus">Your completed session will count toward Progress and can be tied back to the task you were working on.</div>
+      <div class="focus-actions" style="margin-top:9px">
+        <button id="openPomodoro" class="focus-special">POMODORO TIMER →</button>
+      </div>
+      <div class="focus-note" id="focusPageStatus">When the timer ends, StudyOS logs the session, sends a notification and waits for you to return.</div>
     </section>
-    <aside class="sound-board">
-      <div class="head"><b>CALMING SOUNDS</b><span id="soundStatus">Off</span></div>
+    <aside class="sound-board focus-music-board">
+      <div class="head"><b>FOCUS SOUND</b><span id="focusSoundStatus">NOT PLAYING</span></div>
+      <p class="focus-sound-intro">Choose a sound preference now. StudyOS only starts audio after you start the focus session.</p>
       <div class="sound-list">
-        <button class="sound-choice" data-sound="rain"><span><b>Rain</b><small>soft continuous rainfall</small></span><span>01</span></button>
-        <button class="sound-choice" data-sound="brown"><span><b>Brown noise</b><small>low, steady background</small></span><span>02</span></button>
-        <button class="sound-choice" data-sound="forest"><span><b>Forest</b><small>wind and distant birds</small></span><span>03</span></button>
-        <button class="sound-choice" data-sound="cafe"><span><b>Quiet café</b><small>soft room texture</small></span><span>04</span></button>
-        <button class="sound-choice" data-sound="night"><span><b>Night</b><small>low hum and sparse tones</small></span><span>05</span></button>
-        <button class="sound-choice" data-sound="piano"><span><b>Soft piano</b><small>slow generated notes</small></span><span>06</span></button>
+        <button class="sound-choice focus-sound-choice active" data-focus-sound="deep"><span><b>Deep focus</b><small>ambient · low stimulation</small></span><span>01</span></button>
+        <button class="sound-choice focus-sound-choice" data-focus-sound="lofi"><span><b>Lo-fi study</b><small>beat-led · steady</small></span><span>02</span></button>
+        <button class="sound-choice focus-sound-choice" data-focus-sound="piano"><span><b>Ambient piano</b><small>minimal · instrumental</small></span><span>03</span></button>
+        <button class="sound-choice focus-sound-choice" data-focus-sound="silence"><span><b>Silence</b><small>no audio</small></span><span>04</span></button>
       </div>
-      <input class="sound-volume" id="soundVolume" type="range" min="0" max="1" step=".01" value=".28" aria-label="Sound volume">
+      <div class="spotify-strip">
+        <div><b>YOUR SPOTIFY</b><small>Paste a playlist, album or track link. StudyOS will remember it and open it when your focus session starts.</small></div>
+        <input id="spotifyFocusLink" placeholder="https://open.spotify.com/..." autocomplete="off">
+        <div class="spotify-actions"><button id="saveSpotifyFocus" class="focus-special">SAVE LINK</button><button id="openSpotifyFocus" class="focus-special">OPEN IN SPOTIFY</button></div>
+      </div>
       <div class="focus-history"><div class="head"><b>RECENT SESSIONS</b><span id="focusSessionCount">0</span></div><div id="focusHistory"></div></div>
-      <div class="focus-note">The soundscapes are generated locally by StudyOS, so the Focus room does not depend on a separate music tab or a copyrighted stream.</div>
     </aside>
+  </div>
+</section>
+<section id="section-pomodoro" class="section">
+  <div class="pomodoro-page">
+    <div class="eyebrow">FOCUS / POMODORO</div>
+    <h2 class="page-title">THE POMODORO<br><em>ROOM.</em></h2>
+    <p class="page-lede">A dedicated cycle timer. Pick your work rhythm, start once, and let StudyOS handle the transitions.</p>
+    <div class="pomo-grid">
+      <section class="pomo-clock">
+        <div class="pomo-cycle-label" id="pomoCycleLabel">FOCUS · CYCLE 1</div>
+        <div class="pomo-time" id="pomoTimer">25:00</div>
+        <div class="pomo-progress"><span id="pomoProgress"></span></div>
+        <div class="pomo-controls">
+          <button data-pomo="25" class="active">25 / 5</button><button data-pomo="50">50 / 10</button><button data-pomo="custom">CUSTOM</button>
+          <label id="pomoCustomFields" class="pomo-custom" hidden><input id="pomoWork" type="number" min="5" max="180" value="25"><span>/</span><input id="pomoBreak" type="number" min="1" max="60" value="5"></label>
+        </div>
+        <div class="pomo-controls">
+          <button id="pomoStart" class="primary">START</button><button id="pomoPause">PAUSE</button><button id="pomoReset">RESET</button>
+        </div>
+        <div class="pomo-status" id="pomoStatus">READY. START WHEN YOU MEAN IT.</div>
+      </section>
+      <aside class="pomo-side">
+        <div class="head"><b>HOW IT WORKS</b><span>FOCUS → BREAK</span></div>
+        <div class="pomo-steps"><div><b>01</b><span>Focus for your chosen interval.</span></div><div><b>02</b><span>StudyOS alerts you when the interval ends.</span></div><div><b>03</b><span>Take the break, then start the next cycle.</span></div></div>
+        <div class="focus-note">This timer is separate from the regular Focus session so you can use a full Pomodoro workflow without cluttering the main Focus room.</div>
+      </aside>
+    </div>
   </div>
 </section><section id="section-planner" class="section">
   <div class="planner-top">
@@ -384,7 +435,7 @@ body[data-page="ai"] #section-planner .cooking-hero{display:none}
         <button class="work-layer layer-exams" data-cooking-jump="exams"><span>EXAMS</span><b id="cookingExamCount">00</b></button>
         <button class="work-layer layer-deadlines" data-cooking-jump="deadlines"><span>DEADLINES</span><b id="cookingDeadlineCount">00</b></button>
         <button class="work-layer layer-projects" data-cooking-jump="activities"><span>COMMITMENTS</span><b id="cookingCommitmentCount">00</b></button>
-        <button class="work-layer layer-hours" data-cooking-jump="availability"><span>AVAILABLE HOURS</span><b id="cookingAvailabilityCount">00</b></button>
+        <button class="work-layer layer-hours" data-cooking-jump="deadlines"><span>OPEN TIME</span><b id="cookingAvailabilityCount">AUTO</b></button>
         <div class="work-core"><span id="cookingCoreState">COOKED</span><small id="cookingCoreDetail">NO INPUTS YET</small></div>
       </div>
       <div class="stage-foot">
@@ -396,9 +447,9 @@ body[data-page="ai"] #section-planner .cooking-hero{display:none}
 
   <div class="planner-grid">
     <section class="panel ai-panel">
-      <div class="head"><b>STUDYOS AI</b><span>Planner assistant</span></div>
+      <div class="head"><b>YOUR ACADEMIC WEAPON</b><span>Your AI assistant</span></div>
       <div class="chat" id="chat">
-        <div class="message assistant">Tell me something like “I have maths on 18 October and need 6 hours” or “I am on vacation from 10 to 15 October.” I can change the plan itself.</div>
+        <div class="message assistant">Let’s make your new schedule so that you actually cook in your exams. Ask me to change your schedule directly instead of doing it manually. Let me know when you have holidays or miss a deadline, and I’ll reschedule around them.</div>
       </div>
       <div class="chat-compose">
         <textarea id="chatInput" rows="2" placeholder="Tell StudyOS what changed..."></textarea>
@@ -416,12 +467,12 @@ body[data-page="ai"] #section-planner .cooking-hero{display:none}
   <div class="planner-pages" id="plannerPages">
     <section class="planner-window" data-window-panel="deadlines">
       <div class="panel page-panel">
-        <div class="head"><b>DEADLINES</b><span id="deadlineCount">0 saved</span></div>
+        <div class="head"><b>DEADLINES</b><span id="deadlineCount">0 saved</span></div><div class="schedule-note deadline-note">You do not need to know how long something will take. StudyOS estimates the workload from the task, subject and context, then can refine it as you work.</div>
         <div class="form-grid">
           <input id="deadlineSubject" placeholder="Subject">
           <input id="deadlineTitle" placeholder="Exam, assignment or topic">
           <input id="deadlineDate" type="date">
-          <input id="deadlineMinutes" type="number" min="15" step="15" placeholder="Study minutes needed">
+          <div class="estimate-field"><span>AI workload estimate</span><b id="deadlineEstimate">StudyOS will estimate this.</b></div>
           <select id="deadlinePriority"><option value="high">High priority</option><option value="medium" selected>Medium priority</option><option value="low">Low priority</option></select>
           <button class="dark-btn" id="addDeadline">ADD DEADLINE</button>
         </div>
@@ -429,18 +480,7 @@ body[data-page="ai"] #section-planner .cooking-hero{display:none}
       </div>
     </section>
 
-    <section class="planner-window" data-window-panel="availability">
-      <div class="panel page-panel">
-        <div class="head"><b>WHEN I CAN STUDY</b><span>Weekly availability</span></div>
-        <div class="form-grid availability-form">
-          <select id="availDay2"><option value="1">Monday</option><option value="2">Tuesday</option><option value="3">Wednesday</option><option value="4">Thursday</option><option value="5">Friday</option><option value="6">Saturday</option><option value="0">Sunday</option></select>
-          <input id="availStart2" type="time" value="20:00">
-          <input id="availEnd2" type="time" value="22:00">
-          <button class="dark-btn" id="addAvailability2">ADD STUDY WINDOW</button>
-        </div>
-        <div id="availabilityList2" class="data-list"></div>
-      </div>
-    </section>
+    <section class="planner-window" data-window-panel="availability"><div class="panel page-panel"><div class="head"><b>OPTIONAL STUDY PREFERENCES</b><span>Not required</span></div><div class="schedule-note">You can leave this completely empty. StudyOS will otherwise calculate study time from your booked commitments, holidays and the sleep boundary. Add windows only when you want to tell StudyOS that you prefer studying at specific times.</div><div class="form-grid availability-form"><select id="availDay2"><option value="1">Monday</option><option value="2">Tuesday</option><option value="3">Wednesday</option><option value="4">Thursday</option><option value="5">Friday</option><option value="6">Saturday</option><option value="0">Sunday</option></select><input id="availStart2" type="time" value="20:00"><input id="availEnd2" type="time" value="22:00"><button class="dark-btn" id="addAvailability2">ADD PREFERRED WINDOW</button></div><div id="availabilityList2" class="data-list"></div></div></section>
 
     <section class="planner-window" data-window-panel="activities">
       <div class="panel page-panel">
@@ -463,12 +503,12 @@ body[data-page="ai"] #section-planner .cooking-hero{display:none}
       <div class="panel page-panel">
         <div class="head"><b>EXTRA-CURRICULARS</b><span>Clubs · sports · competitions</span></div>
         <div class="form-grid">
-          <input id="extraTitle" placeholder="Club, sport, robotics, competition...">
-          <select id="extraScope"><option value="club">Club</option><option value="sport">Sport</option><option value="robotics">Robotics</option><option value="competition">Competition</option><option value="other">Other</option></select>
+          <input id="extraTitle" placeholder="What is it? e.g. Robotics Club">
+          <select id="extraScope"><option value="club">Club</option><option value="sport">Sport</option><option value="robotics">Robotics</option><option value="competition">Competition</option><option value="music">Music / arts</option><option value="other">Other</option></select>
           <select id="extraDay"><option value="1">Monday</option><option value="2">Tuesday</option><option value="3">Wednesday</option><option value="4">Thursday</option><option value="5">Friday</option><option value="6">Saturday</option><option value="0">Sunday</option></select>
-          <input id="extraStart" type="time">
-          <input id="extraEnd" type="time">
-          <input id="extraNote" placeholder="Coach / location / note">
+          <input id="extraStart" type="time" placeholder="Start time">
+          <input id="extraEnd" type="time" placeholder="End time">
+          <input id="extraNote" placeholder="Coach / location / recurring note">
           <button class="dark-btn" id="addExtra">ADD EXTRA-CURRICULAR</button>
         </div>
         <div id="extraList" class="data-list"></div>
@@ -477,40 +517,57 @@ body[data-page="ai"] #section-planner .cooking-hero{display:none}
     </section>
 
     <section class="planner-window" data-window-panel="exams">
-      <div class="panel page-panel">
-        <div class="head"><b>EXAM PREP ENGINE</b><span>Work backwards from the exam</span></div>
-        <div class="form-grid">
-          <input id="examSubject2" placeholder="Subject">
-          <input id="examDate2" type="date">
-          <input id="syllabusHours2" type="number" min="0" step="0.5" placeholder="Syllabus hours">
-          <input id="pyqCount2" type="number" min="0" step="1" placeholder="PYQs">
-          <input id="sampleCount2" type="number" min="0" step="1" placeholder="Sample papers">
-          <button class="dark-btn" id="addExam2">BUILD EXAM PREP PLAN</button>
-        </div>
-        <div id="examList2" class="data-list"></div>
-      </div>
-    </section>
+  <div class="panel page-panel exam-engine">
+    <div class="head"><b>EXAM PREP ENGINE</b><span>Build the whole exam season</span></div>
+    <p class="page-lede exam-lede">Tell StudyOS what kind of exam this is, upload the timetable and syllabus, then set practice volume subject by subject. You can apply one PYQ / sample-paper target to every subject in one click.</p>
+    <div class="form-grid">
+      <select id="examStandard"><option value="">STANDARD / CLASS</option><option>Class 6</option><option>Class 7</option><option>Class 8</option><option>Class 9</option><option>Class 10</option><option>Class 11</option><option>Class 12</option><option>College / University</option><option>Other</option></select>
+      <select id="examBoard"><option value="">BOARD OF EDUCATION</option><option>CBSE</option><option>ICSE</option><option>ISC</option><option>State Board</option><option>IB</option><option>IGCSE</option><option>Cambridge</option><option>Other</option></select>
+      <input id="examSubjectCount" type="number" min="1" max="30" step="1" placeholder="Number of subjects">
+      <input id="examTimetableFile" type="file" accept=".pdf,.png,.jpg,.jpeg,.webp,.txt,.csv,.json">
+      <input id="examSyllabusFile" type="file" accept=".pdf,.png,.jpg,.jpeg,.webp,.txt,.csv,.json">
+      <button class="dark-btn" id="prepareExamSubjects">SET UP SUBJECTS</button>
+    </div>
+    <div class="exam-material-note"><span>TIMETABLE</span><b id="examTimetableName">Not uploaded</b><span>SYLLABUS</span><b id="examSyllabusName">Not uploaded</b></div>
+    <div id="examSubjectRows" class="exam-subject-rows"></div>
+    <div id="examBulkPractice" class="exam-bulk" hidden>
+      <div><b>APPLY TO ALL SUBJECTS</b><small>Useful when you want the same practice volume everywhere.</small></div>
+      <input id="bulkPyqCount" type="number" min="0" placeholder="PYQs / subject">
+      <input id="bulkSampleCount" type="number" min="0" placeholder="Sample papers / subject">
+      <button class="dark-btn" id="applyBulkExamPractice">APPLY TO ALL</button>
+    </div>
+    <button class="dark-btn exam-build-btn" id="buildExamSeason">BUILD EXAM SEASON</button>
+    <div id="examList2" class="data-list"></div>
+  </div>
+</section>
 
     <section class="planner-window" data-window-panel="exceptions">
-      <div class="panel page-panel">
-        <div class="head"><b>EXCEPTIONS</b><span>Calendar constraints</span></div>
-        <div class="form-grid">
-          <input id="vacStart2" type="date">
-          <input id="vacEnd2" type="date">
-          <select id="vacScope"><option value="personal">Personal vacation</option><option value="all">Global closure</option><option value="school">School holiday / closure</option><option value="tuition">Tuition / coaching holiday</option><option value="club">Club holiday</option><option value="sport">Sports holiday</option><option value="robotics">Robotics holiday</option><option value="competition">Competition pause</option></select>
-          <label class="check-row"><input id="sundayBlocked" type="checkbox"> Keep Sundays study-free</label>
-          <button class="dark-btn" id="addVacation2">ADD CALENDAR CONSTRAINT</button>
-        </div>
-        <div id="vacationList2" class="data-list"></div>
-      </div>
-    </section>
+  <div class="panel page-panel holiday-engine">
+    <div class="head"><b>MARK YOUR HOLIDAYS / DAYS OFF</b><span>Only what changes the calendar</span></div>
+    <div class="holiday-group"><div class="holiday-group-head"><b>SCHOOL</b><span>School-specific closures</span></div><div class="form-grid"><input id="schoolHolidayStart" type="date"><input id="schoolHolidayEnd" type="date"><button class="dark-btn" id="addSchoolHoliday">ADD SCHOOL DAYS OFF</button></div><div id="schoolHolidayList" class="data-list"></div></div>
+    <div class="holiday-group"><div class="holiday-group-head"><b>OTHER CLASSES · COACHING · TUITION</b><span>Only those commitments</span></div><div class="form-grid"><input id="tuitionHolidayStart" type="date"><input id="tuitionHolidayEnd" type="date"><button class="dark-btn" id="addTuitionHoliday">ADD COACHING / TUITION DAYS OFF</button></div><div id="tuitionHolidayList" class="data-list"></div></div>
+    <div class="holiday-group"><div class="holiday-group-head"><b>EXTRA-CURRICULARS</b><span>Clubs · sports · robotics · competitions</span></div><div class="form-grid"><input id="extraHolidayStart" type="date"><input id="extraHolidayEnd" type="date"><select id="extraHolidayScope"><option value="club">Club</option><option value="sport">Sport</option><option value="robotics">Robotics</option><option value="competition">Competition</option><option value="other">Other</option></select><button class="dark-btn" id="addExtraHoliday">ADD EXTRA-CURRICULAR DAYS OFF</button></div><div id="extraHolidayList" class="data-list"></div></div>
+    <div class="sunday-card"><label><input id="sundayBlocked" type="checkbox"> <span>KEEP SUNDAYS FREE</span></label><small>When enabled, StudyOS will not schedule study blocks on Sundays.</small></div>
+    <div class="holiday-group"><div class="holiday-group-head"><b>PERSONAL</b><span>Your own days off</span></div><div class="form-grid"><input id="vacStart2" type="date"><input id="vacEnd2" type="date"><button class="dark-btn" id="addPersonalHoliday">ADD PERSONAL DAYS OFF</button></div><div id="personalHolidayList" class="data-list"></div></div>
+  </div>
+</section>
   </div>
 
   <section class="panel generated-panel">
     <div class="head"><b>YOUR ACTUAL STUDY PLAN</b><span id="planSummary">Waiting for your inputs</span></div>
     <div id="generatedPlan" class="timeline"></div>
   </section>
-</section><section id="section-syllabus" class="section"><div class="panel"><div class="head"><b>SYLLABUS</b><span>Track what remains</span></div><div class="insight"><b>No syllabus has been added yet.</b><br>Add subjects and chapters when you want StudyOS to track coverage. Nothing is pre-filled.</div></div></section><section id="section-reminders" class="section"><div class="panel"><div class="head"><b>REMINDERS</b><span>Up to 10/day</span></div><div id="reminderSectionSlots"></div><div class="insight">Reminder slots are synced from the Today view. Push notifications require browser permission and your notification keys to be configured.</div></div></section><section id="section-progress" class="section"><div class="panel"><div class="head"><b>PROGRESS</b><span>Real activity only</span></div><div class="insight"><b>Your progress starts at zero.</b><br>Completed study blocks and focus sessions will appear here. No sample streaks or fake statistics.</div><div id="progressStats" style="display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-top:14px"></div></div></section></section></main><div class="modal open" id="setupModal">
+</section><section id="section-syllabus" class="section"><div class="panel"><div class="head"><b>SYLLABUS</b><span>Track what remains</span></div><div class="insight"><b>No syllabus has been added yet.</b><br>Add subjects and chapters when you want StudyOS to track coverage. Nothing is pre-filled.</div></div></section><section id="section-reminders" class="section"><div class="panel"><div class="head"><b>REMINDERS</b><span>Up to 10/day</span></div><div id="reminderSectionSlots"></div><div class="insight">Reminder slots are synced from the Today view. Push notifications require browser permission and your notification keys to be configured.</div></div></section><section id="section-progress" class="section"><div class="panel"><div class="head"><b>PROGRESS</b><span>Real activity only</span></div><div class="insight"><b>Your progress starts at zero.</b><br>Completed study blocks and focus sessions will appear here. No sample streaks or fake statistics.</div><div id="progressStats" style="display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-top:14px"></div></div></section></section></main><div class="modal auth-modal" id="authModal">
+  <div class="focuscard auth-card">
+    <div class="eyebrow">STUDYOS</div>
+    <h2>Sign up before you cook.</h2>
+    <p>Create your StudyOS account to save your schedule, exams, focus history and AI changes. You can still explore every screen before signing up.</p>
+    <div id="googleButtonWrap"><button id="googleSignup" class="google-signup">CONTINUE WITH GOOGLE</button><small id="googleStatus">Google sign-in connects once a Google OAuth client is configured.</small></div>
+    <div class="auth-divider"><span>OR</span></div>
+    <form id="localSignupForm" class="auth-form"><input id="signupName" required maxlength="80" placeholder="Your name"><input id="signupEmail" required type="email" maxlength="160" placeholder="Email address"><button class="dark-btn" type="submit">CREATE ACCOUNT</button></form>
+    <small class="auth-foot">Already signed up on this browser? <button id="restoreAccount" type="button">Continue my account</button></small>
+  </div>
+</div><div class="modal open" id="setupModal">
   <div class="focuscard setup-card">
     <div class="setup-heading">
       <div class="eyebrow">WELCOME TO STUDYOS</div>
@@ -609,7 +666,23 @@ body[data-page="ai"] #section-planner .cooking-hero{display:none}
     window.userSettings=settings;
     userSettings=settings;
     modal.classList.remove("open");
-    document.body.dataset.section="today";document.body.dataset.page="today";
+    let pomo={mode:25,work:25,break:5,seconds:1500,running:false,onBreak:false,cycle:1,interval:null};
+function syncPomodoro(){const t=$("pomoTimer");if(!t)return;t.textContent=fmt(pomo.seconds);$("pomoCycleLabel").textContent=(pomo.onBreak?"BREAK":"FOCUS")+" · CYCLE "+pomo.cycle;$("pomoProgress").style.width=Math.max(0,Math.min(100,(1-pomo.seconds/((pomo.onBreak?pomo.break:pomo.work)*60))*100))+"%";$("pomoStatus").textContent=pomo.running?(pomo.onBreak?"BREAK IN PROGRESS":"FOCUS IN PROGRESS"):"READY. START WHEN YOU MEAN IT.";document.querySelectorAll("[data-pomo]").forEach(b=>b.classList.toggle("active",String(b.dataset.pomo)===String(pomo.mode)));}
+function setPomoMode(mode){if(mode==="custom"){$("pomoCustomFields").hidden=false;pomo.work=Math.max(5,Number($("pomoWork").value)||25);pomo.break=Math.max(1,Number($("pomoBreak").value)||5)}else{$("pomoCustomFields").hidden=true;pomo.work=Number(mode);pomo.break=mode==="50"?10:5}pomo.mode=mode;pomo.seconds=pomo.work*60;pomo.onBreak=false;pomo.running=false;clearInterval(pomo.interval);syncPomodoro();}
+function pomoBeep(){try{const ac=new (window.AudioContext||window.webkitAudioContext)(),o=ac.createOscillator(),g=ac.createGain();o.frequency.value=740;g.gain.value=.05;o.connect(g).connect(ac.destination);o.start();o.stop(ac.currentTime+.35)}catch(e){}}
+function togglePomodoro(){pomo.running=!pomo.running;clearInterval(pomo.interval);if(pomo.running){pomo.interval=setInterval(()=>{pomo.seconds--;syncPomodoro();if(pomo.seconds<=0){pomoBeep();if(pomo.onBreak){pomo.cycle++;pomo.onBreak=false;pomo.seconds=pomo.work*60}else{pomo.onBreak=true;pomo.seconds=pomo.break*60}if("serviceWorker"in navigator)navigator.serviceWorker.ready.then(r=>r.showNotification(pomo.onBreak?"Focus interval complete":"Break complete",{body:pomo.onBreak?"Take your break, then return for the next cycle.":"Next focus interval is ready."}));syncPomodoro()}},1000)}syncPomodoro();}
+document.querySelectorAll("[data-pomo]").forEach(b=>b.addEventListener("click",()=>setPomoMode(b.dataset.pomo)));$("pomoStart")?.addEventListener("click",togglePomodoro);$("pomoPause")?.addEventListener("click",togglePomodoro);$("pomoReset")?.addEventListener("click",()=>{pomo.running=false;clearInterval(pomo.interval);pomo.seconds=pomo.work*60;pomo.onBreak=false;pomo.cycle=1;syncPomodoro()});const authUser=JSON.parse(localStorage.getItem("studyos-auth")||"null");document.body.classList.toggle("authed",!!authUser);
+function openAuth(reason){$("authModal").classList.add("open");$("authModal").dataset.reason=reason||"feature";setTimeout(()=>$("signupName")?.focus(),50)}
+function requireAuth(){if(authUser)return true;openAuth("feature");return false}
+function completeAuth(user){localStorage.setItem("studyos-auth",JSON.stringify(user));location.reload()}
+$("localSignupForm")?.addEventListener("submit",e=>{e.preventDefault();completeAuth({name:$("signupName").value.trim(),email:$("signupEmail").value.trim(),method:"email",createdAt:Date.now()})});
+$("restoreAccount")?.addEventListener("click",()=>{const saved=localStorage.getItem("studyos-auth");if(saved)location.reload();else openAuth("restore")});
+$("googleSignup")?.addEventListener("click",()=>{const clientId=window.STUDYOS_GOOGLE_CLIENT_ID||"";if(!clientId){$("googleStatus").textContent="Google sign-in needs the StudyOS Google OAuth client ID configured on the deployment. The account form above is ready now.";return}if(window.google?.accounts?.id){google.accounts.id.initialize({client_id:clientId,callback:r=>{try{const payload=JSON.parse(atob(r.credential.split(".")[1].replace(/-/g,"+").replace(/_/g,"/")));completeAuth({name:payload.name||"StudyOS user",email:payload.email||"",picture:payload.picture||"",method:"google",googleSub:payload.sub})}catch(e){$("googleStatus").textContent="Google sign-in could not be completed."}}});google.accounts.id.prompt()}else $("googleStatus").textContent="Google Identity Services is still loading. Try again in a moment."});
+document.addEventListener("click",e=>{const b=e.target.closest("button");if(!b||b.closest("#authModal"))return;const safe=["sidebarToggle","contentMenuToggle","openClockSettings","notify","setupSave","closeSetup"].includes(b.id);if(!safe&&!authUser){e.preventDefault();e.stopImmediatePropagation();openAuth("feature");}},true);
+if(!authUser){$("authModal").classList.add("open");}$("saveSpotifyFocus")?.addEventListener("click",()=>{const v=$("spotifyFocusLink").value.trim();if(!v||!/^https:\/\/(open\.)?spotify\.com\//.test(v))return alert("Paste a Spotify playlist, album or track link.");state.spotifyFocusLink=v;saveState();$("focusSoundStatus").textContent="SPOTIFY SAVED";});
+$("openSpotifyFocus")?.addEventListener("click",()=>{const v=state.spotifyFocusLink||$("spotifyFocusLink").value.trim();if(!v)return alert("Save a Spotify link first.");window.open(v,"_blank","noopener")});
+if($("spotifyFocusLink"))$("spotifyFocusLink").value=state.spotifyFocusLink||"";
+document.body.dataset.section="today";document.body.dataset.page="today";
     if(typeof showSection==="function")showSection("today");
     if(typeof updateClockAndGreeting==="function")updateClockAndGreeting();
     if(typeof renderToday==="function")renderToday();
@@ -702,7 +775,8 @@ function updateClockAndGreeting(){
 }
 
 const todayKey=()=>accountTodayKey();
-let state=JSON.parse(localStorage.getItem("studyos-state")||"null")||{deadlines:[],availability:[],activities:[],extras:[],vacations:[],exams:[],plan:[],done:[],times:[],focusSessions:[]};
+let state=JSON.parse(localStorage.getItem("studyos-state")||"null")||{deadlines:[],availability:[],activities:[],extras:[],vacations:[],exams:[],plan:[],done:[],times:[],focusSessions:[],examMeta:{},spotifyFocusLink:"",focusSound:"deep"};
+state.examMeta=state.examMeta||{};state.spotifyFocusLink=state.spotifyFocusLink||"";state.focusSound=state.focusSound||"deep";
 state.deadlines=Array.isArray(state.deadlines)?state.deadlines:[];
 state.availability=Array.isArray(state.availability)?state.availability:[];
 state.activities=Array.isArray(state.activities)?state.activities:[];
@@ -752,11 +826,10 @@ function updateCookingExperience(){
   const commitmentCount=state.activities.length+state.extras.length;
   const inputCount=workCount+state.availability.length+commitmentCount+state.vacations.length;
   const plannedMinutes=state.plan.reduce((s,x)=>s+Number(x.duration||0),0);
-  const requiredMinutes=state.deadlines.reduce((s,x)=>s+Number(x.minutes||0),0)+buildExamTasks().reduce((s,x)=>s+Number(x.minutes||0),0);
+  const requiredMinutes=state.deadlines.reduce((s,x)=>s+estimateDeadlineMinutes(x),0)+buildExamTasks().reduce((s,x)=>s+Number(x.minutes||0),0);
   const complete=requiredMinutes>0&&plannedMinutes>=requiredMinutes&&state.plan.length>0;
   let stage="cooked",label="01 / COOKED",message="The oven is cold. Give StudyOS something to work with and we'll start turning the chaos into a run.",button="START WITH DEADLINES",next="01 / INPUT",core="COOKED",detail="NO INPUTS YET";
-  if(workCount>0&&!state.availability.length){stage="recovering";label="02 / RECOVERING";message="Okay, we have a situation. The workload is here. Now give me the hours you actually have.",button="ADD STUDY HOURS",next="02 / HOURS",core="RECOVERING",detail=workCount+" WORKLOAD ITEMS";}
-  else if(workCount>0&&state.availability.length&&!state.plan.length){stage="locked";label="03 / LOCKED IN";message="Now we have something real. Build the run and StudyOS will place the work inside those windows.",button="BUILD THE RUN",next="03 / BUILD",core="LOCKED IN",detail=state.availability.length+" STUDY WINDOWS";}
+  if(workCount>0&&!state.plan.length){stage="locked";label="03 / LOCKED IN";message=state.availability.length?"You gave me preferred hours too. Build the run and I’ll place the work around your booked time.":"You don’t need to fill another form. I’ll calculate the open time around your booked commitments and build the run.",button="BUILD THE RUN",next="03 / BUILD",core="LOCKED IN",detail=state.availability.length?state.availability.length+" PREFERRED WINDOWS":"OPEN TIME AUTO-CALCULATED";}
   else if(state.plan.length){stage="cooking";label="04 / COOKING";message=complete?"Absolutely cooking. Every required minute currently fits the plan.":"We're cooking. The run is built from the time you actually gave me."+ (requiredMinutes>plannedMinutes?" Some work still needs more hours.":"");button="OPEN THE RUN",next="04 / RUN",core="COOKING",detail=state.plan.length+" BLOCKS BUILT";}
   const meter=Math.min(100,Math.round((plannedMinutes/Math.max(requiredMinutes||1,1))*100));
   hero.dataset.state=stage;
@@ -766,12 +839,12 @@ function updateCookingExperience(){
   $("cookingExamCount").textContent=String(state.exams.length).padStart(2,"0");
   $("cookingDeadlineCount").textContent=String(state.deadlines.length).padStart(2,"0");
   $("cookingCommitmentCount").textContent=String(commitmentCount).padStart(2,"0");
-  $("cookingAvailabilityCount").textContent=String(state.availability.length).padStart(2,"0");
+  $("cookingAvailabilityCount").textContent=state.availability.length?String(state.availability.length).padStart(2,"0"):"AUTO";
   const primary=$("cookingPrimaryAction");
   if(primary)primary.onclick=()=>{
     if(stage==="cooked")showSection("deadlines");
-    else if(stage==="recovering")showSection("availability");
     else if(stage==="locked"){generatePlan();updateCookingExperience()}
+    else if(stage==="recovering")showSection("deadlines");
     else showSection("plan");
   };
 }
@@ -823,13 +896,29 @@ function freeSlices(start,end,blocked){
   if(cursor<end)slices.push([cursor,end]);
   return slices;
 }
+function estimateDeadlineMinutes(x){
+  if(Number(x.minutes)>0)return Number(x.minutes);
+  const text=(String(x.subject||"")+" "+String(x.title||"")).toLowerCase();
+  let base=60;
+  if(/exam|test|paper|prelim|final/.test(text))base=150;
+  else if(/project|presentation|assignment|report|lab/.test(text))base=120;
+  else if(/chapter|revision|learn|study/.test(text))base=90;
+  if(x.priority==="high")base+=30;
+  if(x.priority==="low")base-=15;
+  return Math.max(30,Math.round(base/15)*15);
+}
+function studyWindowsForDay(dow){
+  const preferred=state.availability.filter(x=>Number(x.day)===dow);
+  if(preferred.length)return preferred;
+  return [{start:"06:00",end:"23:00",derived:true}];
+}
 function generatePlan(){
-  const deadlines=[...state.deadlines.filter(x=>x.due&&x.minutes>0),...buildExamTasks()].sort((a,b)=>a.due.localeCompare(b.due)||(a.priority==="high"?-1:1));
+  const deadlines=[...state.deadlines.filter(x=>x.due),...buildExamTasks()].map(x=>({...x,minutes:estimateDeadlineMinutes(x)})).sort((a,b)=>a.due.localeCompare(b.due)||(a.priority==="high"?-1:1));
   let newPlan=[],remaining=deadlines.map(x=>({...x,remaining:x.minutes}));
   const start=todayKey(),end=deadlines.length?deadlines.reduce((m,x)=>x.due>m?x.due:m,start):start;
   for(let day=0;day<=180&&addDays(start,day)<=end;day++){
     const key=addDays(start,day),dow=new Date(key+"T12:00:00").getDay();if(isVacation(key))continue;
-    for(const w of state.availability.filter(x=>Number(x.day)===dow)){
+    for(const w of studyWindowsForDay(dow)){
       const slices=freeSlices(mins(w.start),mins(w.end),protectedIntervals(key,dow));
       for(const slice of slices){
         let cursor=slice[0],limit=slice[1];
@@ -844,8 +933,8 @@ function generatePlan(){
     }
   }
   state.plan=newPlan;state.done=state.done.filter(id=>newPlan.some(x=>x.id===id));saveState();renderToday();renderGeneratedPlan();renderPlanner();renderFocusTasks();updateCookingExperience();
-  const unresolved=remaining.filter(x=>x.remaining>0);$("planSummary").textContent=newPlan.length?newPlan.length+" blocks generated"+(unresolved.length?" · "+unresolved.length+" task(s) still need more hours":""):"Add availability before generating";
-  if(unresolved.length)addMessage("assistant","Some work could not fit into the study windows you gave me. I kept the plan honest instead of inventing free time. Add study hours or reduce the required work.");
+  const unresolved=remaining.filter(x=>x.remaining>0);$("planSummary").textContent=newPlan.length?newPlan.length+" blocks generated"+(unresolved.length?" · "+unresolved.length+" task(s) still need more hours":""):"Add a deadline to generate";
+  if(unresolved.length)addMessage("assistant","Some work could not fit before the deadline. I kept the plan honest. Add more booked-free time, reduce the workload, or tell me what should move.");
 }
 function inRange(key,v){return key>=v.start&&key<=v.end}
 function closureApplies(scope,key){return state.vacations.some(v=>inRange(key,v)&&(v.scope==="all"||v.scope===scope))}
@@ -857,6 +946,13 @@ function renderGeneratedPlan(){
   state.plan.forEach(x=>(days[x.date]??=[]).push(x));
   const keys=Object.keys(days).sort();
   el.innerHTML=keys.length?keys.map(k=>'<div class="day-label">'+new Date(k+"T12:00:00").toLocaleDateString("en-IN",{weekday:"long",day:"numeric",month:"short"}).toUpperCase()+'</div>'+days[k].sort((a,b)=>a.start.localeCompare(b.start)).map(x=>'<div class="timeline-block"><time>'+x.start+'</time><div><b>'+esc(x.subject)+'</b><p>'+esc(x.task)+'</p></div><span>'+x.duration+' min</span></div>').join("")).join(""):'<div class="insight"><b>The run is waiting.</b><br>Give StudyOS your deadlines and real study windows, then build it. No invented hours.</div>';
+}
+async function estimateDeadlineWithAI(deadline){
+  try{
+    const r=await fetch("/api/ai",{method:"POST",headers:{"content-type":"application/json"},body:JSON.stringify({message:"Estimate the approximate study minutes for this deadline. Do not create or change anything else. Deadline: "+JSON.stringify(deadline),context:{deadlines:[deadline]},mode:"estimate_deadline"})});
+    const data=await r.json();const estimate=Number(data.estimateMinutes||data.actions?.[0]?.minutes||0);
+    if(estimate>0){deadline.minutes=Math.min(2000,Math.round(estimate/15)*15);saveState();renderPlanner();generatePlan();$("deadlineEstimate")&&($("deadlineEstimate").textContent=deadline.minutes+" min estimated by AI");}
+  }catch(e){$("deadlineEstimate")&&($("deadlineEstimate").textContent="Estimate will be refined by StudyOS as you work.");}
 }
 function addMessage(role,text){const c=$("chat"),d=document.createElement("div");d.className="message "+role;d.textContent=text;c.appendChild(d);c.scrollTop=c.scrollHeight}
 async function sendChat(extra){
@@ -903,8 +999,32 @@ $("addDeadline").onclick=()=>{const subject=$("deadlineSubject").value.trim(),ti
 $("addAvailability2").onclick=()=>{const day=Number($("availDay2").value),start=$("availStart2").value,end=$("availEnd2").value;if(!start||!end||mins(end)<=mins(start))return alert("Choose a valid study window.");state.availability.push({day,start,end});saveState();generatePlan();renderPlanner()};
 $("addActivity").onclick=()=>{const title=$("activityTitle").value.trim(),scope=$("activityScope").value,date=$("activityDay").value,start=$("activityStart").value,end=$("activityEnd").value,location=$("activityLocation").value.trim();if(!title||!date||!start||!end||mins(end)<=mins(start))return alert("Add the activity and a valid time.");state.activities.push({title,scope,date,start,end,location});saveState();generatePlan();renderPlanner();["activityTitle","activityDay","activityStart","activityEnd","activityLocation"].forEach(id=>$(id).value="")};
 $("addExtra").onclick=()=>{const title=$("extraTitle").value.trim(),scope=$("extraScope").value,day=Number($("extraDay").value),start=$("extraStart").value,end=$("extraEnd").value,note=$("extraNote").value.trim();if(!title||!start||!end||mins(end)<=mins(start))return alert("Add the commitment and a valid time.");state.extras.push({title,scope,day,start,end,note});saveState();generatePlan();renderPlanner();["extraTitle","extraStart","extraEnd","extraNote"].forEach(id=>$(id).value="")};
-$("addExam2").onclick=()=>{const subject=$("examSubject2").value.trim(),date=$("examDate2").value;if(!subject||!date)return alert("Add the subject and exam date.");state.exams=state.exams.filter(x=>!(x.subject.toLowerCase()===subject.toLowerCase()&&x.date===date));state.exams.push({subject,date,syllabusHours:Math.max(0,Number($("syllabusHours2").value)||0),pyqCount:Math.max(0,Number($("pyqCount2").value)||0),pyqMinutes:60,sampleCount:Math.max(0,Number($("sampleCount2").value)||0),sampleMinutes:120,errorMinutes:45,finalDays:2,finalMinutes:60});saveState();generatePlan();renderPlanner()};
-$("addVacation2").onclick=()=>{const start=$("vacStart2").value,end=$("vacEnd2").value,scope=$("vacScope").value;if(!start||!end||end<start)return alert("Choose valid dates.");state.vacations.push({start,end,scope});state.calendarRules.sundayBlocked=$("sundayBlocked").checked;saveState();generatePlan();renderPlanner()};
+$("prepareExamSubjects").onclick=prepareExamSubjects;
+$("applyBulkExamPractice").onclick=()=>{document.querySelectorAll(".exam-subject-row").forEach(row=>{const p=row.querySelector(".exam-pyq"),s=row.querySelector(".exam-sample");if($("bulkPyqCount").value!=="")p.value=$("bulkPyqCount").value;if($("bulkSampleCount").value!=="")s.value=$("bulkSampleCount").value})};
+$("buildExamSeason").onclick=buildExamSeason;
+$("examTimetableFile").onchange=e=>$("examTimetableName").textContent=e.target.files[0]?.name||"Not uploaded";
+$("examSyllabusFile").onchange=e=>$("examSyllabusName").textContent=e.target.files[0]?.name||"Not uploaded";
+function prepareExamSubjects(){
+  const n=Math.max(1,Math.min(30,Number($("examSubjectCount").value)||0));if(!n)return alert("Add the number of subjects first.");
+  const box=$("examSubjectRows");box.innerHTML="";
+  for(let i=0;i<n;i++){const row=document.createElement("div");row.className="exam-subject-row";row.innerHTML='<input class="subject-name" placeholder="Subject '+(i+1)+'"><input class="exam-date" type="date"><input class="exam-pyq" type="number" min="0" placeholder="PYQs"><input class="exam-sample" type="number" min="0" placeholder="Sample papers"><input class="exam-final-days" type="number" min="0" max="7" value="2" placeholder="Final revision days">';box.appendChild(row)}
+  $("examBulkPractice").hidden=false;
+}
+function buildExamSeason(){
+  const rows=[...document.querySelectorAll(".exam-subject-row")].map(r=>({subject:r.querySelector(".subject-name").value.trim(),date:r.querySelector(".exam-date").value,pyqCount:Number(r.querySelector(".exam-pyq").value)||0,sampleCount:Number(r.querySelector(".exam-sample").value)||0,finalDays:Number(r.querySelector(".exam-final-days").value)||0})).filter(x=>x.subject&&x.date);
+  if(!rows.length)return alert("Add at least one subject and exam date.");
+  state.examMeta={standard:$("examStandard").value,board:$("examBoard").value,subjectCount:rows.length,timetable:$("examTimetableFile").files[0]?.name||"",syllabus:$("examSyllabusFile").files[0]?.name||""};
+  state.exams=rows.map(x=>({subject:x.subject,date:x.date,syllabusHours:0,pyqCount:x.pyqCount,pyqMinutes:60,sampleCount:x.sampleCount,sampleMinutes:120,errorMinutes:45,finalDays:x.finalDays,finalMinutes:60}));
+  saveState();generatePlan();renderPlanner();
+}
+function addHoliday(startId,endId,scope,listId){const start=$(startId).value,end=$(endId).value;if(!start||!end||end<start)return alert("Choose valid dates.");state.vacations.push({start,end,scope});saveState();generatePlan();renderPlanner();renderHolidayLists()}
+$("addSchoolHoliday").onclick=()=>addHoliday("schoolHolidayStart","schoolHolidayEnd","school","schoolHolidayList");
+$("addTuitionHoliday").onclick=()=>addHoliday("tuitionHolidayStart","tuitionHolidayEnd","tuition","tuitionHolidayList");
+$("addExtraHoliday").onclick=()=>addHoliday("extraHolidayStart","extraHolidayEnd",$("extraHolidayScope").value,"extraHolidayList");
+$("addPersonalHoliday").onclick=()=>addHoliday("vacStart2","vacEnd2","personal","personalHolidayList");
+$("sundayBlocked").onchange=()=>{state.calendarRules.sundayBlocked=$("sundayBlocked").checked;saveState();generatePlan();renderPlanner()};
+function renderHolidayLists(){[["school","schoolHolidayList"],["tuition","tuitionHolidayList"],["club","extraHolidayList"],["sport","extraHolidayList"],["robotics","extraHolidayList"],["competition","extraHolidayList"],["other","extraHolidayList"],["personal","personalHolidayList"]].forEach(([scope,id])=>{const el=$(id);if(!el)return;const rows=state.vacations.filter(v=>v.scope===scope);el.innerHTML=rows.map(v=>'<div class="data-row"><div><b>'+esc(v.start)+' → '+esc(v.end)+'</b><small>'+esc(v.scope)+'</small></div></div>').join("")||'<div class="insight">Nothing marked yet.</div>'})}
+
 $("generatePlan").onclick=generatePlan;
 
 function renderReminderSection(){const target=$("reminderSectionSlots");target.innerHTML=times.length?times.map((t,i)=>'<label class="slot"><input type="time" value="'+t+'" onchange="saveTime('+i+',this.value)"><span>Reminder '+(i+1)+'</span></label>').join(""):'<div class="insight">No reminder slots yet.</div>'}
@@ -929,7 +1049,7 @@ function showSection(name){
   if(name==="reminders")renderReminderSection();
   if(name==="progress")renderProgress();
   if(plannerPages)renderPlanner();
-  if(name==="focus")renderFocusPage();
+  if(name==="focus")renderFocusPage();if(name==="pomodoro")syncPomodoro();
 }
 document.querySelectorAll("[data-section]").forEach(b=>b.addEventListener("click",()=>showSection(b.dataset.section)));document.getElementById("sidebarToggle")?.addEventListener("click",()=>{
   document.body.classList.toggle("sidebar-collapsed");
@@ -978,11 +1098,15 @@ const focus={seconds:25*60,running:false,mode:25,breakMinutes:5,interval:null};
 let focusTaskIndex=0;
 function fmt(s){return String(Math.floor(s/60)).padStart(2,"0")+":"+String(s%60).padStart(2,"0")}
 function syncFocus(){timerEl.textContent=fmt(focus.seconds);$("focusPageTimer")&&( $("focusPageTimer").textContent=fmt(focus.seconds));focusTimerEl.textContent=fmt(focus.seconds);focusHeaderStateEl.textContent=focus.running?"FOCUS SESSION IN PROGRESS":"Ready when you are.";focusStateEl.textContent=focus.running?"FOCUS SESSION IN PROGRESS":"Ready when you are.";focusActionEl.textContent=focus.running?"PAUSE":"START FOCUS";$("focusPageStart")&&($("focusPageStart").textContent=focus.running?"PAUSE":"START FOCUS");document.querySelectorAll("[data-focus]").forEach(b=>b.classList.toggle("active",Number(b.dataset.focus)===focus.mode));document.querySelectorAll("[data-break]").forEach(b=>b.classList.toggle("active",Number(b.dataset.break)===focus.breakMinutes))}
-function setFocus(min){focus.mode=min;focus.seconds=min*60;focus.running=false;clearInterval(focus.interval);$("customFocusMinutes").value="";syncFocus()}
+function setFocus(min){focus.mode=min;focus.seconds=min*60;focus.running=false;clearInterval(focus.interval);if($("customFocusMinutes"))$("customFocusMinutes").value="";if($("customFocusMinutesPage"))$("customFocusMinutesPage").value="";syncFocus()}
 function setCustomFocus(){const n=Math.max(5,Math.min(180,Number($("customFocusMinutes").value)||25));focus.mode=Math.round(n/5)*5;focus.seconds=focus.mode*60;focus.running=false;syncFocus()}
 function openFocus(){ $("focusModal").classList.add("open");syncFocus() }
 function closeFocus(){ $("focusModal").classList.remove("open") }
-function toggleFocus(){if(focus.running){focus.running=false;clearInterval(focus.interval);syncFocus();return}focus.running=true;clearInterval(focus.interval);focus.interval=setInterval(()=>{focus.seconds--;syncFocus();if(focus.seconds<=0){clearInterval(focus.interval);focus.running=false;localStorage.setItem("studyos-focus-count",String(Number(localStorage.getItem("studyos-focus-count")||0)+1));state.focusSessions.unshift({date:todayKey(),duration:focus.mode,task:focusTaskTitle()});state.focusSessions=state.focusSessions.slice(0,20);saveState();renderFocusHistory();if("serviceWorker"in navigator)navigator.serviceWorker.ready.then(r=>r.showNotification("Focus session complete",{body:"Session complete. Take your selected break, then choose what is next."}));syncFocus();renderProgress()}},1000);syncFocus()}
+function finishFocusSession(){focus.running=false;clearInterval(focus.interval);localStorage.setItem("studyos-focus-count",String(Number(localStorage.getItem("studyos-focus-count")||0)+1));state.focusSessions.unshift({date:todayKey(),duration:focus.mode,task:focusTaskTitle()});state.focusSessions=state.focusSessions.slice(0,20);saveState();renderFocusHistory();startCompletionAlert();syncFocus();renderProgress();}
+function startCompletionAlert(){window.focusNeedsAttention=true;document.title="FOCUS COMPLETE · STUDYOS";if("serviceWorker"in navigator)navigator.serviceWorker.ready.then(r=>r.showNotification("Focus session complete",{body:"Your session is done. Return to StudyOS to dismiss the alert.",tag:"studyos-focus-complete"}));beepUntilReturn();}
+function beepUntilReturn(){if(window.focusBeepTimer)clearInterval(window.focusBeepTimer);const beep=()=>{if(document.visibilityState==="visible"){try{const ac=new (window.AudioContext||window.webkitAudioContext)(),o=ac.createOscillator(),g=ac.createGain();o.frequency.value=880;g.gain.value=.04;o.connect(g).connect(ac.destination);o.start();o.stop(ac.currentTime+.18)}catch(e){}}};beep();window.focusBeepTimer=setInterval(beep,1300);}
+document.addEventListener("visibilitychange",()=>{if(document.visibilityState==="visible"&&window.focusNeedsAttention){window.focusNeedsAttention=false;document.title="StudyOS";if(window.focusBeepTimer)clearInterval(window.focusBeepTimer)}});
+function toggleFocus(){if(focus.running){focus.running=false;clearInterval(focus.interval);stopSound();syncFocus();return}focus.running=true;startFocusSound();clearInterval(focus.interval);focus.interval=setInterval(()=>{focus.seconds--;syncFocus();if(focus.seconds<=0){finishFocusSession()}},1000);syncFocus()}
 function resetFocus(){focus.running=false;clearInterval(focus.interval);focus.seconds=focus.mode*60;syncFocus()}
 document.querySelectorAll("[data-focus]").forEach(b=>b.addEventListener("click",()=>setFocus(Number(b.dataset.focus))));
 document.querySelectorAll("[data-break]").forEach(b=>b.addEventListener("click",()=>{focus.breakMinutes=Number(b.dataset.break);syncFocus()}));
@@ -1002,36 +1126,19 @@ function renderFocusHistory(){
   el.innerHTML=rows.length?rows.slice(0,6).map(x=>'<div class="focus-history-row"><b>'+esc(x.task)+'</b><span>'+x.duration+' min · '+esc(x.date)+'</span></div>').join(""):'<div class="insight">No completed focus sessions yet.</div>';
 }
 document.querySelectorAll("[data-page-focus]").forEach(b=>b.addEventListener("click",()=>{setFocus(Number(b.dataset.pageFocus));renderFocusPage()}));
-$("focusPageStart")?.addEventListener("click",()=>toggleFocus());
+$("focusPageStart")?.addEventListener("click",()=>toggleFocus());$("customFocusMinutesPage")?.addEventListener("change",()=>{const n=Math.max(5,Math.min(180,Number($("customFocusMinutesPage").value)||25));setFocus(Math.round(n/5)*5)});$("openPomodoro")?.addEventListener("click",()=>showSection("pomodoro"));
 $("focusPageReset")?.addEventListener("click",()=>resetFocus());
 $("focusPagePrev")?.addEventListener("click",()=>{const n=focusTasks().length;focusTaskIndex=n?((focusTaskIndex-1+n)%n):0;renderFocusPage()});
 $("focusPageNext")?.addEventListener("click",()=>{const n=focusTasks().length;focusTaskIndex=n?((focusTaskIndex+1)%n):0;renderFocusPage()});
 document.querySelectorAll("[data-sound]").forEach(b=>b.addEventListener("click",()=>setSound(b.dataset.sound)));
 $("soundVolume")?.addEventListener("input",e=>setSoundVolume(Number(e.target.value)));
 let audioCtx=null,soundNodes=[],soundGain=null,currentSound="";
-function stopSound(){soundNodes.forEach(n=>{try{n.stop()}catch(e){}});soundNodes.forEach(n=>{try{n.disconnect()}catch(e){}});soundNodes=[];if(soundGain)try{soundGain.disconnect()}catch(e){}currentSound="";$("soundStatus")&&($("soundStatus").textContent="Off");document.querySelectorAll("[data-sound]").forEach(b=>b.classList.remove("active"))}
-function noiseBuffer(type){
-  const len=audioCtx.sampleRate*2,buf=audioCtx.createBuffer(1,len,audioCtx.sampleRate),d=buf.getChannelData(0);let last=0;
-  for(let i=0;i<len;i++){let r=Math.random()*2-1;if(type==="brown"){last=(last+.02*r)/1.02;d[i]=last*3.2}else d[i]=r*.7}
-  return buf;
-}
-function setSound(name){
-  if(currentSound===name){stopSound();return}
-  stopSound();audioCtx=audioCtx||new (window.AudioContext||window.webkitAudioContext)();audioCtx.resume();
-  soundGain=audioCtx.createGain();soundGain.gain.value=Number($("soundVolume").value||.28);soundGain.connect(audioCtx.destination);currentSound=name;$("soundStatus").textContent=name.toUpperCase();document.querySelectorAll("[data-sound]").forEach(b=>b.classList.toggle("active",b.dataset.sound===name));
-  if(name==="rain"||name==="brown"||name==="cafe"||name==="forest"){
-    const src=audioCtx.createBufferSource();src.buffer=noiseBuffer(name==="brown"?"brown":"white");src.loop=true;const filter=audioCtx.createBiquadFilter();filter.type="lowpass";filter.frequency.value=name==="rain"?2800:name==="cafe"?900:name==="forest"?4200:900;src.connect(filter).connect(soundGain);src.start();soundNodes.push(src);
-    if(name==="forest"||name==="cafe"){const osc=audioCtx.createOscillator(),g=audioCtx.createGain();osc.type="sine";osc.frequency.value=name==="forest"?190:120;g.gain.value=.018;osc.connect(g).connect(soundGain);osc.start();soundNodes.push(osc)}
-  }else if(name==="night"){const osc=audioCtx.createOscillator();osc.type="sine";osc.frequency.value=110;const g=audioCtx.createGain();g.gain.value=.018;osc.connect(g).connect(soundGain);osc.start();soundNodes.push(osc)}
-  else if(name==="piano"){playPianoLoop()}
-}
-function playPianoLoop(){
-  if(currentSound!=="piano")return;
-  const notes=[220,261.63,329.63,392,329.63,261.63],i=Math.floor(Date.now()/2400)%notes.length;
-  const osc=audioCtx.createOscillator(),g=audioCtx.createGain();osc.type="sine";osc.frequency.value=notes[i];g.gain.setValueAtTime(0.0001,audioCtx.currentTime);g.gain.exponentialRampToValueAtTime(.035,audioCtx.currentTime+.08);g.gain.exponentialRampToValueAtTime(.0001,audioCtx.currentTime+2.1);osc.connect(g).connect(soundGain);osc.start();osc.stop(audioCtx.currentTime+2.2);setTimeout(playPianoLoop,2300);soundNodes.push(osc)
-}
+function stopSound(){soundNodes.forEach(n=>{try{n.stop()}catch(e){}});soundNodes.forEach(n=>{try{n.disconnect()}catch(e){}});soundNodes=[];currentSound="";$("focusSoundStatus")&&($("focusSoundStatus").textContent=focus.running?"READY":"NOT PLAYING")}
+function startFocusSound(){stopSound();if(state.spotifyFocusLink){window.open(state.spotifyFocusLink,"_blank","noopener");$("focusSoundStatus").textContent="SPOTIFY OPEN";return}if(state.focusSound==="silence"){ $("focusSoundStatus").textContent="SILENT";return}$("focusSoundStatus").textContent=state.focusSound.toUpperCase();}
+// StudyOS intentionally does not play generated placeholder audio. Sound choices are preferences; playback is started by the focus session via Spotify or a connected sound source.
 function setSoundVolume(v){if(soundGain)soundGain.gain.value=v}
-document.body.dataset.section="today";$("sundayBlocked").checked=!!state.calendarRules.sundayBlocked;initPlannerWindows();renderToday();renderPlanner();renderProgress();renderGeneratedPlan();renderReminderSection();renderFocusPage();renderFocusHistory();syncFocus();syncReminders();
+
+document.body.dataset.section="today";$("sundayBlocked").checked=!!state.calendarRules.sundayBlocked;initPlannerWindows();renderToday();renderPlanner();renderProgress();renderGeneratedPlan();renderReminderSection();renderFocusPage();renderFocusHistory();renderHolidayLists();syncFocus();syncPomodoro();syncReminders();
 const cookingStage=$("cookingStage"),workStack=$("workStack");
 if(cookingStage&&workStack&&!window.matchMedia("(prefers-reduced-motion: reduce)").matches){
   cookingStage.addEventListener("pointermove",e=>{
