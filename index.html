@@ -872,6 +872,9 @@ input,select,textarea,button{max-width:100%}
     if(notificationModal && (!notificationsAvailable || Notification.permission!=="granted")){
       setTimeout(()=>notificationModal.classList.add("open"),120);
     }
+  }
+  save.addEventListener("click",saveClockSettings);
+
     let pomo={mode:25,work:25,break:5,seconds:1500,running:false,onBreak:false,cycle:1,interval:null};
 function syncPomodoro(){const t=$("pomoTimer");if(!t)return;t.textContent=fmt(pomo.seconds);$("pomoCycleLabel").textContent=(pomo.onBreak?"BREAK":"FOCUS")+" · CYCLE "+pomo.cycle;$("pomoProgress").style.width=Math.max(0,Math.min(100,(1-pomo.seconds/((pomo.onBreak?pomo.break:pomo.work)*60))*100))+"%";$("pomoStatus").textContent=pomo.running?(pomo.onBreak?"BREAK IN PROGRESS":"FOCUS IN PROGRESS"):"READY. START WHEN YOU MEAN IT.";document.querySelectorAll("[data-pomo]").forEach(b=>b.classList.toggle("active",String(b.dataset.pomo)===String(pomo.mode)));}
 function setPomoMode(mode){if(mode==="custom"){$("pomoCustomFields").hidden=false;pomo.work=Math.max(5,Number($("pomoWork").value)||25);pomo.break=Math.max(1,Number($("pomoBreak").value)||5)}else{$("pomoCustomFields").hidden=true;pomo.work=Number(mode);pomo.break=mode==="50"?10:5}pomo.mode=mode;pomo.seconds=pomo.work*60;pomo.onBreak=false;pomo.running=false;clearInterval(pomo.interval);syncPomodoro();}
