@@ -1803,6 +1803,17 @@ function generatePlan(){
     box-shadow:0 20px 70px rgba(32,41,35,.22);pointer-events:auto;
     transition:all .38s cubic-bezier(.2,.8,.2,1);
   }
+  #clockTutorialArrow{
+    position:fixed;z-index:2;font-size:34px;line-height:1;color:var(--accent);
+    font-weight:900;text-shadow:0 4px 16px rgba(75,148,226,.28);
+    pointer-events:none;transform-origin:left center;
+    animation:clockGuidePulse 1.35s ease-in-out infinite;
+    transition:all .38s cubic-bezier(.2,.8,.2,1);
+  }
+  @keyframes clockGuidePulse{
+    0%,100%{transform:translateX(0) scale(1);opacity:.72}
+    50%{transform:translateX(8px) scale(1.08);opacity:1}
+  }
   #clockTutorialCard:after{
     content:"";position:absolute;width:13px;height:13px;background:var(--surface);
     border-left:2px solid var(--ink);border-top:2px solid var(--ink);
@@ -1857,6 +1868,7 @@ function generatePlan(){
     layer.innerHTML=
       '<div id="clockTutorialShade"></div>'+
       '<div id="clockTutorialSpotlight"></div>'+
+      '<div id="clockTutorialArrow" aria-hidden="true">➜</div>'+
       '<div id="clockTutorialCard" data-side="right">'+
         '<div class="clock-tutorial-kicker">QUICK SETUP · <span id="clockTutorialCount">1/5</span></div>'+
         '<div class="clock-tutorial-title" id="clockTutorialTitle"></div>'+
@@ -1877,6 +1889,7 @@ function generatePlan(){
     spot.style.width=Math.max(20,r.width+pad*2)+"px";
     spot.style.height=Math.max(20,r.height+pad*2)+"px";
 
+    const arrow=$("clockTutorialArrow");
     const cw=card.offsetWidth||330,ch=card.offsetHeight||170,gap=18;
     let left=r.right+gap,top=r.top;
     let side="right";
@@ -1890,6 +1903,16 @@ function generatePlan(){
     left=Math.max(12,Math.min(innerWidth-cw-12,left));
     top=Math.max(12,Math.min(innerHeight-ch-12,top));
     card.style.left=left+"px";card.style.top=top+"px";card.dataset.side=side;
+    if(arrow){
+      let ax,ay,rot;
+      if(side==="right"){ax=r.right+8;ay=r.top+r.height/2-18;rot=0}
+      else if(side==="left"){ax=r.left-42;ay=r.top+r.height/2-18;rot=180}
+      else if(side==="bottom"){ax=r.left+r.width/2-18;ay=r.bottom+8;rot=90}
+      else {ax=r.left+r.width/2-18;ay=r.top-42;rot=-90}
+      arrow.style.left=Math.max(8,Math.min(innerWidth-48,ax))+"px";
+      arrow.style.top=Math.max(8,Math.min(innerHeight-48,ay))+"px";
+      arrow.style.transform="rotate("+rot+"deg)";
+    }
   }
 
   function render(){
@@ -2017,13 +2040,14 @@ function generatePlan(){
 
   function startIfNeeded(){
     hideOtherOnboarding();
-    const already=localStorage.getItem(TUTORIAL_KEY)==="1";
     const hasSettings=!!localStorage.getItem("studyos-settings");
-    if(already||hasSettings){
+    if(hasSettings){
       setup.classList.remove("open");
       setup.style.removeProperty("display");
       return;
     }
+    // The guide is tied to completion of clock setup, not to a stale tutorial flag.
+    // If setup has never been completed, always bring the user back to the guided entry point.
     openStep(0);
   }
 
