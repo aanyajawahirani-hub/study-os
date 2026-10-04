@@ -691,7 +691,7 @@ body[data-page="exceptions"] .sunday-card input{width:20px;height:20px;accent-co
     <form id="localSignupForm" class="auth-form"><input id="signupName" required maxlength="80" placeholder="Your name"><input id="signupEmail" required type="email" maxlength="160" placeholder="Email address"><button class="dark-btn" type="submit">CREATE ACCOUNT</button></form>
     <small class="auth-foot">Already signed up on this browser? <button id="restoreAccount" type="button">Continue my account</button></small>
   </div>
-</div><div class="modal open" id="setupModal">
+</div><div class="modal" id="setupModal">
   <div class="focuscard setup-card">
     <div class="setup-heading">
       <div class="eyebrow">WELCOME TO STUDYOS</div>
@@ -1481,14 +1481,7 @@ function generatePlan(){
 (function(){
   const $f=id=>document.getElementById(id);
 
-  /* Clock onboarding is a hard first-entry gate. Old v1/v2 flags cannot suppress it. */
-  const firstRun=!localStorage.getItem("studyos-onboarding-v3");
-  if(firstRun){
-    document.body.classList.add("setup-first","setup-gate");
-    const setup=$f("setupModal"),auth=$f("authModal");
-    if(setup){setup.classList.add("open");setup.style.display="grid";setup.style.zIndex="9999";}
-    if(auth)auth.classList.remove("open");
-  }
+  /* Clock onboarding is now handled by the guided tutorial below. */
 
   /* Rebuild must always be a real action, not a view switch. */
   window.generatePlan=function(){
@@ -1701,4 +1694,255 @@ function generatePlan(){
   const sundayLabel=sunday?.closest("label")?.querySelector("span");
   if(sundayLabel)sundayLabel.textContent="KEEP SUNDAYS FREE FOR SCHOOL";
 })();
-</script></body></html>
+</script>
+<style id="clock-tutorial-ui">
+  #clockTutorialLayer{
+    position:fixed;inset:0;z-index:10000;pointer-events:none;
+  }
+  #clockTutorialShade{
+    position:absolute;inset:0;background:rgba(20,24,22,.34);
+    backdrop-filter:blur(2px);-webkit-backdrop-filter:blur(2px);
+    pointer-events:none;
+  }
+  #clockTutorialSpotlight{
+    position:fixed;border:2px solid var(--accent);border-radius:8px;
+    box-shadow:0 0 0 6px rgba(169,77,56,.12),0 12px 40px rgba(32,41,35,.16);
+    pointer-events:none;transition:all .38s cubic-bezier(.2,.8,.2,1);
+  }
+  #clockTutorialCard{
+    position:fixed;width:min(340px,calc(100vw - 28px));padding:20px 20px 18px;
+    background:var(--surface);color:var(--ink);border:2px solid var(--ink);
+    box-shadow:0 20px 70px rgba(32,41,35,.22);pointer-events:auto;
+    transition:all .38s cubic-bezier(.2,.8,.2,1);
+  }
+  #clockTutorialCard:after{
+    content:"";position:absolute;width:13px;height:13px;background:var(--surface);
+    border-left:2px solid var(--ink);border-top:2px solid var(--ink);
+    transform:rotate(45deg);top:24px;left:-8px;
+  }
+  #clockTutorialCard[data-side="left"]:after{
+    left:auto;right:-8px;transform:rotate(135deg);
+  }
+  #clockTutorialCard[data-side="bottom"]:after{
+    top:-8px;left:26px;right:auto;transform:rotate(45deg);
+  }
+  #clockTutorialCard[data-side="top"]:after{
+    top:auto;bottom:-8px;left:26px;right:auto;transform:rotate(225deg);
+  }
+  .clock-tutorial-kicker{font-size:8px;letter-spacing:.18em;color:var(--accent);font-weight:900}
+  .clock-tutorial-title{font-family:Georgia,serif;font-size:27px;line-height:1.02;margin:7px 0 8px}
+  .clock-tutorial-copy{font-size:11px;line-height:1.55;color:var(--muted);margin:0}
+  .clock-tutorial-step{font-size:8px;letter-spacing:.12em;color:var(--muted);margin-top:13px}
+  .clock-tutorial-action{
+    margin-top:13px;border:1px solid var(--ink);background:var(--ink);color:var(--surface);
+    padding:10px 12px;font-size:9px;font-weight:900;cursor:pointer;
+  }
+  .clock-tutorial-action:hover{background:var(--accent);border-color:var(--accent)}
+  #clockTutorialLayer.tutorial-hidden{display:none}
+  @media(max-width:700px){
+    #clockTutorialCard{width:min(330px,calc(100vw - 24px));padding:17px}
+    #clockTutorialCard:after{display:none}
+  }
+</style>
+<script id="clock-tutorial">
+(function(){
+  const $=id=>document.getElementById(id);
+  const TUTORIAL_KEY="studyos-clock-tutorial-v1";
+  const setup=$("setupModal"), notif=$("notificationModal");
+  if(!setup)return;
+
+  const state={step:0,active:false};
+
+  function targetFor(step){
+    if(step===0)return $("openClockSettings");
+    if(step===1)return $("setupCountry");
+    if(step===2)return $("setupTimezone");
+    if(step===3)return $("saveSetup");
+    if(step===4)return $("notify");
+    return null;
+  }
+
+  function ensureLayer(){
+    if($("clockTutorialLayer"))return;
+    const layer=document.createElement("div");
+    layer.id="clockTutorialLayer";
+    layer.innerHTML=
+      '<div id="clockTutorialShade"></div>'+
+      '<div id="clockTutorialSpotlight"></div>'+
+      '<div id="clockTutorialCard" data-side="right">'+
+        '<div class="clock-tutorial-kicker">QUICK SETUP · <span id="clockTutorialCount">1/5</span></div>'+
+        '<div class="clock-tutorial-title" id="clockTutorialTitle"></div>'+
+        '<p class="clock-tutorial-copy" id="clockTutorialCopy"></p>'+
+        '<div class="clock-tutorial-step" id="clockTutorialStep"></div>'+
+        '<button class="clock-tutorial-action" id="clockTutorialAction" type="button">GOT IT</button>'+
+      '</div>';
+    document.body.appendChild(layer);
+  }
+
+  function position(){
+    const target=targetFor(state.step),card=$("clockTutorialCard"),spot=$("clockTutorialSpotlight");
+    if(!target||!card||!state.active)return;
+    const r=target.getBoundingClientRect();
+    const pad=6;
+    spot.style.left=Math.max(6,r.left-pad)+"px";
+    spot.style.top=Math.max(6,r.top-pad)+"px";
+    spot.style.width=Math.max(20,r.width+pad*2)+"px";
+    spot.style.height=Math.max(20,r.height+pad*2)+"px";
+
+    const cw=card.offsetWidth||330,ch=card.offsetHeight||170,gap=18;
+    let left=r.right+gap,top=r.top;
+    let side="right";
+    if(left+cw>innerWidth-12){left=r.left-cw-gap;side="left"}
+    if(left<12){left=Math.max(12,Math.min(innerWidth-cw-12,r.left));top=r.bottom+gap;side="bottom"}
+    if(top+ch>innerHeight-12){
+      top=r.top-ch-gap;
+      if(top<12){top=Math.max(12,(innerHeight-ch)/2);side="bottom"}
+      else side="top";
+    }
+    left=Math.max(12,Math.min(innerWidth-cw-12,left));
+    top=Math.max(12,Math.min(innerHeight-ch-12,top));
+    card.style.left=left+"px";card.style.top=top+"px";card.dataset.side=side;
+  }
+
+  function render(){
+    ensureLayer();
+    const titles=[
+      "Set your clock.",
+      "Choose your country.",
+      "Pick your timezone.",
+      "Save your settings.",
+      "Turn on notifications."
+    ];
+    const copies=[
+      "Before you start planning, tell StudyOS how your clock works. Follow the arrow and click the clock settings button.",
+      "Type your country, then choose the matching option from the list. This sets the right defaults for your planner.",
+      "Now choose the timezone you actually use. Pick one of the suggested results so StudyOS can keep your schedule accurate.",
+      "Everything look right? Click SAVE SETTINGS. Your setup is almost done.",
+      "Last step. Click the notification button, then choose Allow in your browser if you want StudyOS reminders."
+    ];
+    const steps=[
+      "CLICK THE HIGHLIGHTED CLOCK SETTINGS BUTTON",
+      "CHOOSE A COUNTRY FROM THE LIST",
+      "CHOOSE A TIMEZONE FROM THE LIST",
+      "CLICK SAVE SETTINGS",
+      "CLICK NOTIFICATIONS ON"
+    ];
+    $("clockTutorialTitle").textContent=titles[state.step];
+    $("clockTutorialCopy").textContent=copies[state.step];
+    $("clockTutorialStep").textContent=steps[state.step];
+    $("clockTutorialCount").textContent=(state.step+1)+"/5";
+    $("clockTutorialAction").textContent=state.step===4?"FINISH":"GOT IT";
+    requestAnimationFrame(position);
+  }
+
+  function hideOtherOnboarding(){
+    if(notif)notif.classList.remove("open");
+  }
+
+  function openStep(step){
+    state.step=step;state.active=true;
+    ensureLayer();
+    $("clockTutorialLayer").classList.remove("tutorial-hidden");
+    if(step>=1){
+      setup.classList.add("open");
+      setup.style.display="grid";
+      setup.style.zIndex="9999";
+      document.body.classList.add("setup-tutorial");
+    }else{
+      setup.classList.remove("open");
+      setup.style.removeProperty("display");
+      document.body.classList.remove("setup-tutorial");
+    }
+    hideOtherOnboarding();
+    render();
+    const target=targetFor(step);
+    if(target){
+      setTimeout(()=>{try{target.scrollIntoView({block:"center",inline:"center",behavior:"smooth"})}catch(_){};position()},60);
+    }
+  }
+
+  function finish(){
+    state.active=false;
+    $("clockTutorialLayer")?.classList.add("tutorial-hidden");
+    setup.classList.remove("open");
+    setup.style.removeProperty("display");
+    document.body.classList.remove("setup-tutorial");
+    localStorage.setItem(TUTORIAL_KEY,"1");
+  }
+
+  function advanceAfterCountry(){
+    if(state.active&&state.step===1){
+      openStep(2);
+    }
+  }
+  function advanceAfterTimezone(){
+    if(state.active&&state.step===2){
+      openStep(3);
+    }
+  }
+
+  document.addEventListener("change",e=>{
+    if(e.target?.id==="setupCountry")advanceAfterCountry();
+    if(e.target?.id==="setupTimezone")advanceAfterTimezone();
+  },true);
+
+  document.addEventListener("click",e=>{
+    if(!state.active)return;
+    const b=e.target.closest("button");
+    if(state.step===0&&b?.id==="openClockSettings"){
+      setTimeout(()=>openStep(1),100);
+      return;
+    }
+    if(state.step===3&&b?.id==="saveSetup"){
+      setTimeout(()=>{
+        if(localStorage.getItem("studyos-settings")){
+          hideOtherOnboarding();
+          openStep(4);
+        }
+      },260);
+      return;
+    }
+    if(state.step===4&&b?.id==="notify"){
+      setTimeout(()=>{
+        if(window.Notification?.permission==="granted"){
+          finish();
+        }else{
+          hideOtherOnboarding();
+          render();
+        }
+      },350);
+      return;
+    }
+    if(b?.id==="clockTutorialAction"){
+      if(state.step===0)openStep(0);
+      else if(state.step===1)openStep(1);
+      else if(state.step===2)openStep(2);
+      else if(state.step===3)openStep(3);
+      else finish();
+    }
+  },true);
+
+  $("setupCountry")?.addEventListener("input",()=>{if(state.active&&state.step===1)position()});
+  $("setupTimezone")?.addEventListener("input",()=>{if(state.active&&state.step===2)position()});
+  window.addEventListener("resize",()=>{if(state.active)position()});
+  window.addEventListener("scroll",()=>{if(state.active)position()},{passive:true});
+
+  function startIfNeeded(){
+    hideOtherOnboarding();
+    const already=localStorage.getItem(TUTORIAL_KEY)==="1";
+    const hasSettings=!!localStorage.getItem("studyos-settings");
+    if(already||hasSettings){
+      setup.classList.remove("open");
+      setup.style.removeProperty("display");
+      return;
+    }
+    openStep(0);
+  }
+
+  /* Prevent the old first-run modal from becoming the first thing the user sees. */
+  setup.classList.remove("open");
+  setup.style.removeProperty("display");
+  setTimeout(startIfNeeded,220);
+})();
+</script>
+</body></html>
