@@ -23,19 +23,55 @@
 @media(max-width:900px){.hero{grid-template-columns:1fr;gap:10px;padding-top:75px}.hero-copy{max-width:680px}.scene{height:570px;max-width:690px;width:100%;margin:auto}.intro{grid-template-columns:1fr;gap:24px;padding:100px 0}.workspace-inner{grid-template-columns:1fr;gap:35px}.workspace-scene{max-width:700px;width:100%;margin:auto}.feature-grid{grid-template-rows:250px 250px 250px}.feature:nth-child(n){grid-column:span 6}.feature:nth-child(5){grid-column:span 12}.feature-heading{align-items:start;flex-direction:column}.feature-heading p{max-width:none}.shell{width:min(100% - 48px,1320px)}}
 @media(max-width:600px){.shell{width:calc(100% - 36px)}.top{height:68px}.nav{display:none;position:absolute;top:68px;left:0;right:0;background:#17231c;padding:22px;flex-direction:column;align-items:stretch;gap:20px;border-bottom:1px solid var(--line)}.nav.open{display:flex}.menu{display:block}.hero{padding:65px 0 30px;min-height:auto}.hero h1{font-size:60px}.hero-copy>p{font-size:13px}.actions{flex-wrap:wrap}.meta{margin-top:35px}.scene{height:430px;transform:scale(.94);transform-origin:top center;margin-bottom:-15px}.orbit{width:370px;height:160px}.orbit.two{width:340px;height:230px}.orbit.three{width:410px;height:300px}.core{width:110px;height:110px}.core-label{font-size:13px}.task-card{width:165px;left:-3px;top:75px;padding:13px}.deadline-card{width:145px;right:-4px;top:28px;padding:12px}.week-card{width:195px;right:-3px;bottom:55px;padding:13px}.focus-card{width:145px;left:-3px;bottom:20px;padding:12px}.float h3{font-size:15px}.float p{font-size:8px}.task-card .task-line{font-size:8px;margin-top:12px}.deadline-date b{font-size:30px}.focus-ring{width:50px;height:50px;font-size:11px}.scene-caption{right:-7px}.ticker-track{justify-content:flex-start;width:max-content;animation:marquee 24s linear infinite}.ticker-track span{margin-right:25px}@keyframes marquee{to{transform:translateX(-40%)}}.intro{padding:80px 0}.intro h2,.section-title{font-size:43px}.intro p{font-size:13px}.feature-zone{padding:45px 0 85px}.feature-grid{display:flex;flex-direction:column}.feature{min-height:215px}.feature h3{font-size:23px;margin-top:25px}.workflow{padding:85px 0}.workflow-grid{grid-template-columns:1fr;gap:34px;margin-top:45px}.workflow-step h3{margin:15px 0 8px}.step-orbit{margin-top:17px;width:58px;height:58px}.workspace{padding:85px 0}.workspace-scene{min-height:315px}.app-panel{inset:15px 0 15px 0;padding:14px;transform:rotateY(-7deg) rotateX(3deg) rotateZ(1deg)}.app-welcome{padding:18px 0 13px}.app-welcome h3{font-size:23px}.app-stat{padding:9px}.app-stat b{font-size:20px}.app-float{right:-6px}.final{padding:85px 0}.final h2{font-size:51px}.footer{align-items:flex-start;flex-direction:column}.footer-links{flex-wrap:wrap}}
 @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}.reveal{opacity:1;transform:none}*,*:before,*:after{animation:none!important;transition:none!important}}
+
+/* Hero art direction: typographic, layered and spatial. Everything below remains untouched. */
+.hero-editorial{min-height:690px;grid-template-columns:.82fr 1.18fr;gap:4vw;padding:72px 0 76px;align-items:center}
+.hero-editorial .hero-copy{padding:15px 0;z-index:2}
+.hero-editorial h1{font-size:clamp(64px,7.6vw,108px);line-height:.86;letter-spacing:-.095em;margin:30px 0 27px}
+.hero-editorial h1 span{display:inline-block;color:var(--acid);font-family:var(--serif);font-style:italic;font-weight:500;letter-spacing:-.085em}
+.hero-editorial .hero-copy>p{max-width:390px}
+.hero-composition{height:510px;position:relative;align-self:center;overflow:hidden;border-left:1px solid var(--line);padding:20px 0 18px 30px;isolation:isolate}
+.composition-index,.composition-foot{display:flex;justify-content:space-between;gap:12px;font:8px var(--mono);letter-spacing:.12em;color:#849387}
+.composition-word{position:absolute;top:78px;left:2%;font:800 clamp(110px,17vw,230px)/.78 var(--display);letter-spacing:-.13em;color:#e9eee4;white-space:nowrap;z-index:-1}
+.composition-word span{color:var(--acid)}
+.composition-rule{position:absolute;top:218px;left:0;right:-10%;height:1px;background:#dce6d7a8;transform:rotate(-8deg);transform-origin:left}
+.composition-track{position:absolute;top:250px;left:10%;right:2%;display:flex;flex-direction:column;gap:0;transform:rotate(-8deg);transform-origin:left;z-index:1}
+.track-head{min-height:57px;display:grid;grid-template-columns:42px 105px 1fr;align-items:center;border-top:1px solid #dce6d744;padding:0 12px;background:linear-gradient(90deg,#d7f36a12,transparent 72%);backdrop-filter:blur(2px)}
+.track-head:nth-child(2){margin-left:9%;background:linear-gradient(90deg,#a9c7dc15,transparent 72%)}
+.track-head:nth-child(3){margin-left:18%;background:linear-gradient(90deg,#ed987714,transparent 72%);border-bottom:1px solid #dce6d744}
+.track-head>span{font:10px var(--mono);color:var(--acid)}
+.track-head b{font:700 11px var(--display);letter-spacing:.12em;color:#e7ede3}
+.track-head small{font:8px var(--mono);color:#8b9a8d}
+.composition-stamp{position:absolute;right:5%;top:105px;width:118px;height:118px;border:1px solid #d7f36a75;border-radius:50%;display:grid;place-content:center;text-align:center;font:9px/1.5 var(--mono);letter-spacing:.12em;color:var(--acid);transform:rotate(12deg);background:#101914a8}
+.composition-stamp i{font:20px var(--sans);font-style:normal;margin-top:5px}
+.composition-foot{position:absolute;bottom:0;left:30px;right:0;border-top:1px solid var(--line);padding-top:13px}
+@media(max-width:900px){.hero-editorial{grid-template-columns:1fr;gap:28px;padding-top:65px}.hero-composition{height:410px;margin-left:0;border-left:0;border-top:1px solid var(--line);padding:18px 0}.composition-word{top:85px;font-size:clamp(130px,25vw,220px)}.composition-rule{top:195px}.composition-track{top:220px}.composition-stamp{top:90px;right:8%}}
+@media(max-width:600px){.hero-editorial{padding:55px 0 30px;gap:32px}.hero-editorial h1{font-size:clamp(58px,15vw,82px)}.hero-composition{height:340px}.composition-index,.composition-foot{font-size:7px}.composition-word{top:78px;font-size:29vw}.composition-rule{top:160px}.composition-track{top:182px;left:0;right:0}.track-head{min-height:48px;grid-template-columns:30px 82px 1fr;padding:0 6px}.track-head b{font-size:9px}.track-head small{font-size:7px}.composition-stamp{width:82px;height:82px;top:70px;right:5%;font-size:7px}.composition-foot{left:0}}
 </style>
 </head>
 <body><div class="grain"></div>
 <div class="shell">
 <header class="top"><a class="logo" href="/"><span class="logo-mark"><span>s</span></span>studyOS</a><nav class="nav" id="nav"><a href="#why">The idea</a><a href="#tools">Toolkit</a><a href="#flow">How it works</a><a class="nav-cta" href="/app/">Enter your workspace ↗</a></nav><button class="menu" id="menu" aria-label="Toggle navigation" aria-expanded="false">☰</button></header>
 <main>
-<section class="hero">
-<div class="hero-copy"><div class="eyebrow"><span class="dot"></span>YOUR ACADEMIC LIFE, IN ORBIT</div><h1>Make space<br>for what <span>matters.</span></h1><p>Deadlines shift. Plans change. Life happens between study sessions. StudyOS brings your academic commitments into one adaptive system, so organising your time stops becoming another task.</p><div class="actions"><a class="primary" href="/app/">Enter StudyOS <span>↗</span></a><a class="underlink" href="#tools">Explore the system ↓</a></div><div class="meta">PLAN LESS ABOUT PLANNING. DO MORE OF THE WORK.</div></div>
-<div class="scene" id="scene" aria-label="Spatial composition of study tasks, deadlines, focus sessions and a weekly plan"><div class="scene-glow"></div><div class="orbit"></div><div class="orbit two"></div><div class="orbit three"></div><div class="core"></div><div class="core-label">studyOS</div><div class="satellite s1"></div><div class="satellite s2"></div><div class="satellite s3"></div>
-<div class="float task-card" data-depth="1.4"><div class="tag">01 / YOUR TASKS</div><h3>On your radar.</h3><p>Keep the moving pieces in view.</p><div class="task-line"><span class="check">✓</span> Revise algebra</div><div class="task-line"><span class="check"></span> Biology diagrams</div><div class="task-line"><span class="check"></span> English assignment</div></div>
-<div class="float deadline-card" data-depth="2"><div class="tag">02 / NEXT DEADLINE</div><h3>Coming into focus.</h3><div class="deadline-date"><b>24</b><span>THU / NOV</span></div><p>Maths assignment</p></div>
-<div class="float week-card" data-depth="1.8"><div class="tag">03 / THE WEEK AHEAD</div><h3>Time, mapped out.</h3><div class="week-bars"><i style="--v:40%"></i><i style="--v:68%"></i><i style="--v:52%"></i><i style="--v:86%"></i><i style="--v:61%"></i><i style="--v:94%"></i><i style="--v:48%"></i></div><div class="week-days"><span>M</span><span>T</span><span>W</span><span>T</span><span>F</span><span>S</span><span>S</span></div></div>
-<div class="float focus-card" data-depth="1.2"><div class="tag">04 / FOCUS MODE</div><div class="focus-ring">25:00</div><p style="text-align:center">One thing at a time.</p></div><div class="scene-caption">A LIVING SYSTEM / 001</div></div>
+<section class="hero hero-editorial">
+  <div class="hero-copy">
+    <div class="eyebrow"><span class="dot"></span> A STUDY SPACE THAT MOVES WITH YOU</div>
+    <h1>Make time<br>for what <span>matters.</span></h1>
+    <p>Deadlines shift. Plans change. Life happens between study sessions. StudyOS brings your academic commitments into one adaptive system, so organising your time stops becoming another task.</p>
+    <div class="actions"><a class="primary" href="/app/">Enter StudyOS <span>↗</span></a><a class="underlink" href="#tools">Explore the system ↓</a></div>
+  </div>
+  <div class="hero-composition" aria-label="A typographic composition showing the moving parts of a student's week">
+    <div class="composition-index"><span>STUDYOS / 001</span><span>AN OPEN SYSTEM FOR YOUR WEEK</span></div>
+    <div class="composition-word" aria-hidden="true">TIME<span>.</span></div>
+    <div class="composition-rule"></div>
+    <div class="composition-track">
+      <div class="track-head"><span>01</span><b>COLLECT</b><small>Deadlines · Exams · Commitments</small></div>
+      <div class="track-head"><span>02</span><b>ARRANGE</b><small>Availability · Study blocks</small></div>
+      <div class="track-head"><span>03</span><b>ADAPT</b><small>Changes · Progress · Focus</small></div>
+    </div>
+    <div class="composition-stamp">YOUR WEEK<br>IS NOT<br>STATIC <i>↗</i></div>
+    <div class="composition-foot"><span>LESS ADMIN. MORE LEARNING.</span><span>01 — 03 / THE STUDY LOOP</span></div>
+  </div>
 </section>
 <div class="ticker"><div class="ticker-track"><span><b>✳</b>DEADLINES</span><span><b>✳</b>STUDY PLANS</span><span><b>✳</b>EXAM PREPARATION</span><span><b>✳</b>FOCUS SESSIONS</span><span><b>✳</b>ADAPTIVE ROUTINES</span></div></div>
 <section class="intro reveal" id="why"><div class="section-label">01 / THE SHIFT</div><div><h2>Your brain is for learning. Not for keeping track of <span>everything.</span></h2><p>One new assignment can throw off a carefully planned week. A tuition class runs late. An exam date moves. StudyOS gives all those moving parts somewhere to land, then helps you reshape the plan around them.</p></div></section>
@@ -56,6 +92,6 @@
 <script>
 const nav=document.getElementById("nav"),menu=document.getElementById("menu");menu?.addEventListener("click",()=>{const open=nav.classList.toggle("open");menu.setAttribute("aria-expanded",String(open));menu.textContent=open?"×":"☰"});nav?.querySelectorAll("a").forEach(a=>a.addEventListener("click",()=>{nav.classList.remove("open");menu?.setAttribute("aria-expanded","false");if(menu)menu.textContent="☰"}));
 const reduce=window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-if(!reduce){const scene=document.getElementById("scene");scene?.addEventListener("pointermove",e=>{const r=scene.getBoundingClientRect(),x=(e.clientX-r.left)/r.width-.5,y=(e.clientY-r.top)/r.height-.5;scene.querySelectorAll("[data-depth]").forEach(el=>{const d=Number(el.dataset.depth);el.style.translate=(x*d*13)+"px "+(y*d*10)+"px";});});scene?.addEventListener("pointerleave",()=>scene.querySelectorAll("[data-depth]").forEach(el=>el.style.translate="0 0"));const io=new IntersectionObserver(entries=>entries.forEach(e=>{if(e.isIntersecting){e.target.classList.add("visible");io.unobserve(e.target)}}),{threshold:.12});document.querySelectorAll(".reveal").forEach(el=>io.observe(el));}
+if(!reduce){const io=new IntersectionObserver(entries=>entries.forEach(e=>{if(e.isIntersecting){e.target.classList.add("visible");io.unobserve(e.target)}}),{threshold:.12});document.querySelectorAll(".reveal").forEach(el=>io.observe(el));}
 </script>
 </body></html>
