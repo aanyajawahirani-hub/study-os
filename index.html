@@ -32,7 +32,6 @@
 .hero-editorial .hero-copy>p{max-width:390px}
 .week-space{height:535px;position:relative;isolation:isolate;perspective:1400px;display:flex;align-items:center;justify-content:center;overflow:visible}
 .week-space:before{content:"";position:absolute;inset:8% -8% 5% 2%;background:linear-gradient(135deg,#E9A18B08,transparent 58%);clip-path:polygon(12% 0,100% 10%,88% 100%,0 83%);z-index:-2}
-.week-meta{position:absolute;top:13px;left:5%;right:0;display:flex;justify-content:space-between;font:8px var(--mono);letter-spacing:.13em;color:#B4A6A1}
 .week-plane{position:relative;width:94%;height:340px;padding:18px 17px 17px;background:#302832;border:1px solid #D5B6AA55;box-shadow:18px 28px 0 -9px #D9A27F24,35px 48px 65px #00000045;transform:rotateY(-13deg) rotateX(5deg) rotateZ(-3deg);transform-style:preserve-3d}
 .week-plane:before{content:"";position:absolute;left:12px;right:12px;top:12px;bottom:12px;border:1px solid #FFFFFF0C;pointer-events:none}
 .week-head{height:36px;display:grid;grid-template-columns:68px repeat(5,1fr);align-items:start;border-bottom:1px solid #FFFFFF2A;font:8px var(--mono);letter-spacing:.1em;color:#BDB0A8}
@@ -51,9 +50,8 @@
 .change-copy small{display:block;font:7px var(--mono);letter-spacing:.12em;color:#8F8087;margin-bottom:4px}
 .change-copy b{font:600 11px var(--display);letter-spacing:-.02em}
 .change-arrow{font:20px var(--sans);color:#806B72}
-.week-caption{position:absolute;bottom:0;left:5%;right:0;display:flex;justify-content:space-between;border-top:1px solid var(--line);padding-top:12px;font:8px var(--mono);letter-spacing:.1em;color:#A19398}
 @media(max-width:900px){.hero-editorial{grid-template-columns:1fr;gap:22px;padding-top:65px}.week-space{height:475px;max-width:720px;width:100%;margin:auto}.week-plane{width:96%}}
-@media(max-width:600px){.hero-editorial{padding:55px 0 30px;gap:18px}.hero-editorial h1{font-size:clamp(58px,15vw,82px)}.week-space{height:370px;overflow:hidden;margin:0 -8px;width:calc(100% + 16px)}.week-meta,.week-caption{left:10px;right:10px;font-size:6px}.week-plane{width:112%;height:275px;padding:13px 10px 10px;transform:rotateY(-7deg) rotateX(4deg) rotateZ(-2deg) translateX(-3%)}.week-head{height:28px;grid-template-columns:43px repeat(5,1fr);font-size:6px}.week-grid{height:200px;grid-template-columns:43px repeat(5,1fr)}.time-axis{font-size:6px;padding-right:4px}.study-block{left:3px;right:3px;padding:5px 3px;font-size:6px;min-height:35px}.study-block small{font-size:5px;margin-top:3px}.plan-change{left:8%;right:0;bottom:23px;padding:9px 10px;gap:8px}.change-mark{width:23px;height:23px;font-size:12px}.change-copy small{font-size:6px}.change-copy b{font-size:9px}.change-arrow{font-size:16px}}
+@media(max-width:600px){.hero-editorial{padding:55px 0 30px;gap:18px}.hero-editorial h1{font-size:clamp(58px,15vw,82px)}.week-space{height:370px;overflow:hidden;margin:0 -8px;width:calc(100% + 16px)}.week-plane{width:112%;height:275px;padding:13px 10px 10px;transform:rotateY(-7deg) rotateX(4deg) rotateZ(-2deg) translateX(-3%)}.week-head{height:28px;grid-template-columns:43px repeat(5,1fr);font-size:6px}.week-grid{height:200px;grid-template-columns:43px repeat(5,1fr)}.time-axis{font-size:6px;padding-right:4px}.study-block{left:3px;right:3px;padding:5px 3px;font-size:6px;min-height:35px}.study-block small{font-size:5px;margin-top:3px}.plan-change{left:8%;right:0;bottom:23px;padding:9px 10px;gap:8px}.change-mark{width:23px;height:23px;font-size:12px}.change-copy small{font-size:6px}.change-copy b{font-size:9px}.change-arrow{font-size:16px}}
 
 /* STUDYOS COLOUR SYSTEM — colour-blocked, bright, and energetic */
 :root{
@@ -170,7 +168,6 @@ h1 span,.hero-editorial h1 span{color:#A84632}
     <div class="actions"><a class="primary" href="/app/">Enter StudyOS <span>↗</span></a><a class="underlink" href="#tools">Explore the system ↓</a></div>
   </div>
   <div class="week-space" role="img" aria-label="Illustrative weekly planner showing study blocks arranged across five days and a schedule change">
-    <div class="week-meta"><span>STUDYOS / A WEEK IN VIEW</span><span>ILLUSTRATIVE PLAN · 01</span></div>
     <div class="week-plane">
       <div class="week-head"><span>LOCAL TIME</span><span>MON</span><span>TUE</span><span>WED</span><span>THU</span><span>FRI</span></div>
       <div class="week-grid">
@@ -198,7 +195,6 @@ h1 span,.hero-editorial h1 span{color:#A84632}
       </div>
     </div>
     <div class="plan-change"><span class="change-mark">↗</span><span class="change-copy"><small>WHEN YOUR WEEK CHANGES</small><b>One update. A plan that adjusts.</b></span><span class="change-arrow">→</span></div>
-    <div class="week-caption"><span>DEADLINES / AVAILABILITY / STUDY BLOCKS</span><span>PLAN · ADAPT · CONTINUE</span></div>
   </div>
 </section>
 <div class="ticker"><div class="ticker-track"><span><b>✳</b>DEADLINES</span><span><b>✳</b>STUDY PLANS</span><span><b>✳</b>EXAM PREPARATION</span><span><b>✳</b>FOCUS SESSIONS</span><span><b>✳</b>ADAPTIVE ROUTINES</span></div></div>
