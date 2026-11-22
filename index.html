@@ -55,38 +55,41 @@
 @media(max-width:900px){.hero-editorial{grid-template-columns:1fr;gap:22px;padding-top:65px}.week-space{height:475px;max-width:720px;width:100%;margin:auto}.week-plane{width:96%}}
 @media(max-width:600px){.hero-editorial{padding:55px 0 30px;gap:18px}.hero-editorial h1{font-size:clamp(58px,15vw,82px)}.week-space{height:370px;overflow:hidden;margin:0 -8px;width:calc(100% + 16px)}.week-meta,.week-caption{left:10px;right:10px;font-size:6px}.week-plane{width:112%;height:275px;padding:13px 10px 10px;transform:rotateY(-7deg) rotateX(4deg) rotateZ(-2deg) translateX(-3%)}.week-head{height:28px;grid-template-columns:43px repeat(5,1fr);font-size:6px}.week-grid{height:200px;grid-template-columns:43px repeat(5,1fr)}.time-axis{font-size:6px;padding-right:4px}.study-block{left:3px;right:3px;padding:5px 3px;font-size:6px;min-height:35px}.study-block small{font-size:5px;margin-top:3px}.plan-change{left:8%;right:0;bottom:23px;padding:9px 10px;gap:8px}.change-mark{width:23px;height:23px;font-size:12px}.change-copy small{font-size:6px}.change-copy b{font-size:9px}.change-arrow{font-size:16px}}
 
-/* ELECTRIC CITRON — bright, confident, unmistakably StudyOS */
+/* STUDYOS COLOUR SYSTEM — colour-blocked, bright, and energetic */
 :root{
-  --bg:#D9E66A;
+  --bg:#A8C9D9;
   --panel:#F0EDA9;
-  --panel2:#A8C9D9;
+  --panel2:#B8CE72;
   --ink:#342A37;
-  --muted:#5F514A;
+  --muted:#594B43;
   --line:#342A3730;
   --acid:#E76F51;
   --mint:#A6BF43;
   --orange:#F2B84B;
   --blue:#75AFCB;
 }
-html,body{background:var(--bg);color:var(--ink)}
+html,body{background:#A8C9D9;color:var(--ink)}
 .grain{opacity:.025;mix-blend-mode:multiply}
 .top{border-color:var(--line)}
-.logo-mark{border-color:var(--acid);color:var(--ink);border-radius:8px 50% 50%}
-.nav{color:#51434A}
-.nav a:not(.nav-cta):hover{color:#C64F38}
+.logo-mark{border-color:#342A37;color:#342A37}
+.nav{color:#344C58}
+.nav a:not(.nav-cta):hover{color:#A84632}
 .nav-cta{border:1px solid var(--ink);color:var(--ink);border-radius:2px}
-.nav-cta:hover{background:var(--ink);color:var(--bg)}
+.nav-cta:hover{background:var(--ink);color:#D9E66A}
 .menu{color:var(--ink)}
 .eyebrow,.section-label,.feature-num{color:#A84632}
-.eyebrow .dot{background:var(--acid);box-shadow:0 0 0 4px #E76F5125}
+.eyebrow .dot{background:#E76F51;box-shadow:0 0 0 4px #E76F5125}
 h1,.intro h2,.section-title{color:var(--ink)}
-h1 span,.hero-editorial h1 span{color:#B94C38}
-.intro h2 span{color:#78912D}
-.hero-copy>p,.intro p,.workspace-copy p{color:#594B43}
-.primary{background:var(--ink);color:#F4F0B1;border-radius:2px}
+h1 span,.hero-editorial h1 span{color:#A84632}
+.intro h2 span{color:#526D28}
+.hero-copy>p,.intro p,.workspace-copy p{color:#51443F}
+.primary{background:var(--ink);color:#F0EDA9;border-radius:2px}
 .primary:hover{background:#C95740;box-shadow:0 12px 28px #8F3C302B}
 .underlink{color:var(--ink);border-color:#786B45}
-.meta,.week-meta,.week-caption{color:#655943}
+.meta,.week-meta,.week-caption{color:#594B43}
+
+/* Each major section gets its own surface, while the transitions stay crisp. */
+.hero{background:#D9E66A;box-shadow:0 0 0 100vmax #D9E66A;clip-path:inset(0 -100vmax)}
 .week-space:before{background:linear-gradient(125deg,#E76F5145 0%,#75AFCB55 42%,#F2B84B66 73%,transparent 100%)}
 .week-plane{background:#F0EDA9;border:1px solid #756D3F;box-shadow:16px 23px 0 -9px #75AFCB,28px 38px 60px #342A3725}
 .week-plane:before{border-color:#342A381A}
@@ -104,13 +107,18 @@ h1 span,.hero-editorial h1 span{color:#B94C38}
 .change-arrow{color:#F0EDA9}
 .ticker{color:#E8EC9A;border-color:#342A37;background:#342A37}
 .ticker b{color:#F2B84B}
-.feature-heading p{color:#655943}
+.intro{background:#EF9872;box-shadow:0 0 0 100vmax #EF9872;clip-path:inset(0 -100vmax)}
+.intro .section-label{color:#713F32}
+.intro h2 span{color:#526D28}
+.intro p{color:#583E37}
+.feature-zone{background:#F2C94C;box-shadow:0 0 0 100vmax #F2C94C;clip-path:inset(0 -100vmax)}
+.feature-heading p{color:#655126}
 .feature{background:#F0EDA9;border:1px solid #6D673A70;box-shadow:0 8px 26px #342A3710;border-radius:2px}
 .feature:nth-child(1){background:#EF9872}
 .feature:nth-child(2){background:#A8C9D9}
-.feature:nth-child(3){background:#F2C94C}
+.feature:nth-child(3){background:#F7D978}
 .feature:nth-child(4){background:#B8CE72}
-.feature:nth-child(5){background:#E5A28B}
+.feature:nth-child(5){background:#D9B7CF}
 .feature:hover{border-color:#342A37;box-shadow:8px 10px 0 #342A3715}
 .feature h3{color:#342A37}
 .feature p{color:#51443F}
@@ -119,7 +127,7 @@ h1 span,.hero-editorial h1 span{color:#B94C38}
 .feature:nth-child(2) .feature-glyph{color:#365F72}
 .feature:nth-child(3) .feature-glyph{color:#765A1D}
 .feature:nth-child(4) .feature-glyph{color:#526B22}
-.feature:nth-child(5) .feature-glyph{color:#8F3F38}
+.feature:nth-child(5) .feature-glyph{color:#754E70}
 .workflow{background:#75AFCB;color:#263D49}
 .workflow:before{border-color:#342A3725;box-shadow:0 0 0 50px #342A380A,0 0 0 100px #342A3807}
 .workflow .section-label{color:#365F72}
@@ -128,7 +136,8 @@ h1 span,.hero-editorial h1 span{color:#B94C38}
 .workflow-step h3{color:#263D49}
 .step-orbit{border-color:#477E99;color:#342A37}
 .step-orbit:after{border-color:#477E99}
-.workspace-link{color:#A84632;border-color:#A8463280}
+.workspace{background:#B8CE72;box-shadow:0 0 0 100vmax #B8CE72;clip-path:inset(0 -100vmax)}
+.workspace-link{color:#8F3E2E;border-color:#8F3E2E80}
 .app-panel{background:#F0EDA9;color:#342A37;border-color:#756D3F;box-shadow:25px 30px 60px #342A3728}
 .app-top{border-color:#756D3F55}
 .app-welcome small,.app-stat span,.app-task small{color:#75664C}
@@ -144,9 +153,9 @@ h1 span,.hero-editorial h1 span{color:#B94C38}
 .final .section-label{color:#633B34}
 .final p{color:#633B34}
 .final .primary{background:#342A37;color:#F0EDA9}
-.footer{color:#594B43}
+.footer{color:#344C58}
 .footer a:hover{color:#A84632}
-@media(max-width:600px){.nav{background:#D9E66A;border-color:var(--line)}}
+@media(max-width:600px){.nav{background:#A8C9D9;border-color:var(--line)}}
 </style>
 </head>
 <body><div class="grain"></div>
