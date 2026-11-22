@@ -150,6 +150,38 @@ h1 span,.hero-editorial h1 span{color:#A84632}
 .feature:nth-child(3) .feature-glyph{color:#765A1D}
 .feature:nth-child(4) .feature-glyph{color:#526B22}
 .feature:nth-child(5) .feature-glyph{color:#754E70}
+
+/* Liquid-glass treatment for the five system cards */
+.feature{
+  isolation:isolate;
+  border:1px solid rgba(255,255,255,.72);
+  border-radius:16px;
+  background:rgba(255,255,255,.30);
+  -webkit-backdrop-filter:blur(24px) saturate(165%);
+  backdrop-filter:blur(24px) saturate(165%);
+  box-shadow:0 12px 30px rgba(83,65,24,.10),0 2px 5px rgba(83,65,24,.06),inset 0 1.5px 0 rgba(255,255,255,.86),inset 0 -1px 0 rgba(255,255,255,.22);
+}
+.feature:before{
+  content:"";
+  position:absolute;
+  inset:0;
+  z-index:-1;
+  pointer-events:none;
+  border-radius:inherit;
+  background:linear-gradient(145deg,rgba(255,255,255,.62) 0%,rgba(255,255,255,.18) 28%,rgba(255,255,255,.04) 62%,rgba(255,255,255,.24) 100%);
+}
+.feature:nth-child(1){background:rgba(239,152,114,.43)}
+.feature:nth-child(2){background:rgba(168,201,217,.43)}
+.feature:nth-child(3){background:rgba(247,217,120,.48)}
+.feature:nth-child(4){background:rgba(184,206,114,.43)}
+.feature:nth-child(5){background:rgba(217,183,207,.43)}
+.feature h3,.feature p,.feature-num,.feature-glyph,.feature-orb{position:relative;z-index:1}
+.feature:hover{
+  border-color:rgba(255,255,255,.94);
+  box-shadow:0 18px 38px rgba(83,65,24,.15),0 3px 8px rgba(83,65,24,.08),inset 0 1.5px 0 rgba(255,255,255,.96),inset 0 -1px 0 rgba(255,255,255,.3);
+  transform:translateY(-6px);
+}
+
 .workflow{background:#75AFCB;color:#263D49}
 .workflow:before{border-color:#342A3725;box-shadow:0 0 0 50px #342A380A,0 0 0 100px #342A3807}
 .workflow .section-label{color:#365F72}
