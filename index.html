@@ -122,30 +122,30 @@ h1 span,.hero-editorial h1 span{color:#A84632}
 .intro p{color:#583E37}
 .feature-zone{background:#F2C94C;box-shadow:0 0 0 100vmax #F2C94C;clip-path:inset(0 -100vmax)}
 .feature-heading p{color:#655126}
-/* Glass feature cards: translucent surfaces with soft colour refraction */
+/* Tinted glass cards: keep each original card colour, soften it with blur */
 .feature{
-  background:rgba(255,255,255,.30);
-  border:1px solid rgba(255,255,255,.66);
-  border-radius:5px;
-  box-shadow:0 12px 34px rgba(52,42,55,.09),inset 0 1px 0 rgba(255,255,255,.72);
-  -webkit-backdrop-filter:blur(18px) saturate(145%);
-  backdrop-filter:blur(18px) saturate(145%);
+  position:relative;
+  background:rgba(240,237,169,.76);
+  border:1px solid rgba(52,42,55,.20);
+  border-radius:3px;
+  box-shadow:0 10px 28px rgba(52,42,55,.09),inset 0 1px 0 rgba(255,255,255,.28);
+  -webkit-backdrop-filter:blur(14px) saturate(125%);
+  backdrop-filter:blur(14px) saturate(125%);
 }
-.feature:nth-child(1){background:rgba(255,231,220,.36)}
-.feature:nth-child(2){background:rgba(222,244,255,.38)}
-.feature:nth-child(3){background:rgba(255,248,215,.40)}
-.feature:nth-child(4){background:rgba(236,248,210,.38)}
-.feature:nth-child(5){background:rgba(250,230,246,.38)}
+.feature:nth-child(1){background:rgba(239,152,114,.78)}
+.feature:nth-child(2){background:rgba(168,201,217,.78)}
+.feature:nth-child(3){background:rgba(247,217,120,.80)}
+.feature:nth-child(4){background:rgba(184,206,114,.78)}
+.feature:nth-child(5){background:rgba(217,183,207,.78)}
 .feature:hover{
-  border-color:rgba(255,255,255,.9);
-  box-shadow:0 18px 42px rgba(52,42,55,.13),inset 0 1px 0 rgba(255,255,255,.85);
+  border-color:rgba(52,42,55,.38);
+  box-shadow:0 16px 34px rgba(52,42,55,.13),inset 0 1px 0 rgba(255,255,255,.36);
   transform:translateY(-5px);
 }
 .feature h3{color:#342A37}
 .feature p{color:#51443F}
-.feature-orb{background:radial-gradient(circle at 35% 30%,rgba(255,255,255,.55),transparent 68%);filter:blur(10px)}
-.feature-glyph{color:#9C4937}
-.feature:nth-child(2) .feature-glyph{color:#365F72}
+.feature-orb{background:radial-gradient(circle at 35% 30%,rgba(255,255,255,.28),transparent 68%);filter:blur(12px)}
+
 .feature:nth-child(3) .feature-glyph{color:#765A1D}
 .feature:nth-child(4) .feature-glyph{color:#526B22}
 .feature:nth-child(5) .feature-glyph{color:#754E70}
@@ -178,6 +178,10 @@ h1 span,.hero-editorial h1 span{color:#A84632}
 .footer a:hover{color:#A84632}
 @media(max-width:600px){.nav{background:#A8E0FF;border-color:var(--line)}}
 
+
+/* The Shift: keep the two-part thought visually connected */
+.intro{grid-template-columns:.4fr 1.6fr;gap:50px}
+.intro h2{font-size:clamp(42px,4vw,58px);line-height:1.08;max-width:1050px;letter-spacing:-.035em}
 /* TYPE SCALE REFINEMENT — improve readability across the full landing page */
 h1,.hero-editorial h1{letter-spacing:-.045em}
 .hero-editorial h1 span{letter-spacing:-.015em}
