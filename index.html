@@ -333,6 +333,24 @@ h1,.hero-editorial h1{letter-spacing:-.045em}
   .week-space .plan-change{pointer-events:auto}
 }
 
+
+/* Keep decorative card symbols out of the text flow and behind the copy. */
+.feature{isolation:isolate}
+.feature-glyph{
+  position:absolute!important;
+  z-index:0!important;
+  top:18px;
+  right:22px;
+  margin:0;
+  line-height:1;
+  pointer-events:none;
+  opacity:.22;
+}
+.feature h3,.feature p{
+  position:relative;
+  z-index:1;
+}
+
 </style>
 </head>
 <body><div class="grain"></div>
