@@ -386,81 +386,19 @@ html{scroll-padding-top:112px}
 }
 
 
-/* Give the toolkit headline more visual authority. */
+/* Keep the toolkit headline prominent without an overly heavy weight. */
 .feature-heading .section-title{
-  font-weight:650;
+  font-weight:500;
   font-size:clamp(58px,6.1vw,82px);
   line-height:.96;
   letter-spacing:-.035em;
-  -webkit-text-stroke:.2px currentColor;
-  text-shadow:0 2px 0 rgba(48,38,56,.08);
+  -webkit-text-stroke:0;
+  text-shadow:none;
 }
 @media(max-width:600px){
   .feature-heading .section-title{font-size:clamp(43px,10vw,58px);line-height:1}
 }
 
-
-/* Constrain the fixed navigation to a centered, page-width panel. */
-.top{
-  width:min(1656px,calc(100vw - 72px));
-  left:50%;
-  right:auto;
-  transform:translateX(-50%);
-  padding:0;
-}
-@media(max-width:600px){
-  .top{width:calc(100vw - 36px)}
-}
-
-
-/* Full-width fixed navigation, with a shorter vertical profile. */
-.top{
-  width:100%;
-  left:0;
-  right:0;
-  transform:none;
-  height:82px;
-  padding:0 max(36px,calc((100vw - 1656px)/2));
-}
-.shell{padding-top:82px}
-@media(max-width:900px){
-  .top{padding:0 24px}
-}
-@media(max-width:600px){
-  .top{height:68px;padding:0 18px}
-  .shell{padding-top:68px}
-}
-
-
-/* Further compact the fixed navigation bar. */
-.top{height:68px}
-.shell{padding-top:68px}
-@media(max-width:600px){
-  .top{height:60px}
-  .shell{padding-top:60px}
-  .top .nav{top:60px}
-}
-
-
-/* Compact the navigation panel without shrinking its typography. */
-.top{height:60px}
-.shell{padding-top:60px}
-.top .logo{font-size:20px}
-.top .nav{font-size:20px;gap:30px}
-.top .nav-cta{font-size:20px;padding:9px 16px}
-html{scroll-padding-top:72px}
-@media(max-width:900px){
-  .top{height:60px}
-  .shell{padding-top:60px}
-  .top .nav{font-size:16px;gap:22px}
-  .top .nav-cta{font-size:16px;padding:8px 13px}
-}
-@media(max-width:600px){
-  .top{height:54px;padding:0 18px}
-  .shell{padding-top:54px}
-  .top .nav{top:54px}
-  html{scroll-padding-top:66px}
-}
 </style>
 </head>
 <body><div class="grain"></div>
