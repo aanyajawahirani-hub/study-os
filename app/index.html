@@ -4,6 +4,33 @@
 <meta name="theme-color" content="#f4f1ea"><meta name="apple-mobile-web-app-capable" content="yes">
 <link rel="manifest" href="/manifest.webmanifest"><link rel="apple-touch-icon" href="/icon.svg">
 <title>StudyOS</title>
+<style id="supabase-auth-guard">html.auth-pending body{visibility:hidden}</style>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.119.2"></script>
+<script>
+document.documentElement.classList.add("auth-pending");
+window.studyOSAuthReady=(async()=>{
+  try{
+    const client=window.supabase.createClient(
+      "https://oepeyvbtbjpvkmvsdxbw.supabase.co",
+      "sb_publishable_GHWEOy9U2v48gJhhjXbWIQ_ZHJo3NtF"
+    );
+    window.studyOSSupabase=client;
+    const {data,error}=await client.auth.getSession();
+    if(error||!data.session){location.replace("/auth/");return null;}
+    const user=data.session.user;
+    window.studyOSAuthUser={
+      id:user.id,
+      email:user.email||"",
+      name:user.user_metadata?.full_name||user.email||"StudyOS user"
+    };
+    document.documentElement.classList.remove("auth-pending");
+    return window.studyOSAuthUser;
+  }catch(error){
+    location.replace("/auth/");
+    return null;
+  }
+})();
+</script>
 <style>
 :root{--paper:#f1eee6;--surface:#f8f5ed;--surface2:#e7e2d7;--ink:#202923;--muted:#6e756d;--line:#c9c5b9;--accent:#a94d38;--accent2:#557766}
 *{box-sizing:border-box}body{margin:0;background:var(--paper);color:var(--ink);font-family:Arial,Helvetica,sans-serif}main{min-height:100vh;display:block}
@@ -1182,67 +1209,15 @@ function syncPomodoro(){const t=$("pomoTimer");if(!t)return;t.textContent=fmt(po
 function setPomoMode(mode){if(mode==="custom"){$("pomoCustomFields").hidden=false;pomo.work=Math.max(5,Number($("pomoWork").value)||25);pomo.break=Math.max(1,Number($("pomoBreak").value)||5)}else{$("pomoCustomFields").hidden=true;pomo.work=Number(mode);pomo.break=mode==="50"?10:5}pomo.mode=mode;pomo.seconds=pomo.work*60;pomo.onBreak=false;pomo.running=false;clearInterval(pomo.interval);syncPomodoro();}
 function pomoBeep(){try{const ac=new (window.AudioContext||window.webkitAudioContext)(),o=ac.createOscillator(),g=ac.createGain();o.frequency.value=740;g.gain.value=.05;o.connect(g).connect(ac.destination);o.start();o.stop(ac.currentTime+.35)}catch(e){}}
 function togglePomodoro(){pomo.running=!pomo.running;clearInterval(pomo.interval);if(pomo.running){pomo.interval=setInterval(()=>{pomo.seconds--;syncPomodoro();if(pomo.seconds<=0){pomoBeep();if(pomo.onBreak){pomo.cycle++;pomo.onBreak=false;pomo.seconds=pomo.work*60}else{pomo.onBreak=true;pomo.seconds=pomo.break*60}if("serviceWorker"in navigator)navigator.serviceWorker.ready.then(r=>r.showNotification(pomo.onBreak?"Focus interval complete":"Break complete",{body:pomo.onBreak?"Take your break, then return for the next cycle.":"Next focus interval is ready."}));syncPomodoro()}},1000)}syncPomodoro();}
-document.querySelectorAll("[data-pomo]").forEach(b=>b.addEventListener("click",()=>setPomoMode(b.dataset.pomo)));$("pomoStart")?.addEventListener("click",togglePomodoro);$("pomoPause")?.addEventListener("click",togglePomodoro);$("pomoReset")?.addEventListener("click",()=>{pomo.running=false;clearInterval(pomo.interval);pomo.seconds=pomo.work*60;pomo.onBreak=false;pomo.cycle=1;syncPomodoro()});const authUser=JSON.parse(localStorage.getItem("studyos-auth")||"null");document.body.classList.toggle("authed",!!authUser);
-function openAuth(reason){$("authModal").classList.add("open");$("authModal").dataset.reason=reason||"feature";setTimeout(()=>$("signupName")?.focus(),50)}
-function requireAuth(){if(authUser)return true;openAuth("feature");return false}
-function completeAuth(user){localStorage.setItem("studyos-auth",JSON.stringify(user));location.reload()}
-$("localSignupForm")?.addEventListener("submit",e=>{e.preventDefault();completeAuth({name:$("signupName").value.trim(),email:$("signupEmail").value.trim(),method:"email",createdAt:Date.now()})});
-$("restoreAccount")?.addEventListener("click",()=>{const saved=localStorage.getItem("studyos-auth");if(saved)location.reload();else openAuth("restore")});
-let studyOSGoogleReady=false;
-let studyOSGoogleClientId="";
-function finishGoogleSignIn(response){
-  try{
-    if(!response?.credential)throw new Error("Missing Google credential");
-    const payload=JSON.parse(atob(response.credential.split(".")[1].replace(/-/g,"+").replace(/_/g,"/")));
-    if(!payload.sub||!payload.email)throw new Error("Incomplete Google profile");
-    completeAuth({name:payload.name||"StudyOS user",email:payload.email,picture:payload.picture||"",method:"google",googleSub:payload.sub,createdAt:Date.now()});
-  }catch(e){$("googleStatus").textContent="Google sign-in could not be completed. Please try again.";}
-}
-function initStudyOSGoogle(clientId){
-  if(!clientId)return;
-  studyOSGoogleClientId=clientId;
-  if(!window.google?.accounts?.id){$("googleStatus").textContent="Google sign-in is loading…";return;}
-  google.accounts.id.initialize({
-    client_id:clientId,
-    callback:finishGoogleSignIn,
-    auto_select:false,
-    cancel_on_tap_outside:true,
-    use_fedcm_for_button:true
-  });
-  google.accounts.id.renderButton($("googleRenderButton"),{
-    type:"standard",
-    theme:"outline",
-    size:"large",
-    text:"continue_with",
-    shape:"rectangular",
-    width:420
-  });
-  $("googleRenderButton").hidden=false;
-  $("googleSignup").hidden=true;
-  studyOSGoogleReady=true;
-  $("googleStatus").textContent="Google is ready. Continue with your Google account.";
-}
-$("googleSignup")?.addEventListener("click",()=>{
-  if(!studyOSGoogleReady){
-    $("googleStatus").textContent=studyOSGoogleClientId?"Google is still loading. Try again in a moment.":"Google sign-in is not configured on this deployment yet.";
-    return;
-  }
+document.querySelectorAll("[data-pomo]").forEach(b=>b.addEventListener("click",()=>setPomoMode(b.dataset.pomo)));$("pomoStart")?.addEventListener("click",togglePomodoro);$("pomoPause")?.addEventListener("click",togglePomodoro);$("pomoReset")?.addEventListener("click",()=>{pomo.running=false;clearInterval(pomo.interval);pomo.seconds=pomo.work*60;pomo.onBreak=false;pomo.cycle=1;syncPomodoro()});let authUser=window.studyOSAuthUser||null;
+document.body.classList.toggle("authed",!!authUser);
+window.studyOSAuthReady.then(user=>{
+  if(!user)return;
+  authUser=user;
+  document.body.classList.add("authed");
 });
-(async function loadStudyOSGoogle(){
-  try{
-    const cfg=await fetch("/api/config",{cache:"no-store"}).then(r=>r.ok?r.json():{});
-    const clientId=cfg.googleClientId||window.STUDYOS_GOOGLE_CLIENT_ID||"";
-    if(!clientId){$("googleStatus").textContent="Google sign-in is not configured on this deployment yet.";return;}
-    window.STUDYOS_GOOGLE_CLIENT_ID=clientId;
-    if(window.google?.accounts?.id){initStudyOSGoogle(clientId);return;}
-    const s=document.createElement("script");
-    s.src="https://accounts.google.com/gsi/client";
-    s.async=true;s.defer=true;
-    s.onload=()=>initStudyOSGoogle(clientId);
-    s.onerror=()=>{$("googleStatus").textContent="Google sign-in could not load. Check your connection or deployment settings.";};
-    document.head.appendChild(s);
-  }catch(e){$("googleStatus").textContent="Could not load Google sign-in configuration.";}
-})();
+function openAuth(){location.replace("/auth/")}
+function requireAuth(){return !!authUser}
 $("notificationSkip")?.addEventListener("click",()=>{$("notificationModal").classList.remove("open")});
 
 async function enableStudyOSNotifications(button){
@@ -1294,7 +1269,7 @@ async function enableStudyOSNotifications(button){
 }
 $("notificationEnable")?.addEventListener("click",()=>enableStudyOSNotifications($("notificationEnable")));
 document.addEventListener("click",e=>{const b=e.target.closest("button");if(!b||b.closest("#authModal"))return;const safe=["sidebarToggle","contentMenuToggle","openClockSettings","notify","saveSetup","closeSetup","notificationEnable","notificationSkip"].includes(b.id)||!!b.closest("#setupModal");if(!safe&&!authUser){e.preventDefault();e.stopImmediatePropagation();openAuth("feature");}},true);
-if(!authUser){$("authModal").classList.add("open");}$("focusAudioFile")?.addEventListener("change",e=>{const f=e.target.files[0];if(!f)return;focusAudio=focusAudio||new Audio();focusAudio.src=URL.createObjectURL(f);$("focusAudioName").textContent=f.name;$("focusSoundStatus").textContent="LOCAL SOUND READY";});
+$("focusAudioFile")?.addEventListener("change",e=>{const f=e.target.files[0];if(!f)return;focusAudio=focusAudio||new Audio();focusAudio.src=URL.createObjectURL(f);$("focusAudioName").textContent=f.name;$("focusSoundStatus").textContent="LOCAL SOUND READY";});
 document.body.dataset.section="today";document.body.dataset.page="today";
     if(typeof showSection==="function")showSection("today");
     if(typeof updateClockAndGreeting==="function")updateClockAndGreeting();
