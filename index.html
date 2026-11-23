@@ -349,3 +349,17 @@ if(!reduce){const io=new IntersectionObserver(entries=>entries.forEach(e=>{if(e.
 @media(max-width:900px){
   .feature-heading p{align-self:flex-start;max-width:300px;flex:0 1 auto}
 }
+
+/* Keep the weekly planner pinned in the hero's visual position while the page scrolls. */
+@media(min-width:901px){
+  .week-space{
+    position:fixed;
+    top:14vh;
+    right:2vw;
+    width:min(54vw,760px);
+    height:535px;
+    z-index:6;
+    pointer-events:none;
+  }
+  .week-plane,.plan-change{pointer-events:auto}
+}
