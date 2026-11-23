@@ -266,6 +266,55 @@ h1,.hero-editorial h1{letter-spacing:-.045em}
   .nav{font-size:16px;gap:30px}
   .nav .nav-cta{font-size:16px}
 }
+
+/* Feature cards: give the copy a clear hierarchy and consistent placement. */
+.feature{
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+  gap:12px;
+  padding:34px;
+  min-height:0;
+}
+.feature h3{
+  margin:0;
+  max-width:440px;
+  font-size:clamp(25px,2vw,31px);
+  line-height:1.08;
+  letter-spacing:-.035em;
+  font-weight:600;
+  color:#302638;
+}
+.feature p{
+  margin:0;
+  max-width:440px;
+  font-size:16px;
+  line-height:1.65;
+  font-weight:500;
+  color:#403640;
+}
+.feature-glyph{
+  top:20px;
+  right:25px;
+  font-size:62px;
+  opacity:.42;
+}
+.feature:nth-child(1) .feature-glyph,
+.feature:nth-child(2) .feature-glyph,
+.feature:nth-child(3) .feature-glyph,
+.feature:nth-child(4) .feature-glyph,
+.feature:nth-child(5) .feature-glyph{color:#302638}
+@media(max-width:900px){
+  .feature{padding:28px;gap:10px}
+  .feature h3{font-size:26px}
+  .feature p{font-size:15px}
+}
+@media(max-width:600px){
+  .feature{min-height:215px;padding:25px}
+  .feature h3{font-size:24px}
+  .feature p{font-size:14px}
+}
+
 </style>
 </head>
 <body><div class="grain"></div>
