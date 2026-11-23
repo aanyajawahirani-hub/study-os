@@ -412,6 +412,25 @@ html{scroll-padding-top:112px}
   .top{width:calc(100vw - 36px)}
 }
 
+
+/* Full-width fixed navigation, with a shorter vertical profile. */
+.top{
+  width:100%;
+  left:0;
+  right:0;
+  transform:none;
+  height:82px;
+  padding:0 max(36px,calc((100vw - 1656px)/2));
+}
+.shell{padding-top:82px}
+@media(max-width:900px){
+  .top{padding:0 24px}
+}
+@media(max-width:600px){
+  .top{height:68px;padding:0 18px}
+  .shell{padding-top:68px}
+}
+
 </style>
 </head>
 <body><div class="grain"></div>
