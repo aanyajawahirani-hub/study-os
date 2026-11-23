@@ -315,6 +315,24 @@ h1,.hero-editorial h1{letter-spacing:-.045em}
   .feature p{font-size:14px}
 }
 
+
+/* Desktop: detach the planner from the hero so it stays pinned in the viewport. */
+@media(min-width:901px){
+  .week-space{
+    position:fixed!important;
+    top:14vh;
+    right:2vw;
+    left:auto;
+    width:min(54vw,760px);
+    height:535px;
+    margin:0;
+    z-index:15;
+    pointer-events:none;
+  }
+  .week-space .week-plane,
+  .week-space .plan-change{pointer-events:auto}
+}
+
 </style>
 </head>
 <body><div class="grain"></div>
