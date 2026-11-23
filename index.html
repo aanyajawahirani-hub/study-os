@@ -399,6 +399,19 @@ html{scroll-padding-top:112px}
   .feature-heading .section-title{font-size:clamp(43px,10vw,58px);line-height:1}
 }
 
+
+/* Constrain the fixed navigation to a centered, page-width panel. */
+.top{
+  width:min(1656px,calc(100vw - 72px));
+  left:50%;
+  right:auto;
+  transform:translateX(-50%);
+  padding:0;
+}
+@media(max-width:600px){
+  .top{width:calc(100vw - 36px)}
+}
+
 </style>
 </head>
 <body><div class="grain"></div>
