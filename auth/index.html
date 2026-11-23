@@ -106,7 +106,7 @@ h2{font:600 clamp(33px,3vw,43px)/1 var(--display);letter-spacing:-.045em;margin:
       <form id="authForm" novalidate>
         <div class="fields">
           <div class="field" id="nameField"><label for="name">Full name</label><input id="name" name="name" autocomplete="name" placeholder="Your name" maxlength="80"></div>
-          <div class="field"><label for="email">Email address</label><input id="email" name="email" type="email" autocomplete="email" placeholder="you@example.com" maxlength="160" required></div>
+          <div class="field" id="emailField"><label for="email">Email address</label><input id="email" name="email" type="email" autocomplete="email" placeholder="you@example.com" maxlength="160" required></div>
           <div class="field" id="passwordField"><label for="password">Password</label><div class="password-wrap"><input id="password" name="password" type="password" autocomplete="new-password" placeholder="Create a password" minlength="8" required><button class="show-password" type="button" id="togglePassword">SHOW</button></div></div>
           <div class="field" id="confirmField"><label for="confirm">Confirm password</label><input id="confirm" name="confirm" type="password" autocomplete="new-password" placeholder="Enter your password again"></div>
           <div class="form-meta" id="forgotRow" hidden><button class="text-action" type="button" id="forgotButton">Forgot password?</button></div>
@@ -119,28 +119,40 @@ h2{font:600 clamp(33px,3vw,43px)/1 var(--display);letter-spacing:-.045em;margin:
     </div>
   </section>
 </main>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.119.2"></script>
 <script>
 (() => {
+  const SUPABASE_URL = "https://oepeyvbtbjpvkmvsdxbw.supabase.co";
+  const SUPABASE_PUBLISHABLE_KEY = "sb_publishable_GHWEOy9U2v48gJhhjXbWIQ_ZHJo3NtF";
+  const client = window.supabase.createClient(SUPABASE_URL, SUPABASE_PUBLISHABLE_KEY);
+  window.studyOSSupabase = client;
   const $ = id => document.getElementById(id);
   let mode = "signup";
+  function message(text) { $("status").textContent = text; }
   function setMode(next) {
     mode = next;
     const signup = mode === "signup";
-    $("signupTab").setAttribute("aria-selected", String(signup));
-    $("loginTab").setAttribute("aria-selected", String(!signup));
-    $("heading").textContent = signup ? "Create your account." : "Welcome back.";
-    $("subheading").textContent = signup ? "Set up your workspace and keep your academic life in sync." : "Sign in to return to your academic workspace.";
+    const recovery = mode === "recovery";
+    $("signupTab").hidden = recovery;
+    $("loginTab").hidden = recovery;
+    document.querySelector(".mode-switch").hidden = recovery;
+    $("heading").textContent = recovery ? "Choose a new password." : signup ? "Create your account." : "Welcome back.";
+    $("subheading").textContent = recovery ? "Set a new password for your StudyOS account." : signup ? "Set up your workspace and keep your academic life in sync." : "Sign in to return to your academic workspace.";
     $("nameField").hidden = !signup;
-    $("confirmField").hidden = !signup;
-    $("password").autocomplete = signup ? "new-password" : "current-password";
-    $("password").placeholder = signup ? "Create a password" : "Enter your password";
+    $("emailField").hidden = recovery;
+    $("confirmField").hidden = !signup && !recovery;
+    $("password").autocomplete = signup || recovery ? "new-password" : "current-password";
+    $("password").placeholder = recovery ? "New password" : signup ? "Create a password" : "Enter your password";
+    $("googleButton").hidden = recovery;
+    $("divider").hidden = recovery;
     $("googleLabel").textContent = signup ? "Continue with Google" : "Sign in with Google";
-    $("submitButton").textContent = signup ? "CREATE ACCOUNT" : "LOG IN";
+    $("submitButton").textContent = recovery ? "UPDATE PASSWORD" : signup ? "CREATE ACCOUNT" : "LOG IN";
+    $("switchNote").hidden = recovery;
     $("switchNote").firstChild.textContent = signup ? "Already have an account?" : "New to StudyOS?";
     $("switchButton").textContent = signup ? "Log in" : "Create an account";
-    $("forgotRow").hidden = signup;
+    $("forgotRow").hidden = signup || recovery;
+    $("legal").textContent = recovery ? "Choose a password you have not used elsewhere." : "Your account is protected by Supabase authentication.";
     $("status").textContent = "";
-    $("legal").textContent = "Account creation and sign-in will be enabled when secure authentication is connected.";
   }
   $("signupTab").addEventListener("click", () => setMode("signup"));
   $("loginTab").addEventListener("click", () => setMode("login"));
@@ -151,34 +163,84 @@ h2{font:600 clamp(33px,3vw,43px)/1 var(--display);letter-spacing:-.045em;margin:
     input.type = visible ? "text" : "password";
     $("togglePassword").textContent = visible ? "HIDE" : "SHOW";
   });
-  $("forgotButton").addEventListener("click", () => {
-    $("status").textContent = "Password reset will be available once StudyOS authentication is connected.";
+  $("forgotButton").addEventListener("click", async () => {
+    const email = $("email").value.trim();
+    if (!email) { message("Enter your email address first."); $("email").focus(); return; }
+    const { error } = await client.auth.resetPasswordForEmail(email, { redirectTo: location.origin + "/auth/" });
+    message(error ? error.message : "If an account exists for that email, a password reset link is on its way.");
   });
-  $("googleButton").addEventListener("click", () => {
-    $("status").textContent = "Google sign-in will be enabled after the StudyOS authentication provider is configured.";
+  $("googleButton").addEventListener("click", async () => {
+    $("googleButton").disabled = true;
+    message("Connecting to Google…");
+    const { error } = await client.auth.signInWithOAuth({
+      provider: "google",
+      options: { redirectTo: location.origin + "/app/" }
+    });
+    if (error) { message(error.message); $("googleButton").disabled = false; }
   });
-  $("authForm").addEventListener("submit", event => {
+  $("authForm").addEventListener("submit", async event => {
     event.preventDefault();
     const email = $("email").value.trim();
     const password = $("password").value;
-    if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
-      $("status").textContent = "Enter a valid email address to continue.";
-      $("email").focus();
-      return;
+    if (mode !== "recovery" && (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email))) {
+      message("Enter a valid email address to continue."); $("email").focus(); return;
     }
     if (password.length < 8) {
-      $("status").textContent = "Use a password with at least 8 characters.";
-      $("password").focus();
-      return;
+      message("Use a password with at least 8 characters."); $("password").focus(); return;
     }
-    if (mode === "signup" && $("password").value !== $("confirm").value) {
-      $("status").textContent = "Those passwords do not match yet.";
-      $("confirm").focus();
-      return;
+    if (mode === "signup" && !$("name").value.trim()) {
+      message("Enter your name to create your account."); $("name").focus(); return;
     }
-    $("status").textContent = "The form is ready. Secure account access will be activated after Supabase is connected.";
+    if ((mode === "signup" || mode === "recovery") && password !== $("confirm").value) {
+      message("Those passwords do not match yet."); $("confirm").focus(); return;
+    }
+    $("submitButton").disabled = true;
+    $("submitButton").textContent = "PLEASE WAIT…";
+    try {
+      if (mode === "recovery") {
+        const { error } = await client.auth.updateUser({ password });
+        if (error) throw error;
+        message("Your password has been updated. Opening your workspace…");
+        location.replace("/app/");
+        return;
+      }
+      if (mode === "signup") {
+        const { data, error } = await client.auth.signUp({
+          email,
+          password,
+          options: {
+            data: { full_name: $("name").value.trim() },
+            emailRedirectTo: location.origin + "/auth/"
+          }
+        });
+        if (error) throw error;
+        if (data.session) {
+          message("Account created. Opening your workspace…");
+          location.replace("/app/");
+        } else {
+          message("Account created. Check your inbox for the confirmation link, then return here to log in.");
+          setMode("login");
+          $("email").value = email;
+        }
+      } else {
+        const { error } = await client.auth.signInWithPassword({ email, password });
+        if (error) throw error;
+        message("Signed in. Opening your workspace…");
+        location.replace("/app/");
+      }
+    } catch (error) {
+      message(error?.message || "Something went wrong. Please try again.");
+      $("submitButton").disabled = false;
+      $("submitButton").textContent = mode === "recovery" ? "UPDATE PASSWORD" : mode === "signup" ? "CREATE ACCOUNT" : "LOG IN";
+    }
   });
-  setMode("signup");
+  (async () => {
+    const recovery = new URLSearchParams(location.hash.slice(1)).get("type") === "recovery";
+    if (recovery) { setMode("recovery"); return; }
+    const { data, error } = await client.auth.getSession();
+    if (!error && data.session) location.replace("/app/");
+    else setMode("signup");
+  })();
 })();
 </script>
 </body>
