@@ -463,35 +463,3 @@ const reduce=window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 if(!reduce){const io=new IntersectionObserver(entries=>entries.forEach(e=>{if(e.isIntersecting){e.target.classList.add("visible");io.unobserve(e.target)}}),{threshold:.12});document.querySelectorAll(".reveal").forEach(el=>io.observe(el));}
 </script>
 </body></html>
-
-/* Make the feature-section kicker read as a deliberate visual element. */
-.feature-heading p{
-  color:#FFF8D8;
-  background:#46351B;
-  border:1px solid rgba(255,248,216,.55);
-  border-radius:999px;
-  padding:13px 17px;
-  max-width:270px;
-  flex:0 0 270px;
-  font:700 10px/1.65 var(--mono);
-  letter-spacing:.13em;
-  text-align:center;
-  box-shadow:0 5px 0 rgba(70,53,27,.12),inset 0 1px 0 rgba(255,255,255,.16);
-}
-@media(max-width:900px){
-  .feature-heading p{align-self:flex-start;max-width:300px;flex:0 1 auto}
-}
-
-/* Keep the weekly planner pinned in the hero's visual position while the page scrolls. */
-@media(min-width:901px){
-  .week-space{
-    position:fixed;
-    top:14vh;
-    right:2vw;
-    width:min(54vw,760px);
-    height:535px;
-    z-index:6;
-    pointer-events:none;
-  }
-  .week-plane,.plan-change{pointer-events:auto}
-}
