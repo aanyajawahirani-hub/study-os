@@ -218,9 +218,9 @@ h2{font:600 clamp(33px,3vw,43px)/1 var(--display);letter-spacing:-.045em;margin:
           message("Account created. Opening your workspace…");
           location.replace("/app/");
         } else {
-          message("Account created. Check your inbox for the confirmation link, then return here to log in.");
           setMode("login");
           $("email").value = email;
+          message("Account created. Check your inbox for the confirmation link, then return here to log in.");
         }
       } else {
         const { error } = await client.auth.signInWithPassword({ email, password });
