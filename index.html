@@ -441,6 +441,26 @@ html{scroll-padding-top:112px}
   .top .nav{top:60px}
 }
 
+
+/* Compact the navigation panel without shrinking its typography. */
+.top{height:60px}
+.shell{padding-top:60px}
+.top .logo{font-size:20px}
+.top .nav{font-size:20px;gap:30px}
+.top .nav-cta{font-size:20px;padding:9px 16px}
+html{scroll-padding-top:72px}
+@media(max-width:900px){
+  .top{height:60px}
+  .shell{padding-top:60px}
+  .top .nav{font-size:16px;gap:22px}
+  .top .nav-cta{font-size:16px;padding:8px 13px}
+}
+@media(max-width:600px){
+  .top{height:54px;padding:0 18px}
+  .shell{padding-top:54px}
+  .top .nav{top:54px}
+  html{scroll-padding-top:66px}
+}
 </style>
 </head>
 <body><div class="grain"></div>
