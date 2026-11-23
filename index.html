@@ -385,6 +385,20 @@ html{scroll-padding-top:112px}
   .top .logo{font-size:17px}
 }
 
+
+/* Give the toolkit headline more visual authority. */
+.feature-heading .section-title{
+  font-weight:700;
+  font-size:clamp(58px,6.1vw,82px);
+  line-height:.96;
+  letter-spacing:-.035em;
+  -webkit-text-stroke:.45px currentColor;
+  text-shadow:0 2px 0 rgba(48,38,56,.08);
+}
+@media(max-width:600px){
+  .feature-heading .section-title{font-size:clamp(43px,10vw,58px);line-height:1}
+}
+
 </style>
 </head>
 <body><div class="grain"></div>
