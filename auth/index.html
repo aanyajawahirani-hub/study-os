@@ -205,12 +205,22 @@ h2{font:600 clamp(33px,3vw,43px)/1 var(--display);letter-spacing:-.045em;margin:
   });
   $("googleButton").addEventListener("click", async () => {
     $("googleButton").disabled = true;
-    message("Connecting to Google…");
-    const { error } = await client.auth.signInWithOAuth({
-      provider: "google",
-      options: { redirectTo: location.origin + "/app/" }
-    });
-    if (error) { message(error.message); $("googleButton").disabled = false; }
+    message("Opening Google sign-in…");
+    try {
+      const { data, error } = await client.auth.signInWithOAuth({
+        provider: "google",
+        options: {
+          redirectTo: location.origin + "/app/",
+          skipBrowserRedirect: true
+        }
+      });
+      if (error) throw error;
+      if (!data?.url) throw new Error("Supabase did not return a Google sign-in URL. Check the Google provider configuration.");
+      window.location.assign(data.url);
+    } catch (error) {
+      message(error?.message || "Google sign-in could not start. Please try again.");
+      $("googleButton").disabled = false;
+    }
   });
   $("authForm").addEventListener("submit", async event => {
     event.preventDefault();
