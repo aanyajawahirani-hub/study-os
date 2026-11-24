@@ -45,7 +45,7 @@ window.studyOSAuthReady=(async()=>{
       subjects:user.user_metadata?.subjects||"",
       provider:user.app_metadata?.provider||user.app_metadata?.providers?.[0]||"account"
     };
-    const remaining=Math.max(0,650-(Date.now()-transitionStarted));
+    const remaining=Math.max(0,3000-(Date.now()-transitionStarted));
     if(remaining)await new Promise(resolve=>setTimeout(resolve,remaining));
     document.documentElement.classList.remove("auth-pending");
     const transition=document.getElementById("authTransition");
@@ -836,7 +836,7 @@ aside#appSidebar .streak{position:sticky;bottom:auto;margin-top:22px}
   <div class="auth-transition-inner">
     <div class="auth-transition-mark" aria-hidden="true"><span>S</span></div>
     <h1 class="auth-transition-title">Welcome to StudyOS.</h1>
-    <p class="auth-transition-copy">Preparing your workspace...</p>
+    <p class="auth-transition-copy">Signing you in and preparing your workspace...</p>
     <div class="auth-transition-loader" aria-hidden="true"></div>
   </div>
 </div><main>
