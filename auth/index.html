@@ -50,6 +50,13 @@ h2{font:600 clamp(33px,3vw,43px)/1 var(--display);letter-spacing:-.045em;margin:
 .field input{width:100%;height:44px;border:1px solid #CFC3BB;background:#FBF8F3;color:#29212B;padding:0 12px;border-radius:0;outline:none;font-size:12px}
 .field input:focus{border-color:#9C6967;box-shadow:0 0 0 3px #9C69671A}
 .password-wrap{position:relative}.password-wrap input{padding-right:65px}
+.password-feedback{display:grid;gap:6px;margin-top:7px}
+.strength-top{display:flex;justify-content:space-between;align-items:center;font:9px var(--mono);letter-spacing:.04em;color:#786D73}
+.strength-bars{display:grid;grid-template-columns:repeat(4,1fr);gap:4px}
+.strength-bars span{height:3px;background:#D9CEC6;transition:background .18s}
+.strength-bars span.filled{background:#B87968}
+.password-hint{font-size:9px;line-height:1.5;color:#897D83}
+.password-hint.good{color:#52715D}
 .show-password{position:absolute;right:10px;top:50%;transform:translateY(-50%);border:0;background:none;color:#786B73;font-size:9px;font-weight:600;cursor:pointer}
 .form-meta{display:flex;justify-content:flex-end;margin-top:-3px}
 .text-action{border:0;background:none;color:#785B66;font-size:10px;text-decoration:underline;text-underline-offset:3px;cursor:pointer;padding:0}
@@ -107,7 +114,7 @@ h2{font:600 clamp(33px,3vw,43px)/1 var(--display);letter-spacing:-.045em;margin:
         <div class="fields">
           <div class="field" id="nameField"><label for="name">Full name</label><input id="name" name="name" autocomplete="name" placeholder="Your name" maxlength="80"></div>
           <div class="field" id="emailField"><label for="email">Email address</label><input id="email" name="email" type="email" autocomplete="email" placeholder="you@example.com" maxlength="160" required></div>
-          <div class="field" id="passwordField"><label for="password">Password</label><div class="password-wrap"><input id="password" name="password" type="password" autocomplete="new-password" placeholder="Create a password" minlength="8" required><button class="show-password" type="button" id="togglePassword">SHOW</button></div></div>
+          <div class="field" id="passwordField"><label for="password">Password</label><div class="password-wrap"><input id="password" name="password" type="password" autocomplete="new-password" placeholder="Create a password" minlength="8" required aria-describedby="passwordFeedback"><button class="show-password" type="button" id="togglePassword">SHOW</button></div><div class="password-feedback" id="passwordFeedback" aria-live="polite"><div class="strength-top"><span>Password strength</span><strong id="strengthLabel">Not entered</strong></div><div class="strength-bars" aria-hidden="true"><span></span><span></span><span></span><span></span></div><div class="password-hint" id="passwordHint">Use at least 8 characters. A mix of letters, numbers and symbols makes it harder to guess.</div></div></div>
           <div class="field" id="confirmField"><label for="confirm">Confirm password</label><input id="confirm" name="confirm" type="password" autocomplete="new-password" placeholder="Enter your password again"></div>
           <div class="form-meta" id="forgotRow" hidden><button class="text-action" type="button" id="forgotButton">Forgot password?</button></div>
           <button class="submit" type="submit" id="submitButton">CREATE ACCOUNT</button>
@@ -121,13 +128,19 @@ h2{font:600 clamp(33px,3vw,43px)/1 var(--display);letter-spacing:-.045em;margin:
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.119.2"></script>
 <script>
 (() => {
+  const $ = id => document.getElementById(id);
+  function message(text) { $("status").textContent = text; }
+  if (!window.supabase || typeof window.supabase.createClient !== "function") {
+    message("Secure sign-in could not load. Check your connection, refresh the page and try again.");
+    $("submitButton").disabled = true;
+    $("googleButton").disabled = true;
+    return;
+  }
   const SUPABASE_URL = "https://oepeyvbtbjpvkmvsdxbw.supabase.co";
   const SUPABASE_PUBLISHABLE_KEY = "sb_publishable_GHWEOy9U2v48gJhhjXbWIQ_ZHJo3NtF";
   const client = window.supabase.createClient(SUPABASE_URL, SUPABASE_PUBLISHABLE_KEY);
   window.studyOSSupabase = client;
-  const $ = id => document.getElementById(id);
   let mode = "signup";
-  function message(text) { $("status").textContent = text; }
   function setMode(next) {
     mode = next;
     const signup = mode === "signup";
@@ -161,6 +174,29 @@ h2{font:600 clamp(33px,3vw,43px)/1 var(--display);letter-spacing:-.045em;margin:
     input.type = visible ? "text" : "password";
     $("togglePassword").textContent = visible ? "HIDE" : "SHOW";
   });
+  function updatePasswordFeedback() {
+    const value = $("password").value;
+    const checks = [
+      value.length >= 8,
+      value.length >= 12,
+      /[a-z]/.test(value) && /[A-Z]/.test(value),
+      /\\d/.test(value),
+      /[^A-Za-z0-9]/.test(value)
+    ];
+    const score = checks.filter(Boolean).length;
+    const label = !value ? "Not entered" : value.length < 8 ? "Too short" : score <= 1 ? "Weak" : score <= 2 ? "Fair" : score <= 3 ? "Good" : "Strong";
+    $("strengthLabel").textContent = label;
+    const bars = document.querySelectorAll(".strength-bars span");
+    const filled = !value ? 0 : value.length < 8 ? 1 : Math.max(2, Math.min(4, score - 1));
+    bars.forEach((bar, index) => bar.classList.toggle("filled", index < filled));
+    $("passwordHint").textContent = value.length < 8
+      ? `Add ${8 - value.length} more character${8 - value.length === 1 ? "" : "s"} to meet the 8-character minimum.`
+      : label === "Strong"
+        ? "Good password. Keep it unique to StudyOS."
+        : "Good start. Add length and a mix of uppercase/lowercase letters, numbers or symbols.";
+    $("passwordHint").classList.toggle("good", value.length >= 8 && score >= 4);
+  }
+  $("password").addEventListener("input", updatePasswordFeedback);
   $("forgotButton").addEventListener("click", async () => {
     const email = $("email").value.trim();
     if (!email) { message("Enter your email address first."); $("email").focus(); return; }
@@ -183,8 +219,8 @@ h2{font:600 clamp(33px,3vw,43px)/1 var(--display);letter-spacing:-.045em;margin:
     if (mode !== "recovery" && (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email))) {
       message("Enter a valid email address to continue."); $("email").focus(); return;
     }
-    if (password.length < 8) {
-      message("Use a password with at least 8 characters."); $("password").focus(); return;
+    if ((mode === "signup" || mode === "recovery") && password.length < 8) {
+      message("Your password must be at least 8 characters long."); $("password").focus(); updatePasswordFeedback(); return;
     }
     if (mode === "signup" && !$("name").value.trim()) {
       message("Enter your name to create your account."); $("name").focus(); return;
@@ -227,7 +263,7 @@ h2{font:600 clamp(33px,3vw,43px)/1 var(--display);letter-spacing:-.045em;margin:
         location.replace("/app/");
       }
     } catch (error) {
-      message(error?.message || "Something went wrong. Please try again.");
+      message(error?.message || "We couldn't complete that request. Please try again.");
       $("submitButton").disabled = false;
       $("submitButton").textContent = mode === "recovery" ? "UPDATE PASSWORD" : mode === "signup" ? "CREATE ACCOUNT" : "LOG IN";
     }
