@@ -42,6 +42,7 @@ h2{font:600 clamp(33px,3vw,43px)/1 var(--display);letter-spacing:-.045em;margin:
 .mode-switch button[aria-selected="true"]:after{content:"";position:absolute;bottom:-1px;left:0;right:0;height:2px;background:#A96861}
 .google{width:100%;height:46px;border:1px solid #BFB4AD;background:#FBF8F3;color:#29212B;display:flex;align-items:center;justify-content:center;gap:11px;font-size:11px;font-weight:600;cursor:pointer;transition:background .2s,border-color .2s}
 .google:hover{background:#fff;border-color:#8D7C83}
+.google-hint{font-size:10px;line-height:1.55;color:#766A72;text-align:center;margin:9px 0 0}
 .google-mark{font:700 17px Arial,sans-serif;background:conic-gradient(from -45deg,#4285F4 0 25%,#34A853 0 50%,#FBBC05 0 75%,#EA4335 0);background-clip:text;-webkit-background-clip:text;color:transparent}
 .divider{display:flex;align-items:center;gap:12px;margin:20px 0;color:#94868C;font:8px var(--mono);letter-spacing:.1em}.divider:before,.divider:after{content:"";height:1px;background:#D5CAC2;flex:1}
 .fields{display:grid;gap:13px}
@@ -107,7 +108,8 @@ h2{font:600 clamp(33px,3vw,43px)/1 var(--display);letter-spacing:-.045em;margin:
         <button type="button" id="loginTab" role="tab" aria-selected="false">Log in</button>
       </div>
 
-      <button class="google" type="button" id="googleButton"><span class="google-mark" aria-hidden="true">G</span><span id="googleLabel">Continue with Google</span></button>
+      <button class="google" type="button" id="googleButton"><span class="google-mark" aria-hidden="true">G</span><span id="googleLabel">Sign in with Google</span></button>
+      <p class="google-hint" id="googleHint" hidden>Created your account with Google? Use this button and choose the same Google account.</p>
       <div class="divider" id="divider">OR CONTINUE WITH EMAIL</div>
 
       <form id="authForm" novalidate>
@@ -140,7 +142,7 @@ h2{font:600 clamp(33px,3vw,43px)/1 var(--display);letter-spacing:-.045em;margin:
   const SUPABASE_PUBLISHABLE_KEY = "sb_publishable_GHWEOy9U2v48gJhhjXbWIQ_ZHJo3NtF";
   const client = window.supabase.createClient(SUPABASE_URL, SUPABASE_PUBLISHABLE_KEY);
   window.studyOSSupabase = client;
-  let mode = "signup";
+  let mode = "login";
   function setMode(next) {
     mode = next;
     const signup = mode === "signup";
@@ -156,6 +158,7 @@ h2{font:600 clamp(33px,3vw,43px)/1 var(--display);letter-spacing:-.045em;margin:
     $("password").autocomplete = signup || recovery ? "new-password" : "current-password";
     $("password").placeholder = recovery ? "New password" : signup ? "Create a password" : "Enter your password";
     $("googleButton").hidden = recovery;
+    $("googleHint").hidden = signup || recovery;
     $("divider").hidden = recovery;
     $("googleLabel").textContent = signup ? "Continue with Google" : "Sign in with Google";
     $("submitButton").textContent = recovery ? "UPDATE PASSWORD" : signup ? "CREATE ACCOUNT" : "LOG IN";
@@ -273,7 +276,10 @@ h2{font:600 clamp(33px,3vw,43px)/1 var(--display);letter-spacing:-.045em;margin:
         location.replace("/app/");
       }
     } catch (error) {
-      message(error?.message || "We couldn't complete that request. Please try again.");
+      const errorMessage = error?.message || "We couldn't complete that request. Please try again.";
+      message(mode === "login" && /invalid login credentials/i.test(errorMessage)
+        ? "These email/password details were not accepted. If you originally created your account with Google, choose Sign in with Google above and select the same Google account. A Google sign-in does not automatically create a password."
+        : errorMessage);
       $("submitButton").disabled = false;
       $("submitButton").textContent = mode === "recovery" ? "UPDATE PASSWORD" : mode === "signup" ? "CREATE ACCOUNT" : "LOG IN";
     }
@@ -283,7 +289,7 @@ h2{font:600 clamp(33px,3vw,43px)/1 var(--display);letter-spacing:-.045em;margin:
     if (recovery) { setMode("recovery"); return; }
     const { data, error } = await client.auth.getSession();
     if (!error && data.session) location.replace("/app/");
-    else setMode("signup");
+    else setMode("login");
   })();
 })();
 </script>
