@@ -17,14 +17,15 @@
 .brand{display:inline-flex;align-items:center;gap:11px;width:max-content;font:800 17px var(--display);letter-spacing:-.03em}
 .mark{width:29px;height:29px;border:1px solid var(--acid);border-radius:8px 50% 50%;display:grid;place-items:center;color:var(--acid);font:500 15px var(--serif);transform:rotate(-12deg)}.mark span{transform:rotate(12deg)}
 .story-main{max-width:650px;margin:8vh 0 7vh}
-.kicker{font:11px var(--mono);letter-spacing:.16em;text-transform:uppercase;color:var(--acid)}
+.kicker{max-width:390px;font:600 clamp(23px,2.15vw,29px)/1.12 var(--display);letter-spacing:-.035em;color:var(--acid)}
 h1{font:600 clamp(54px,6.5vw,92px)/.94 var(--display);letter-spacing:-.055em;margin:26px 0 22px;max-width:650px}
 h1 em{font:italic 400 1.12em/.9 var(--serif);color:var(--acid);letter-spacing:-.02em}
 .lede{max-width:500px;color:#C5B8B0;font-size:16px;line-height:1.7;margin:0}
 .preview{max-width:590px;border:1px solid #FFFFFF24;background:linear-gradient(145deg,#302832,#29222B);padding:20px 21px 18px;box-shadow:0 25px 70px #00000026}
-.preview-top{display:flex;justify-content:space-between;align-items:center;padding-bottom:13px;border-bottom:1px solid #FFFFFF1C;font:8px var(--mono);letter-spacing:.12em;color:#BDB0A8}
+.preview-top{display:flex;justify-content:space-between;align-items:center;padding-bottom:13px;border-bottom:1px solid #FFFFFF1C;font:10px var(--mono);letter-spacing:.12em;color:#BDB0A8}
 .live-dot{display:inline-block;width:6px;height:6px;border-radius:50%;background:var(--mint);margin-right:7px}
 .preview-title{font:500 22px var(--display);margin:15px 0 12px}
+.email-panel{margin-top:10px}
 .week{display:grid;grid-template-columns:repeat(5,1fr);gap:7px}
 .day{min-height:70px;border-left:1px solid #FFFFFF22;padding:0 0 0 7px}
 .day small{font:7px var(--mono);color:#9D8F94}
@@ -35,7 +36,7 @@ h1 em{font:italic 400 1.12em/.9 var(--serif);color:var(--acid);letter-spacing:-.
 .auth-card{width:min(100%,460px);background:#F2E9DE;color:#29212B;padding:clamp(27px,4vw,48px);box-shadow:0 28px 90px #00000035}
 .card-kicker{font:8px var(--mono);letter-spacing:.15em;color:#887782;text-transform:uppercase}
 h2{font:600 clamp(33px,3vw,43px)/1 var(--display);letter-spacing:-.045em;margin:13px 0 10px}
-.auth-card.is-signup h2{font-size:36px;white-space:nowrap}
+.auth-card.is-signup h2{font-size:clamp(31px,2.7vw,36px);letter-spacing:-.05em;white-space:nowrap}
 .sub{font-size:13px;line-height:1.65;color:#746873;margin:0 0 20px}
 .mode-switch{display:grid;grid-template-columns:1fr 1fr;border-bottom:1px solid #CFC2B9;margin-bottom:18px}
 .mode-switch button{border:0;background:transparent;color:#877A82;padding:12px 8px 13px;font-size:11px;font-weight:600;cursor:pointer;position:relative}
@@ -43,6 +44,9 @@ h2{font:600 clamp(33px,3vw,43px)/1 var(--display);letter-spacing:-.045em;margin:
 .mode-switch button[aria-selected="true"]:after{content:"";position:absolute;bottom:-1px;left:0;right:0;height:2px;background:#A96861}
 .google{width:100%;height:46px;border:1px solid #BFB4AD;background:#FBF8F3;color:#29212B;display:flex;align-items:center;justify-content:center;gap:11px;font-size:12px;font-weight:600;cursor:pointer;transition:background .2s,border-color .2s}
 .google:hover{background:#fff;border-color:#8D7C83}
+.email-toggle{width:100%;height:44px;margin-top:10px;border:1px solid #BFB4AD;background:transparent;color:#59434F;font-size:13px;font-weight:700;cursor:pointer;transition:background .2s,border-color .2s}
+.email-toggle:hover{background:#FBF8F3;border-color:#8D7C83}
+.email-back{display:block;margin:0 0 10px auto;padding:0;border:0;background:none;color:#785B66;font-size:10px;text-decoration:underline;text-underline-offset:3px;cursor:pointer}
 .recent-method{display:grid;gap:5px;padding:9px 1px 0}
 .recent-tag{font:8px var(--mono);letter-spacing:.09em;color:#8A6A62}
 .recent-copy{font-size:10px;line-height:1.45;color:#766A72}
@@ -86,9 +90,12 @@ h1{font-size:clamp(48px,5.4vw,72px);margin:15px 0 13px;white-space:nowrap}
 .auth-side{padding:0}
 .auth-card{padding:21px 30px}
 h2{margin:9px 0 7px}
-.auth-card.is-signup h2{font-size:34px}
+.auth-card.is-signup h2{font-size:clamp(31px,2.7vw,36px);white-space:nowrap;letter-spacing:-.05em}
 .sub{font-size:13px;margin-bottom:12px;line-height:1.5}
 .mode-switch{margin-bottom:12px}
+.email-toggle{height:42px;margin-top:8px}
+.email-panel{margin-top:9px}
+.email-back{margin-bottom:7px}
 .mode-switch button{padding:9px 8px 10px}
 .google{height:42px}
 .divider{margin:11px 0}
@@ -139,9 +146,12 @@ h2{margin:9px 0 7px}
       </div>
       <button class="google" type="button" id="googleButton"><span class="google-mark" aria-hidden="true">G</span><span id="googleLabel">Sign in with Google</span></button>
       <div class="recent-method" id="googleRecent" hidden><span class="recent-tag">RECENTLY USED · ON THIS DEVICE</span><span class="recent-copy">Continue with your usual sign-in method.</span></div>
-      <div class="recent-method" id="emailRecent" hidden><span class="recent-tag">RECENTLY USED · ON THIS DEVICE</span><span class="recent-copy">Continue with your usual sign-in method.</span></div>
-      <div class="divider" id="divider">OR CONTINUE WITH EMAIL</div>
-      <form id="authForm" novalidate>
+      <button class="email-toggle" type="button" id="emailToggle">Continue with email</button>
+      <div class="email-panel" id="emailPanel" hidden>
+        <div class="recent-method" id="emailRecent" hidden><span class="recent-tag">RECENTLY USED · ON THIS DEVICE</span><span class="recent-copy">Continue with your usual sign-in method.</span></div>
+        <button class="email-back" type="button" id="emailBack">Use Google sign-in instead</button>
+        <div class="divider" id="divider">OR CONTINUE WITH EMAIL</div>
+        <form id="authForm" novalidate>
         <div class="fields">
           <div class="field" id="nameField"><label for="name">Full name</label><input id="name" name="name" autocomplete="name" placeholder="Your name" maxlength="80"></div>
           <div class="field" id="emailField"><label for="email">Email address</label><input id="email" name="email" type="email" autocomplete="email" placeholder="you@example.com" maxlength="160" required></div>
@@ -150,7 +160,8 @@ h2{margin:9px 0 7px}
           <div class="form-meta" id="forgotRow" hidden><button class="text-action" type="button" id="forgotButton">Forgot password?</button></div>
           <button class="submit" type="submit" id="submitButton">CREATE ACCOUNT</button>
         </div>
-      </form>
+        </form>
+      </div>
       <p class="switch-note" id="switchNote">Already have an account?<button type="button" id="switchButton">Log in</button></p>
       <p class="status" id="status" role="status" aria-live="polite"></p>
     </div>
@@ -181,22 +192,9 @@ h2{margin:9px 0 7px}
     try { localStorage.setItem(AUTH_METHOD_KEY, method); } catch {}
   }
   function arrangeLoginMethods() {
-    const card = document.querySelector(".auth-card");
-    const form = $("authForm");
-    const divider = $("divider");
-    const google = $("googleButton");
     const lastMethod = getLastAuthMethod();
-    const googleRecent = $("googleRecent");
-    const emailRecent = $("emailRecent");
-    googleRecent.hidden = lastMethod !== "google";
-    emailRecent.hidden = lastMethod !== "email";
-    if (lastMethod === "email") {
-      card.insertBefore(form, google);
-      form.after(emailRecent, divider);
-    } else {
-      card.insertBefore(google, form);
-      google.after(googleRecent, divider);
-    }
+    $("googleRecent").hidden = lastMethod !== "google";
+    $("emailRecent").hidden = lastMethod !== "email";
   }
   function setMode(next) {
     mode = next;
@@ -214,6 +212,8 @@ h2{margin:9px 0 7px}
     $("password").autocomplete = signup || recovery ? "new-password" : "current-password";
     $("password").placeholder = recovery ? "New password" : signup ? "Create a password" : "Enter your password";
     $("googleButton").hidden = recovery;
+    $("emailToggle").hidden = recovery;
+    $("emailPanel").hidden = !recovery;
     $("divider").hidden = recovery;
     $("googleLabel").textContent = signup ? "Continue with Google" : "Sign in with Google";
     $("submitButton").textContent = recovery ? "UPDATE PASSWORD" : signup ? "CREATE ACCOUNT" : "LOG IN";
@@ -225,7 +225,18 @@ h2{margin:9px 0 7px}
     $("loginTab").setAttribute("aria-selected", String(!signup && !recovery));
     $("status").textContent = "";
     if (!signup && !recovery) arrangeLoginMethods();
+    else if (signup) arrangeLoginMethods();
   }
+  $("emailToggle").addEventListener("click", () => {
+    $("emailPanel").hidden = false;
+    $("emailToggle").hidden = true;
+    $("email").focus();
+  });
+  $("emailBack").addEventListener("click", () => {
+    $("emailPanel").hidden = true;
+    $("emailToggle").hidden = false;
+    $("googleButton").focus();
+  });
   $("signupTab").addEventListener("click", () => setMode("signup"));
   $("loginTab").addEventListener("click", () => setMode("login"));
   $("switchButton").addEventListener("click", () => setMode(mode === "signup" ? "login" : "signup"));
