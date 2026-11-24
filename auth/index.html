@@ -42,6 +42,9 @@ h2{font:600 clamp(33px,3vw,43px)/1 var(--display);letter-spacing:-.045em;margin:
 .mode-switch button[aria-selected="true"]:after{content:"";position:absolute;bottom:-1px;left:0;right:0;height:2px;background:#A96861}
 .google{width:100%;height:46px;border:1px solid #BFB4AD;background:#FBF8F3;color:#29212B;display:flex;align-items:center;justify-content:center;gap:11px;font-size:11px;font-weight:600;cursor:pointer;transition:background .2s,border-color .2s}
 .google:hover{background:#fff;border-color:#8D7C83}
+.recent-method{display:grid;gap:5px;padding:9px 1px 0}
+.recent-tag{font:8px var(--mono);letter-spacing:.09em;color:#8A6A62}
+.recent-copy{font-size:10px;line-height:1.45;color:#766A72}
 .google-mark{font:700 17px Arial,sans-serif;background:conic-gradient(from -45deg,#4285F4 0 25%,#34A853 0 50%,#FBBC05 0 75%,#EA4335 0);background-clip:text;-webkit-background-clip:text;color:transparent}
 .divider{display:flex;align-items:center;gap:12px;margin:20px 0;color:#94868C;font:8px var(--mono);letter-spacing:.1em}.divider:before,.divider:after{content:"";height:1px;background:#D5CAC2;flex:1}
 .fields{display:grid;gap:13px}
@@ -108,6 +111,8 @@ h2{font:600 clamp(33px,3vw,43px)/1 var(--display);letter-spacing:-.045em;margin:
       </div>
 
       <button class="google" type="button" id="googleButton"><span class="google-mark" aria-hidden="true">G</span><span id="googleLabel">Sign in with Google</span></button>
+      <div class="recent-method" id="googleRecent" hidden><span class="recent-tag">RECENTLY USED · ON THIS DEVICE</span><span class="recent-copy">Continue with your usual sign-in method.</span></div>
+      <div class="recent-method" id="emailRecent" hidden><span class="recent-tag">RECENTLY USED · ON THIS DEVICE</span><span class="recent-copy">Continue with your usual sign-in method.</span></div>
       <div class="divider" id="divider">OR CONTINUE WITH EMAIL</div>
 
       <form id="authForm" novalidate>
@@ -143,8 +148,8 @@ h2{font:600 clamp(33px,3vw,43px)/1 var(--display);letter-spacing:-.045em;margin:
   let mode = "login";
   const AUTH_METHOD_KEY = "studyos:last-auth-method";
   function getLastAuthMethod() {
-    try { return localStorage.getItem(AUTH_METHOD_KEY) === "email" ? "email" : "google"; }
-    catch { return "google"; }
+    try { return localStorage.getItem(AUTH_METHOD_KEY); }
+    catch { return null; }
   }
   function rememberAuthMethod(method) {
     try { localStorage.setItem(AUTH_METHOD_KEY, method); } catch {}
@@ -154,12 +159,17 @@ h2{font:600 clamp(33px,3vw,43px)/1 var(--display);letter-spacing:-.045em;margin:
     const form = $("authForm");
     const divider = $("divider");
     const google = $("googleButton");
-    if (getLastAuthMethod() === "email") {
+    const lastMethod = getLastAuthMethod();
+    const googleRecent = $("googleRecent");
+    const emailRecent = $("emailRecent");
+    googleRecent.hidden = lastMethod !== "google";
+    emailRecent.hidden = lastMethod !== "email";
+    if (lastMethod === "email") {
       card.insertBefore(form, google);
-      form.after(divider);
+      form.after(emailRecent, divider);
     } else {
       card.insertBefore(google, form);
-      google.after(divider);
+      google.after(googleRecent, divider);
     }
   }
   function setMode(next) {
@@ -184,6 +194,8 @@ h2{font:600 clamp(33px,3vw,43px)/1 var(--display);letter-spacing:-.045em;margin:
     $("switchNote").firstChild.textContent = signup ? "Already have an account?" : "New to StudyOS?";
     $("switchButton").textContent = signup ? "Log in" : "Create an account";
     $("forgotRow").hidden = signup || recovery;
+    $("signupTab").setAttribute("aria-selected", String(signup));
+    $("loginTab").setAttribute("aria-selected", String(!signup && !recovery));
     $("status").textContent = "";
     if (!signup && !recovery) arrangeLoginMethods();
   }
