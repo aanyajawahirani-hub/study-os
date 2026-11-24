@@ -36,13 +36,14 @@ window.studyOSAuthReady=(async()=>{
       id:user.id,
       email:user.email||"",
       name:user.user_metadata?.full_name||user.email||"StudyOS user",
-      firstName:user.user_metadata?.first_name||String(user.user_metadata?.full_name||"").trim().split(/\\s+/)[0]||"",
-      lastName:user.user_metadata?.last_name||String(user.user_metadata?.full_name||"").trim().split(/\\s+/).slice(1).join(" ")||"",
+      firstName:user.user_metadata?.first_name||String(user.user_metadata?.full_name||"").trim().split(/\s+/)[0]||"",
+      lastName:user.user_metadata?.last_name||String(user.user_metadata?.full_name||"").trim().split(/\s+/).slice(1).join(" ")||"",
       avatarUrl:user.user_metadata?.avatar_url||user.user_metadata?.picture||"",
       school:user.user_metadata?.school||"",
       grade:user.user_metadata?.grade||"",
       board:user.user_metadata?.board||"",
-      subjects:user.user_metadata?.subjects||""
+      subjects:user.user_metadata?.subjects||"",
+      provider:user.app_metadata?.provider||user.app_metadata?.providers?.[0]||"account"
     };
     const remaining=Math.max(0,650-(Date.now()-transitionStarted));
     if(remaining)await new Promise(resolve=>setTimeout(resolve,remaining));
@@ -1505,7 +1506,7 @@ function greetingForHour(h){
 function updateClockAndGreeting(){
   const p=zonedParts();
   const g=$("greeting"),prompt=$("greetingPrompt"),msg=greetingForHour(Number(p.hour));
-  const firstName=window.studyOSProfile?.firstName||window.studyOSAuthUser?.firstName||String(window.studyOSAuthUser?.name||"").trim().split(/\\s+/)[0];
+  const firstName=window.studyOSProfile?.firstName||window.studyOSAuthUser?.firstName||String(window.studyOSAuthUser?.name||"").trim().split(/\s+/)[0];
   if(g)g.textContent=firstName?"Welcome, "+firstName+".":msg[0];
   if(prompt)prompt.textContent=msg[1];
   const tz=$("timezoneLabel");
@@ -3029,9 +3030,9 @@ function generatePlan(){
   const $a=id=>document.getElementById(id);
   const fields=["accountFirstName","accountLastName","accountSchool","accountGrade","accountBoard","accountSubjects"];
   function profileFromUser(user){
-    const meta=user?.user_metadata||{};
-    const full=String(meta.full_name||meta.name||"").trim();
-    const parts=full.split(/\\s+/).filter(Boolean);
+    const meta=user?.user_metadata||user||{};
+    const full=String(meta.full_name||meta.name||[meta.firstName,meta.lastName].filter(Boolean).join(" ")||"").trim();
+    const parts=full.split(/\s+/).filter(Boolean);
     return {
       firstName:String(meta.first_name||parts[0]||""),
       lastName:String(meta.last_name||parts.slice(1).join(" ")||""),
