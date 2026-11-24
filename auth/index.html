@@ -115,7 +115,6 @@ h2{font:600 clamp(33px,3vw,43px)/1 var(--display);letter-spacing:-.045em;margin:
       </form>
       <p class="switch-note" id="switchNote">Already have an account?<button type="button" id="switchButton">Log in</button></p>
       <p class="status" id="status" role="status" aria-live="polite"></p>
-      <p class="legal" id="legal">By continuing, you agree to use StudyOS responsibly. Account creation will be enabled when secure authentication is connected.</p>
     </div>
   </section>
 </main>
@@ -151,7 +150,6 @@ h2{font:600 clamp(33px,3vw,43px)/1 var(--display);letter-spacing:-.045em;margin:
     $("switchNote").firstChild.textContent = signup ? "Already have an account?" : "New to StudyOS?";
     $("switchButton").textContent = signup ? "Log in" : "Create an account";
     $("forgotRow").hidden = signup || recovery;
-    $("legal").textContent = recovery ? "Choose a password you have not used elsewhere." : "Your account is protected by Supabase authentication.";
     $("status").textContent = "";
   }
   $("signupTab").addEventListener("click", () => setMode("signup"));
