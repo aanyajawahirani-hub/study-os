@@ -4,12 +4,26 @@
 <meta name="theme-color" content="#f4f1ea"><meta name="apple-mobile-web-app-capable" content="yes">
 <link rel="manifest" href="/manifest.webmanifest"><link rel="apple-touch-icon" href="/icon.svg">
 <title>StudyOS</title>
-<style id="supabase-auth-guard">html.auth-pending body{visibility:hidden}</style>
+<style id="supabase-auth-guard">
+html.auth-pending body{overflow:hidden}
+html.auth-pending body > :not(#authTransition){visibility:hidden}
+#authTransition{position:fixed;inset:0;z-index:100000;display:grid;place-items:center;background:#f1eee6;color:#202923;opacity:1;transition:opacity .32s ease}
+#authTransition.is-leaving{opacity:0;pointer-events:none}
+.auth-transition-inner{display:grid;justify-items:center;text-align:center;padding:28px}
+.auth-transition-mark{width:48px;height:48px;display:grid;place-items:center;border:1.5px solid #a94d38;border-radius:14px 50% 50%;color:#a94d38;font:italic 30px Georgia,serif;transform:rotate(-10deg)}
+.auth-transition-mark span{transform:rotate(10deg)}
+.auth-transition-title{margin:24px 0 7px;font:500 clamp(30px,5vw,42px)/1 Georgia,serif;letter-spacing:-.04em}
+.auth-transition-copy{margin:0;color:#6e756d;font:11px/1.6 Arial,Helvetica,sans-serif;letter-spacing:.02em}
+.auth-transition-loader{width:30px;height:30px;margin-top:25px;border:2px solid #d8d2c7;border-top-color:#a94d38;border-radius:50%;animation:authTransitionSpin .8s linear infinite}
+@keyframes authTransitionSpin{to{transform:rotate(360deg)}}
+@media(prefers-reduced-motion:reduce){#authTransition{transition:none}.auth-transition-loader{animation:none}}
+</style>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.119.2"></script>
 <script>
 document.documentElement.classList.add("auth-pending");
 window.studyOSAuthReady=(async()=>{
   try{
+    const transitionStarted=Date.now();
     const client=window.supabase.createClient(
       "https://oepeyvbtbjpvkmvsdxbw.supabase.co",
       "sb_publishable_GHWEOy9U2v48gJhhjXbWIQ_ZHJo3NtF"
@@ -23,7 +37,11 @@ window.studyOSAuthReady=(async()=>{
       email:user.email||"",
       name:user.user_metadata?.full_name||user.email||"StudyOS user"
     };
+    const remaining=Math.max(0,650-(Date.now()-transitionStarted));
+    if(remaining)await new Promise(resolve=>setTimeout(resolve,remaining));
     document.documentElement.classList.remove("auth-pending");
+    const transition=document.getElementById("authTransition");
+    if(transition){transition.classList.add("is-leaving");setTimeout(()=>transition.remove(),350)}
     return window.studyOSAuthUser;
   }catch(error){
     location.replace("/auth/");
@@ -780,7 +798,15 @@ aside#appSidebar .streak{position:sticky;bottom:auto;margin-top:22px}
 .holiday-end.is-single{display:none}
 .exam-engine .upload-grid{grid-template-columns:1fr 1fr}
 @media(max-width:700px){.today-intro-copy{gap:11px}.workload-input{grid-template-columns:1fr 100px}.exam-engine .upload-grid{grid-template-columns:1fr}}
-</style></head><body><main>
+</style></head><body>
+<div id="authTransition" role="status" aria-live="polite">
+  <div class="auth-transition-inner">
+    <div class="auth-transition-mark" aria-hidden="true"><span>S</span></div>
+    <h1 class="auth-transition-title">Welcome to StudyOS.</h1>
+    <p class="auth-transition-copy">Preparing your workspace...</p>
+    <div class="auth-transition-loader" aria-hidden="true"></div>
+  </div>
+</div><main>
 <aside id="appSidebar">
   <div class="brand"><span class="brand-mark">•</span><span class="brand-name">STUDYOS</span></div>
   <button class="sidebar-toggle" id="sidebarToggle" type="button" aria-label="Close sidebar"><span>←</span><b>CLOSE SIDEBAR</b></button>
