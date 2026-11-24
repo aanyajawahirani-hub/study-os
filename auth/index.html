@@ -17,40 +17,41 @@
 .brand{display:inline-flex;align-items:center;gap:11px;width:max-content;font:800 17px var(--display);letter-spacing:-.03em}
 .mark{width:29px;height:29px;border:1px solid var(--acid);border-radius:8px 50% 50%;display:grid;place-items:center;color:var(--acid);font:500 15px var(--serif);transform:rotate(-12deg)}.mark span{transform:rotate(12deg)}
 .story-main{max-width:650px;margin:8vh 0 7vh}
-.kicker{font:9px var(--mono);letter-spacing:.16em;text-transform:uppercase;color:var(--acid)}
+.kicker{font:11px var(--mono);letter-spacing:.16em;text-transform:uppercase;color:var(--acid)}
 h1{font:600 clamp(54px,6.5vw,92px)/.94 var(--display);letter-spacing:-.055em;margin:26px 0 22px;max-width:650px}
 h1 em{font:italic 400 1.12em/.9 var(--serif);color:var(--acid);letter-spacing:-.02em}
-.lede{max-width:410px;color:#C5B8B0;font-size:14px;line-height:1.85;margin:0}
-.preview{max-width:560px;border:1px solid #FFFFFF24;background:linear-gradient(145deg,#302832,#29222B);padding:17px 18px 16px;box-shadow:0 25px 70px #00000026}
+.lede{max-width:500px;color:#C5B8B0;font-size:16px;line-height:1.7;margin:0}
+.preview{max-width:590px;border:1px solid #FFFFFF24;background:linear-gradient(145deg,#302832,#29222B);padding:20px 21px 18px;box-shadow:0 25px 70px #00000026}
 .preview-top{display:flex;justify-content:space-between;align-items:center;padding-bottom:13px;border-bottom:1px solid #FFFFFF1C;font:8px var(--mono);letter-spacing:.12em;color:#BDB0A8}
 .live-dot{display:inline-block;width:6px;height:6px;border-radius:50%;background:var(--mint);margin-right:7px}
-.preview-title{font:500 20px var(--display);margin:15px 0 12px}
+.preview-title{font:500 22px var(--display);margin:15px 0 12px}
 .week{display:grid;grid-template-columns:repeat(5,1fr);gap:7px}
-.day{min-height:65px;border-left:1px solid #FFFFFF22;padding:0 0 0 7px}
+.day{min-height:70px;border-left:1px solid #FFFFFF22;padding:0 0 0 7px}
 .day small{font:7px var(--mono);color:#9D8F94}
-.block{height:25px;margin-top:9px;background:#E9A18B;color:#302832;padding:6px 5px;font:700 7px var(--display);white-space:nowrap;overflow:hidden}
+.block{height:28px;margin-top:9px;background:#E9A18B;color:#302832;padding:7px 5px;font:700 7px var(--display);white-space:nowrap;overflow:hidden}
 .day:nth-child(2) .block{background:#AEBBD0}.day:nth-child(3) .block{background:#B9C8B7}.day:nth-child(4) .block{background:#D9A27F}.day:nth-child(5) .block{background:#AEBBD0}
-.story-foot{font:8px var(--mono);letter-spacing:.1em;color:#8D7F89}
+.story-foot{font:10px var(--mono);letter-spacing:.1em;color:#8D7F89}
 .auth-side{display:flex;align-items:center;justify-content:center;padding:30px 0}
 .auth-card{width:min(100%,460px);background:#F2E9DE;color:#29212B;padding:clamp(27px,4vw,48px);box-shadow:0 28px 90px #00000035}
 .card-kicker{font:8px var(--mono);letter-spacing:.15em;color:#887782;text-transform:uppercase}
 h2{font:600 clamp(33px,3vw,43px)/1 var(--display);letter-spacing:-.045em;margin:13px 0 10px}
-.sub{font-size:12px;line-height:1.7;color:#746873;margin:0 0 25px}
-.mode-switch{display:grid;grid-template-columns:1fr 1fr;border-bottom:1px solid #CFC2B9;margin-bottom:22px}
+.auth-card.is-signup h2{font-size:36px;white-space:nowrap}
+.sub{font-size:13px;line-height:1.65;color:#746873;margin:0 0 20px}
+.mode-switch{display:grid;grid-template-columns:1fr 1fr;border-bottom:1px solid #CFC2B9;margin-bottom:18px}
 .mode-switch button{border:0;background:transparent;color:#877A82;padding:12px 8px 13px;font-size:11px;font-weight:600;cursor:pointer;position:relative}
 .mode-switch button[aria-selected="true"]{color:#29212B}
 .mode-switch button[aria-selected="true"]:after{content:"";position:absolute;bottom:-1px;left:0;right:0;height:2px;background:#A96861}
-.google{width:100%;height:46px;border:1px solid #BFB4AD;background:#FBF8F3;color:#29212B;display:flex;align-items:center;justify-content:center;gap:11px;font-size:11px;font-weight:600;cursor:pointer;transition:background .2s,border-color .2s}
+.google{width:100%;height:46px;border:1px solid #BFB4AD;background:#FBF8F3;color:#29212B;display:flex;align-items:center;justify-content:center;gap:11px;font-size:12px;font-weight:600;cursor:pointer;transition:background .2s,border-color .2s}
 .google:hover{background:#fff;border-color:#8D7C83}
 .recent-method{display:grid;gap:5px;padding:9px 1px 0}
 .recent-tag{font:8px var(--mono);letter-spacing:.09em;color:#8A6A62}
 .recent-copy{font-size:10px;line-height:1.45;color:#766A72}
 .google-mark{font:700 17px Arial,sans-serif;background:conic-gradient(from -45deg,#4285F4 0 25%,#34A853 0 50%,#FBBC05 0 75%,#EA4335 0);background-clip:text;-webkit-background-clip:text;color:transparent}
-.divider{display:flex;align-items:center;gap:12px;margin:20px 0;color:#94868C;font:8px var(--mono);letter-spacing:.1em}.divider:before,.divider:after{content:"";height:1px;background:#D5CAC2;flex:1}
-.fields{display:grid;gap:13px}
+.divider{display:flex;align-items:center;gap:12px;margin:17px 0;color:#94868C;font:8px var(--mono);letter-spacing:.1em}.divider:before,.divider:after{content:"";height:1px;background:#D5CAC2;flex:1}
+.fields{display:grid;gap:11px}
 .field{display:grid;gap:6px}
 .field label{font-size:10px;font-weight:600;color:#514650}
-.field input{width:100%;height:44px;border:1px solid #CFC3BB;background:#FBF8F3;color:#29212B;padding:0 12px;border-radius:0;outline:none;font-size:12px}
+.field input{width:100%;height:42px;border:1px solid #CFC3BB;background:#FBF8F3;color:#29212B;padding:0 12px;border-radius:0;outline:none;font-size:12px}
 .field input:focus{border-color:#9C6967;box-shadow:0 0 0 3px #9C69671A}
 .password-wrap{position:relative}.password-wrap input{padding-right:65px}
 .password-feedback{display:grid;gap:6px;margin-top:7px}
@@ -58,20 +59,49 @@ h2{font:600 clamp(33px,3vw,43px)/1 var(--display);letter-spacing:-.045em;margin:
 .strength-bars{display:grid;grid-template-columns:repeat(4,1fr);gap:4px}
 .strength-bars span{height:3px;background:#D9CEC6;transition:background .18s}
 .strength-bars span.filled{background:#B87968}
-.password-hint{font-size:9px;line-height:1.5;color:#897D83}
+.password-hint{font-size:11px;line-height:1.45;color:#897D83}
 .password-hint.good{color:#52715D}
 .show-password{position:absolute;right:10px;top:50%;transform:translateY(-50%);border:0;background:none;color:#786B73;font-size:9px;font-weight:600;cursor:pointer}
 .form-meta{display:flex;justify-content:flex-end;margin-top:-3px}
 .text-action{border:0;background:none;color:#785B66;font-size:10px;text-decoration:underline;text-underline-offset:3px;cursor:pointer;padding:0}
-.submit{width:100%;height:47px;border:0;background:#29212B;color:#F2E9DE;margin-top:5px;font-size:10px;font-weight:700;letter-spacing:.06em;cursor:pointer;transition:background .2s,transform .2s}
+.submit{width:100%;height:45px;border:0;background:#29212B;color:#F2E9DE;margin-top:5px;font-size:10px;font-weight:700;letter-spacing:.06em;cursor:pointer;transition:background .2s,transform .2s}
 .submit:hover{background:#493B45;transform:translateY(-1px)}
-.switch-note{text-align:center;color:#786D73;font-size:10px;line-height:1.7;margin:19px 0 0}
+.switch-note{text-align:center;color:#786D73;font-size:12px;line-height:1.6;margin:15px 0 0}
 .switch-note button{border:0;background:none;color:#59434F;text-decoration:underline;text-underline-offset:3px;font-weight:700;cursor:pointer;padding:0 0 0 3px}
 .legal{font-size:9px;line-height:1.6;color:#92858A;margin:23px 0 0;text-align:center}
-.status{min-height:16px;margin:10px 0 0;color:#805D5D;font-size:10px;line-height:1.5}
+.status{min-height:12px;margin:7px 0 0;color:#805D5D;font-size:10px;line-height:1.4}
 .back{display:inline-block;margin:0 0 22px;color:#766A72;font-size:10px;text-decoration:underline;text-underline-offset:3px}
 [hidden]{display:none!important}
-@media(max-width:900px){.page{grid-template-columns:1fr;max-width:620px;padding:25px 24px;gap:12px}.story{min-height:auto}.story-main{margin:7vh 0 4vh}.story h1{font-size:clamp(53px,11vw,76px)}.preview{display:none}.story-foot{display:none}.auth-side{padding:15px 0 35px}.auth-card{max-width:520px}}
+@media(min-width:901px) and (max-height:850px){
+.page{min-height:100svh;padding:14px 4vw;gap:4vw;grid-template-columns:minmax(0,1.08fr) minmax(420px,.92fr)}
+.story{min-height:calc(100svh - 28px);padding:4px 0 6px}
+.story-main{margin:2.5vh 0 2vh}
+h1{font-size:clamp(48px,5.4vw,72px);margin:15px 0 13px;white-space:nowrap}
+.lede{font-size:15px;line-height:1.55;max-width:490px}
+.preview{padding:13px 15px 12px;margin-top:18px!important;max-width:570px}
+.preview-title{font-size:19px;margin:10px 0 8px}
+.preview-top{padding-bottom:9px}
+.day{min-height:54px}
+.block{height:23px;margin-top:6px;padding-top:5px}
+.auth-side{padding:0}
+.auth-card{padding:21px 30px}
+h2{margin:9px 0 7px}
+.auth-card.is-signup h2{font-size:34px}
+.sub{font-size:13px;margin-bottom:12px;line-height:1.5}
+.mode-switch{margin-bottom:12px}
+.mode-switch button{padding:9px 8px 10px}
+.google{height:42px}
+.divider{margin:11px 0}
+.fields{gap:8px}
+.field{gap:4px}
+.field input{height:38px}
+.password-feedback{gap:4px;margin-top:4px}
+.password-hint{font-size:10.5px;line-height:1.35}
+.submit{height:41px}
+.switch-note{margin-top:10px;font-size:12px}
+.status{min-height:9px;margin-top:4px}
+}
+@media(max-width:900px){.page{grid-template-columns:1fr;max-width:620px;padding:25px 24px;gap:12px}.story{min-height:auto}.story-main{margin:7vh 0 4vh}.story h1{font-size:clamp(53px,11vw,76px);white-space:normal}.preview{display:none}.story-foot{display:none}.auth-side{padding:15px 0 35px}.auth-card{max-width:520px}.auth-card.is-signup h2{font-size:clamp(31px,7vw,36px);white-space:normal}}
 @media(max-width:520px){.page{padding:18px 16px;gap:0}.story-main{margin:6vh 0 4vh}.story h1{font-size:54px}.lede{font-size:12px}.auth-side{padding:10px 0 25px}.auth-card{padding:25px 21px}.auth-card h2{font-size:35px}}
 @media(prefers-reduced-motion:reduce){*,*:before,*:after{transition:none!important;scroll-behavior:auto!important}}
 </style>
@@ -98,23 +128,19 @@ h2{font:600 clamp(33px,3vw,43px)/1 var(--display);letter-spacing:-.045em;margin:
     </div>
     <div class="story-foot">STUDYOS · YOUR ACADEMIC WORKSPACE</div>
   </section>
-
   <section class="auth-side" aria-label="Account access">
     <div class="auth-card">
       <div class="card-kicker">STUDYOS ACCOUNT</div>
       <h2 id="heading">Create your account.</h2>
       <p class="sub" id="subheading">Set up your workspace and keep your academic life in sync.</p>
-
       <div class="mode-switch" role="tablist" aria-label="Account type">
         <button type="button" id="signupTab" role="tab" aria-selected="true">Create account</button>
         <button type="button" id="loginTab" role="tab" aria-selected="false">Log in</button>
       </div>
-
       <button class="google" type="button" id="googleButton"><span class="google-mark" aria-hidden="true">G</span><span id="googleLabel">Sign in with Google</span></button>
       <div class="recent-method" id="googleRecent" hidden><span class="recent-tag">RECENTLY USED · ON THIS DEVICE</span><span class="recent-copy">Continue with your usual sign-in method.</span></div>
       <div class="recent-method" id="emailRecent" hidden><span class="recent-tag">RECENTLY USED · ON THIS DEVICE</span><span class="recent-copy">Continue with your usual sign-in method.</span></div>
       <div class="divider" id="divider">OR CONTINUE WITH EMAIL</div>
-
       <form id="authForm" novalidate>
         <div class="fields">
           <div class="field" id="nameField"><label for="name">Full name</label><input id="name" name="name" autocomplete="name" placeholder="Your name" maxlength="80"></div>
@@ -176,6 +202,7 @@ h2{font:600 clamp(33px,3vw,43px)/1 var(--display);letter-spacing:-.045em;margin:
     mode = next;
     const signup = mode === "signup";
     const recovery = mode === "recovery";
+    document.querySelector(".auth-card").classList.toggle("is-signup", signup);
     $("signupTab").hidden = recovery;
     $("loginTab").hidden = recovery;
     document.querySelector(".mode-switch").hidden = recovery;
@@ -214,7 +241,7 @@ h2{font:600 clamp(33px,3vw,43px)/1 var(--display);letter-spacing:-.045em;margin:
       value.length >= 8,
       value.length >= 12,
       /[a-z]/.test(value) && /[A-Z]/.test(value),
-      /\\d/.test(value),
+      /\d/.test(value),
       /[^A-Za-z0-9]/.test(value)
     ];
     const score = checks.filter(Boolean).length;
