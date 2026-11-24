@@ -3040,7 +3040,7 @@ function generatePlan(){
       grade:String(meta.grade||""),
       board:String(meta.board||""),
       subjects:Array.isArray(meta.subjects)?meta.subjects.join(", "):String(meta.subjects||""),
-      avatarUrl:String(meta.avatar_url||meta.picture||"")
+      avatarUrl:String(meta.avatar_url||meta.picture||meta.avatarUrl||"")
     };
   }
   function renderAccount(){
