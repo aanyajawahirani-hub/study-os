@@ -1016,7 +1016,7 @@ aside#appSidebar .streak b{font-size:27px!important;line-height:1.05!important;m
     <div class="next-label">NEXT UP</div>
     <div class="next-content">
       <div>
-        <div class="next-time" id="nextTime">YOUR NEXT STUDY BLOCK</div>
+        <div class="next-time" id="nextTime">YOUR FIRST SESSION</div>
         <h3 id="nextTitle">Add your first study block.</h3>
         <p id="next">Tell StudyOS what is due and when you can study. Your next block will appear here.</p>
       </div>
@@ -1641,14 +1641,11 @@ function updateClockAndGreeting(){
   if(g)g.textContent=firstName?"Welcome, "+firstName+".":msg[0];
   if(prompt)prompt.textContent=msg[1];
   const tz=$("timezoneLabel");
-  if(tz)tz.textContent=(userSettings?.timezone||"Asia/Kolkata").replace(/_/g," ");
+  if(tz)tz.textContent=(userSettings?.timezone||"Asia/Kolkata").replace(/_/g," ").replace(/\//g," / ").toUpperCase();
   const d=$("date");
   if(d){
     const zone=userSettings?.timezone||"Asia/Kolkata";
-    const fmt=userSettings?.dateFormat||"DD/MM/YYYY";
     const p=zonedParts();
-    const day=String(Number(p.day)),month=String(Number(p.month)),year=p.year;
-    const numeric=fmt==="MM/DD/YYYY"?month+"/"+day+"/"+year:fmt==="YYYY/MM/DD"?year+"/"+month+"/"+day:day+"/"+month+"/"+year;
     const longDate=new Intl.DateTimeFormat("en-US",{timeZone:zone,weekday:"long",day:"numeric",month:"long",year:"numeric"}).format(new Date());
     d.textContent=longDate.toUpperCase();
   }
@@ -1749,7 +1746,7 @@ function renderToday(){
   nextEl.textContent=nextTask?("Next: "+nextTask.subject+" · "+nextTask.task):(rows.length?"Today is cleared.":"Add your constraints to generate a plan.");
   const nextTitle=$("nextTitle"),nextTime=$("nextTime");
   if(nextTitle)nextTitle.textContent=nextTask?(nextTask.subject+" · "+nextTask.task):(rows.length?"All planned blocks complete.":"Add your first study block.");
-  if(nextTime)nextTime.textContent=nextTask?(nextTask.start+" · "+nextTask.duration+" MIN"):"YOUR NEXT STUDY BLOCK";
+  if(nextTime)nextTime.textContent=nextTask?(nextTask.start+" · "+nextTask.duration+" MIN"):"YOUR FIRST SESSION";
   renderFocusTasks();renderFocusPage();
 }
 function buildExamTasks(){
