@@ -831,6 +831,137 @@ aside#appSidebar .streak{position:sticky;bottom:auto;margin-top:22px}
 @media(max-width:900px){.account-layout{grid-template-columns:1fr}}
 @media(max-width:600px){.account-heading{align-items:flex-start}.account-avatar{width:58px;height:58px;flex-basis:58px}.account-fields{grid-template-columns:1fr}.account-full{grid-column:auto}}
 </style>
+
+<style id="studyos-dashboard-polish">
+/* Dashboard structure: separate the editorial headline from its metrics. */
+#section-today .today-intro{
+  display:grid!important;
+  grid-template-columns:minmax(0,1fr)!important;
+  justify-items:start;
+  align-items:start!important;
+  gap:24px!important;
+  padding:8px 0 26px!important;
+  margin-bottom:0!important;
+  border-bottom:2px solid var(--ink)!important;
+}
+#section-today .today-intro-copy{gap:12px!important;width:100%;min-width:0}
+#section-today .today-intro-copy h2{
+  font-size:clamp(52px,5.6vw,82px)!important;
+  line-height:.94!important;
+  max-width:760px;
+  margin:0!important;
+}
+#section-today .today-summary{
+  display:flex!important;
+  width:max-content;
+  max-width:100%;
+  min-width:0;
+  border:1px solid var(--ink)!important;
+  border-left:1px solid var(--ink)!important;
+  overflow:hidden;
+}
+#section-today .today-summary>div{
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+  min-width:132px;
+  padding:13px 18px!important;
+  border-right:1px solid var(--ink)!important;
+}
+#section-today .today-summary>div:nth-child(2){min-width:220px}
+#section-today .today-summary>div:last-child{border-right:0!important}
+#section-today .today-summary span{
+  font-size:clamp(25px,2.2vw,34px)!important;
+  line-height:1.05!important;
+  white-space:nowrap;
+}
+#section-today .today-summary small{
+  margin-top:7px!important;
+  font-size:9px!important;
+  letter-spacing:.12em!important;
+  line-height:1.3;
+}
+#section-today .today-next{padding:25px 0 24px!important;margin-top:0}
+#section-today .next-content{align-items:center!important;gap:24px}
+#section-today .next-content h3{font-size:clamp(27px,2.5vw,36px)!important;line-height:1.08!important}
+#section-today .next-content p{font-size:13px!important;line-height:1.55!important}
+#section-today .next-action{min-height:42px;white-space:nowrap}
+#section-today .today-columns{grid-template-columns:minmax(0,1.35fr) minmax(270px,.85fr)!important;gap:34px!important;padding-top:24px!important}
+#section-today .today-side{padding-left:24px!important}
+#section-today .section-line b{font-size:10px!important}
+#section-today .section-line span{font-size:9px!important}
+
+/* Sidebar: consistent numbering, predictable row rhythm, and a real widget footer. */
+aside#appSidebar{display:flex!important;flex-direction:column!important;overflow-x:hidden!important;overflow-y:auto!important;scrollbar-width:thin;padding:28px 22px 22px!important}
+aside#appSidebar .brand{flex:0 0 auto;margin-bottom:0}
+aside#appSidebar .side-nav{display:grid!important;gap:16px!important;padding:0 0 4px!important;margin-top:28px!important}
+aside#appSidebar .nav-group{display:grid!important;gap:0!important;margin:0!important}
+aside#appSidebar .nav-group-label{
+  display:block!important;
+  padding:0 4px 9px!important;
+  margin:0!important;
+  color:#8f988e!important;
+  font-size:8px!important;
+  line-height:1.3!important;
+  letter-spacing:.16em!important;
+}
+aside#appSidebar .navlink{
+  display:flex!important;
+  align-items:center!important;
+  gap:8px!important;
+  min-height:46px!important;
+  height:auto!important;
+  padding:11px 4px!important;
+  line-height:1.25!important;
+  white-space:normal!important;
+}
+aside#appSidebar .nav-index{flex:0 0 24px;margin:0!important;font-size:9px!important;line-height:1.2}
+aside#appSidebar .nav-label{display:block;min-width:0;line-height:1.3;letter-spacing:.09em}
+aside#appSidebar .nav-subnote{
+  display:block!important;
+  padding:5px 8px 11px!important;
+  margin:0!important;
+  font-size:8px!important;
+  line-height:1.4!important;
+  letter-spacing:.07em!important;
+  text-transform:uppercase;
+}
+aside#appSidebar .streak{
+  position:relative!important;
+  inset:auto!important;
+  flex:0 0 auto;
+  margin:18px 0 0!important;
+  padding:15px 8px 5px!important;
+  border-top:1px solid rgba(243,236,220,.4)!important;
+  background:transparent!important;
+}
+aside#appSidebar .streak small{font-size:8px!important;line-height:1.45!important;letter-spacing:.13em!important}
+aside#appSidebar .streak b{font-size:27px!important;line-height:1.05!important;margin:7px 0!important}
+
+/* Keep the header controls aligned and remove redundant date formatting. */
+.shell>header{gap:24px!important;align-items:flex-end!important}
+.shell>header>div:first-child{min-width:0}
+.shell>header>div:last-child{display:flex;align-items:center;gap:8px!important;flex-wrap:wrap}
+.shell>header .btn{min-height:42px;white-space:nowrap}
+#date{line-height:1.35;letter-spacing:.18em!important}
+#timezoneLabel{font-size:9px!important;letter-spacing:.12em!important;color:var(--ink-soft)!important}
+.greeting-prompt{font-size:15px!important;line-height:1.4!important}
+@media(max-width:900px){
+  #section-today .today-intro{display:block!important;gap:0!important}
+  #section-today .today-summary{width:100%;margin-top:22px!important}
+  #section-today .today-summary>div{min-width:0!important;flex:1;padding:12px 10px!important}
+  #section-today .today-summary>div:nth-child(2){min-width:0!important}
+  #section-today .today-columns{grid-template-columns:1fr!important;gap:24px!important}
+  #section-today .today-side{border-left:0!important;border-top:2px solid var(--ink);padding:22px 0 0!important}
+  aside#appSidebar{padding-bottom:22px!important}
+}
+@media(max-width:600px){
+  #section-today .today-intro h2{font-size:clamp(46px,12vw,64px)!important}
+  #section-today .today-summary span{font-size:clamp(22px,7vw,30px)!important}
+  .shell>header>div:last-child{width:100%;display:grid!important;grid-template-columns:1fr 1fr}
+  .shell>header .btn{padding:11px 8px!important;font-size:8px!important}
+}
+</style>
 </head><body>
 <div id="authTransition" role="status" aria-live="polite">
   <div class="auth-transition-inner">
@@ -852,17 +983,17 @@ aside#appSidebar .streak{position:sticky;bottom:auto;margin-top:22px}
     </div>
     <div class="nav-group"><span class="nav-group-label">INPUTS</span>
       <button class="navlink" data-section="deadlines"><span class="nav-index">05</span><span class="nav-label">Deadlines</span></button>
-      <button class="navlink" data-section="activities"><span class="nav-index">07</span><span class="nav-label">Academics</span></button><span class="nav-subnote">School, coaching, tuition, other, etc.</span>
-      <button class="navlink" data-section="extras"><span class="nav-index">08</span><span class="nav-label">Your Other Commitments</span></button><span class="nav-subnote">Extracurriculars, clubs, sports, competitions, etc.</span>
-      <button class="navlink" data-section="exams"><span class="nav-index">09</span><span class="nav-label">Exams</span></button>
-      <button class="navlink" data-section="exceptions"><span class="nav-index">10</span><span class="nav-label">Mark Your Holidays / Days Off</span></button>
+      <button class="navlink" data-section="activities"><span class="nav-index">06</span><span class="nav-label">Academics</span></button><span class="nav-subnote">School, coaching, tuition, other, etc.</span>
+      <button class="navlink" data-section="extras"><span class="nav-index">07</span><span class="nav-label">Your Other Commitments</span></button><span class="nav-subnote">Extracurriculars, clubs, sports, competitions, etc.</span>
+      <button class="navlink" data-section="exams"><span class="nav-index">08</span><span class="nav-label">Exams</span></button>
+      <button class="navlink" data-section="exceptions"><span class="nav-index">09</span><span class="nav-label">Mark Your Holidays / Days Off</span></button>
     </div>
     <div class="nav-group"><span class="nav-group-label">TRACK</span>
-      <button class="navlink" data-section="syllabus"><span class="nav-index">11</span><span class="nav-label">Syllabus</span></button>
-      <button class="navlink" data-section="reminders"><span class="nav-index">12</span><span class="nav-label">Reminders</span></button>
-      <button class="navlink" data-section="progress"><span class="nav-index">13</span><span class="nav-label">Progress</span></button>
+      <button class="navlink" data-section="syllabus"><span class="nav-index">10</span><span class="nav-label">Syllabus</span></button>
+      <button class="navlink" data-section="reminders"><span class="nav-index">11</span><span class="nav-label">Reminders</span></button>
+      <button class="navlink" data-section="progress"><span class="nav-index">12</span><span class="nav-label">Progress</span></button>
     </div>
-    <div class="nav-group account-nav-group"><span class="nav-group-label">PERSONAL</span><button class="navlink" data-section="account"><span class="nav-index">14</span><span class="nav-label">My Account</span></button>
+    <div class="nav-group account-nav-group"><span class="nav-group-label">PERSONAL</span><button class="navlink" data-section="account"><span class="nav-index">13</span><span class="nav-label">My Account</span></button>
     </div>
   </nav>
   <div class="streak"><small>STREAK</small><b id="streakValue">0 DAYS</b><small>Start your first study block.</small></div>
@@ -1519,7 +1650,7 @@ function updateClockAndGreeting(){
     const day=String(Number(p.day)),month=String(Number(p.month)),year=p.year;
     const numeric=fmt==="MM/DD/YYYY"?month+"/"+day+"/"+year:fmt==="YYYY/MM/DD"?year+"/"+month+"/"+day:day+"/"+month+"/"+year;
     const longDate=new Intl.DateTimeFormat("en-US",{timeZone:zone,weekday:"long",day:"numeric",month:"long",year:"numeric"}).format(new Date());
-    d.textContent=longDate.toUpperCase()+" · "+numeric;
+    d.textContent=longDate.toUpperCase();
   }
 }
 
