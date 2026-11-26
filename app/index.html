@@ -1546,16 +1546,28 @@ aside#appSidebar .streak b{font-size:27px!important;line-height:1.05!important;m
     }
     countryEl.setCustomValidity("");timezoneEl.setCustomValidity("");formatEl.setCustomValidity("");
     const settings={country,timezone,dateFormat};
-    localStorage.setItem("studyos-settings",JSON.stringify(settings));
+    const nextOnboarding={...(window.studyOSOnboarding||{}),clock_completed:true};
+    try{
+      if(typeof window.studyOSSaveMetadata!=="function")throw new Error("Account storage is not ready.");
+      await window.studyOSSaveMetadata({studyos_settings:settings,[ONBOARDING_META_KEY]:nextOnboarding});
+    }catch(error){
+      alert("Your clock settings could not be saved to your StudyOS account. Please try again. "+(error?.message||""));
+      return;
+    }
+    localStorage.setItem(settingsKey,JSON.stringify(settings));
     window.userSettings=settings;
     userSettings=settings;
+    window.studyOSOnboarding=nextOnboarding;
     modal.classList.remove("open");
     document.body.classList.remove("setup-first","setup-gate");
-    localStorage.setItem(onboardingKey,"1");
     const notificationModal=$("notificationModal");
-    const notificationsAvailable="Notification" in window;
-    if(notificationModal && (!notificationsAvailable || Notification.permission!=="granted")){
+    const permissionGranted="Notification" in window && Notification.permission==="granted";
+    if(window.studyOSNewAccount && !nextOnboarding.notification_prompt_completed && !permissionGranted && notificationModal){
       setTimeout(()=>notificationModal.classList.add("open"),120);
+    }else if(window.studyOSNewAccount && permissionGranted && !nextOnboarding.notification_prompt_completed){
+      const completed={...nextOnboarding,notification_prompt_completed:true,notifications_enabled:true};
+      window.studyOSOnboarding=completed;
+      window.studyOSSaveMetadata({[ONBOARDING_META_KEY]:completed}).catch(error=>console.warn("Could not save notification onboarding state:",error));
     }
   }
   save.addEventListener("click",saveClockSettings);
@@ -1614,6 +1626,10 @@ async function enableStudyOSNotifications(button){
     }
     button.textContent="NOTIFICATIONS ON";
     localStorage.setItem("studyos-notifications-enabled","1");
+    const completed={...(window.studyOSOnboarding||{}),notification_prompt_completed:true,notifications_enabled:true};
+    window.studyOSOnboarding=completed;
+    try{await window.studyOSSaveMetadata({[ONBOARDING_META_KEY]:completed});}
+    catch(metadataError){console.warn("Notifications are enabled, but account onboarding state could not be saved:",metadataError);}
     $("notificationModal")?.classList.remove("open");
     new Notification("StudyOS notifications enabled",{body:"Your study reminders can now notify you."});
   }catch(err){
@@ -1755,9 +1771,26 @@ const COUNTRY_ZONES={"India":"Asia/Kolkata","United States":"America/New_York","
 const COUNTRY_DATE_FORMAT={"India":"DD/MM/YYYY","United States":"MM/DD/YYYY","United Kingdom":"DD/MM/YYYY","Australia":"DD/MM/YYYY","Singapore":"DD/MM/YYYY","United Arab Emirates":"DD/MM/YYYY","Canada":"MM/DD/YYYY","Japan":"YYYY/MM/DD","Germany":"DD/MM/YYYY","France":"DD/MM/YYYY","Brazil":"DD/MM/YYYY","China":"YYYY/MM/DD","South Korea":"YYYY/MM/DD","New Zealand":"DD/MM/YYYY","South Africa":"DD/MM/YYYY","Nepal":"DD/MM/YYYY","Bangladesh":"DD/MM/YYYY","Sri Lanka":"DD/MM/YYYY","Malaysia":"DD/MM/YYYY","Indonesia":"DD/MM/YYYY","Thailand":"DD/MM/YYYY"};
 const TIMEZONE_LIST=(()=>{try{return Array.from(new Set(["Asia/Kolkata",...Intl.supportedValuesOf("timeZone").filter(z=>!z.startsWith("Etc/")&&!z.startsWith("Indian/")&&z!=="Asia/Calcutta")])).sort();}catch(e){return ["Asia/Kolkata","Asia/Dubai","Asia/Singapore","Asia/Tokyo","Australia/Sydney","Europe/London","Europe/Paris","Europe/Berlin","America/New_York","America/Chicago","America/Denver","America/Los_Angeles","Pacific/Auckland"];}})();
 const settingsKey="studyos-settings";
-const onboardingKey="studyos-onboarding-v3";
+const ONBOARDING_META_KEY="studyos_onboarding_v1";
+const ONBOARDING_ROLLOUT_AT="2026-11-26T08:00:00.000Z";
 let userSettings=JSON.parse(localStorage.getItem(settingsKey)||"null");
-const needsFirstRun=!localStorage.getItem(onboardingKey);
+window.studyOSNewAccount=false;
+window.studyOSOnboarding={};
+window.studyOSSaveMetadata=async function(patch){
+  const client=window.studyOSSupabase;
+  if(!client)throw new Error("Your StudyOS account connection is not ready.");
+  const {data,error:getError}=await client.auth.getUser();
+  if(getError)throw getError;
+  if(!data?.user)throw new Error("No signed-in StudyOS user was found.");
+  const current=data.user.user_metadata||{};
+  const merged={...current,...patch};
+  if(patch[ONBOARDING_META_KEY]){
+    merged[ONBOARDING_META_KEY]={...(current[ONBOARDING_META_KEY]||{}),...patch[ONBOARDING_META_KEY]};
+  }
+  const {data:updated,error}=await client.auth.updateUser({data:merged});
+  if(error)throw error;
+  return updated?.user;
+};
 function localNow(){return new Date(new Intl.DateTimeFormat("en-US",{timeZone:userSettings?.timezone||"Asia/Kolkata",year:"numeric",month:"2-digit",day:"2-digit",hour:"2-digit",minute:"2-digit",second:"2-digit",hourCycle:"h23"}).formatToParts(new Date()).reduce((o,p)=>(o[p.type]=p.value,o),{}).year+"-"+new Intl.DateTimeFormat("en-US",{timeZone:userSettings?.timezone||"Asia/Kolkata",year:"numeric",month:"2-digit",day:"2-digit"}).format(new Date()).split("/")[0]+"-01T00:00:00");}
 function zonedParts(){
   const parts=new Intl.DateTimeFormat("en-US",{timeZone:userSettings?.timezone||"Asia/Kolkata",weekday:"long",year:"numeric",month:"2-digit",day:"2-digit",hour:"2-digit",minute:"2-digit",hourCycle:"h23"}).formatToParts(new Date());
@@ -2216,23 +2249,56 @@ document.querySelectorAll("[data-cooking-jump]").forEach(b=>b.addEventListener("
       $("useDeadlineEstimate")?.addEventListener("click",()=>{$("deadlineMinutes").value=Math.max(15,Math.round(n/15)*15);$("deadlineEstimate").textContent="AI suggestion placed in the required field. You can edit it.";});
     }catch(e){$("deadlineEstimate").textContent="AI unavailable. Enter your own approximate time. StudyOS will not guess."}
   });
-  // First-entry sequence: clock settings, then a StudyOS notification setup screen.
-  const setup=$("setupModal"),notif=$("notificationModal");
-  function maybeNotificationOnboarding(){
-    if(!notif||localStorage.getItem("studyos-notification-onboarding-seen")==="1")return;
-    if(window.Notification&&Notification.permission==="granted"){localStorage.setItem("studyos-notification-onboarding-seen","1");return}
-    notif.classList.add("open");
-  }
-  $("saveSetup")?.addEventListener("click",()=>setTimeout(maybeNotificationOnboarding,120));
-  $("notificationSkip")?.addEventListener("click",()=>{localStorage.setItem("studyos-notification-onboarding-seen","1");notif?.classList.remove("open")});
-  $("notificationEnable")?.addEventListener("click",async()=>{
-    if(!("Notification"in window)){notif?.classList.remove("open");return}
-    try{
-      const p=Notification.permission==="granted"?"granted":await Notification.requestPermission();
-      if(p==="granted"){$("notify").textContent="NOTIFICATIONS ON";$("notify").classList.add("on");localStorage.setItem("studyos-notification-onboarding-seen","1");notif.classList.remove("open");}
-      else{$("notificationEnable").textContent=p==="denied"?"NOTIFICATIONS BLOCKED":"TRY AGAIN";}
-    }catch(_){$("notificationEnable").textContent="TRY AGAIN";}
+  // First-run guidance is keyed to the Supabase account, never to this browser.
+  const notif=$("notificationModal");
+  $("notificationSkip")?.addEventListener("click",async()=>{
+    notif?.classList.remove("open");
+    const completed={...(window.studyOSOnboarding||{}),notification_prompt_completed:true,notifications_enabled:false};
+    window.studyOSOnboarding=completed;
+    try{await window.studyOSSaveMetadata({[ONBOARDING_META_KEY]:completed});}
+    catch(error){console.warn("Could not save notification onboarding choice:",error);}
   });
+  (async()=>{
+    const signedIn=await window.studyOSAuthReady;
+    if(!signedIn||!window.studyOSSupabase)return;
+    try{
+      const {data,error}=await window.studyOSSupabase.auth.getUser();
+      if(error)throw error;
+      const account=data?.user;
+      if(!account)return;
+      const createdAt=Date.parse(account.created_at||"");
+      const isNewAccount=Number.isFinite(createdAt)&&createdAt>=Date.parse(ONBOARDING_ROLLOUT_AT);
+      window.studyOSNewAccount=isNewAccount;
+      const metadata=account.user_metadata||{};
+      const onboarding=metadata[ONBOARDING_META_KEY]||{};
+      window.studyOSOnboarding=onboarding;
+      const accountSettings=metadata.studyos_settings;
+      if(accountSettings&&accountSettings.timezone&&accountSettings.dateFormat){
+        userSettings=accountSettings;
+        localStorage.setItem(settingsKey,JSON.stringify(accountSettings));
+      }else if(isNewAccount){
+        userSettings=null;
+        localStorage.removeItem(settingsKey);
+      }
+      if(typeof updateClockAndGreeting==="function")updateClockAndGreeting();
+      if(!isNewAccount)return;
+      if(!onboarding.clock_completed||!accountSettings){
+        openSetup();
+        return;
+      }
+      if(!onboarding.notification_prompt_completed){
+        if(window.Notification&&Notification.permission==="granted"){
+          const completed={...onboarding,notification_prompt_completed:true,notifications_enabled:true};
+          window.studyOSOnboarding=completed;
+          await window.studyOSSaveMetadata({[ONBOARDING_META_KEY]:completed});
+        }else{
+          notif?.classList.add("open");
+        }
+      }
+    }catch(error){
+      console.error("StudyOS account onboarding could not be loaded:",error);
+    }
+  })();
   const originalShowSection=showSection;
   showSection=function(name){
     originalShowSection(name);
