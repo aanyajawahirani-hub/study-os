@@ -2310,11 +2310,7 @@ document.querySelectorAll("[data-cooking-jump]").forEach(b=>b.addEventListener("
       $("plannerPageLede").textContent="StudyOS works around the life you actually have. Add the inputs it needs, then let the engine place the work.";
     }
   };
-  // If settings already exist on a later visit, do not reopen the clock modal. If it is first entry, the existing setup modal stays visible.
-  if(userSettings && setup && !needsFirstRun)setup.classList.remove("open");
-  if(userSettings && window.Notification && Notification.permission!=="granted" && localStorage.getItem("studyos-notification-onboarding-seen")!=="1"){
-    setTimeout(maybeNotificationOnboarding,250);
-  }
+  // Account onboarding above is the only authority for first-run clock and notification guidance.
 })();
 
 function commitmentActiveOnDay(x,key,dow){
@@ -2522,19 +2518,7 @@ function generatePlan(){
     try{input.showPicker?.()}catch(_){}
   },true);
 
-  /* First-run notification follows clock save and never competes with it. */
-  const setup=$f("setupModal"),notif=$f("notificationModal");
-  $f("saveSetup")?.addEventListener("click",()=>{
-    setTimeout(()=>{
-      if(!localStorage.getItem("studyos-onboarding-v3"))return;
-      setup?.classList.remove("open");
-      if(notif && (!("Notification" in window)||Notification.permission!=="granted"))notif.classList.add("open");
-    },180);
-  });
-  $f("notificationSkip")?.addEventListener("click",()=>{
-    localStorage.setItem("studyos-notification-onboarding-seen","1");
-    notif?.classList.remove("open");
-  });
+  /* Clock and notification onboarding are handled once per authenticated account above. */
 
   /* Feature controls remain usable without an account. Auth is optional. */
   /* Make the Academic Weapon feel like an actual command surface. */
@@ -3002,29 +2986,7 @@ function generatePlan(){
   const $f=id=>document.getElementById(id);
 
   const saveSetup=$f("saveSetup"), setupModal=$f("setupModal");
-  if(saveSetup){
-    saveSetup.type="button";
-    saveSetup.addEventListener("click",function(){
-      const countryEl=$f("setupCountry"), timezoneEl=$f("setupTimezone"), formatEl=$f("setupDateFormat");
-      if(!countryEl||!timezoneEl||!formatEl)return;
-      const country=(countryEl.dataset.validValue||countryEl.value||"").trim();
-      const timezone=(timezoneEl.dataset.validValue||timezoneEl.value||"").trim();
-      const dateFormat=formatEl.value||"DD/MM/YYYY";
-      const validCountry=typeof COUNTRY_ZONES!=="undefined" && Object.prototype.hasOwnProperty.call(COUNTRY_ZONES,country);
-      const validZone=typeof TIMEZONE_LIST!=="undefined" && Array.isArray(TIMEZONE_LIST) && TIMEZONE_LIST.includes(timezone);
-      if(!validCountry){countryEl.setCustomValidity("Choose a country from the list.");countryEl.reportValidity?.();countryEl.focus();return}
-      if(!validZone){timezoneEl.setCustomValidity("Choose a timezone from the list.");timezoneEl.reportValidity?.();timezoneEl.focus();return}
-      countryEl.setCustomValidity("");timezoneEl.setCustomValidity("");
-      const settings={country,timezone,dateFormat};
-      localStorage.setItem("studyos-settings",JSON.stringify(settings));
-      window.userSettings=settings;
-      if(setupModal){setupModal.classList.remove("open");setupModal.style.removeProperty("display")}
-      document.body.classList.remove("setup-first","setup-gate");
-      localStorage.setItem("studyos-onboarding-v3","1");
-      if(typeof updateClockAndGreeting==="function")updateClockAndGreeting();
-      if(typeof renderToday==="function")renderToday();
-    },true);
-  }
+  if(saveSetup)saveSetup.type="button";
 
   window.editDeadline=function(i){
     const x=state.deadlines?.[i]; if(!x)return;
@@ -3103,25 +3065,7 @@ function generatePlan(){
   const $=id=>document.getElementById(id);
 
   const saveSetup=$("saveSetup");
-  if(saveSetup){
-    saveSetup.onclick=function(e){
-      e.preventDefault();
-      const countryEl=$("setupCountry"),zoneEl=$("setupTimezone"),fmtEl=$("setupDateFormat"),modal=$("setupModal");
-      const country=(countryEl?.dataset.validValue||countryEl?.value||"India").trim();
-      const timezone=(zoneEl?.dataset.validValue||zoneEl?.value||"Asia/Kolkata").trim();
-      const dateFormat=(fmtEl?.value||"DD/MM/YYYY").trim();
-      if(!country||!timezone||!dateFormat)return;
-      const settings={country,timezone,dateFormat};
-      localStorage.setItem("studyos-settings",JSON.stringify(settings));
-      window.userSettings=settings;
-      try{userSettings=settings}catch(_){}
-      modal?.classList.remove("open");
-      document.body.classList.remove("setup-first","setup-gate");
-      localStorage.setItem("studyos-onboarding-v3","1");
-      if(typeof updateClockAndGreeting==="function")updateClockAndGreeting();
-      if(typeof renderToday==="function")renderToday();
-    };
-  }
+  if(saveSetup)saveSetup.type="button";
 
   const cooking=$("cookingPrimaryAction");
   if(cooking)cooking.onclick=function(){
