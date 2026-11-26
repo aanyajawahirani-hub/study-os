@@ -462,4 +462,26 @@ const nav=document.getElementById("nav"),menu=document.getElementById("menu");me
 const reduce=window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 if(!reduce){const io=new IntersectionObserver(entries=>entries.forEach(e=>{if(e.isIntersecting){e.target.classList.add("visible");io.unobserve(e.target)}}),{threshold:.12});document.querySelectorAll(".reveal").forEach(el=>io.observe(el));}
 </script>
+
+<script id="studyos-google-return-guard">
+(function(){
+  const key="studyos_google_redirect_pending";
+  let pending=false;
+  try{pending=sessionStorage.getItem(key)==="1";if(pending)sessionStorage.removeItem(key)}catch(_){}
+  if(!pending)return;
+  const script=document.createElement("script");
+  script.src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.119.2";
+  script.onload=async()=>{
+    try{
+      const client=window.supabase.createClient(
+        "https://oepeyvbtbjpvkmvsdxbw.supabase.co",
+        "sb_publishable_GHWEOy9U2v48gJhhjXbWIQ_ZHJo3NtF"
+      );
+      const {data,error}=await client.auth.getSession();
+      if(!error&&data.session)location.replace("/app/");
+    }catch(_){}
+  };
+  document.head.appendChild(script);
+})();
+</script>
 </body></html>
