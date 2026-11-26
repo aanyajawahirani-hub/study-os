@@ -1526,7 +1526,7 @@ aside#appSidebar .streak b{font-size:27px!important;line-height:1.05!important;m
   const modal=document.getElementById("setupModal");
   if(!save||!modal)return;
   save.type="button";
-  function saveClockSettings(e){
+  async function saveClockSettings(e){
     if(e){e.preventDefault();e.stopPropagation();}
     const countryEl=document.getElementById("setupCountry");
     const timezoneEl=document.getElementById("setupTimezone");
