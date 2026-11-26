@@ -1561,13 +1561,8 @@ aside#appSidebar .streak b{font-size:27px!important;line-height:1.05!important;m
     modal.classList.remove("open");
     document.body.classList.remove("setup-first","setup-gate");
     const notificationModal=$("notificationModal");
-    const permissionGranted="Notification" in window && Notification.permission==="granted";
-    if(window.studyOSNewAccount && !nextOnboarding.notification_prompt_completed && !permissionGranted && notificationModal){
+    if(window.studyOSNewAccount && !nextOnboarding.notification_prompt_completed && notificationModal){
       setTimeout(()=>notificationModal.classList.add("open"),120);
-    }else if(window.studyOSNewAccount && permissionGranted && !nextOnboarding.notification_prompt_completed){
-      const completed={...nextOnboarding,notification_prompt_completed:true,notifications_enabled:true};
-      window.studyOSOnboarding=completed;
-      window.studyOSSaveMetadata({[ONBOARDING_META_KEY]:completed}).catch(error=>console.warn("Could not save notification onboarding state:",error));
     }
   }
   save.addEventListener("click",saveClockSettings);
@@ -2287,13 +2282,7 @@ document.querySelectorAll("[data-cooking-jump]").forEach(b=>b.addEventListener("
         return;
       }
       if(!onboarding.notification_prompt_completed){
-        if(window.Notification&&Notification.permission==="granted"){
-          const completed={...onboarding,notification_prompt_completed:true,notifications_enabled:true};
-          window.studyOSOnboarding=completed;
-          await window.studyOSSaveMetadata({[ONBOARDING_META_KEY]:completed});
-        }else{
-          notif?.classList.add("open");
-        }
+        notif?.classList.add("open");
       }
     }catch(error){
       console.error("StudyOS account onboarding could not be loaded:",error);
