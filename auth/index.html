@@ -277,6 +277,7 @@ h2{margin:9px 0 7px}
   });
   $("googleButton").addEventListener("click", async () => {
     rememberAuthMethod("google");
+    try { sessionStorage.setItem("studyos_google_redirect_pending", "1"); } catch (_) {}
     $("googleButton").disabled = true;
     message("Opening Google sign-in…");
     try {
@@ -291,6 +292,7 @@ h2{margin:9px 0 7px}
       if (!data?.url) throw new Error("Supabase did not return a Google sign-in URL. Check the Google provider configuration.");
       window.location.assign(data.url);
     } catch (error) {
+      try { sessionStorage.removeItem("studyos_google_redirect_pending"); } catch (_) {}
       message(error?.message || "Google sign-in could not start. Please try again.");
       $("googleButton").disabled = false;
     }
