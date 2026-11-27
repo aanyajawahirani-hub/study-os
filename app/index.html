@@ -963,23 +963,7 @@ aside#appSidebar .streak b{font-size:27px!important;line-height:1.05!important;m
 }
 </style>
 
-<style id="dashboard-collapse-system">
-.today-intro-top,.next-heading{display:flex;align-items:center;justify-content:space-between;gap:16px}
-.next-heading{margin-bottom:10px}
-.next-heading .next-label{margin:0}
-.collapse-control{display:inline-flex;align-items:center;justify-content:center;gap:7px;flex:0 0 auto;border:1px solid var(--line);background:transparent;color:var(--muted);padding:6px 8px;font:700 8px/1 Arial,Helvetica,sans-serif;letter-spacing:.1em;cursor:pointer;transition:background .18s ease,color .18s ease,border-color .18s ease}
-.collapse-control:hover{background:var(--surface2);color:var(--ink);border-color:var(--ink)}
-.collapse-control>span:first-child{font-size:13px;line-height:.7}
-.collapse-control[aria-expanded="false"]>span:first-child{transform:rotate(180deg)}
-[data-collapse-hidden="true"]{display:none!important}
-.today-intro-copy{min-width:0}
-.today-intro-copy .today-intro-top{max-width:460px}
-.today-intro .today-summary{align-self:stretch}
-.today-list .section-line,.today-side .section-line{align-items:center}
-.today-list .section-line .collapse-control,.today-side .section-line .collapse-control{margin-left:auto}
-@media(max-width:900px){.today-intro-top{max-width:none}.today-intro .today-summary{margin-top:25px}}
-@media(prefers-reduced-motion:no-preference){.collapse-control>span:first-child{transition:transform .18s ease}}
-</style>
+
 <style id="studyos-sidebar-redesign">
 /* StudyOS sidebar: quiet navigation, strong identity, compact icon rail. */
 :root{--sidebar-width:272px;--sidebar-rail:82px;--sidebar-bg:#17243b;--sidebar-panel:#202f49;--sidebar-text:#f5f7fb;--sidebar-muted:#aab7cc;--sidebar-line:rgba(222,233,249,.13);--sidebar-accent:#69b8f2}
@@ -1139,7 +1123,7 @@ aside#appSidebar .streak b{font-size:27px!important;line-height:1.05!important;m
 <div class="mobile-nav" id="mobileNav"><button class="active" data-section="today">Today</button><button data-section="plan">Plan</button><button data-section="focus">Focus</button><button data-section="ai">Academic Weapon</button><button data-section="deadlines">Deadlines</button><button data-section="activities">Activities</button><button data-section="extras">Extras</button><button data-section="exams">Exams</button><button data-section="exceptions">Days Off</button><button data-section="syllabus">Syllabus</button><button data-section="reminders">Reminders</button><button data-section="progress">Progress</button><button data-section="account">My Account</button></div><div id="section-today" class="section active">
   <div class="today-intro">
     <div class="today-intro-copy">
-      <div class="today-intro-top"><div class="eyebrow">YOUR DAY</div><button class="collapse-control" type="button" data-collapse-target="today-summary" aria-controls="today-summary" aria-expanded="true" aria-label="Collapse daily statistics"><span aria-hidden="true">−</span><span class="collapse-word">COLLAPSE</span></button></div>
+      <div class="today-intro-top"><div class="eyebrow">YOUR DAY</div></div>
       <h2>What matters<br><em>right now.</em></h2>
     </div>
     <div class="today-summary" id="today-summary">
@@ -1150,7 +1134,7 @@ aside#appSidebar .streak b{font-size:27px!important;line-height:1.05!important;m
   </div>
 
   <div class="today-next">
-    <div class="next-heading"><div class="next-label">NEXT UP</div><button class="collapse-control" type="button" data-collapse-target="next-content" aria-controls="next-content" aria-expanded="true" aria-label="Collapse next up"><span aria-hidden="true">−</span><span class="collapse-word">COLLAPSE</span></button></div>
+    <div class="next-heading"><div class="next-label">NEXT UP</div></div>
     <div class="next-content" id="next-content">
       <div>
         <div class="next-time" id="nextTime">YOUR FIRST SESSION</div>
@@ -1163,14 +1147,14 @@ aside#appSidebar .streak b{font-size:27px!important;line-height:1.05!important;m
 
   <div class="today-columns">
     <section class="today-list">
-      <div class="section-line"><b>TODAY</b><span id="todayPlanMeta">YOUR SCHEDULE</span><button class="collapse-control" type="button" data-collapse-target="blocks" aria-controls="blocks" aria-expanded="true" aria-label="Collapse today schedule"><span aria-hidden="true">−</span><span class="collapse-word">COLLAPSE</span></button></div>
+      <div class="section-line"><b>TODAY</b><span id="todayPlanMeta">YOUR SCHEDULE</span></div>
       <div id="blocks"></div>
        
     </section>
 
     <aside class="today-side">
       <section class="side-section">
-        <div class="section-line"><b>UP NEXT</b><span>PRIORITIES</span><button class="collapse-control" type="button" data-collapse-target="upNext" aria-controls="upNext" aria-expanded="true" aria-label="Collapse priorities"><span aria-hidden="true">−</span><span class="collapse-word">COLLAPSE</span></button></div>
+        <div class="section-line"><b>UP NEXT</b><span>PRIORITIES</span></div>
         <div id="upNext"><div class="side-empty">Upcoming exams and priorities will appear here once you add them.</div></div>
       </section>
       </aside>
@@ -3385,30 +3369,8 @@ function generatePlan(){
 })();
 </script>
 
-<script id="studyos-collapsible-dashboard">
+<script id="studyos-sidebar-state">
 (function(){
-  const storageKey="studyos-dashboard-collapse-v1";
-  const sidebarKey="studyos-sidebar-collapsed";
-  let saved={};
-  try{saved=JSON.parse(localStorage.getItem(storageKey)||"{}")||{}}catch(_){}
-  function setCollapsed(button,collapsed,persist=true){
-    const id=button.dataset.collapseTarget;
-    const target=document.getElementById(id);
-    if(!target)return;
-    target.dataset.collapseHidden=collapsed?"true":"false";
-    button.setAttribute("aria-expanded",String(!collapsed));
-    button.setAttribute("aria-label",(collapsed?"Expand ":"Collapse ")+id.replace(/([A-Z])/g," $1").toLowerCase());
-    const mark=button.querySelector("span:first-child");
-    const word=button.querySelector(".collapse-word");
-    if(mark)mark.textContent=collapsed?"+":"−";
-    if(word)word.textContent=collapsed?"EXPAND":"COLLAPSE";
-    if(persist){saved[id]=collapsed;try{localStorage.setItem(storageKey,JSON.stringify(saved))}catch(_){}}
-  }
-  document.querySelectorAll("[data-collapse-target]").forEach(button=>{
-    const id=button.dataset.collapseTarget;
-    setCollapsed(button,Boolean(saved[id]),false);
-    button.addEventListener("click",()=>setCollapsed(button,button.getAttribute("aria-expanded")==="true"));
-  });
   document.querySelectorAll("#appSidebar .navlink").forEach(link=>{
     const label=link.querySelector(".nav-label")?.textContent?.trim();
     if(label){link.setAttribute("aria-label",label);link.setAttribute("title",label);}
