@@ -3504,4 +3504,36 @@ aside#appSidebar .streak b{color:var(--sidebar-text)!important}
 .sidebar-toggle{background:rgba(255,255,255,.055)!important;border-color:var(--sidebar-line)!important;color:var(--sidebar-text)!important}
 .sidebar-toggle:hover{background:rgba(255,255,255,.1)!important;border-color:rgba(245,242,236,.3)!important}
 </style>
+
+<style id="studyos-collapsed-sidebar-navigation">
+@media(min-width:801px){
+  body.sidebar-collapsed aside#appSidebar .side-nav,
+  body.sidebar-collapsed aside#appSidebar .nav-group{overflow:visible!important}
+  body.sidebar-collapsed aside#appSidebar .navlink{
+    display:flex!important;visibility:visible!important;opacity:1!important;
+    position:relative!important;z-index:2!important;
+    width:100%!important;min-width:0!important;
+    pointer-events:auto!important;cursor:pointer!important;
+    color:var(--sidebar-muted)!important;
+  }
+  body.sidebar-collapsed aside#appSidebar .navlink:before{
+    display:grid!important;visibility:visible!important;opacity:1!important;
+    pointer-events:none!important;
+    background:rgba(255,255,255,.075)!important;
+    color:#d4d9d1!important;
+    transition:background .18s ease,color .18s ease,transform .18s ease!important;
+  }
+  body.sidebar-collapsed aside#appSidebar .navlink:hover:before,
+  body.sidebar-collapsed aside#appSidebar .navlink:focus-visible:before{
+    background:var(--sidebar-accent)!important;color:var(--sidebar-bg)!important;
+    transform:scale(1.06);
+  }
+  body.sidebar-collapsed aside#appSidebar .navlink.active:before{
+    background:var(--sidebar-accent)!important;color:var(--sidebar-bg)!important;
+  }
+  body.sidebar-collapsed aside#appSidebar .navlink:focus-visible{
+    outline:2px solid var(--sidebar-accent)!important;outline-offset:2px!important;
+  }
+}
+</style>
 </body></html>
