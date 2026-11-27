@@ -3415,4 +3415,93 @@ function generatePlan(){
   #section-today .side-empty{font-size:12px!important}
 }
 </style>
+
+<style id="studyos-chic-colour-system">
+/* A quieter, more elevated palette: warm stone, ink, muted wine and soft olive. */
+:root{
+  --paper:#f2f0eb!important;
+  --paper-deep:#e6e1d8!important;
+  --surface:#fbfaf7!important;
+  --surface2:#eae7e0!important;
+  --ink:#292d2b!important;
+  --ink-soft:#555c56!important;
+  --muted:#777d76!important;
+  --line:#d5d1c8!important;
+  --accent:#87545a!important;
+  --accent2:#68796d!important;
+  --accent3:#8a7560!important;
+  --focus:#87545a!important;
+  --green:#68796d!important;
+  --red:#87545a!important;
+  --blue:#68796d!important;
+  --ochre:#aa936f!important;
+  --sidebar-bg:#252d2b!important;
+  --sidebar-panel:#303a36!important;
+  --sidebar-text:#f5f2ec!important;
+  --sidebar-muted:#b9beb6!important;
+  --sidebar-line:rgba(245,242,236,.14)!important;
+  --sidebar-accent:#c5a98b!important;
+}
+html,body{background:var(--paper)!important;color:var(--ink)!important}
+.shell{background:transparent!important}
+#section-today .today-intro,
+.shell>header{border-color:var(--line)!important}
+#section-today .today-summary,
+#section-today .today-summary>div{border-color:var(--line)!important}
+#section-today .next-label,
+#section-today .today-intro h2 em,
+h1 em,.page-title em{color:var(--accent)!important}
+#section-today .section-line{border-color:var(--ink)!important}
+.panel,.hero,.focus-main,.sound-board,.side-section,.today-next{
+  border-color:var(--line)!important;
+}
+.panel,.hero,.focus-main,.sound-board,.focuscard,.setup-card,.auth-card{
+  background:var(--surface)!important;
+}
+.btn,.generate-btn,.dark-btn,.send-btn,.next-action{
+  background:var(--ink)!important;color:var(--surface)!important;
+  border-color:var(--ink)!important;box-shadow:none!important;
+}
+.btn:hover,.generate-btn:hover,.dark-btn:hover,.send-btn:hover,
+.next-action:hover{background:var(--accent)!important;border-color:var(--accent)!important}
+.insight,.schedule-note{background:#e9e8e0!important;border-left-color:var(--accent2)!important}
+.block:hover,.data-row:hover{background:#efede7!important}
+.dot,.done .dot{border-color:var(--accent2)!important}
+.done .dot,.focus-controls button.active,.focus-controls button.primary,
+.focus-actions button.active,.mini-controls button.active{
+  background:var(--accent2)!important;border-color:var(--accent2)!important;color:#fff!important;
+}
+input,select,textarea,.form-grid input,.form-grid select,.form-grid textarea,
+.workload-input input,.workload-input select,.holiday-mode{
+  background:#f8f6f1!important;color:var(--ink)!important;border-color:var(--line)!important;
+}
+input:focus,select:focus,textarea:focus{
+  border-color:var(--accent)!important;box-shadow:0 0 0 3px rgba(135,84,90,.12)!important;
+}
+input::placeholder,textarea::placeholder{color:#999b93!important}
+.planner-tabs{background:var(--surface)!important;border-color:var(--line)!important}
+.planner-tab{color:var(--muted)!important}
+.planner-tab.active{background:var(--ink)!important;color:var(--surface)!important}
+.message.assistant{background:var(--surface2)!important;border-color:var(--line)!important}
+.message.user{background:var(--ink)!important;color:var(--surface)!important;border-color:var(--ink)!important}
+aside#appSidebar{
+  background:var(--sidebar-bg)!important;
+  border-right:1px solid rgba(41,45,43,.16)!important;
+}
+aside#appSidebar .brand{color:var(--sidebar-text)!important}
+aside#appSidebar .brand-mark{color:var(--sidebar-accent)!important}
+aside#appSidebar .nav-group-label{color:#a9b0a8!important}
+aside#appSidebar .navlink{color:var(--sidebar-muted)!important}
+aside#appSidebar .navlink:hover{background:rgba(255,255,255,.07)!important;color:#fff!important}
+aside#appSidebar .navlink.active{
+  background:var(--sidebar-panel)!important;color:var(--sidebar-text)!important;
+}
+aside#appSidebar .navlink.active:before{background:var(--sidebar-accent)!important;color:var(--sidebar-bg)!important}
+aside#appSidebar .nav-index{color:#c5a98b!important}
+aside#appSidebar .nav-subnote,aside#appSidebar .streak small{color:#aeb5ac!important}
+aside#appSidebar .streak{border-color:var(--sidebar-line)!important}
+aside#appSidebar .streak b{color:var(--sidebar-text)!important}
+.sidebar-toggle{background:rgba(255,255,255,.055)!important;border-color:var(--sidebar-line)!important;color:var(--sidebar-text)!important}
+.sidebar-toggle:hover{background:rgba(255,255,255,.1)!important;border-color:rgba(245,242,236,.3)!important}
+</style>
 </body></html>
